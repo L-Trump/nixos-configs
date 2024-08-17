@@ -53,6 +53,7 @@
   services.libinput.enable = true;
   services.libinput.touchpad.naturalScrolling = true;
   services.xserver.videoDrivers = [ "modesetting" ];
+  services.tlp.enable = true;
 # services.xserver.deviceSection = ''
 #   Option "TearFree" "true"
 # '';

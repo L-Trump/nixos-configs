@@ -33,6 +33,18 @@
     };
   };
 
+  xdg.desktopEntries.aerc = {
+    type = "Application";
+    name = "aerc";
+    genericName = "Mail Client";
+    comment = "Launches the aerc email client";
+    settings.Keywords = "Email,Mail,IMAP,SMTP";
+    categories = [ "Office" "Network" "Email" "ConsoleOnly" ];
+    icon = "utilities-terminal";
+    exec = ''alacritty --class aerc,aerc -T "AERC" -e fish -ilc "LC_ALL=C aerc" %u'';
+    mimeType = [ "x-scheme-handler/mailto" ];
+  };
+
   age.secrets.aerc-accounts = {
     file = ./accounts.conf.age;
     path = "${config.xdg.configHome}/aerc/accounts.conf";

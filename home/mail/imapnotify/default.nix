@@ -28,7 +28,7 @@ in
     };
     Service = {
       # Use the nix store path for config to ensure service restarts when it changes
-      Environment = "PATH=/run/current-system/sw/bin";
+      Environment = "PATH=/run/current-system/sw/bin:/etc/profiles/per-user/%u/bin";
       ExecStart = "${getExe cfg.package} -conf '${config.xdg.configHome}/goimapnotify/goimapnotify.yaml'";
       Restart = "always";
       RestartSec = 30;
