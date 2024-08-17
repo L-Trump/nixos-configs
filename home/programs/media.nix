@@ -24,7 +24,6 @@
     obs-studio.enable = true;
   };
 
-  services = {
-    playerctld.enable = true;
-  };
+  services.playerctld.enable = true;
+  services.udiskie.enable = true;
 }

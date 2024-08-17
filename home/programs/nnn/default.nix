@@ -9,6 +9,8 @@
       c = "$HOME/Codes";
       d = "$HOME/Documents";
       D = "$HOME/Downloads";
+      U = "/run/media";
+      m = "/run/media";
     };
     plugins.src = (pkgs.fetchFromGitHub {
       owner = "jarun";

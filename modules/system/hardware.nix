@@ -16,9 +16,5 @@
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
-  
-# services.power-profiles-daemon = {
-#   enable = true;
-# };
+  services.udisks2.enable = true;
 }
-
