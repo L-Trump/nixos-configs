@@ -1,0 +1,8 @@
+#!/bin/sh
+COUNT=$(find ~/Mail -type f | grep -vE ',[^,]*S[^,]*$' | grep -i INBOX | wc -l)
+
+if [ "$COUNT" -ne "0" ]; then
+    echo "Unread: $COUNT"
+else
+    echo "Mail"
+fi

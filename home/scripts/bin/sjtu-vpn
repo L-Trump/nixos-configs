@@ -1,0 +1,19 @@
+#!/bin/fish
+
+if test (count $argv) -eq 1
+	if test $argv[1] = start
+		ipsec up "sjtu-student"
+		echo "Started"
+	else if test $argv[1] = stop
+		ipsec down "sjtu-student"
+		echo "Stopped"
+	end
+else
+	if ipsec  status "sjtu-student" | grep -q "0 up"
+		ipsec up "sjtu-student"
+		echo "Started"
+	else
+		ipsec down "sjtu-student"
+		echo "Stopped"
+	end
+end

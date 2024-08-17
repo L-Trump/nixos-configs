@@ -1,0 +1,24 @@
+#!/bin/sh
+OFFLINEIMAP=$(pgrep offlineimap)
+
+if [ -n "$OFFLINEIMAP" ]; then
+    echo "Already running one instance of offlineimap. Exiting..."
+    exit 0
+fi
+
+if [ "$2" != "quiet" ] && [ "$1" != "quiet" ]; then
+    notify-send -u normal -i /usr/share/icons/HighContrast/48x48/status/mail-unread.png -t 3000 -a "OfflineIMAP" "OfflineIMAP" "Start Syncing..."
+    # paplay /usr/share/sounds/freedesktop/stereo/message-new-instant.oga 
+fi
+    
+if [ -z "$1" ] || [ "$1" = "quiet" ]; then
+    offlineimap -u quiet
+else
+    offlineimap -u quiet -a $1
+fi
+
+if [ "$2" != "quiet" ] && [ "$1" != "quiet" ]; then
+    notify-send -u normal -i /usr/share/icons/HighContrast/48x48/status/mail-unread.png -t 3000 -a "OfflineIMAP" "OfflineIMAP" "Sync Finished!"
+    # paplay /usr/share/sounds/freedesktop/stereo/message-new-instant.oga 
+    paplay /run/current-system/sw/share/sounds/freedesktop/stereo/message-new-instant.oga 
+fi

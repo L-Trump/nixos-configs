@@ -1,0 +1,9 @@
+#!/bin/env bash
+# XFILE=$HOME/.xsettingsd
+# if [ -n "$(grep -E '^Net/ThemeName *".*-dark"$' $XFILE)" ]; then
+# 	sed -i 's/^\(Net\/ThemeName[[:blank:]]*\)"\(.*\)-dark"$/\1"\2"/;' $XFILE
+# else
+# 	sed -i 's/^\(Net\/ThemeName[[:blank:]]*\)"\(.*\)"$/\1"\2-dark"/;' $XFILE
+# fi
+# pkill -HUP xsettingsd
+darkman toggle

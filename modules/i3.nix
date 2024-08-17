@@ -5,6 +5,7 @@
 { pkgs, ... }:
 
 {
+  imports = [ ./autologin.nix ];
   environment.pathsToLink = [ "/libexec" ];
 
   # Enable the X11 windowing system.
@@ -25,19 +26,10 @@
     windowManager.i3 = {
       enable = true;
       extraPackages = with pkgs; [
-        rofi
         dunst
-        i3blocks
-        i3lock
-        i3status
-        picom
         feh
         acpi
-        arandr
         dex
-        xbindkeys
-        xorg.xbacklight
-        xorg.xdpyinfo
       ];
     };
   };

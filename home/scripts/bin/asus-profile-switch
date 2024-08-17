@@ -1,0 +1,17 @@
+#!/bin/bash
+
+asusctl profile -n
+current_profile=$(asusctl profile -p | grep profile | awk '{print $4}')
+echo "Current Profile: ${current_profile}"
+
+case $current_profile in
+Performance)
+	notify-send -u normal -r 1081 -i /usr/share/icons/hicolor/512x512/apps/asus_notif_red.png -t 3000 -a "asusctl" "切换ROG配置" "已切换到性能模式"
+	;;
+Quiet)
+	notify-send -u normal -r 1081 -i /usr/share/icons/hicolor/512x512/apps/asus_notif_green.png -t 3000 -a "asusctl" "切换ROG配置" "已切换到静音模式"
+	;;
+Balanced)
+	notify-send -u normal -r 1081 -i /usr/share/icons/hicolor/512x512/apps/asus_notif_yellow.png -t 3000 -a "asusctl" "切换ROG配置" "已切换到平衡模式"
+	;;
+esac

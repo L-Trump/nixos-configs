@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+PID_FILE="$HOME/.dynamic_bg_run"
+if [ -f "$PID_FILE" ]; then
+    rm "$PID_FILE"
+    pkill -9 xwinwrap
+    echo "Closed Dynamic Background"
+else
+    touch "$PID_FILE"
+    prime-run xwinwrap -d -g 2592x1458+0+0 -ni -s -st -sp -b -nf -ov -fdt -un -debug -- mpv --mute=yes --no-audio --no-osc --no-osd-bar --quiet --screen=0 --geometry=2592x1458+0+0 --wid={WID} --override-display-fps=15 --loop ~/Pictures/WallpaperEngine/contents/2987671258/合成\ 1.mp4
+    prime-run xwinwrap -d -g 3840x2160+2592+0 -ni -s -st -sp -b -nf -ov -fdt -un -debug -- mpv --mute=yes --no-audio --no-osc --no-osd-bar --quiet --screen=0 --geometry=3840x2160 --wid={WID} --override-display-fps=15 --loop /home/ltrump/.local/share/Steam/steamapps/workshop/content/431960/2923831977/横屏.mp4
+    echo "Start Dynamic Background"
+fi

@@ -10,7 +10,7 @@
       ./hardware-configuration.nix
       ./touch-screen.nix
       ../../modules/i3.nix
-      ../../modules/system.nix
+      ../../modules/system
     ];
 
   # Use the systemd-boot EFI boot loader.
@@ -64,7 +64,10 @@
   # intel-ocl
   ];
 
-  hardware.intelgpu.driver = "i915";
+  hardware.intelgpu.driver = "xe";
+
+  # hardware.ipu6.enable = true;
+  # hardware.ipu6.platform = "ipu6epmtl";
 
   services.udev.extraRules = ''
     ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="intel_backlight", MODE="0666", RUN+="${pkgs.coreutils}/bin/chmod a+w /sys/class/backlight/%k/brightness"

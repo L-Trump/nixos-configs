@@ -1,0 +1,12 @@
+#!/bin/env bash
+# if [[ $( asusctl -k ) == "Current keyboard led brightness: 0" ]]; then
+# 	asusctl -k low
+# 	echo low;
+# elif [[ $( asusctl -k ) == "Current keyboard led brightness: 1" ]]; then
+# 	asusctl -k med
+# 	echo med;
+# else
+# 	asusctl -k high
+# 	echo high;
+# fi
+asusctl -n

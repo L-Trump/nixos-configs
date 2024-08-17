@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# i3lock -i $(find ~/Pictures/LockScreen/* -regextype egrep -regex ".*(\\.jpg|\\.png)" | shuf -n1)  -n -c 000011
+# i3lock -n -c 000011
+mybetterlockscreen -l

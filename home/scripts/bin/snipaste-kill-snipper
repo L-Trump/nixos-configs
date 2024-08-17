@@ -1,0 +1,12 @@
+#!/usr/bin/bash
+while (xprop -name "Snipper - Snipaste"); do
+	sleep 0.5
+	while (xprop -name "Snipper - Snipaste" | grep "_NET_WM_STATE_STAYS_ON_TOP"); do
+		sleep 0.1
+	done
+	sleep 0.5
+	if [[ -z $(xprop -name "Snipper - Snipaste" | grep "_NET_WM_STATE_STAYS_ON_TOP") ]]; then
+		i3-msg "[instance=\"Snipaste\" title=\"Snipper.*\"] kill"
+		sleep 1
+	fi
+done

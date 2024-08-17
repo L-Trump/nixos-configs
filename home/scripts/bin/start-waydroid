@@ -1,0 +1,17 @@
+#!/bin/bash
+set -xeuo pipefail
+
+killall -9 cage || true;
+sudo systemctl restart waydroid-container.service;
+
+# if ! pgrep cage; then
+#     weston &> /dev/null &
+# fi
+
+sleep 2;
+#export DISPLAY=':0'
+prime-run cage -s -- waydroid show-full-ui ;
+
+waydroid session stop;
+sudo systemctl stop waydroid-container.service;
+killall -9 cage || true;
