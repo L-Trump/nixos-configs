@@ -45,8 +45,8 @@ bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
 
 # Sreen brightness controls
-bindsym XF86MonBrightnessUp exec echo $(($(cat /sys/class/backlight/intel_backlight/brightness)+12))>/sys/class/backlight/amdgpu_bl1/brightness  # increase screen brightness
-bindsym XF86MonBrightnessDown exec echo $(($(cat /sys/class/backlight/intel_backlight/brightness)-12))>/sys/class/backlight/amdgpu_bl1/brightness # decrease screen brightness
+bindsym XF86MonBrightnessUp exec echo $(($(cat /sys/class/backlight/intel_backlight/brightness)+12))>/sys/class/backlight/intel_backlight/brightness  # increase screen brightness
+bindsym XF86MonBrightnessDown exec echo $(($(cat /sys/class/backlight/intel_backlight/brightness)-12))>/sys/class/backlight/intel_backlight/brightness # decrease screen brightness
 
 # Asus Keys (Needs asusctl)
 bindsym XF86KbdBrightnessUp exec kbdbrightnessup 

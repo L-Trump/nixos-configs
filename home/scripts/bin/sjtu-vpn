@@ -1,4 +1,4 @@
-#!/bin/fish
+#!/usr/bin/env fish
 
 if test (count $argv) -eq 1
 	if test $argv[1] = start

@@ -1,0 +1,5 @@
+{ pkgs, ... }:
+
+{
+  imports = [ ./swanctl.nix ];
+}

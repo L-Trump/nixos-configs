@@ -1,6 +1,5 @@
 { pkgs, config, ... }:
 
-
 {
   systemd.services."getty@tty1" = {
     overrideStrategy = "asDropin";

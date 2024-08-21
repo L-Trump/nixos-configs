@@ -9,6 +9,9 @@ in
   "../home/mail/aerc/accounts.conf.age".publicKeys = users ++ hosts;
   "../home/mail/offlineimap/offlineimaprc.age".publicKeys = users ++ hosts;
   "../home/mail/imapnotify/goimapnotify-config.yaml.age".publicKeys = users ++ hosts;
+  "../modules/vpn/ipsec.conf.age".publicKeys = users ++ hosts;
+  "../modules/vpn/ipsec.secrets.age".publicKeys = users ++ hosts;
+  "../modules/vpn/strongswan.conf.age".publicKeys = users ++ hosts;
   "passage/Email/h-sjtu.age".publicKeys = users ++ hosts;
   "passage/Email/l-swjtu.age".publicKeys = users ++ hosts;
   "passage/Email/l-qq.age".publicKeys = users ++ hosts;

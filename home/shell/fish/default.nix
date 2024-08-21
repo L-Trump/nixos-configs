@@ -4,7 +4,7 @@
     enable = true;
     interactiveShellInit = ''
       set fish_greeting
-      set -gx GTK_USE_PORTAL 1
+      # set -gx GTK_USE_PORTAL 1
     '';
     plugins = with pkgs; [
       { name = "foreign-env"; src = fishPlugins.foreign-env.src; }

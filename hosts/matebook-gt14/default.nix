@@ -6,11 +6,13 @@
 
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [
+      # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ./touch-screen.nix
       ../../modules/i3.nix
       ../../modules/system
+      ../../modules/vpn
     ];
 
   # Use the systemd-boot EFI boot loader.
@@ -28,41 +30,41 @@
   boot.kernelPackages = pkgs.linuxPackages_zen;
   # boot.kernelPackages = pkgs.linuxPackages_testing;
   boot.kernelParams = [
-#   "i915.force_probe=7d55"
-#   "xe.force_probe=!7d55"
+    #   "i915.force_probe=7d55"
+    #   "xe.force_probe=!7d55"
     "i915.enable_psr=0"
     "i915.enable_guc=3"
     "snd-intel-dspcfg.dsp_driver=1"
   ];
 
-# boot.extraModprobeConfig = ''
-#   softdep i2c_hid pre: pinctrl_meteorlake
-#   softdep i2c_hid_acpi pre: xe pinctrl_meteorlake
-#   softdep hid_generic pre: pinctrl_meteorlake
-#   softdep hid_multitouch pre: pinctrl_meteorlake
-# '';
+  # boot.extraModprobeConfig = ''
+  #   softdep i2c_hid pre: pinctrl_meteorlake
+  #   softdep i2c_hid_acpi pre: xe pinctrl_meteorlake
+  #   softdep hid_generic pre: pinctrl_meteorlake
+  #   softdep hid_multitouch pre: pinctrl_meteorlake
+  # '';
 
   hardware.firmware = with pkgs; [ sof-firmware ];
 
   networking.hostName = "ltrumpNixOS"; # Define your hostname.
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-  networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
+  networking.networkmanager.enable = true; # Easiest to use and most distros use this by default.
 
   # Enable touchpad support (enabled default in most desktopManager).
   services.libinput.enable = true;
   services.libinput.touchpad.naturalScrolling = true;
   services.xserver.videoDrivers = [ "modesetting" ];
   services.tlp.enable = true;
-# services.xserver.deviceSection = ''
-#   Option "TearFree" "true"
-# '';
+  # services.xserver.deviceSection = ''
+  #   Option "TearFree" "true"
+  # '';
 
   hardware.graphics.enable32Bit = true;
   hardware.graphics.extraPackages = with pkgs; [
     intel-compute-runtime
     intel-media-driver
-  # intel-ocl
+    # intel-ocl
   ];
 
   hardware.intelgpu.driver = "xe";
@@ -111,4 +113,3 @@
   system.stateVersion = "24.11"; # Did you read the comment?
 
 }
-

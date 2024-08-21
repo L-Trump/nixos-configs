@@ -7,11 +7,11 @@
 {
   imports = [
     ./nix-settings.nix
-    ./locale-fonts.nix
+    ./locale.nix
     ./user.nix
     ./network.nix
     ./hardware.nix
     ./environments.nix
+    ../fonts
   ];
 }
-

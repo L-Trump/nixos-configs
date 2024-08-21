@@ -5,10 +5,10 @@
     enable = true;
     package = (pkgs.nnn.override { withNerdIcons = true; });
     bookmarks = {
-      u = "$HOME/Onedrive/上交";
-      c = "$HOME/Codes";
-      d = "$HOME/Documents";
-      D = "$HOME/Downloads";
+      u = "~/Onedrive/上交";
+      c = "~/Codes";
+      d = "~/Documents";
+      D = "~/Downloads";
       U = "/run/media";
       m = "/run/media";
     };
