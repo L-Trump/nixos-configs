@@ -34,6 +34,8 @@
     agenix
     age
     passage
+
+    just
   ];
 
   services.dbus.packages = [ pkgs.gcr ];
@@ -53,4 +55,3 @@
 
   security.polkit.enable = true;
 }
-
