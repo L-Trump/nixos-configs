@@ -26,4 +26,5 @@
 
   services.playerctld.enable = true;
   services.udiskie.enable = true;
+  services.mpris-proxy.enable = true;
 }

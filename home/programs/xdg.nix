@@ -27,6 +27,8 @@
     "x-scheme-handler/tg" = [ "telegramdesktop.desktop" ];
   };
 in {
+  imports = [ ./portal ];
+
   xdg = {
     enable = true;
 

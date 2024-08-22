@@ -4,6 +4,8 @@
 
   environment.pathsToLink = [
     "/share/icons"
+    "/share/xdg-desktop-portal"
+    "/share/applications"
   ];
   # List packages installed in system profile. To search, run:
   # $ nix search wget

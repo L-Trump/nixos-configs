@@ -1,6 +1,27 @@
 { config, pkgs, ... }:
 
+let
+  pkg-nnn-dbus = pkgs.stdenv.mkDerivation {
+    name = "nnn-dbus";
+    propagatedBuildInputs = with pkgs; [
+      gobject-introspection
+      (python3.withPackages (pyPkgs: with pyPkgs; [
+        pip
+        pygobject3
+        pycairo
+        pydbus
+      ]))
+    ];
+    nativeBuildInputs = with pkgs; [ wrapGAppsHook ];
+    dontUnpack = true;
+    installPhase = ''
+      install -Dm755 ${./nnn-dbus} $out/bin/nnn-dbus
+    '';
+  };
+in
+
 {
+  home.packages = [ pkg-nnn-dbus ];
   programs.nnn = {
     enable = true;
     package = (pkgs.nnn.override { withNerdIcons = true; });
