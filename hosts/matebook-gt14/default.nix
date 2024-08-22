@@ -69,6 +69,12 @@
 
   hardware.intelgpu.driver = "xe";
 
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = true;
+  };
+  services.blueman.enable = true;
+
   # hardware.ipu6.enable = true;
   # hardware.ipu6.platform = "ipu6epmtl";
 
