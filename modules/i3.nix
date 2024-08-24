@@ -26,7 +26,6 @@
     windowManager.i3 = {
       enable = true;
       extraPackages = with pkgs; [
-        dunst
         feh
         acpi
         dex
@@ -41,4 +40,3 @@
     after = [ "graphical-session-pre.target" ];
   };
 }
-

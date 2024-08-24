@@ -4,6 +4,7 @@
   imports = [
     ./picom.nix
     ./polybar
+    ../dunst
   ];
 
   xresources.properties = {
