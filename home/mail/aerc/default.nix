@@ -41,7 +41,7 @@
     settings.Keywords = "Email,Mail,IMAP,SMTP";
     categories = [ "Office" "Network" "Email" "ConsoleOnly" ];
     icon = "utilities-terminal";
-    exec = ''alacritty --class aerc,aerc -T "AERC" -e fish -ilc "LC_ALL=C aerc" %u'';
+    exec = ''alacritty --class aerc,aerc -T "AERC" -e fish -ilc "aerc" %u'';
     mimeType = [ "x-scheme-handler/mailto" ];
   };
 
