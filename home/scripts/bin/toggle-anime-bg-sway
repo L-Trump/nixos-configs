@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 PID_FILE="$HOME/.dynamic_bg_run"
 EDP_BG="/home/ltrump/Pictures/DynamicWallpaper/咩栗荡秋千.mp4"
 HDMI_BG="/home/ltrump/Pictures/DynamicWallpaper/呜米抽烟.mp4"

@@ -33,6 +33,7 @@ in
       After="graphical-session.target";
     };
     Service = {
+      Environment = "PATH=/run/wrappers/bin:/run/current-system/sw/bin:/etc/profiles/per-user/%u/bin";
       Type="dbus";
       BusName="org.freedesktop.impl.portal.desktop.termfilechooser";
       ExecStart="${pkg-termfilechooser}/libexec/xdg-desktop-portal-termfilechooser";

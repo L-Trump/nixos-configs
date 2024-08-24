@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 asusctl profile -n
 current_profile=$(asusctl profile -p | grep profile | awk '{print $4}')

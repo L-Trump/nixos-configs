@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 while (xprop -name "Snipper - Snipaste"); do
 	sleep 0.5
 	while (xprop -name "Snipper - Snipaste" | grep "_NET_WM_STATE_STAYS_ON_TOP"); do

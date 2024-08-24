@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 usage="usage: $(basename "$0") [-hn] ACCOUNT
 Check an offlineimap account's mail directory for new messages and trigger notification
