@@ -36,7 +36,6 @@
     i3blocks
     i3lock-color
     i3status
-    rofi
     arandr
     xbindkeys
     xorg.xbacklight
@@ -48,4 +47,9 @@
     rofi-rbw
     snipaste
   ];
+
+  programs.rofi = {
+    enable = true;
+    extraConfig.dpi = 192;
+  };
 }

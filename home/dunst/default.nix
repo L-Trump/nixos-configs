@@ -11,7 +11,7 @@
         transparency = 15;
         frame_color = "#d94085";
         font = "Monospace 12";
-        dmenu = "${pkgs.rofi}/bin/rofi -dpi 144 -dmenu -p dunst:";
+        dmenu = "${pkgs.rofi}/bin/rofi -dpi 192 -dmenu -p dunst:";
         browser = "${pkgs.xdg-utils}/bin/xdg-open";
         corner_radius = 15;
         mouse_left_click = "do_action, close_current";
