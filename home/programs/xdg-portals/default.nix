@@ -28,16 +28,16 @@ in
 
   systemd.user.services.xdg-desktop-portal-termfilechooser = {
     Unit = {
-      Description="Portal service (terminal file chooser implementation)";
-      PartOf="graphical-session.target";
-      After="graphical-session.target";
+      Description = "Portal service (terminal file chooser implementation)";
+      PartOf = "graphical-session.target";
+      After = "graphical-session.target";
     };
     Service = {
       Environment = "PATH=/run/wrappers/bin:/run/current-system/sw/bin:/etc/profiles/per-user/%u/bin";
-      Type="dbus";
-      BusName="org.freedesktop.impl.portal.desktop.termfilechooser";
-      ExecStart="${pkg-termfilechooser}/libexec/xdg-desktop-portal-termfilechooser";
-      Restart="on-failure";
+      Type = "dbus";
+      BusName = "org.freedesktop.impl.portal.desktop.termfilechooser";
+      ExecStart = "${pkg-termfilechooser}/libexec/xdg-desktop-portal-termfilechooser";
+      Restart = "on-failure";
     };
   };
 }

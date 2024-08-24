@@ -2,24 +2,7 @@
 
 {
   home.packages = with pkgs; [
-    firefox
-    google-chrome
-    microsoft-edge
-
     onedriver
-    openfortivpn
-    remmina
-
-    wpsoffice-cn
-
-    logseq
-    qq
-    wechat-uos-without-sandbox
-    nur.repos.linyinfeng.wemeet
-    nur.repos.rewine.ttf-wps-fonts
-
-    vikunja
-    zotero
     bitwarden-desktop
   ];
 

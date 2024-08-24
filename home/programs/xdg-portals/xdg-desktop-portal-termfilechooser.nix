@@ -1,20 +1,20 @@
-{
-  lib,
-  stdenv,
-  fetchFromGitHub,
-  makeWrapper,
-  fetchpatch,
-  meson,
-  ninja,
-  pkg-config,
-  wayland-protocols,
-  wayland-scanner,
-  inih,
-  libdrm,
-  mesa,
-  scdoc,
-  systemd,
-  wayland,
+{ lib
+, stdenv
+, fetchFromGitHub
+, makeWrapper
+, fetchpatch
+, meson
+, ninja
+, pkg-config
+, wayland-protocols
+, wayland-scanner
+, inih
+, libdrm
+, mesa
+, scdoc
+, systemd
+, wayland
+,
 }:
 
 stdenv.mkDerivation {
