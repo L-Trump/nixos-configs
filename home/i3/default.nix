@@ -8,12 +8,11 @@
   ];
 
   xresources.properties = {
-    "Xcursor.size" = 32;
     "Xft.dpi" = 192;
     "rofi.dpi" = 192;
     "*.dpi" = 192;
-    "Xcursor.theme" = "merry_cursors";
   };
+  home.pointerCursor.x11.enable = true;
 
 
   programs.fish = {

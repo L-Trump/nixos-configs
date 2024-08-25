@@ -66,7 +66,5 @@
     xfce.thunar
     libnotify
     lxqt.lxqt-policykit
-
-    adwaita-icon-theme
   ];
 }

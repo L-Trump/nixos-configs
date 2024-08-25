@@ -9,6 +9,7 @@
     ./neovim
     ./shell
     ./scripts
+    ./appearance
   ];
 
   home = {
