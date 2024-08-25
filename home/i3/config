@@ -110,7 +110,7 @@ exec --no-startup-id dex -a -s ~/.config/autostart
 exec --no-startup-id systemctl --user restart sunshine.service
 exec --no-startup-id systemctl --user restart xsettingsd.service
 # exec --no-startup-id sudo rog-control-center
-# exec_always --no-startup-id sleep 10 && my-mail-sync
+exec_always --no-startup-id sleep 10 && my-mail-sync
 bindsym $mod+Shift+b exec --no-startup-id feh --randomize --bg-fill --recursive ~/Pictures/Wallpapers/Meumy ~/Pictures/Wallpapers/Meumy
 # Add dynamic background!!
 bindsym $mod+b exec --no-startup-id toggle-anime-bg
