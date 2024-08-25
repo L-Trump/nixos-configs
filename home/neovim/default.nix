@@ -7,6 +7,11 @@
     setBuildEnv = true;
     withBuildTools = true;
   };
+
+  programs.neovim.extraPackages = with pkgs; [
+    lazygit
+  ];
+
   home.sessionVariables = {
     EDITOR = "nvim";
     SYSTEMD_EDITOR = "nvim";
