@@ -26,7 +26,7 @@
     font = {
       name = "Microsoft YaHei UI";
       package = pkgs.vistafonts-chs;
-      size = 12;
+      size = 10;
     };
   };
 

@@ -4,6 +4,10 @@
   services.dunst = {
     enable = true;
     configFile = "${config.xdg.configHome}/dunst/dunstrc.mutable";
+    iconTheme = {
+      name = "Adwaita";
+      package = pkgs.adwaita-icon-theme;
+    };
     settings = {
       global = {
         follow = "keyboard";
@@ -38,8 +42,30 @@
     };
   };
 
-  home.activation.newDunstrc = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    run --quiet ${pkgs.rsync}/bin/rsync --chmod 644 $VERBOSE_ARG \
+  xdg.configFile."dunst/dunstrc".onChange = ''
+    ${pkgs.rsync}/bin/rsync --chmod 644 $VERBOSE_ARG \
         ${config.xdg.configFile."dunst/dunstrc".source} ${config.xdg.configHome}/dunst/dunstrc.mutable
+    ${pkgs.procps}/bin/pkill -u "$USER" ''${VERBOSE+-e} dunst || true
   '';
+
+  services.darkman.lightModeScripts.dunst-switch = ''
+    FILE=${config.xdg.configHome}/dunst/dunstrc.mutable
+    ${pkgs.crudini}/bin/crudini --set $FILE urgency_normal background '"#d0ebff"'
+    ${pkgs.crudini}/bin/crudini --set $FILE urgency_normal foreground '"#000000"'
+    ${pkgs.systemd}/bin/systemctl --user restart dunst.service
+    ${pkgs.libnotify}/bin/notify-send --app-name="darkman" -t 3000 --icon=weather-clear-symbolic "Darkman" "Switching to light mode"
+  '';
+
+  services.darkman.darkModeScripts.dunst-switch = ''
+    FILE=${config.xdg.configHome}/dunst/dunstrc.mutable
+    ${pkgs.crudini}/bin/crudini --set $FILE urgency_normal background '"#18111e"'
+    ${pkgs.crudini}/bin/crudini --set $FILE urgency_normal foreground '"#ffffff"'
+    ${pkgs.systemd}/bin/systemctl --user restart dunst.service
+    ${pkgs.libnotify}/bin/notify-send --app-name="darkman" -t 3000 --icon=weather-clear-night-symbolic "Darkman" "Switching to dark mode"
+  '';
+
+  # home.activation.newDunstrc = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+  #   run --quiet ${pkgs.rsync}/bin/rsync --chmod 644 $VERBOSE_ARG \
+  #       ${config.xdg.configFile."dunst/dunstrc".source} ${config.xdg.configHome}/dunst/dunstrc.mutable
+  # '';
 }
