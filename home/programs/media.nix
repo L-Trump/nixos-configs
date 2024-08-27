@@ -12,6 +12,7 @@
     # images
     imv
     pulseaudio
+    wiliwili
   ];
 
   programs = {
