@@ -15,14 +15,14 @@
   home.pointerCursor.x11.enable = true;
 
 
-  programs.fish = {
-    interactiveShellInit = ''
-      # auto login
-      if test -z $DISPLAY; and test $XDG_VTNR -eq 1; and test "$(tty)" = "/dev/tty1"; and test "$(fgconsole 2>/dev/null || echo 1)" -eq 1
-          exec startx
-      end
-    '';
-  };
+  # programs.fish = {
+  #   interactiveShellInit = ''
+  #     # auto login
+  #     if test -z $DISPLAY; and test $XDG_VTNR -eq 1; and test "$(tty)" = "/dev/tty1"; and test "$(fgconsole 2>/dev/null || echo 1)" -eq 1
+  #         exec startx
+  #     end
+  #   '';
+  # };
 
   home.file.".config/i3/config".source = ./config;
   home.file.".xinitrc".source = ./.xinitrc;
@@ -43,12 +43,12 @@
     xclip
     xss-lock
     feh
-    rofi-rbw
     snipaste
   ];
 
   programs.rofi = {
     enable = true;
     extraConfig.dpi = 192;
+    # package = pkgs.rofi-wayland;
   };
 }

@@ -11,6 +11,7 @@
       ./hardware-configuration.nix
       ./touch-screen.nix
       ../../modules/i3.nix
+      ../../modules/hyprland.nix
       ../../modules/system
       ../../modules/vpn
     ];

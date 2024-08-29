@@ -10,6 +10,7 @@ in
     extraPortals = with pkgs; [
       xdg-desktop-portal-gtk
       xdg-desktop-portal-wlr
+      xdg-desktop-portal-hyprland
       pkg-termfilechooser
     ];
     config = {
@@ -17,6 +18,11 @@ in
       i3 = {
         default = [ "gtk" ];
         "org.freedesktop.impl.portal.FileChooser" = [ "termfilechooser" ];
+      };
+      hyprland = {
+        default = [ "hyprland" "gtk" ];
+        "org.freedesktop.impl.portal.FileChooser" = [ "termfilechooser" ];
+        "org.freedesktop.impl.portal.Screenshot" = [ "wlr" ];
       };
     };
   };

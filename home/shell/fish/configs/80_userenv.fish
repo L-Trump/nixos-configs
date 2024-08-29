@@ -1,1 +1,0 @@
-set -gx MOZ_USE_XINPUT2 1

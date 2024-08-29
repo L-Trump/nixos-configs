@@ -4,6 +4,9 @@
   home.packages = with pkgs; [
     onedriver
     bitwarden-desktop
+    rbw
+    pinentry
+    rofi-rbw-wayland
   ];
 
   services.syncthing.enable = true;

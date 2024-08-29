@@ -17,4 +17,11 @@
   # Enable CUPS to print documents.
   services.printing.enable = true;
   services.udisks2.enable = true;
+
+  security.wrappers.brightnessctl = {
+    setuid = true;
+    owner = "root";
+    group = "root";
+    source = "${pkgs.brightnessctl}/bin/brightnessctl";
+  };
 }

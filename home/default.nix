@@ -10,6 +10,7 @@
     ./shell
     ./scripts
     ./appearance
+    ./hyprland
   ];
 
   home = {
