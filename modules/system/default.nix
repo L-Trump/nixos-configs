@@ -13,5 +13,6 @@
     ./hardware.nix
     ./environments.nix
     ../fonts
+    ../boot
   ];
 }

@@ -109,11 +109,6 @@
       };
     };
 
-    device = [{
-      name = "ftsc1000:00-2808:5662";
-      output = "eDP-1";
-    }];
-
     # https://wiki.hyprland.org/Configuring/Variables/#gestures
     gestures = {
       workspace_swipe = true;

@@ -1,11 +1,6 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, mylib, ... }:
 let
-  my-scripts = pkgs.buildEnv {
-    name = "my-scripts";
-    paths = [ ./bin ];
-    extraPrefix = "/bin";
-    ignoreCollisions = true;
-  };
+  my-scripts = pkgs.mkScriptsPackage "my-scripts" ./bin;
 in
 {
   home.packages = [ my-scripts ];

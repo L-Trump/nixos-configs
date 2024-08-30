@@ -42,6 +42,7 @@
         specialArgs = genSpecialArgs;
         modules = [
           ./hosts/matebook-gt14
+          ./overlays
           nixos-hardware.nixosModules.common-cpu-intel
           nixos-hardware.nixosModules.common-pc-laptop
           nixos-hardware.nixosModules.common-pc-ssd
@@ -60,7 +61,12 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.users.ltrump = import ./home;
+            home-manager.users.ltrump = {
+              imports = [
+                ./home
+                ./home/hosts/matebook-gt14.nix
+              ];
+            };
             home-manager.sharedModules = [
               agenix.homeManagerModules.default
               inputs.nvimdots.homeManagerModules.nvimdots
