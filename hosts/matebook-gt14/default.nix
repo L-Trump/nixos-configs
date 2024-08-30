@@ -26,7 +26,7 @@
   # boot.loader.systemd-boot.enable = true;
   boot.loader.efi = {
     canTouchEfiVariables = true;
-    efiSysMountPoint = "/boot";
+    efiSysMountPoint = "/boot/efi";
   };
   boot.kernelPackages = pkgs.linuxPackages_zen;
   # boot.kernelPackages = pkgs.linuxPackages_testing;
