@@ -21,7 +21,7 @@ let
     "Gtk/FontName" = "${config.gtk.font.name}, ${toString config.gtk.font.size}";
     "Net/IconThemeName" = config.gtk.iconTheme.name;
     "Net/ThemeName" = config.gtk.theme.name;
-    "Xft/DPI" = 196608;
+    # "Xft/DPI" = 196608;
   };
 in
 {

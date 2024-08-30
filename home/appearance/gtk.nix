@@ -11,6 +11,7 @@
     whitesur-icon-theme
     adwaita-icon-theme
     tela-icon-theme
+    papirus-icon-theme
   ];
 
   gtk = {

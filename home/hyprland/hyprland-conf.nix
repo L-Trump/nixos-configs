@@ -281,6 +281,9 @@
       "center, class:^(Rofi)$"
       "pin, class:^(Rofi)$"
       "stayfocused, class:^(Rofi)$"
+      # picker
+      "float, class:^(picker|NNN)$"
+      "float, class:^(QQ)$"
       # no blur
       "noblur, class:(Alacritty)"
       "float, class:(com.github.hluk.copyq)"
