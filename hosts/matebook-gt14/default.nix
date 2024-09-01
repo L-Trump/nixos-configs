@@ -65,7 +65,7 @@
   hardware.graphics.extraPackages = with pkgs; [
     intel-compute-runtime
     intel-media-driver
-    # intel-ocl
+    vpl-gpu-rt
   ];
 
   hardware.intelgpu.driver = "xe";
