@@ -28,6 +28,11 @@
       url = "github:L-Trump/nvimdots/main";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # Lan mouse
+    lan-mouse = {
+      url = "github:feschber/lan-mouse";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, nixpkgs, nixos-hardware, home-manager, nur, agenix, ... }@inputs:
@@ -70,6 +75,7 @@
             home-manager.sharedModules = [
               agenix.homeManagerModules.default
               inputs.nvimdots.homeManagerModules.nvimdots
+              inputs.lan-mouse.homeManagerModules.default
             ];
             home-manager.extraSpecialArgs = genSpecialArgs;
           }
