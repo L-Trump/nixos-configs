@@ -9,7 +9,7 @@
   networking.nftables.enable = true;
 
   services.tailscale.enable = true;
- 
+
   # Clash
   programs.clash-verge = {
     enable = true;
@@ -26,4 +26,3 @@
     wantedBy = [ "multi-user.target" ];
   };
 }
-

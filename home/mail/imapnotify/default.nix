@@ -18,10 +18,6 @@ let
 in
 {
   home.packages = [ cfg.package ];
-  age.secrets.goimapnotify-conf = {
-    file = ./goimapnotify-config.yaml.age;
-    path = "${config.xdg.configHome}/goimapnotify/goimapnotify.yaml";
-  };
   systemd.user.services.nix-goimapnotify = {
     Unit = {
       Description = "goimapnotify";

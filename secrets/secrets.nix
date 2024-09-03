@@ -6,15 +6,16 @@ let
   hosts = [ host-matebook-gt14 ];
 in
 {
-  "../home/mail/aerc/accounts.conf.age".publicKeys = users ++ hosts;
-  "../home/mail/offlineimap/offlineimaprc.age".publicKeys = users ++ hosts;
-  "../home/mail/imapnotify/goimapnotify-config.yaml.age".publicKeys = users ++ hosts;
-  "../modules/vpn/ipsec.conf.age".publicKeys = users ++ hosts;
-  "../modules/vpn/ipsec.secrets.age".publicKeys = users ++ hosts;
-  "../modules/vpn/strongswan.conf.age".publicKeys = users ++ hosts;
+  "mail/aerc-accounts.conf.age".publicKeys = users ++ hosts;
+  "mail/offlineimaprc.age".publicKeys = users ++ hosts;
+  "mail/goimapnotify-config.yaml.age".publicKeys = users ++ hosts;
+  "vpn/ipsec.conf.age".publicKeys = users ++ hosts;
+  "vpn/ipsec.secrets.age".publicKeys = users ++ hosts;
+  "vpn/strongswan.conf.age".publicKeys = users ++ hosts;
   "passage/Email/h-sjtu.age".publicKeys = users ++ hosts;
   "passage/Email/l-swjtu.age".publicKeys = users ++ hosts;
   "passage/Email/l-qq.age".publicKeys = users ++ hosts;
   "passage/Email/l-163.age".publicKeys = users ++ hosts;
   "passage/Email/y-163.age".publicKeys = users ++ hosts;
+  "hosts/matebook-gt14/easytier-ltnet.conf.age".publicKeys = users ++ hosts;
 }

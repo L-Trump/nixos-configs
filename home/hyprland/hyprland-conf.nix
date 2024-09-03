@@ -98,10 +98,11 @@
 
     # https://wiki.hyprland.org/Configuring/Variables/#input
     input = {
-      kb_layout = "us";
+      # kb_layout = "us";
       numlock_by_default = true;
       follow_mouse = 1;
       sensitivity = -0.3; # -1.0 - 1.0, 0 means no modification.
+      # resolve_binds_by_sym = true;
       touchpad = {
         natural_scroll = true;
         drag_lock = true;

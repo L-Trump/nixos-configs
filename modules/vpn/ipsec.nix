@@ -21,14 +21,6 @@ in
 
 {
   environment.systemPackages = [ strongswanPackage ];
-  age.secrets.ipsec-conf = {
-    file = ./ipsec.conf.age;
-    path = "/etc/ipsec.conf";
-  };
-  age.secrets.ipsec-secrets = {
-    file = ./ipsec.secrets.age;
-    path = "/etc/ipsec.secrets";
-  };
   environment.etc."ipsec.d/cacerts/isrgrootx1.pem".source = ./isrgrootx1.pem;
   environment.etc."ipsec.d/cacerts/addtrust.pem".source = ./addtrust.pem;
 

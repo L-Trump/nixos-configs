@@ -37,17 +37,22 @@
 
   outputs = { self, nixpkgs, nixos-hardware, home-manager, nur, agenix, ... }@inputs:
     let
-      inherit (inputs.nixpkgs) lib;
+      inherit (nixpkgs) lib;
+      system = "x86_64-linux";
+      pkgs = nixpkgs.legacyPackages."${system}";
       mylib = import ./lib { inherit lib; };
       genSpecialArgs = { inherit mylib; };
     in
     {
+      packages."${system}" = import ./packages { inherit pkgs; };
       nixosConfigurations.ltrumpNixOS = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
+        inherit system;
         specialArgs = genSpecialArgs;
         modules = [
           ./hosts/matebook-gt14
           ./overlays
+          ./secrets/default.nix
+          ./secrets/hosts/matebook-gt14/default.nix
           nixos-hardware.nixosModules.common-cpu-intel
           nixos-hardware.nixosModules.common-pc-laptop
           nixos-hardware.nixosModules.common-pc-ssd
@@ -70,6 +75,7 @@
               imports = [
                 ./home
                 ./home/hosts/matebook-gt14.nix
+                ./secrets/home.nix
               ];
             };
             home-manager.sharedModules = [

@@ -4,7 +4,6 @@
   imports = [
     ./aerc
     ./offlineimap
-    ./pass.nix
     ./imapnotify
   ];
 }

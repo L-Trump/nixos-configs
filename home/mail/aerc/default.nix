@@ -45,11 +45,6 @@
     mimeType = [ "x-scheme-handler/mailto" ];
   };
 
-  age.secrets.aerc-accounts = {
-    file = ./accounts.conf.age;
-    path = "${config.xdg.configHome}/aerc/accounts.conf";
-  };
-
   xdg.configFile."aerc/stylesets/nord".source = ./style-nord;
   xdg.configFile."aerc/binds.conf".source = ./binds.conf;
 }

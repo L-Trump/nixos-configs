@@ -14,5 +14,6 @@
     ./environments.nix
     ../fonts
     ../boot
+    ../easytier
   ];
 }
