@@ -14,6 +14,7 @@
   settings = {
     monitor = [
       "eDP-1,preferred,0x0,auto"
+      "desc:Lenovo Group Limited LEN Y27q-20 0x01010101,preferred,auto-right,1.6"
       ",preferred,auto-right,auto"
     ];
     env = [
