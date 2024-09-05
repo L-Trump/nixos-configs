@@ -13,6 +13,7 @@ in
     serviceConfig = {
       Type = "simple";
       ExecStart = "${package}/bin/easytier-core -c ${config.age.secrets.easytier-conf.path} --multi-thread";
+      Restart = "on-failure";
     };
     wantedBy = [ "multi-user.target" ];
   };
