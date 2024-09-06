@@ -256,7 +256,9 @@
 
       "$mainMod, d, exec, ~/.config/waybar/rofi-menus/launcher.sh"
       "$mainMod, c, exec, ~/.config/waybar/rofi-menus/powermenu.sh"
-      "$mainMod, return, exec, alacritty msg create-window || alacritty"
+      "$mainMod, return, exec, kitty -1"
+      "$mainMod SHIFT, return, exec, kitty"
+      # "$mainMod, return, exec, alacritty msg create-window || alacritty"
       # ", Print, exec, snipaste snip"
       # "$mainMod SHIFT, s, exec, snipaste snip"
       ", Print, exec, grimblast --notify --cursor copysave area"
@@ -284,7 +286,7 @@
       "float, class:^(picker|NNN)$"
       "float, class:^(QQ)$"
       # no blur
-      "noblur, class:(Alacritty)"
+      "noblur, class:^(Alacritty|kitty)$"
       "float, class:(com.github.hluk.copyq)"
       "size 622 652, class:(com.github.hluk.copyq)"
     ];
