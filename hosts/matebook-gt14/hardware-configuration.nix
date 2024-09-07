@@ -25,6 +25,12 @@
       options = [ "subvol=home" "compress=zstd"];
     };
 
+  fileSystems."/snapshots" =
+    { device = "/dev/disk/by-uuid/bc5fbdc7-9582-4c3f-8afd-9c340e3e9ec5";
+      fsType = "btrfs";
+      options = [ "subvol=snapshots" "compress=zstd" ];
+    };
+
   fileSystems."/nix" =
     { device = "/dev/disk/by-uuid/bc5fbdc7-9582-4c3f-8afd-9c340e3e9ec5";
       fsType = "btrfs";
