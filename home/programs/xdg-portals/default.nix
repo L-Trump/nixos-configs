@@ -1,9 +1,5 @@
 { config, pkgs, ... }:
 
-let
-  pkg-termfilechooser = pkgs.callPackage ./xdg-desktop-portal-termfilechooser.nix { };
-in
-
 {
   xdg.portal = {
     enable = true;
@@ -11,7 +7,7 @@ in
       xdg-desktop-portal-gtk
       xdg-desktop-portal-wlr
       xdg-desktop-portal-hyprland
-      pkg-termfilechooser
+      xdg-desktop-portal-termfilechooser
     ];
     config = {
       common.default = "*";
@@ -42,7 +38,7 @@ in
       Environment = "PATH=/run/wrappers/bin:/run/current-system/sw/bin:/etc/profiles/per-user/%u/bin";
       Type = "dbus";
       BusName = "org.freedesktop.impl.portal.desktop.termfilechooser";
-      ExecStart = "${pkg-termfilechooser}/libexec/xdg-desktop-portal-termfilechooser";
+      ExecStart = "${pkgs.xdg-desktop-portal-termfilechooser}/libexec/xdg-desktop-portal-termfilechooser";
       Restart = "on-failure";
     };
   };
