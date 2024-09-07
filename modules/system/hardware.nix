@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 {
-  services.udev.packages = with pkgs; [ gnome.gnome-settings-daemon ];
+  services.udev.packages = with pkgs; [ gnome-settings-daemon ];
   services.fwupd.enable = true;
 
   # Enable sound by pipewire.
