@@ -78,6 +78,11 @@
 
   # hardware.ipu6.enable = true;
   # hardware.ipu6.platform = "ipu6epmtl";
+  services.fprintd = {
+    enable = true;
+    tod.enable = true;
+    tod.driver = pkgs.libfprint-2-tod1-goodix-550a;
+  };
 
   services.udev.extraRules = ''
     ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="intel_backlight", MODE="0666", RUN+="${pkgs.coreutils}/bin/chmod a+w /sys/class/backlight/%k/brightness"
