@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
+
 openfortivpn -c /home/ltrump/.fortivpnconf &
 vpn_id=$!
 sleep 5
 echo "Clean route"
+ip route add 192.168.2.236 dev ppp0
 ip route add 192.168.2.238 dev ppp0
 ip route del 112.86.83.102
 wait $vpn_id

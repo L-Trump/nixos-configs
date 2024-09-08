@@ -1,0 +1,19 @@
+#!/usr/bin/env fish
+
+if test (count $argv) -eq 1
+	if test $argv[1] = start
+		swanctl -i --child vpn-student
+		echo "Started"
+	else if test $argv[1] = stop
+		swanctl -t --ike vpn-student
+		echo "Stopped"
+	end
+else
+	if swanctl --stats | grep -q "IKE_SAs: 0 total"
+		swanctl -i --child vpn-student
+		echo "Started"
+	else
+		swanctl -t --ike vpn-student
+		echo "Stopped"
+	end
+end

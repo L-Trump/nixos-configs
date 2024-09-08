@@ -10,8 +10,6 @@ let
 in
 {
   environment.systemPackages = [ strongswanPackage ];
-  environment.etc."ipsec.d/cacerts/isrgrootx1.pem".source = ./isrgrootx1.pem;
-  environment.etc."ipsec.d/cacerts/addtrust.pem".source = ./addtrust.pem;
   services.strongswan-swanctl = {
     enable = true;
     package = strongswanPackage;
