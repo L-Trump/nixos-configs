@@ -1,0 +1,2 @@
+#!/bin/sh
+kitty --class NNN -T "NNN File Manager" -e fish -ilc "nnn $1"

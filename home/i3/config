@@ -118,7 +118,7 @@ bindsym $mod+b exec --no-startup-id toggle-anime-bg
 bindsym $mod+m exec --no-startup-id toggle-tray
 # bindsym $mod+m exec --no-startup-id polybar-msg action "#tray.module_toggle"
 # bind nnn
-bindsym $mod+n exec --no-startup-id alacritty-nnn
+bindsym $mod+n exec --no-startup-id term-nnn
 # rofi bitwarden
 bindsym $mod+Mod1+v exec --no-startup-id rofi-rbw
 # uTools

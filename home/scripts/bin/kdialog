@@ -13,4 +13,4 @@ file="${file##/*/}"
 
 
 
-alacritty --class picker,picker -T "File Picker" -e sh -c "cd $dir && nnn -J -p - '$file' | awk '{ print system(\"[ -d '\''\"\$0\"'\'' ]\") ? \$0 : \$0\"/$file\" }' > /proc/$$/fd/1"
+kitty --class picker -T "File Picker" -e sh -c "cd $dir && nnn -J -p - '$file' | awk '{ print system(\"[ -d '\''\"\$0\"'\'' ]\") ? \$0 : \$0\"/$file\" }' > /proc/$$/fd/1"

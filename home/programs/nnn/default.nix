@@ -18,10 +18,11 @@ let
       install -Dm755 ${./nnn-dbus} $out/bin/nnn-dbus
     '';
   };
+  nnn-scripts = pkgs.mkScriptsPackage "nnn-scripts" ./scripts;
 in
 
 {
-  home.packages = [ pkg-nnn-dbus ];
+  home.packages = [ pkg-nnn-dbus nnn-scripts ];
   programs.nnn = {
     enable = true;
     package = (pkgs.nnn.override { withNerdIcons = true; });
@@ -91,4 +92,14 @@ in
         end
     end
   '';
+
+  xdg.desktopEntries.nnn = {
+    name = "nnn";
+    comment = "Terminal file manager";
+    exec = "${nnn-scripts}/bin/term-nnn %f";
+    icon = "nnn";
+    mimeType = [ "inode/directory" ];
+    categories = [ "System" "FileTools" "FileManager" "ConsoleOnly" ];
+    settings.Keywords = "File;Manager;Management;Explorer;Launcher";
+  };
 }

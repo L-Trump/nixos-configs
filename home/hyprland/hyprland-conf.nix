@@ -263,7 +263,7 @@
       # "$mainMod SHIFT, s, exec, snipaste snip"
       ", Print, exec, grimblast --notify --cursor copysave area"
       "$mainMod SHIFT, s, exec, grimblast --notify --cursor copysave area"
-      "$mainMod, n, exec, alacritty-nnn"
+      "$mainMod, n, exec, term-nnn"
       "$mainMod ALT, v, exec, rofi-rbw"
       "$mainMod SHIFT, v, exec, copyq toggle"
     ];
@@ -284,6 +284,8 @@
       "stayfocused, class:^(Rofi)$"
       # picker
       "float, class:^(picker|NNN)$"
+      "center, class:^(picker|NNN)$"
+      "size 715 520, class:^(picker|NNN)$"
       "float, class:^(QQ)$"
       # no blur
       "noblur, class:^(Alacritty|kitty)$"

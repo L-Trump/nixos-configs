@@ -10,7 +10,7 @@ if [ "$save" = 1 ]; then
     touch "$suggest"
 fi
 
-alacritty --class picker,picker -e fish -ilc "nnn -p - '$suggest' | awk '{ print system(\"[ -d '\''\"\$0\"'\'' ]\") ? \$0 : \$0\"/$file\" }' > '$out'"
+kitty --class picker -T "NNN File Picker" -e fish -ilc "nnn -p - '$suggest' | awk '{ print system(\"[ -d '\''\"\$0\"'\'' ]\") ? \$0 : \$0\"/$file\" }' > '$out'"
 
 if [ "$save" = 1 ]; then
     if [ ! -s "$out" ] || [ ! -s "$suggest" ]; then
