@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 
 {
   enable = true;
@@ -10,6 +10,9 @@
     "XDG_SESSION_DESKTOP"
     "XDG_SESSION_TYPE"
     "DESKTOP_SESSION"
+  ];
+  plugins = [
+    inputs.hyprgrass.packages.${pkgs.system}.default
   ];
   settings = {
     monitor = [
@@ -115,7 +118,7 @@
     gestures = {
       workspace_swipe = true;
       workspace_swipe_touch = true;
-      workspace_swipe_cancel_ratio = 0.3;
+      workspace_swipe_cancel_ratio = 0.15;
     };
 
     # https://wiki.hyprland.org/Configuring/Variables/#misc
@@ -292,6 +295,21 @@
       "float, class:(com.github.hluk.copyq)"
       "size 622 652, class:(com.github.hluk.copyq)"
     ];
+
+    "plugin:touch_gestures" = {
+      sensitivity = 3.0;
+      hyprgrass-bindm = [
+        ", longpress:2, movewindow"
+        ", longpress:3, resizewindow"
+      ];
+      hyprgrass-bind = [
+        ", swipe:4:d, killactive:"
+        ", edge:r:u, exec, pactl set-sink-volume @DEFAULT_SINK@ +5%"
+        ", edge:r:d, exec, pactl set-sink-volume @DEFAULT_SINK@ -5%"
+        ", edge:l:u, exec, brightnessctl s 3%+"
+        ", edge:l:d, exec, brightnessctl s 3%-"
+      ];
+    };
   };
 
   extraConfig = ''
@@ -333,4 +351,5 @@
     bind = , escape, submap, reset
     submap = reset
   '';
+
 }

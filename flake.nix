@@ -13,6 +13,16 @@
     };
     # NUR packages
     nur.url = "github:nix-community/NUR";
+    # Hyprland
+    hyprland = {
+      url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    # Hyprland gestures
+    hyprgrass = {
+      url = "github:horriblename/hyprgrass";
+      inputs.hyprland.follows = "hyprland"; # IMPORTANT
+    };
     # xddxdd packages, for qq/wechat
     nur-xddxdd = {
       url = "github:xddxdd/nur-packages";
@@ -41,7 +51,7 @@
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages."${system}";
       mylib = import ./lib { inherit lib; };
-      genSpecialArgs = { inherit mylib; };
+      genSpecialArgs = { inherit mylib inputs; };
     in
     {
       packages."${system}" = import ./packages { inherit pkgs; };
@@ -60,6 +70,7 @@
             nixpkgs.overlays = [
               nur.overlay
               agenix.overlays.default
+              inputs.hyprland.overlays.default
             ];
           }
           # XDDXDD overlay
@@ -73,8 +84,7 @@
             home-manager.useUserPackages = true;
             home-manager.users.ltrump = {
               imports = [
-                ./home
-                ./home/hosts/matebook-gt14.nix
+                ./hosts/matebook-gt14/home.nix
                 ./secrets/home.nix
               ];
             };

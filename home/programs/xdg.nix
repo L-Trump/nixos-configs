@@ -31,6 +31,10 @@ in
 {
   imports = [ ./xdg-portals ];
 
+  home.packages = with pkgs; [
+    xdg-user-dirs
+  ];
+
   xdg = {
     enable = true;
 

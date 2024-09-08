@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, inputs, lib, pkgs, ... }:
 
 let
   wallpaper_umy = builtins.path { path = ../../wallpapers/Meumy/91689568_p1.jpg; };
@@ -12,7 +12,7 @@ in
 
   home.pointerCursor.x11.enable = true;
 
-  wayland.windowManager.hyprland = import ./hyprland-conf.nix { inherit pkgs; };
+  wayland.windowManager.hyprland = import ./hyprland-conf.nix { inherit pkgs inputs; };
 
   programs.fish = {
     interactiveShellInit = ''

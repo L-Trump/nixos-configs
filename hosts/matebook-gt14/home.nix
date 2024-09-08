@@ -2,6 +2,8 @@
 { config, lib, pkgs, ... }:
 
 {
+  imports = [ ../../home/default.nix ];
+
   wayland.windowManager.hyprland.settings = {
     device = [{
       name = "ftsc1000:00-2808:5662";

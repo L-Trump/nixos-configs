@@ -16,11 +16,13 @@
 
   home.packages = with pkgs; [
     fastfetch
+    bat
 
     zip
     xz
     unzip
     p7zip
+    libarchive
 
     ripgrep
     jq
@@ -59,7 +61,6 @@
 
     pciutils
     usbutils
-    xdg-user-dirs
 
     networkmanagerapplet
 
