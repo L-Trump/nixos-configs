@@ -3,6 +3,9 @@
 let
   inherit (lib) mapAttrsToList;
   bookmarks = {
+    h = "~";
+    r = "/";
+    n = "~/nixos-configs";
     u = "~/Onedrive/上交";
     c = "~/Codes";
     d = "~/Documents";
@@ -17,11 +20,12 @@ let
     s = ''shell "$SHELL" --block --confirm'';
     c = ''shell 'for path in "$@"; do echo "file://$path"; done | wl-copy -t text/uri-list' --confirm'';
   };
-  bookmark_keymaps = mapAttrsToList
+  bookmark_keymaps = lib.flatten (mapAttrsToList
     (key: value:
-      { on = [ "b" key ]; run = "cd ${value}"; desc = "Cd ${value}"; }
+      [{ on = [ "b" key ]; run = "cd ${value}"; desc = "Cd ${value}"; }
+      { on = [ "g" key ]; run = "cd ${value}"; desc = "Cd ${value}"; }]
     )
-    bookmarks;
+    bookmarks);
   plugin_keymaps = mapAttrsToList
     (key: value:
       { on = [ ";" key ]; run = value; }
@@ -47,8 +51,8 @@ in
         { on = "e"; run = ''shell "''${EDITOR:-vi} \"$@\"" --block --confirm''; desc = "Edit current by $EDITOR"; }
         { on = "<Enter>"; run = "plugin --sync smart-enter"; desc = "Enter/open the target"; }
         { on = "l"; run = "plugin --sync smart-enter"; desc = "Enter/open the target"; }
-        { on = [ "n" "f" ]; run = "create"; desc = "Create a file"; }
-        { on = [ "n" "d" ]; run = "create --dir"; desc = "Create a directory"; }
+        # { on = [ "n" "f" ]; run = "create"; desc = "Create a file"; }
+        # { on = [ "n" "d" ]; run = "create --dir"; desc = "Create a directory"; }
       ] ++ bookmark_keymaps ++ plugin_keymaps;
     };
     initLua = ./yazi-init.lua;
