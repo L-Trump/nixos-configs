@@ -4,7 +4,7 @@ let
   strongswanPackage = pkgs.strongswanTNC.overrideAttrs (final: prev: {
     configureFlags = prev.configureFlags ++ [
       "--enable-eap-peap"
-      "--disable-resolve"
+      # "--disable-resolve"
     ];
   });
 in
