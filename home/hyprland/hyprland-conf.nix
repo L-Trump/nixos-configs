@@ -292,7 +292,7 @@
       "float, class:^(picker|NNN)$"
       "center, class:^(picker|NNN)$"
       "size 715 520, class:^(picker|NNN)$"
-      "float, class:^(QQ)$"
+      "float, class:^(QQ|wechat)$"
       # no blur
       "noblur, class:^(Alacritty|kitty)$"
       "float, class:(com.github.hluk.copyq)"
