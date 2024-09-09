@@ -29,10 +29,11 @@
     efiSysMountPoint = "/boot/efi";
   };
   boot.kernelPackages = pkgs.linuxPackages_zen;
+  # boot.initrd.kernelModules = [ "xe" ];
   # boot.kernelPackages = pkgs.linuxPackages_testing;
   boot.kernelParams = [
     #   "i915.force_probe=7d55"
-    #   "xe.force_probe=!7d55"
+    # "xe.force_probe=7d55"
     "i915.enable_psr=0"
     "i915.enable_guc=3"
     "snd-intel-dspcfg.dsp_driver=1"
@@ -79,12 +80,12 @@
   };
   services.blueman.enable = true;
 
-  # hardware.ipu6.enable = true;
-  # hardware.ipu6.platform = "ipu6epmtl";
+  hardware.ipu6.enable = true;
+  hardware.ipu6.platform = "ipu6epmtl";
   services.fprintd = {
     enable = true;
-    tod.enable = true;
-    tod.driver = pkgs.libfprint-2-tod1-goodix-550a;
+    # tod.enable = true;
+    # tod.driver = pkgs.libfprint-2-tod1-goodix-550a;
   };
 
   services.udev.extraRules = ''
