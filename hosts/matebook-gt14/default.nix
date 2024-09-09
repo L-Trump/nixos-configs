@@ -54,7 +54,10 @@
 
   # Enable touchpad support (enabled default in most desktopManager).
   services.libinput.enable = true;
-  services.libinput.touchpad.naturalScrolling = true;
+  services.libinput.touchpad = {
+    naturalScrolling = true;
+    clickMethod = "clickfinger";
+  };
   services.xserver.videoDrivers = [ "modesetting" ];
   services.tlp.enable = true;
   # services.xserver.deviceSection = ''

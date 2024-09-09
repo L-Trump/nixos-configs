@@ -105,12 +105,13 @@
       # kb_layout = "us";
       numlock_by_default = true;
       follow_mouse = 1;
-      sensitivity = -0.3; # -1.0 - 1.0, 0 means no modification.
+      sensitivity = 0; # -1.0 - 1.0, 0 means no modification.
       # resolve_binds_by_sym = true;
       touchpad = {
         natural_scroll = true;
         drag_lock = true;
         scroll_factor = 0.7;
+        clickfinger_behavior = true;
       };
     };
 
@@ -274,6 +275,8 @@
       # Move/resize windows with mainMod + LMB/RMB and dragging
       "$mainMod, mouse:272, movewindow"
       "$mainMod, mouse:273, resizewindow"
+      "$mainMod, Control_L, movewindow"
+      "$mainMod, ALT_L, resizewindow"
     ];
 
     windowrulev2 = [
