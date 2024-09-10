@@ -2,7 +2,7 @@
 {
     // "layer": "top", // Waybar at top layer
     // "position": "bottom", // Waybar position (top|bottom|left|right)
-    "height": 40, // Waybar height (to be removed for auto height)
+    "height": 39, // Waybar height (to be removed for auto height)
     // "width": 1280, // Waybar width
     "spacing": 4, // Gaps between modules (4px)
     // Choose the order of the modules
@@ -138,7 +138,7 @@
     "clock": {
         // "timezone": "America/New_York",
         "interval": 1,
-        "format": "<span size='14pt'></span> {:%I:%M %p}",
+        "format": "<span size='14pt'></span>  {:%I:%M %p}",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
         "calendar": {
             // "mode"          : "year",
@@ -153,7 +153,7 @@
                 "today":      "<span color='#ff6699'><b><u>{}</u></b></span>"
             }
         }, 
-        "format-alt": "<span size='14pt'></span> {:%a, %d %b %Y}"
+        "format-alt": "<span size='14pt'></span>  {:%a, %d %b %Y}"
     },
     "cpu": {
         "format": "{usage}% ",
@@ -184,11 +184,11 @@
             "warning": 30,
             "critical": 15
         },
-        "format": "<span size='12pt'>{icon}</span> {capacity}%",
-        "format-full": "<span size='12pt'>{icon}</span> {capacity}%",
-        "format-charging": "<span size='12pt'></span> {capacity}%",
-        "format-plugged": "<span size='12pt'></span> {capacity}%",
-        "format-alt": "<span size='12pt'>{icon}</span> {time}",
+        "format": "<span rise='-1pt' size='14pt'>{icon}</span>  {capacity}%",
+        "format-full": "<span size='14pt'>{icon}</span>  {capacity}%",
+        "format-charging": "<span size='14pt'></span> {capacity}%",
+        "format-plugged": "<span size='14pt'></span>  {capacity}%",
+        "format-alt": "<span size='14pt'>{icon}</span>  {time}",
         // "format-good": "", // An empty format will hide the module
         // "format-full": "",
         "format-icons": ["", "", "", "", ""]

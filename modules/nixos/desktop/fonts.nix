@@ -39,6 +39,7 @@
           "FiraCode"
           "JetBrainsMono"
           "Iosevka"
+          "SourceCodePro"
         ];
       })
       julia-mono
@@ -50,8 +51,8 @@
     # B&W emojis that would sometimes show instead of some Color emojis
     fontconfig.defaultFonts = {
       serif = [ "Source Han Serif SC" "Source Han Serif TC" "Noto Color Emoji" ];
-      sansSerif = [ "Source Han Sans SC" "Source Han Sans TC" "Noto Color Emoji" ];
-      monospace = [ "JetBrainsMono Nerd Font" "Noto Color Emoji" ];
+      sansSerif = [ "Microsoft Yahei" "Source Han Sans SC" "Source Han Sans TC" "Noto Color Emoji" ];
+      monospace = [ "SauceCodePro Nerd Font" "Microsoft Yahei" "Noto Color Emoji" ];
       emoji = [ "Noto Color Emoji" ];
     };
   };
