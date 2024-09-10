@@ -75,6 +75,8 @@ in
     slurp
     grimblast
     copyq
+    dex
+    acpi
   ];
 
   programs.rofi = {

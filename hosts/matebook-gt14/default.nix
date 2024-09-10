@@ -2,53 +2,27 @@
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, inputs, ... }:
 
+let
+  inherit (inputs) nixos-hardware;
+in
 {
   imports =
     [
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ./touch-screen.nix
-      ../../modules/i3.nix
-      ../../modules/hyprland.nix
-      ../../modules/system
-      ../../modules/vpn
+      ./steam.nix
+      # Hardware
+      nixos-hardware.nixosModules.common-cpu-intel
+      nixos-hardware.nixosModules.common-pc-laptop
+      nixos-hardware.nixosModules.common-pc-ssd
     ];
 
   # Use the systemd-boot EFI boot loader.
-  boot.loader.grub = {
-    enable = true;
-    device = "nodev";
-    efiSupport = true;
-    useOSProber = true;
-  };
-  # boot.loader.systemd-boot.enable = true;
-  boot.loader.efi = {
-    canTouchEfiVariables = true;
-    efiSysMountPoint = "/boot/efi";
-  };
-  boot.kernelPackages = pkgs.linuxPackages_zen;
-  # boot.initrd.kernelModules = [ "xe" ];
-  # boot.kernelPackages = pkgs.linuxPackages_testing;
-  boot.kernelParams = [
-    #   "i915.force_probe=7d55"
-    # "xe.force_probe=7d55"
-    "i915.enable_psr=0"
-    "i915.enable_guc=3"
-    "snd-intel-dspcfg.dsp_driver=1"
-  ];
 
-  # boot.extraModprobeConfig = ''
-  #   softdep i2c_hid pre: pinctrl_meteorlake
-  #   softdep i2c_hid_acpi pre: xe pinctrl_meteorlake
-  #   softdep hid_generic pre: pinctrl_meteorlake
-  #   softdep hid_multitouch pre: pinctrl_meteorlake
-  # '';
-
-  hardware.firmware = with pkgs; [ sof-firmware ];
-
-  networking.hostName = "ltrumpNixOS"; # Define your hostname.
+  networking.hostName = "matebook-gt14"; # Define your hostname.
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   networking.networkmanager.enable = true; # Easiest to use and most distros use this by default.
@@ -60,7 +34,6 @@
     clickMethod = "clickfinger";
   };
   services.xserver.videoDrivers = [ "modesetting" ];
-  services.tlp.enable = true;
   # services.xserver.deviceSection = ''
   #   Option "TearFree" "true"
   # '';
@@ -74,19 +47,13 @@
 
   hardware.intelgpu.driver = "xe";
 
-  hardware.bluetooth = {
-    enable = true;
-    powerOnBoot = true;
-  };
-  services.blueman.enable = true;
-
   hardware.ipu6.enable = true;
   hardware.ipu6.platform = "ipu6epmtl";
-  services.fprintd = {
-    enable = true;
-    # tod.enable = true;
-    # tod.driver = pkgs.libfprint-2-tod1-goodix-550a;
-  };
+  # services.fprintd = {
+  #   enable = true;
+  #   tod.enable = true;
+  #   tod.driver = pkgs.libfprint-2-tod1-goodix-550a;
+  # };
 
   services.udev.extraRules = ''
     ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="intel_backlight", MODE="0666", RUN+="${pkgs.coreutils}/bin/chmod a+w /sys/class/backlight/%k/brightness"

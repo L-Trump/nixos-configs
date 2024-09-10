@@ -1,5 +1,8 @@
-{ config, ... }:
+{ inputs, ... }:
 
 {
-  imports = [ ./vpn ];
+  imports = [
+    inputs.agenix.nixosModules.default
+    ./vpn
+  ];
 }

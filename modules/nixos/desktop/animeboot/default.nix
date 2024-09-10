@@ -31,7 +31,6 @@ in
     # Hide the OS choice for bootloaders.
     # It's still possible to open the bootloader list by pressing any key
     # It will just not appear on screen unless a key is pressed
-    loader.timeout = 3;
   };
   boot.loader.grub.theme = "${meumy-grub-theme}/grub/themes/meumy";
 }

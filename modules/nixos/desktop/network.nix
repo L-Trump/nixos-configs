@@ -1,15 +1,5 @@
-{ config, lib, pkgs, ... }:
-
+{ pkgs, ... }:
 {
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  networking.firewall.enable = false;
-  networking.nftables.enable = true;
-
-  services.tailscale.enable = true;
-
   # Clash
   programs.clash-verge = {
     enable = true;

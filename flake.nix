@@ -1,9 +1,13 @@
 {
   description = "LTrump's NixOS flake";
 
+  outputs = inputs: import ./outputs inputs;
+
   inputs = {
-    # unstable nixpkgs
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    # Official NixOS package source, using nixos's unstable branch by default
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable-small";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.05";
     # hardware optimization
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     # home-manager unstable
@@ -43,60 +47,17 @@
       url = "github:feschber/lan-mouse";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # generate iso/qcow2/docker/... image from nixos configuration
+    nixos-generators = {
+      url = "github:nix-community/nixos-generators";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    haumea = {
+      url = "github:nix-community/haumea/v0.2.2";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, nixos-hardware, home-manager, nur, agenix, ... }@inputs:
-    let
-      inherit (nixpkgs) lib;
-      system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages."${system}";
-      mylib = import ./lib { inherit lib; };
-      genSpecialArgs = { inherit mylib inputs; };
-    in
-    {
-      packages."${system}" = import ./packages { inherit pkgs; };
-      nixosConfigurations.ltrumpNixOS = nixpkgs.lib.nixosSystem {
-        inherit system;
-        specialArgs = genSpecialArgs;
-        modules = [
-          ./hosts/matebook-gt14
-          ./overlays
-          ./secrets/default.nix
-          ./secrets/hosts/matebook-gt14/default.nix
-          nixos-hardware.nixosModules.common-cpu-intel
-          nixos-hardware.nixosModules.common-pc-laptop
-          nixos-hardware.nixosModules.common-pc-ssd
-          {
-            nixpkgs.overlays = [
-              nur.overlay
-              agenix.overlays.default
-              inputs.hyprland.overlays.default
-            ];
-          }
-          # XDDXDD overlay
-          inputs.nur-xddxdd.nixosModules.setupOverlay
-          # XDDXDD cache substituter
-          inputs.nur-xddxdd.nixosModules.nix-cache-attic
-          agenix.nixosModules.default
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.ltrump = {
-              imports = [
-                ./hosts/matebook-gt14/home.nix
-                ./secrets/home.nix
-              ];
-            };
-            home-manager.sharedModules = [
-              agenix.homeManagerModules.default
-              inputs.nvimdots.homeManagerModules.nvimdots
-              inputs.lan-mouse.homeManagerModules.default
-            ];
-            home-manager.extraSpecialArgs = genSpecialArgs;
-          }
-        ];
-      };
-    };
 
 }

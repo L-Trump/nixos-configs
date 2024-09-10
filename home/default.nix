@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, myvars, pkgs, lib, inputs, ... }:
 
 {
   imports = [
@@ -11,15 +11,18 @@
     ./scripts
     ./appearance
     ./hyprland
+
+    inputs.agenix.homeManagerModules.default
+    inputs.nvimdots.homeManagerModules.nvimdots
+    inputs.lan-mouse.homeManagerModules.default
   ];
 
   home = {
-    username = "ltrump";
-    homeDirectory = "/home/ltrump";
+    username = myvars.username;
+    homeDirectory = "/home/${myvars.username}";
 
     stateVersion = "24.11";
   };
 
   programs.home-manager.enable = true;
-
 }

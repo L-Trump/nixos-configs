@@ -16,6 +16,19 @@
           fi
         '';
       };
+
+      mkFontPackage = name: src: pkgs.stdenvNoCC.mkDerivation {
+        inherit name src;
+        dontUnpack = true;
+        setSourceRoot = "sourceRoot=`pwd`";
+        installPhase = ''
+          mkdir -p $out/share/fonts
+          mkdir -p $out/share/fonts/opentype
+          mkdir -p $out/share/fonts/truetype
+          find -name \*.otf -exec mv {} $out/share/fonts/OTF/ \;
+          find -name \*.{ttf,ttc} -exec mv {} $out/share/fonts/TTF/ \;
+        '';
+      };
     })
   ];
 }

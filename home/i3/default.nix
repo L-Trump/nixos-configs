@@ -44,6 +44,8 @@
     xss-lock
     feh
     snipaste
+    dex
+    acpi
   ];
 
   programs.rofi = {

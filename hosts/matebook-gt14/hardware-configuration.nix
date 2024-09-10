@@ -13,6 +13,27 @@
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
+  boot.loader.grub = {
+    enable = true;
+    device = "nodev";
+    efiSupport = true;
+    useOSProber = true;
+  };
+  # boot.loader.systemd-boot.enable = true;
+  boot.loader.efi = {
+    canTouchEfiVariables = true;
+    efiSysMountPoint = "/boot/efi";
+  };
+  boot.kernelPackages = pkgs.linuxPackages_zen;
+  # boot.kernelPackages = pkgs.linuxPackages_testing;
+  boot.kernelParams = [
+    # "xe.force_probe=7d55"
+    "i915.enable_psr=0"
+    "i915.enable_guc=3"
+    "snd-intel-dspcfg.dsp_driver=1"
+  ];
+
+  hardware.firmware = with pkgs; [ sof-firmware ];
 
   fileSystems."/" =
     {
