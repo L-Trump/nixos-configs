@@ -13,10 +13,6 @@
     gccgo
     go
     nodejs_22
-    # age tools
-    agenix
-    age
-    passage
   ];
 
   environment.pathsToLink = [

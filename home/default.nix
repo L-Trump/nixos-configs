@@ -1,28 +1,24 @@
-{ config, myvars, pkgs, lib, inputs, ... }:
-
+{ myvars, config, myhome, lib, ... }:
+with lib;
+let
+  rawcfg = myhome;
+in
 {
-  imports = [
-    ./fcitx5
-    ./i3
-    ./programs
-    ./mail
-    ./neovim
-    ./shell
-    ./scripts
-    ./appearance
-    ./hyprland
-
-    inputs.agenix.homeManagerModules.default
-    inputs.nvimdots.homeManagerModules.nvimdots
-    inputs.lan-mouse.homeManagerModules.default
-  ];
-
   home = {
-    username = myvars.username;
+    inherit (myvars) username;
     homeDirectory = "/home/${myvars.username}";
 
     stateVersion = "24.11";
   };
 
   programs.home-manager.enable = true;
+
+  imports = [
+    ./options.nix
+    ./core
+  ]
+  ++ optional rawcfg.tuiExtra.enable ./tui
+  ++ optional rawcfg.desktop.enable ./gui;
+
+  myhome = rawcfg;
 }

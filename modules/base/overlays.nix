@@ -12,7 +12,6 @@
 
   nixpkgs.overlays = [
     inputs.nur.overlay
-    inputs.agenix.overlays.default
     inputs.hyprland.overlays.default
   ];
 }

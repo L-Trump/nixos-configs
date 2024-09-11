@@ -4,6 +4,7 @@
   environment.systemPackages = with pkgs; [
     git # used by nix flakes
     git-lfs # used by huggingface models
+    rclone # remote mount tool
 
     # archives
     libarchive
@@ -39,5 +40,10 @@
     tree
     gnutar
     rsync
+
+    # age tools
+    agenix
+    age
+    passage
   ];
 }

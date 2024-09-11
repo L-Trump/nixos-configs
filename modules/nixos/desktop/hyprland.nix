@@ -5,10 +5,10 @@
 { pkgs, lib, config, ... }:
 
 let
-  cfg = config.modules.desktop;
+  cfg = config.mymodules.desktop.wayland;
 in
 {
-  config = lib.mkIf cfg.wayland.enable {
+  config = lib.mkIf cfg.enable {
     programs.hyprland.enable = true;
     environment.systemPackages = [
       pkgs.wl-clipboard-rs

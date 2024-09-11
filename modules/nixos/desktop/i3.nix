@@ -4,12 +4,12 @@
 
 { config, lib, ... }:
 let
-  cfg = config.modules.desktop;
+  cfg = config.mymodules.desktop.xorg;
 in
 {
   config = {
-    services.xserver.enable = cfg.xorg.enable;
-  } // lib.mkIf cfg.xorg.enable
+    services.xserver.enable = cfg.enable;
+  } // lib.mkIf cfg.enable
     {
       # Enable the X11 windowing system.
       services.xserver = {

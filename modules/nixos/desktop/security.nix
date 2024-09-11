@@ -8,6 +8,8 @@
   # security with gnome-kering
   services.gnome.gnome-keyring.enable = true;
 
+  environment.systemPackages = with pkgs; [ lxqt.lxqt-policykit ];
+
   # gpg agent with pinentry
   programs.gnupg.agent = {
     enable = true;
