@@ -8,6 +8,16 @@
   #   '';
   # };
 
+  home.packages = with pkgs; [
+      #-- nix
+      nil
+      # rnix-lsp
+      # nixd
+      statix # Lints and suggestions for the nix programming language
+      deadnix # Find and remove unused code in .nix source files
+      alejandra # Nix Code Formatter
+  ];
+
   # home.packages = with pkgs; (
   #   # -*- Data & Configuration Languages -*-#
   #   [

@@ -4,7 +4,9 @@
   programs.helix = {
     enable = true;
     package = pkgs.helix;
+
     settings = {
+      theme = "zed_onedark";
       editor = {
         line-number = "relative";
         cursorline = true;
@@ -25,6 +27,9 @@
         };
         esc = [ "collapse_selection" "keep_primary_selection" ];
       };
+      # keys.insert = {
+      #   j.k = "normal_mode";
+      # };
     };
   };
 }
