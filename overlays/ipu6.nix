@@ -1,9 +1,12 @@
-{ config, pkgs, lib, ... }:
-
 {
+  config,
+  pkgs,
+  lib,
+  ...
+}: {
   nixpkgs.overlays = [
-    (final: prev:
-      {
+    (
+      final: prev: {
         ipu6-camera-bins = prev.ipu6-camera-bins.overrideAttrs (_final: _prev: {
           version = "0-unstable-2024-07-19";
           src = prev.fetchFromGitHub {

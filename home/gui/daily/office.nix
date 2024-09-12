@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   home.packages = with pkgs; [
     # e-book viewer(.epub/.mobi/...)
     # do not support .pdf
@@ -66,7 +64,7 @@
     icon = "logseq";
     settings.StartupWMClass = "logseq";
     comment = "A privacy-first, open-source platform for knowledge management and collaboration.";
-    mimeType = [ "x-scheme-handler/logseq" ];
-    categories = [ "Office" "Utility" ];
+    mimeType = ["x-scheme-handler/logseq"];
+    categories = ["Office" "Utility"];
   };
 }

@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   programs.fzf = {
     enable = true;
     defaultCommand = "fd --type f";
@@ -8,5 +6,5 @@
     fileWidgetCommand = "fd --type f";
   };
 
-  home.packages = [ pkgs.fd ];
+  home.packages = [pkgs.fd];
 }

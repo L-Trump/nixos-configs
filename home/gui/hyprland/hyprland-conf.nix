@@ -1,6 +1,8 @@
-{ pkgs, inputs, ... }:
-
 {
+  pkgs,
+  inputs,
+  ...
+}: {
   enable = true;
   systemd.variables = [
     "DISPLAY"
@@ -355,5 +357,4 @@
     bind = , escape, submap, reset
     submap = reset
   '';
-
 }

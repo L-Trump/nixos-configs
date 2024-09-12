@@ -2,16 +2,14 @@
   # NOTE: the args not used in this file CAN NOT be removed!
   # because haumea pass argument lazily,
   # and these arguments are used in the functions like `mylib.nixosSystem`, `mylib.colmenaSystem`, etc.
-  inputs
-, lib
-, myvars
-, mylib
-, system
-, genSpecialArgs
-, ...
-} @ args:
-
-let
+  inputs,
+  lib,
+  myvars,
+  mylib,
+  system,
+  genSpecialArgs,
+  ...
+} @ args: let
   # Huawei Matebook-GT14
   name = "matebook-gt14";
   dname = "matebook-gt14";
@@ -60,8 +58,7 @@ let
       "hosts/${dname}/home"
     ];
   };
-in
-{
+in {
   nixosConfigurations = {
     # host with hyprland compositor
     "${name}" = mylib.nixosSystem (base-modules // args // myconfigs);

@@ -1,6 +1,9 @@
-{ config, pkgs, lib, ... }:
-
 {
+  config,
+  pkgs,
+  lib,
+  ...
+}: {
   # Themes
   home.packages = with pkgs; [
     adw-gtk3 # Adwaita
@@ -33,9 +36,7 @@
       name = "Tela";
       package = pkgs.tela-icon-theme;
     };
-
   };
 
   home.pointerCursor.gtk.enable = true;
-
 }

@@ -1,14 +1,17 @@
-{ self, nixpkgs, ... }@inputs:
-
-let
+{
+  self,
+  nixpkgs,
+  ...
+} @ inputs: let
   inherit (inputs.nixpkgs) lib;
-  mylib = import ../lib { inherit lib; };
-  myvars = import ../vars { inherit lib; };
+  mylib = import ../lib {inherit lib;};
+  myvars = import ../vars {inherit lib;};
 
   # Add my custom lib, vars, nixpkgs instance, and all the inputs to specialArgs,
   # genSpecialArgs = { inherit mylib inputs nixpkgs; };
   genSpecialArgs = system:
-    inputs // {
+    inputs
+    // {
       inherit mylib myvars inputs;
 
       # use unstable branch for some packages to get the latest updates
@@ -25,13 +28,13 @@ let
     };
 
   # This is the args for all the haumea modules in this folder.
-  args = { inherit inputs lib mylib myvars genSpecialArgs; };
+  args = {inherit inputs lib mylib myvars genSpecialArgs;};
 
   # modules for each supported system
   nixosSystems = {
-    x86_64-linux = import ./x86_64-linux (args // { system = "x86_64-linux"; });
+    x86_64-linux = import ./x86_64-linux (args // {system = "x86_64-linux";});
   };
-  darwinSystems = { };
+  darwinSystems = {};
   allSystems = nixosSystems // darwinSystems;
   allSystemNames = builtins.attrNames allSystems;
   nixosSystemValues = builtins.attrValues nixosSystems;
@@ -40,33 +43,31 @@ let
 
   # Helper function to generate a set of attributes for each system
   forAllSystems = func: (nixpkgs.lib.genAttrs allSystemNames func);
-in
-
-{
+in {
   # Add attribute sets into outputs, for debugging
-  debugAttrs = { inherit nixosSystems darwinSystems allSystems allSystemNames; };
+  debugAttrs = {inherit nixosSystems darwinSystems allSystems allSystemNames;};
 
   # NixOS Hosts
   nixosConfigurations =
-    lib.attrsets.mergeAttrsList (map (it: it.nixosConfigurations or { }) nixosSystemValues);
+    lib.attrsets.mergeAttrsList (map (it: it.nixosConfigurations or {}) nixosSystemValues);
 
   # Packages
   packages = forAllSystems (
-    system:
-    let
-      pkgs = nixpkgs.legacyPackages."${ system}";
+    system: let
+      pkgs = nixpkgs.legacyPackages."${system}";
     in
-    (allSystems.${system}.packages or { }) // (
-      import ../packages { inherit pkgs; }
-    )
+      (allSystems.${system}.packages or {})
+      // (
+        import ../packages {inherit pkgs;}
+      )
   );
 
   # Eval Tests for all NixOS & darwin systems.
-  evalTests = lib.lists.all (it: it.evalTests == { }) allSystemValues;
+  evalTests = lib.lists.all (it: it.evalTests == {}) allSystemValues;
 
   # macOS Hosts
   darwinConfigurations =
-    lib.attrsets.mergeAttrsList (map (it: it.darwinConfigurations or { }) darwinSystemValues);
+    lib.attrsets.mergeAttrsList (map (it: it.darwinConfigurations or {}) darwinSystemValues);
 
   # Format the nix code in this flake
   formatter = forAllSystems (

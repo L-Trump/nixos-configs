@@ -1,8 +1,11 @@
-{ config, pkgs, lib, ... }:
-let
-  easytier-pkg = pkgs.easytier;
-in
 {
+  config,
+  pkgs,
+  lib,
+  ...
+}: let
+  easytier-pkg = pkgs.easytier;
+in {
   # Network discovery, mDNS
   # With this enabled, you can access your machine at <hostname>.local
   # it's more convenient than using the IP address.

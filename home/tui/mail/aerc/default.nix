@@ -1,6 +1,9 @@
-{ config, pkgs, lib, ... }:
-
 {
+  config,
+  pkgs,
+  lib,
+  ...
+}: {
   programs.aerc = {
     enable = true;
     extraConfig = {
@@ -42,9 +45,9 @@
     genericName = "Mail Client";
     comment = "Launches the aerc email client";
     settings.Keywords = "Email,Mail,IMAP,SMTP";
-    categories = [ "Office" "Network" "Email" "ConsoleOnly" ];
+    categories = ["Office" "Network" "Email" "ConsoleOnly"];
     icon = "utilities-terminal";
     exec = ''kitty --class aerc -T "AERC" -e fish -ilc "aerc" %u'';
-    mimeType = [ "x-scheme-handler/mailto" ];
+    mimeType = ["x-scheme-handler/mailto"];
   };
 }

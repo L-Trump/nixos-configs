@@ -1,6 +1,9 @@
-{ config, pkgs, lib, ... }:
-
 {
+  config,
+  pkgs,
+  lib,
+  ...
+}: {
   dconf.settings = {
     "org/gnome/interface" = {
       color-scheme = "'prefer-light'";

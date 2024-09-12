@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   home.packages = with pkgs; [
     docker-compose
     dive # explore docker layers
@@ -20,5 +18,4 @@
 
     ko # build go project to container image
   ];
-
 }

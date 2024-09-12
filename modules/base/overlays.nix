@@ -1,6 +1,10 @@
-{ pkgs, myvars, nixpkgs, inputs, ... }@args:
-
 {
+  pkgs,
+  myvars,
+  nixpkgs,
+  inputs,
+  ...
+} @ args: {
   imports = [
     # XDDXDD overlay
     inputs.nur-xddxdd.nixosModules.setupOverlay

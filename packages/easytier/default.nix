@@ -1,8 +1,8 @@
-{ lib
-, fetchzip
-, stdenv
+{
+  lib,
+  fetchzip,
+  stdenv,
 }:
-
 stdenv.mkDerivation {
   pname = "easytier";
   version = "1.2.3";
@@ -25,12 +25,12 @@ stdenv.mkDerivation {
     description = "A simple, decentralized mesh VPN with WireGuard support.";
     mainProgram = "easytier-cli";
     longDescription = ''
-      EasyTier is a simple, safe and decentralized VPN networking solution implemented 
-      with the Rust language and Tokio framework. 
+      EasyTier is a simple, safe and decentralized VPN networking solution implemented
+      with the Rust language and Tokio framework.
     '';
-    license = with lib.licenses; [ asl20 ];
-    sourceProvenance = with lib.sourceTypes; [ binaryNativeCode ];
-    platforms = [ "x86_64-linux" ];
-    maintainers = [ ];
+    license = with lib.licenses; [asl20];
+    sourceProvenance = with lib.sourceTypes; [binaryNativeCode];
+    platforms = ["x86_64-linux"];
+    maintainers = [];
   };
 }

@@ -1,10 +1,12 @@
-{ config, pkgs, ... }:
-
 {
+  config,
+  pkgs,
+  ...
+}: {
   systemd.user.targets.tray = {
     Unit = {
       Description = "Home Manager System Tray";
-      Requires = [ "graphical-session-pre.target" ];
+      Requires = ["graphical-session-pre.target"];
     };
   };
 
@@ -18,7 +20,7 @@
     comment = "A Clash Meta GUI based on tauri.";
     exec = "clash-verge %u";
     icon = "clash-verge";
-    mimeType = [ "x-scheme-handler/clash" ];
-    categories = [ "Network" "Development" ];
+    mimeType = ["x-scheme-handler/clash"];
+    categories = ["Network" "Development"];
   };
 }

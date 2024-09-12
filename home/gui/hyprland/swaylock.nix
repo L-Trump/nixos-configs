@@ -1,8 +1,6 @@
-{ pkgs, ... }:
-let
-  lock_wallpaper = builtins.path { path = ../../../wallpapers/LockWallpapers/75778903_p0.jpg; };
-in
-{
+{pkgs, ...}: let
+  lock_wallpaper = builtins.path {path = ../../../wallpapers/LockWallpapers/75778903_p0.jpg;};
+in {
   programs.swaylock = {
     enable = true;
     package = pkgs.swaylock-effects;

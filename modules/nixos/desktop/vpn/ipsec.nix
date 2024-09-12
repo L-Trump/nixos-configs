@@ -1,6 +1,9 @@
-{ pkgs, config, lib, ... }:
-
-let
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}: let
   strongswanConf = builtins.toFile "strongswan.conf" ''
     charon {
       plugins {
@@ -17,17 +20,15 @@ let
     }
   '';
   strongswanPackage = pkgs.strongswan;
-in
-
-{
-  environment.systemPackages = [ strongswanPackage ];
+in {
+  environment.systemPackages = [strongswanPackage];
 
   systemd.services.strongswan = {
     description = "strongSwan IPSec Service";
-    wantedBy = [ "multi-user.target" ];
-    path = with pkgs; [ kmod iproute2 iptables util-linux ]; # XXX Linux
-    wants = [ "network-online.target" ];
-    after = [ "network-online.target" ];
+    wantedBy = ["multi-user.target"];
+    path = with pkgs; [kmod iproute2 iptables util-linux]; # XXX Linux
+    wants = ["network-online.target"];
+    after = ["network-online.target"];
     environment = {
       STRONGSWAN_CONF = strongswanConf;
     };

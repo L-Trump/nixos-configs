@@ -1,6 +1,9 @@
-{ pkgs, config, lib, ... }:
-
 {
+  pkgs,
+  config,
+  lib,
+  ...
+}: {
   age.secrets.aerc-accounts = {
     file = ./aerc-accounts.conf.age;
     path = "${config.xdg.configHome}/aerc/accounts.conf";

@@ -1,10 +1,7 @@
-{ pkgs, ... }:
-
-let
+{pkgs, ...}: let
   vpn-scripts = pkgs.mkScriptsPackage "vpn-scripts" ./scripts;
-in
-{
-  imports = [ ./swanctl.nix ];
+in {
+  imports = [./swanctl.nix];
 
   environment.systemPackages = with pkgs; [
     openfortivpn

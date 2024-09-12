@@ -1,10 +1,12 @@
-{ config, pkgs, ... }:
-
 {
+  config,
+  pkgs,
+  ...
+}: {
   services.picom = {
     enable = true;
     shadow = true;
-    shadowOffsets = [ (-7) (-7) ];
+    shadowOffsets = [(-7) (-7)];
     shadowExclude = [
       "name = 'Notification'"
       "class_g = 'Conky'"
@@ -33,7 +35,7 @@
       "_GTK_FRAME_EXTENTS@:c"
     ];
     fade = true;
-    fadeSteps = [ 0.05 0.05 ];
+    fadeSteps = [0.05 0.05];
     fadeExclude = [
       "class_g = 'Snipaste.AppImage'"
       "class_i = 'Snipaste'"
@@ -42,15 +44,29 @@
       "class_g = 'wechat.exe'"
     ];
     inactiveOpacity = 0.8;
-    
+
     wintypes = {
-      tooltip = { fade = true; shadow = true; opacity = 0.75; focus = true; full-shadow = false; };
-      dock = { shadow = false; };
-      dnd = { shadow = false; };
-      popup_menu = { opacity = 0.8; shadow = false; focus = true; };
-      dropdown_menu = { opacity = 0.8; shadow = false; focus = true; };
+      tooltip = {
+        fade = true;
+        shadow = true;
+        opacity = 0.75;
+        focus = true;
+        full-shadow = false;
+      };
+      dock = {shadow = false;};
+      dnd = {shadow = false;};
+      popup_menu = {
+        opacity = 0.8;
+        shadow = false;
+        focus = true;
+      };
+      dropdown_menu = {
+        opacity = 0.8;
+        shadow = false;
+        focus = true;
+      };
     };
-  
+
     settings = {
       shadow-radius = 7;
       frame-opacity = 0.7;

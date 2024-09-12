@@ -1,9 +1,7 @@
-{ lib, ... }:
-with lib;
-let
+{lib, ...}:
+with lib; let
   cfg = config.mymodules;
-in
-{
+in {
   options.mymodules = {
     visualization = {
       enable = mkOption {

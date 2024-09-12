@@ -1,6 +1,9 @@
-{ pkgs, config, lib, ... }:
-
 {
+  pkgs,
+  config,
+  lib,
+  ...
+}: {
   age.secrets.ipsec-conf = {
     file = ./ipsec.conf.age;
     path = "/etc/ipsec.conf";

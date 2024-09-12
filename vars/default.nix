@@ -1,4 +1,4 @@
-{ lib }: {
+{lib}: {
   username = "ltrump";
   userfullname = "L-Trump";
   useremail = "ltrump@163.com";

@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   home.packages = with pkgs; [
     qq
     wechat-uos-without-sandbox
@@ -12,7 +10,7 @@
     exec = "${pkgs.qq}/bin/qq --enable-wayland-ime --ozone-platform-hint=auto --enable-features=WaylandWindowDecorations";
     icon = "qq";
     settings.StartupWMClass = "QQ";
-    categories = [ "Chat" "Network" ];
+    categories = ["Chat" "Network"];
     comment = "QQ";
   };
 }

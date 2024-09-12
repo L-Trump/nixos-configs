@@ -1,13 +1,17 @@
-{ config, inputs, lib, pkgs, myhome, ... }:
-
-with lib;
-let
-  wallpaper_umy = builtins.path { path = ../../../wallpapers/Meumy/91689568_p1.jpg; };
-  wallpaper_merry = builtins.path { path = ../../../wallpapers/Meumy/91689568_p6.jpg; };
+{
+  config,
+  inputs,
+  lib,
+  pkgs,
+  myhome,
+  ...
+}:
+with lib; let
+  wallpaper_umy = builtins.path {path = ../../../wallpapers/Meumy/91689568_p1.jpg;};
+  wallpaper_merry = builtins.path {path = ../../../wallpapers/Meumy/91689568_p6.jpg;};
   rawcfg = myhome.desktop.wayland;
   cfg = config.myhome.desktop.wayland;
-in
-{
+in {
   imports = optionals rawcfg.enable [
     ./waybar
     ./swaylock.nix
@@ -16,7 +20,7 @@ in
   config = mkIf cfg.enable {
     home.pointerCursor.x11.enable = true;
 
-    wayland.windowManager.hyprland = import ./hyprland-conf.nix { inherit pkgs inputs; };
+    wayland.windowManager.hyprland = import ./hyprland-conf.nix {inherit pkgs inputs;};
 
     programs.fish = {
       interactiveShellInit = ''

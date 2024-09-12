@@ -1,5 +1,9 @@
-{ config, lib, pkgs, ... }:
-let
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
   meumy-grub-theme = pkgs.stdenvNoCC.mkDerivation {
     name = "meumy-grub-theme";
     src = ./meumy-grub-theme;
@@ -11,8 +15,7 @@ let
     '';
   };
   cfg = config.mymodules.desktop.animeboot;
-in
-{
+in {
   config = lib.mkIf (cfg.enable) {
     boot = {
       plymouth = {

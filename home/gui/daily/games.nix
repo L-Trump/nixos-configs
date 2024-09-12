@@ -1,8 +1,11 @@
-{ pkgs, lib, config, ... }:
-let
-  cfg = config.myhome.desktop.daily.game;
-in
 {
+  pkgs,
+  lib,
+  config,
+  ...
+}: let
+  cfg = config.myhome.desktop.daily.game;
+in {
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
       # nix-gaming.packages.${pkgs.system}.osu-laser-bin

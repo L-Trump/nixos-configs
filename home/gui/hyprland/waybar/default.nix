@@ -1,6 +1,8 @@
-{ pkgs, lib, ... }:
-
 {
+  pkgs,
+  lib,
+  ...
+}: {
   programs.waybar.enable = true;
   xdg.configFile."waybar/config.jsonc" = {
     source = ./config.jsonc;

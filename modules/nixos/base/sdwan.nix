@@ -1,21 +1,23 @@
-{ config, pkgs, ... }:
-let
-  easytier-pkg = pkgs.easytier;
-in
 {
+  config,
+  pkgs,
+  ...
+}: let
+  easytier-pkg = pkgs.easytier;
+in {
   services.tailscale.enable = true;
 
-  environment.systemPackages = [ easytier-pkg ];
+  environment.systemPackages = [easytier-pkg];
   systemd.services.easytier-ltnet = {
-    path = with pkgs; [ easytier-pkg iproute2 bash ];
+    path = with pkgs; [easytier-pkg iproute2 bash];
     description = "EasyTier Service";
-    wants = [ "network.target" ];
-    after = [ "network.target" ];
+    wants = ["network.target"];
+    after = ["network.target"];
     serviceConfig = {
       Type = "simple";
       ExecStart = "${easytier-pkg}/bin/easytier-core -c ${config.age.secrets.easytier-conf.path} --multi-thread";
       Restart = "on-failure";
     };
-    wantedBy = [ "multi-user.target" ];
+    wantedBy = ["multi-user.target"];
   };
 }

@@ -1,6 +1,9 @@
-{ config, pkgs, lib, ... }:
-
 {
+  config,
+  pkgs,
+  lib,
+  ...
+}: {
   services.dunst = {
     enable = true;
     configFile = "${config.xdg.configHome}/dunst/dunstrc.mutable";
