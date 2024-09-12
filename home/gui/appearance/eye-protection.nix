@@ -12,7 +12,7 @@
     # has problem with wayland, so disable it
     tray = false;
     temperature = {
-      day = 5700;
+      day = 6500;
       night = 4000;
     };
     # https://gitlab.com/chinstrap/gammastep/-/blob/master/gammastep.conf.sample?ref_type=heads
