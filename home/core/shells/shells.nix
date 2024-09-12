@@ -29,6 +29,6 @@
   home.shellAliases = {
     nv = "nvim";
     clr = "clear";
-    ssh = "TERM=xtern-256color command ssh";
+    ssh = "TERM=xterm-256color command ssh";
   };
 }
