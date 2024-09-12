@@ -4,5 +4,6 @@
     enableBashIntegration = true;
     enableZshIntegration = true;
     enableNushellIntegration = true;
+    flags = [ "--disable-up-arrow" ];
   };
 }
