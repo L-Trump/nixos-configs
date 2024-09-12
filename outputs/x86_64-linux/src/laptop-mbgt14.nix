@@ -27,6 +27,7 @@ let
       wayland.enable = true;
       xorg.enable = true;
       game.enable = false;
+      keyremap.enable = true;
     };
   };
   myconfigs.myhome = {

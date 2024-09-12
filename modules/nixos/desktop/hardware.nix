@@ -1,5 +1,8 @@
 { config, lib, pkgs, ... }:
 
+let
+  cfg = config.mymodules.desktop;
+in
 {
   environment.systemPackages = with pkgs; [
     pulseaudio # provides `pactl`, which is required by some apps(e.g. sonic-pi)
@@ -37,6 +40,17 @@
     android-udev-rules # required by adb
     openfpgaloader
   ];
+
+  services.keyd = lib.mkIf (cfg.keyremap.enable) {
+    enable = true;
+    keyboards.default.settings = {
+      main = {
+        # overloads the capslock key to function as both escape (when tapped) and control (when held)
+        capslock = "overload(control, esc)";
+        esc = "capslock";
+      };
+    };
+  };
 
   services.fwupd.enable = true;
 
