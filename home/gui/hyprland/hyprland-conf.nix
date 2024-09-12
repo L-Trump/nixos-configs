@@ -264,7 +264,7 @@
       "$mainMod, d, exec, ~/.config/waybar/rofi-menus/launcher.sh"
       "$mainMod, c, exec, ~/.config/waybar/rofi-menus/powermenu.sh"
       "$mainMod, return, exec, kitty -1"
-      "$mainMod SHIFT, return, exec, kitty"
+      "$mainMod SHIFT, return, exec, kitty -e fish -ilc zj"
       # "$mainMod, return, exec, alacritty msg create-window || alacritty"
       # ", Print, exec, snipaste snip"
       # "$mainMod SHIFT, s, exec, snipaste snip"
