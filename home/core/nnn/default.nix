@@ -13,7 +13,7 @@
       z = "autojump";
       s = "!fish -i*";
       e = ''-!nvim "\$nnn"*'';
-      f = "fzplug";
+      f = "fzcd";
     };
   };
 

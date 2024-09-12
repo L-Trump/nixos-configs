@@ -4,13 +4,14 @@ if command -qv nnn
     #     source ${config.programs.nnn.finalPackage}/share/quitcd/quitcd.fish
     # end
     # Setup nnn cd
-    function nnn_cd
-        if not test -z $NNN_PIPE
-            printf "%s\0" "0c$PWD" > $NNN_PIPE &
-            disown
-        end
-    end
-    trap nnn_cd EXIT
+    # function nnn_cd
+    #     if not test -z $NNN_PIPE
+    #         fish -c 'printf "%s\0" "0c$PWD" > $NNN_PIPE' &
+    #         disown
+    #     end
+    # end
+
+    # trap nnn_cd EXIT
 
     # With the original prompt function renamed, we can override with our own.
     if not test -z "$NNNLVL"
