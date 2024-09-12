@@ -40,7 +40,7 @@
 
     "audio/*" = ["mpv.desktop"];
     "video/*" = ["mpv.dekstop"];
-    "image/*" = ["imv-dir.desktop"];
+    "image/*" = ["vimiv.desktop"];
   };
 in {
   imports = [./xdg-portals];
@@ -50,6 +50,7 @@ in {
     xdg-user-dirs
   ];
 
+  xdg.configFile."mimeapps.list".force = true;  
   xdg = {
     enable = true;
 

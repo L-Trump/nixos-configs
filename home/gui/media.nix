@@ -15,6 +15,7 @@
 
     # images
     imv # Simple image viewer
+    vimiv-qt # A better vim-like image viewer
     viu # Terminal image viewer with native support for iTerm and Kitty
     imagemagick
     graphviz
