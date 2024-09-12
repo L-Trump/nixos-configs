@@ -27,10 +27,6 @@
   };
 
   nixpkgs.config.allowUnfree = true;
-  nixpkgs.config.permittedInsecurePackages = [
-    "electron-27.3.11"
-    "openssl-1.1.1w"
-  ];
 
   # make `nix run nixpkgs#nixpkgs` use the same nixpkgs as the one used by this flake.
   nix.registry.nixpkgs.flake = nixpkgs;
