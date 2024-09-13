@@ -25,13 +25,18 @@ in
         lib.optionals ((lib.lists.length home-modules) > 0)
         [
           home-manager.nixosModules.home-manager
-          {
+          ({config, ...}: {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
 
-            home-manager.extraSpecialArgs = specialArgs // {inherit myhome;};
+            home-manager.extraSpecialArgs =
+              specialArgs
+              // {
+                inherit myhome;
+                systemConfig = config;
+              };
             home-manager.users."${myvars.username}".imports = home-modules;
-          }
+          })
         ]
       );
   }

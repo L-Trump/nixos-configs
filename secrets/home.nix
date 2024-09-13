@@ -1,6 +1,6 @@
 {inputs, ...}: {
   imports = [
-    ./mail/home.nix
+    ./mail.nix
     inputs.agenix.homeManagerModules.default
   ];
 }

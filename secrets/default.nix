@@ -1,7 +1,8 @@
 {inputs, ...}: {
   imports = [
     inputs.agenix.nixosModules.default
-    ./vpn
+    ./vpn.nix
+    ./easytier.nix
   ];
 
   nixpkgs.overlays = [

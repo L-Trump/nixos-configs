@@ -33,7 +33,7 @@
       enable = true;
       mail.enable = true;
       lsp.enable = true;
-      lsp.lang = [ "all" ];
+      lsp.lang = ["all"];
     };
     desktop = {
       enable = true;
@@ -49,7 +49,6 @@
       "secrets/default.nix"
       "modules/nixos/default.nix"
       # host specific
-      "secrets/hosts/${dname}"
       "hosts/${dname}/modules"
     ];
     home-modules = map mylib.relativeToRoot [

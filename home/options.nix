@@ -19,7 +19,7 @@ with lib; {
             "c"
             "all"
           ]);
-          default = [ "nix" "bash" ];
+          default = ["nix" "bash"];
           description = "Enabled languages";
         };
       };

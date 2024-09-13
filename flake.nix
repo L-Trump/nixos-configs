@@ -47,6 +47,11 @@
       url = "github:feschber/lan-mouse";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # My secrets
+    mysecrets = {
+      url = "git+ssh://git@github.com/L-Trump/nixos-secrets.git?shallow=1";
+      flake = false;
+    };
     # generate iso/qcow2/docker/... image from nixos configuration
     nixos-generators = {
       url = "github:nix-community/nixos-generators";

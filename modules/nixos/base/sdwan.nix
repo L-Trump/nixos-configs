@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  lib,
   ...
 }: let
   easytier-pkg = pkgs.easytier;
@@ -8,7 +9,7 @@ in {
   services.tailscale.enable = true;
 
   environment.systemPackages = [easytier-pkg];
-  systemd.services.easytier-ltnet = {
+  systemd.services.easytier-ltnet = lib.mkIf (builtins.hasAttr "easytier-conf" config.age.secrets) {
     path = with pkgs; [easytier-pkg iproute2 bash];
     description = "EasyTier Service";
     wants = ["network.target"];
