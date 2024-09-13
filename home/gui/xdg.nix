@@ -50,7 +50,7 @@ in {
     xdg-user-dirs
   ];
 
-  xdg.configFile."mimeapps.list".force = true;  
+  xdg.configFile."mimeapps.list".force = true;
   xdg = {
     enable = true;
 

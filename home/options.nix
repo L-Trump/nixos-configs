@@ -8,6 +8,21 @@ with lib; {
     tuiExtra = {
       enable = mkEnableOption "Extra TUI configs";
       mail.enable = mkEnableOption "E-Mail related";
+      lsp = {
+        enable = mkEnableOption "Enable language server protocols programs";
+        lang = mkOption {
+          type = types.listOf (types.enum [
+            "nix"
+            "markdown"
+            "rust"
+            "bash"
+            "c"
+            "all"
+          ]);
+          default = [ "nix" "bash" ];
+          description = "Enabled languages";
+        };
+      };
     };
     desktop = {
       enable = mkEnableOption "Enable Desktop Environment";

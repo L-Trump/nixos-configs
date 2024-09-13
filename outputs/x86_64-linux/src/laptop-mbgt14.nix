@@ -32,6 +32,8 @@
     tuiExtra = {
       enable = true;
       mail.enable = true;
+      lsp.enable = true;
+      lsp.lang = [ "all" ];
     };
     desktop = {
       enable = true;

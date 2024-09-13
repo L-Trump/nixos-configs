@@ -19,7 +19,7 @@
       };
       keys.normal = {
         space = {
-          space = "file_picker";
+          space = "file_picker_in_current_buffer_directory";
           w = ":w";
           q = ":q";
         };
