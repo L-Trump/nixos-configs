@@ -300,6 +300,11 @@
       "noblur, class:^(Alacritty|kitty)$"
       "float, class:(com.github.hluk.copyq)"
       "size 622 652, class:(com.github.hluk.copyq)"
+      "opacity 0.0 override, class:^(xwaylandvideobridge)$"
+      "noanim, class:^(xwaylandvideobridge)$"
+      "noinitialfocus, class:^(xwaylandvideobridge)$"
+      "maxsize 1 1, class:^(xwaylandvideobridge)$"
+      "noblur, class:^(xwaylandvideobridge)$"
     ];
 
     "plugin:touch_gestures" = {
