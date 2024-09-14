@@ -10,11 +10,12 @@
 in {
   config =
     {
-      services.xserver.enable = cfg.enable;
+      services.xserver.enable = lib.mkDefault false;
     }
     // lib.mkIf cfg.enable
     {
       # Enable the X11 windowing system.
+      services.xserver.enable = true;
       services.xserver = {
         autorun = false;
 
