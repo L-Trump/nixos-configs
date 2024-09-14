@@ -28,7 +28,7 @@
   };
   myconfigs.myhome = {
     tuiExtra = {
-      enable = true;
+      enable = false;
       mail.enable = false;
       lsp.enable = true;
     };
