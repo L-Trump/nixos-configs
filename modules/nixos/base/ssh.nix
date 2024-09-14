@@ -10,6 +10,11 @@
     openFirewall = true;
   };
 
+  # The OpenSSH agent remembers private keys for you
+  # so that you don’t have to type in passphrases every time you make an SSH connection.
+  # Use `ssh-add` to add a key to the agent.
+  programs.ssh.startAgent = true;
+
   # Add terminfo database of all known terminals to the system profile.
   # https://github.com/NixOS/nixpkgs/blob/nixos-24.05/nixos/modules/config/terminfo.nix
   environment.enableAllTerminfo = true;
