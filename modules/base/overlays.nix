@@ -1,10 +1,4 @@
-{
-  pkgs,
-  myvars,
-  nixpkgs,
-  inputs,
-  ...
-} @ args: {
+{inputs, ...}: {
   imports = [
     # XDDXDD overlay
     inputs.nur-xddxdd.nixosModules.setupOverlay
@@ -17,5 +11,6 @@
   nixpkgs.overlays = [
     inputs.nur.overlay
     inputs.hyprland.overlays.default
+    # inputs.helix-driver.overlays.default
   ];
 }
