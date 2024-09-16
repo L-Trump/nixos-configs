@@ -41,6 +41,14 @@
   # Use LTS kernel
   boot.kernelPackages = pkgs.linuxPackages;
 
+  fileSystems."/btr_pool" = {
+    device = "/dev/disk/by-uuid/12f13149-888b-4a28-8e27-a8af46860de6";
+    fsType = "btrfs";
+    # btrfs's top-level subvolume, internally has an id 5
+    # we can access all other subvolumes from this subvolume.
+    options = ["subvolid=5"];
+  };
+
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/12f13149-888b-4a28-8e27-a8af46860de6";
     fsType = "btrfs";
