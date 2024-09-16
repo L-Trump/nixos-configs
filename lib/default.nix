@@ -1,5 +1,6 @@
 {lib, ...}: {
   nixosSystem = import ./nixosSystem.nix;
+  colmenaSystem = import ./colmenaSystem.nix;
 
   relativeToRoot = lib.path.append ../.;
   scanPaths = path:

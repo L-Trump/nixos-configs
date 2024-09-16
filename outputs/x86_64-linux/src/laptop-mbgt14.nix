@@ -43,7 +43,7 @@
       daily.game.enable = false;
     };
   };
-  base-modules = {
+  modules = {
     nixos-modules = map mylib.relativeToRoot [
       # common
       "secrets/default.nix"
@@ -59,9 +59,10 @@
       "hosts/${dname}/home"
     ];
   };
+  systemArgs = modules // args // myconfigs;
 in {
   nixosConfigurations = {
     # host with hyprland compositor
-    "${name}" = mylib.nixosSystem (base-modules // args // myconfigs);
+    "${name}" = mylib.nixosSystem systemArgs;
   };
 }

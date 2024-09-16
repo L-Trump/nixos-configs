@@ -87,6 +87,10 @@ fmt:
 gcroot:
   ls -al /nix/var/nix/gcroots/auto/
 
+[group('colmena')]
+col tag:
+  colmena apply --on '@{{tag}}' --verbose --show-trace
+
 ############################################################################
 #
 #  Neovim related commands

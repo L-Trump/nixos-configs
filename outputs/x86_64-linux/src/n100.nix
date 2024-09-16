@@ -12,7 +12,9 @@
 } @ args: let
   # Huawei Matebook-GT14
   name = "n100";
-  dname = "n100";
+  tags = [name];
+  ssh-user = "root";
+
   myconfigs.mymodules = {
     visualization = {
       enable = true;
@@ -43,13 +45,13 @@
       daily.game.enable = false;
     };
   };
-  base-modules = {
+  modules = {
     nixos-modules = map mylib.relativeToRoot [
       # common
       "secrets/default.nix"
       "modules/nixos/default.nix"
       # host specific
-      "hosts/${dname}/modules"
+      "hosts/${name}/modules"
     ];
     home-modules = map mylib.relativeToRoot [
       # common
@@ -57,9 +59,16 @@
       "secrets/home.nix"
     ];
   };
+
+  systemArgs = modules // args // myconfigs;
 in {
-  nixosConfigurations = {
-    # host with hyprland compositor
-    "${name}" = mylib.nixosSystem (base-modules // args // myconfigs);
+  nixosConfigurations."${name}" = mylib.nixosSystem systemArgs;
+
+  colmena."${name}" =
+    mylib.colmenaSystem (systemArgs // {inherit tags ssh-user;});
+
+  colmenaMeta = {
+    nodeNixpkgs."${name}" = import inputs.nixpkgs {inherit system;};
+    nodeSpecialArgs."${name}" = {inherit (myconfigs) mymodules;};
   };
 }
