@@ -47,6 +47,7 @@
     nix-melt # A TUI flake.lock viewer
     # https://github.com/utdemir/nix-tree
     nix-tree # A TUI to visualize the dependency graph of a nix derivation
+    nvd # Nix/NixOS package version diff tool
 
     # productivity
     croc # File transfer between computers securely and easily

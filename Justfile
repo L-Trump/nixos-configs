@@ -16,8 +16,19 @@ set shell := ["fish", "-c"]
 default:
     @just --list
 
+# Run eval tests
+[group('nix')]
 switch:
   sudo nixos-rebuild switch
+
+# Run eval tests
+[group('nix')]
+preview:
+  nixos-rebuild build $argv && nvd diff /run/current-system result
+
+[group('nix')]
+diff:
+  nvd diff $(command ls -d1v /nix/var/nix/profiles/system-*-link|tail -n 2)
 
 # Run eval tests
 [group('nix')]
