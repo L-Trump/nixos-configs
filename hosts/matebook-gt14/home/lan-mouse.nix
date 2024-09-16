@@ -1,6 +1,7 @@
 {
   pkgs,
   inputs,
+  lib,
   ...
 }: {
   imports = [
@@ -22,4 +23,5 @@
       };
     };
   };
+  systemd.user.services.lan-mouse.Install.WantedBy = lib.mkForce [];
 }
