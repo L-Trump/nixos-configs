@@ -47,7 +47,7 @@
     "i915.enable_psr=0"
     "i915.enable_guc=3"
     "snd-intel-dspcfg.dsp_driver=1"
-    "initcall_blacklist=simpledrm_platform_driver_init"
+    "initcall_blacklist=simpledrm_platform_driver_init"  # wait fix
   ];
 
   hardware.firmware = with pkgs; [sof-firmware];
