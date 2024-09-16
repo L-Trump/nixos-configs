@@ -40,13 +40,14 @@
     canTouchEfiVariables = true;
     efiSysMountPoint = "/boot/efi";
   };
-  boot.kernelPackages = pkgs.linuxPackages_zen;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
   # boot.kernelPackages = pkgs.linuxPackages_testing;
   boot.kernelParams = [
     # "xe.force_probe=7d55"
     "i915.enable_psr=0"
     "i915.enable_guc=3"
     "snd-intel-dspcfg.dsp_driver=1"
+    "initcall_blacklist=simpledrm_platform_driver_init"
   ];
 
   hardware.firmware = with pkgs; [sof-firmware];
