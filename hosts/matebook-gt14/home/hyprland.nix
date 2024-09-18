@@ -5,6 +5,12 @@
   ...
 }: {
   wayland.windowManager.hyprland.settings = {
+    monitor = [
+      "eDP-1,preferred,0x0,auto"
+      "desc:Lenovo Group Limited LEN Y27q-20 0x01010101,preferred,auto-right,1.6"
+      "desc:Dell Inc. DELL SE2722H CVW0WP3,1920x1080@60,auto-right,auto"
+      ",preferred,auto-right,auto"
+    ];
     device = [
       {
         name = "ftsc1000:00-2808:5662";
