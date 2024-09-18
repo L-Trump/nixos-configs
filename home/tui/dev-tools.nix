@@ -18,10 +18,10 @@
     colmena # nixos's remote deployment tool
 
     # db related
-    pkgs-unstable.mycli
-    pkgs-unstable.pgcli
-    mongosh
-    sqlite
+    # pkgs-unstable.mycli
+    # pkgs-unstable.pgcli
+    # mongosh
+    # sqlite
 
     # embedded development
     minicom
@@ -36,7 +36,7 @@
     protobuf # protocol buffer compiler
 
     # solve coding extercises - learn by doing
-    exercism
+    # exercism
 
     # Automatically trims your branches whose tracking remote refs are merged or gone
     # It's really useful when you work on a project for a long time.
