@@ -1,11 +1,15 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  pkgs-stable,
+  ...
+}: {
   home.packages = with pkgs; [
     # e-book viewer(.epub/.mobi/...)
     # do not support .pdf
     foliate
     wpsoffice-cn
     nur.repos.rewine.ttf-wps-fonts
-    logseq
+    pkgs-stable.logseq
     vikunja
   ];
 

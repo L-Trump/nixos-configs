@@ -24,6 +24,9 @@
         inherit system;
         # To use chrome, we need to allow the installation of non-free software
         config.allowUnfree = true;
+        config.permittedInsecurePackages = [
+          "electron-27.3.11" # deps for logseq
+        ];
       };
     };
 
