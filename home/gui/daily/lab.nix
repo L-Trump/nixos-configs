@@ -8,5 +8,6 @@
     remmina
     zotero
     nur.repos.linyinfeng.wemeet
+    matlab
   ];
 }
