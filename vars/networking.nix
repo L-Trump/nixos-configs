@@ -8,6 +8,7 @@
   hostsAddr.easytier = {
     matebook-gt14.ipv4 = "10.144.144.250";
     n100.ipv4 = "10.144.144.111";
+    tencent-vm-jp.ipv4 = "10.144.144.253";
   };
 
   ssh = {
