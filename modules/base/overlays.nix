@@ -11,6 +11,7 @@
   nixpkgs.overlays = [
     inputs.nur.overlay
     inputs.hyprland.overlays.default
+    inputs.nix-matlab.overlay
     # inputs.helix-driver.overlays.default
   ];
 }
