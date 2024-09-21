@@ -5,7 +5,7 @@
   ...
 }:
 with lib; let
-  cfg = config.mymodules.visualization;
+  cfg = config.mymodules.virtualization;
 in {
   config = mkIf (cfg.enable) {
     ###################################################################################

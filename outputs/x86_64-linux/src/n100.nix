@@ -16,7 +16,7 @@
   ssh-user = "root";
 
   myconfigs.mymodules = {
-    visualization = {
+    virtualization = {
       enable = true;
       docker.enable = true;
       qemu.enable = true;

@@ -3,11 +3,11 @@ with lib; let
   cfg = config.mymodules;
 in {
   options.mymodules = {
-    visualization = {
+    virtualization = {
       enable = mkOption {
         type = types.bool;
-        default = cfg.visualization.docker.enable || cfg.visualization.qemu.enable;
-        description = "Visualization related";
+        default = cfg.virtualization.docker.enable || cfg.virtualization.qemu.enable;
+        description = "Virtualization related";
       };
       docker.enable = mkEnableOption "Enable docker server";
       qemu.enable = mkEnableOption "QEMU KVM";

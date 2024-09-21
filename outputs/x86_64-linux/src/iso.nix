@@ -14,7 +14,7 @@
   name = "iso";
   dname = "iso";
   myconfigs.mymodules = {
-    visualization = {
+    virtualization = {
       enable = false;
     };
     desktop = {

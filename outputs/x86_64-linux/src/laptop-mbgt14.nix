@@ -14,7 +14,7 @@
   name = "matebook-gt14";
   dname = "matebook-gt14";
   myconfigs.mymodules = {
-    visualization = {
+    virtualization = {
       enable = true;
       docker.enable = true;
       qemu.enable = false;
