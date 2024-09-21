@@ -14,5 +14,7 @@ in {
     file = "${mysecrets}/vpn/ipsec.secrets.age";
     path = "/etc/ipsec.secrets";
   };
-  age.secrets.swanctl-conf.file = lib.mkIf config.mymodules.desktop.enable "${mysecrets}/vpn/strongswan.conf.age";
+  age.secrets.swanctl-conf = lib.mkIf config.mymodules.desktop.enable {
+    file = "${mysecrets}/vpn/strongswan.conf.age";
+  };
 }
