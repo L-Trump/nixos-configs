@@ -2,26 +2,26 @@
 
 set prefix_name GDK_DPI NO_WAYLAND
 set prefix_exec "GDK_DPI_SCALE=1" "WAYLAND_DISPLAY="
-set app_rule "^.*firefox|GDK_DPI" "^.*zotero|NO_WAYLAND" \
-						 "^.*TETR.IO|GDK_DPI" \
-						 "^.*virt-manager|GDK_DPI" \
-						 "^.*remmina|GDK_DPI" \
-						 "^.*[Tt]hunar|GDK_DPI"
+set app_rule "^.*firefox|GDK_DPI" \
+    "^.*TETR.IO|GDK_DPI" \
+    "^.*virt-manager|GDK_DPI" \
+    "^.*remmina|GDK_DPI" \
+    "^.*[Tt]hunar|GDK_DPI"
 
 set cmd $argv[1]
 set prefix
 for rule_str in $app_rule
-	echo $rule_str | read -d '|' rule pnames
-	if string match -qr $rule $cmd
-		for pname in (string split ' ' $pnames)
-			set pexec $prefix_exec[(contains -i $pname $prefix_name)]
-			set -a prefix $pexec
-		end
-	end
+    echo $rule_str | read -d '|' rule pnames
+    if string match -qr $rule $cmd
+        for pname in (string split ' ' $pnames)
+            set pexec $prefix_exec[(contains -i $pname $prefix_name)]
+            set -a prefix $pexec
+        end
+    end
 end
 set run_cmd "$(echo "$(string join ' ' $prefix) $argv" | string trim)"
 if test -n "$prefix"
-	set run_cmd "env $run_cmd"
+    set run_cmd "env $run_cmd"
 end
 echo $run_cmd
 eval $run_cmd
