@@ -34,6 +34,8 @@ in {
 
     home.file.".config/i3/config".source = ./config;
     home.file.".xinitrc".source = ./.xinitrc;
+    home.file.".stalonetrayrc".source = ./.stalonetrayrc;
+    xdg.configFile."betterlockscreenrc".source = ./betterlockscreenrc;
 
     home.packages = with pkgs; [
       i3-scripts

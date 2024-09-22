@@ -1,0 +1,29 @@
+# configuration file for betterlockscreen
+# 
+# i3lockcolor_bin="i3lock"
+locktext="%A, %d %b %Y"
+lockargs="$lockargs \ 
+--time-pos="x+349:y+h-125" \
+--date-pos="x+349:y+h-73" \
+-e \
+--pass-screen-keys --pass-media-keys --pass-power-keys --pass-volume-keys \
+--ind-pos="x+w-140:y+h-130" \
+--radius=60 --ring-width=9 --time-align 0 --date-align 0 \
+--time-size=115 --date-size=41"
+font="Iosevka Nerd Font"
+timesize=115
+textsize=41
+insidecolor=00000000
+ringcolor=ffffffff
+keyhlcolor=d23c3dff
+bshlcolor=d23c3dff
+layoutcolor=00000000
+separatorcolor=00000000
+insidevercolor=00000000
+insidewrongcolor=d23c3dff
+ringvercolor=ffffffff
+ringwrongcolor=ffffffff
+verifcolor=ffffffff
+timecolor=ffffffff
+datecolor=ffffffff
+loginbox=00000060
