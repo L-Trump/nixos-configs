@@ -6,9 +6,11 @@
   mylib,
   pkgs,
   inputs,
+  myvars,
   ...
 }: let
   inherit (inputs) nixos-hardware;
+  hostName = "n100";
 in {
   imports = [
     # Hardware
@@ -18,10 +20,12 @@ in {
 
   # Use the systemd-boot EFI boot loader.
 
-  networking.hostName = "n100"; # Define your hostname.
-  # Pick only one of the below networking options.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-  networking.networkmanager.enable = true; # Easiest to use and most distros use this by default.
+  networking = {
+    inherit hostName;
+
+    # Pick only one of the below networking options.
+    networkmanager.enable = true; # Easiest to use and most distros use this by default.
+  };
 
   # Enable touchpad support (enabled default in most desktopManager).
   services.libinput.enable = true;
