@@ -49,6 +49,7 @@
     "snd-intel-dspcfg.dsp_driver=1"
     "initcall_blacklist=simpledrm_platform_driver_init" # wait fix
   ];
+  boot.tmp.cleanOnBoot = true;
 
   hardware.firmware = with pkgs; [sof-firmware];
 
