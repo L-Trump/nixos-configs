@@ -49,7 +49,7 @@
     };
     # My secrets
     mysecrets = {
-      url = "git+ssh://git@github.com/L-Trump/nixos-secrets.git?shallow=1";
+      url = "git+ssh://git@github.com/L-Trump/nixos-secrets.git";
       flake = false;
     };
     # generate iso/qcow2/docker/... image from nixos configuration
