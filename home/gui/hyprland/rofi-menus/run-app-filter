@@ -2,25 +2,35 @@
 
 set prefix_name GDK_DPI NO_WAYLAND
 set prefix_exec "GDK_DPI_SCALE=1" "WAYLAND_DISPLAY="
+set append_name WAYLAND_ELECTRON
+set append_exec "--enable-wayland-ime --ozone-platform-hint=auto --enable-features=WaylandWindowDecorations"
 set app_rule "^.*firefox|GDK_DPI" \
     "^.*TETR.IO|GDK_DPI" \
     "^.*virt-manager|GDK_DPI" \
     "^.*remmina|GDK_DPI" \
     "^.*lx-music-desktop|NO_WAYLAND" \
+    "^.*typora|WAYLAND_ELECTRON" \
     "^.*[Tt]hunar|GDK_DPI"
 
 set cmd $argv[1]
 set prefix
+set append
 for rule_str in $app_rule
     echo $rule_str | read -d '|' rule pnames
     if string match -qr $rule $cmd
         for pname in (string split ' ' $pnames)
-            set pexec $prefix_exec[(contains -i $pname $prefix_name)]
-            set -a prefix $pexec
+            if contains $pname $prefix_name
+                set pexec $prefix_exec[(contains -i $pname $prefix_name)]
+                set -a prefix $pexec
+            end
+            if contains $pname $append_name
+                set pexec $append_exec[(contains -i $pname $append_name)]
+                set -a append $pexec
+            end
         end
     end
 end
-set run_cmd "$(echo "$(string join ' ' $prefix) $argv" | string trim)"
+set run_cmd "$(echo "$(string join ' ' -- $prefix) $argv $(string join ' ' -- $append)" | string trim)"
 if test -n "$prefix"
     set run_cmd "env $run_cmd"
 end

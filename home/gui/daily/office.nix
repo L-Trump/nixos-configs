@@ -11,6 +11,7 @@
     nur.repos.rewine.ttf-wps-fonts
     pkgs-stable.logseq
     vikunja
+    typora
   ];
 
   programs.zathura = {

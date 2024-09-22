@@ -21,7 +21,6 @@
     graphviz
 
     # video/audio tools
-    nvtopPackages.full
     libva-utils
     vdpauinfo
     vulkan-tools
