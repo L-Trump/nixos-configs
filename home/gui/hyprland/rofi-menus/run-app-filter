@@ -6,6 +6,7 @@ set app_rule "^.*firefox|GDK_DPI" \
     "^.*TETR.IO|GDK_DPI" \
     "^.*virt-manager|GDK_DPI" \
     "^.*remmina|GDK_DPI" \
+    "^.*lx-music-desktop|NO_WAYLAND" \
     "^.*[Tt]hunar|GDK_DPI"
 
 set cmd $argv[1]

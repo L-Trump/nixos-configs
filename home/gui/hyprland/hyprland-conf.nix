@@ -298,11 +298,16 @@
       "noblur, class:^(Alacritty|kitty)$"
       "float, class:(com.github.hluk.copyq)"
       "size 622 652, class:(com.github.hluk.copyq)"
+      # xwaylandvideobridge
       "opacity 0.0 override, class:^(xwaylandvideobridge)$"
       "noanim, class:^(xwaylandvideobridge)$"
       "noinitialfocus, class:^(xwaylandvideobridge)$"
       "maxsize 1 1, class:^(xwaylandvideobridge)$"
       "noblur, class:^(xwaylandvideobridge)$"
+      # lx-music-desktop
+      "noborder, class:(lx-music-desktop)"
+      "noblur, class:(lx-music-desktop)"
+      "noshadow, class:(lx-music-desktop)"
     ];
 
     "plugin:touch_gestures" = {

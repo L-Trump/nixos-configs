@@ -2,10 +2,12 @@
   home.packages = with pkgs; [
     # A bilibili client
     wiliwili
+    # Music
+    lx-music-desktop
 
     # creative
     # blender # 3d modeling
-    gimp # image editing, I prefer using figma in browser instead of this one
+    # gimp # image editing, I prefer using figma in browser instead of this one
     # inkscape # vector graphics
     # krita # digital painting
     # musescore # music notation
