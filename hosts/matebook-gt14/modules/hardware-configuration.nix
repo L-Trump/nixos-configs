@@ -53,6 +53,38 @@
 
   hardware.firmware = with pkgs; [sof-firmware];
 
+  fileSystems."/" = {
+    device = "/dev/disk/by-uuid/bc5fbdc7-9582-4c3f-8afd-9c340e3e9ec5";
+    fsType = "btrfs";
+    options = ["subvol=@root" "compress=zstd"];
+  };
+
+  # clean on boot
+  boot.initrd.postDeviceCommands = lib.mkAfter ''
+    mkdir -p /btrfs_tmp
+    mount -o subvolid=5,compress=zstd ${config.fileSystems."/".device} /btrfs_tmp
+    if [[ -e /btrfs_tmp/@root ]]; then
+        mkdir -p /btrfs_tmp/@snapshots/old_roots
+        timestamp=$(date --date="@$(stat -c %Y /btrfs_tmp/@root)" "+%Y-%m-%-d_%H:%M:%S")
+        mv /btrfs_tmp/@root "/btrfs_tmp/@snapshots/old_roots/$timestamp"
+    fi
+
+    delete_subvolume_recursively() {
+        IFS=$'\n'
+        for i in $(btrfs subvolume list -o "$1" | cut -f 9- -d ' '); do
+            delete_subvolume_recursively "/btrfs_tmp/$i"
+        done
+        btrfs subvolume delete "$1"
+    }
+
+    # for i in $(find /btrfs_tmp/@snapshots/old_roots/ -maxdepth 1 -mtime +10); do
+    #     delete_subvolume_recursively "$i"
+    # done
+
+    btrfs subvolume create /btrfs_tmp/@root
+    umount /btrfs_tmp
+  '';
+
   fileSystems."/btr_pool" = {
     device = "/dev/disk/by-uuid/bc5fbdc7-9582-4c3f-8afd-9c340e3e9ec5";
     fsType = "btrfs";
@@ -61,28 +93,29 @@
     options = ["subvolid=5"];
   };
 
-  fileSystems."/" = {
+  fileSystems."/nix" = {
     device = "/dev/disk/by-uuid/bc5fbdc7-9582-4c3f-8afd-9c340e3e9ec5";
     fsType = "btrfs";
-    options = ["subvol=root" "compress=zstd"];
+    options = ["subvol=nix" "noatime" "compress=zstd"];
   };
 
-  fileSystems."/home" = {
+  fileSystems."/persistent" = {
     device = "/dev/disk/by-uuid/bc5fbdc7-9582-4c3f-8afd-9c340e3e9ec5";
     fsType = "btrfs";
-    options = ["subvol=home" "compress=zstd"];
+    options = ["subvol=@persistent" "noatime" "compress=zstd"];
+    neededForBoot = true;
   };
 
   fileSystems."/snapshots" = {
     device = "/dev/disk/by-uuid/bc5fbdc7-9582-4c3f-8afd-9c340e3e9ec5";
     fsType = "btrfs";
-    options = ["subvol=snapshots" "compress=zstd"];
+    options = ["subvol=@snapshots" "compress=zstd"];
   };
 
-  fileSystems."/nix" = {
+  fileSystems."/tmp" = {
     device = "/dev/disk/by-uuid/bc5fbdc7-9582-4c3f-8afd-9c340e3e9ec5";
     fsType = "btrfs";
-    options = ["subvol=nix" "noatime" "compress=zstd"];
+    options = ["subvol=@tmp" "compress=zstd"];
   };
 
   fileSystems."/boot/efi" = {

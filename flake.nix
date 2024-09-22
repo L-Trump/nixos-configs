@@ -52,6 +52,8 @@
       url = "git+ssh://git@github.com/L-Trump/nixos-secrets.git";
       flake = false;
     };
+    # Impermanence
+    impermanence.url = "github:nix-community/impermanence";
     # generate iso/qcow2/docker/... image from nixos configuration
     nixos-generators = {
       url = "github:nix-community/nixos-generators";

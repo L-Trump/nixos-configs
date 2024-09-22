@@ -19,7 +19,7 @@ default:
 # Run eval tests
 [group('nix')]
 switch:
-  sudo nixos-rebuild switch
+  sudo nixos-rebuild switch --flake .
 
 # Run eval tests
 [group('nix')]
