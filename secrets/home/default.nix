@@ -1,5 +1,11 @@
-{mylib, inputs, ...}: {
-  imports = [
-    inputs.agenix.homeManagerModules.default
-  ] ++ mylib.scanPaths ./.;
+{
+  mylib,
+  inputs,
+  ...
+}: {
+  imports =
+    [
+      inputs.agenix.homeManagerModules.default
+    ]
+    ++ mylib.scanPaths ./.;
 }
