@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-openfortivpn -c /home/ltrump/.fortivpnconf &
+openfortivpn -c /etc/.fortivpnconf &
 vpn_id=$!
 sleep 5
 echo "Clean route"

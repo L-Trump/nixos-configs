@@ -43,7 +43,7 @@
   base-modules = {
     nixos-modules = map mylib.relativeToRoot [
       # common
-      "secrets/default.nix"
+      "secrets/modules"
       "modules/nixos/default.nix"
       # host specific
       "hosts/${dname}/modules"
@@ -51,7 +51,7 @@
     home-modules = map mylib.relativeToRoot [
       # common
       "home/default.nix"
-      "secrets/home.nix"
+      "secrets/home"
     ];
   };
 in {

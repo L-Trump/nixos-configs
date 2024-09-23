@@ -17,4 +17,8 @@ in {
   age.secrets.swanctl-conf = lib.mkIf config.mymodules.desktop.enable {
     file = "${mysecrets}/vpn/strongswan.conf.age";
   };
+  age.secrets.fortivpnconf = lib.mkIf config.mymodules.desktop.enable {
+    file = "${mysecrets}/vpn/fortivpnconf.age";
+    path = "/etc/.fortivpnconf";
+  };
 }

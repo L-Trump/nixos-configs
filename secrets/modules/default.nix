@@ -1,9 +1,7 @@
-{inputs, ...}: {
+{mylib, inputs, ...}: {
   imports = [
     inputs.agenix.nixosModules.default
-    ./vpn.nix
-    ./easytier.nix
-  ];
+  ] ++ mylib.scanPaths ./.;
 
   nixpkgs.overlays = [
     inputs.agenix.overlays.default
