@@ -48,7 +48,7 @@
   forAllSystems = func: (nixpkgs.lib.genAttrs allSystemNames func);
 in {
   # Add attribute sets into outputs, for debugging
-  debugAttrs = {inherit nixosSystems darwinSystems allSystems allSystemNames;};
+  debugAttrs = {inherit myvars nixosSystems darwinSystems allSystems allSystemNames;};
 
   # NixOS Hosts
   nixosConfigurations =
