@@ -96,7 +96,7 @@
   fileSystems."/nix" = {
     device = "/dev/disk/by-uuid/bc5fbdc7-9582-4c3f-8afd-9c340e3e9ec5";
     fsType = "btrfs";
-    options = ["subvol=nix" "noatime" "compress=zstd"];
+    options = ["subvol=@nix" "noatime" "compress=zstd"];
   };
 
   fileSystems."/persistent" = {

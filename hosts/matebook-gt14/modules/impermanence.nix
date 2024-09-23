@@ -39,7 +39,7 @@ in {
       "/etc/NetworkManager/system-connections"
       "/etc/ssh"
       "/etc/nix/inputs"
-      "/etc/nix/rancher"
+      "/etc/rancher"
       # "/etc/secureboot" # lanzaboote - secure boot
       # my secrets
       "/etc/agenix/"
