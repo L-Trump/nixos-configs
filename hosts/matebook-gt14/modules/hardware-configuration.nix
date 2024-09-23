@@ -77,9 +77,9 @@
         btrfs subvolume delete "$1"
     }
 
-    # for i in $(find /btrfs_tmp/@snapshots/old_roots/ -maxdepth 1 -mtime +10); do
-    #     delete_subvolume_recursively "$i"
-    # done
+    for i in $(find /btrfs_tmp/@snapshots/old_roots/ -maxdepth 1 -mtime +10); do
+        delete_subvolume_recursively "$i"
+    done
 
     btrfs subvolume create /btrfs_tmp/@root
     umount /btrfs_tmp
@@ -116,6 +116,12 @@
     device = "/dev/disk/by-uuid/bc5fbdc7-9582-4c3f-8afd-9c340e3e9ec5";
     fsType = "btrfs";
     options = ["subvol=@tmp" "compress=zstd"];
+  };
+
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-uuid/bc5fbdc7-9582-4c3f-8afd-9c340e3e9ec5";
+    fsType = "btrfs";
+    options = ["subvol=@boot" "compress=zstd"];
   };
 
   fileSystems."/boot/efi" = {
