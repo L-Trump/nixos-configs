@@ -24,7 +24,7 @@ switch:
 # Run eval tests
 [group('nix')]
 preview:
-  nixos-rebuild build $argv && nvd diff /run/current-system result
+  nixos-rebuild build --flake . $argv && nvd diff /run/current-system result
 
 [group('nix')]
 diff:
