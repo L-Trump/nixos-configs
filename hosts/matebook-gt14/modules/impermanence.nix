@@ -70,6 +70,7 @@ in {
         "Pictures"
         "Videos"
         "Sync"
+        "Onedrive"
 
         # Mail
         "Mail"
