@@ -16,8 +16,8 @@ in {
   systemd.services.easytier-ltnet = lib.mkIf cfg.enable {
     path = with pkgs; [easytier-pkg iproute2 bash];
     description = "EasyTier Service";
-    wants = ["network.target"];
-    after = ["network.target"];
+    wants = ["network-online.target" "nss-lookup.target"];
+    after = ["network-online.target" "nss-lookup.target"];
     serviceConfig = {
       Type = "simple";
       ExecStart = "${easytier-pkg}/bin/easytier-core -c ${config.age.secrets.easytier-conf.path} --multi-thread";
