@@ -164,7 +164,7 @@
     },
     "temperature": {
         // "thermal-zone": 2,
-        // "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
+        "hwmon-path": "/sys/class/hwmon/hwmon6/temp1_input",
         "critical-threshold": 80,
         // "format-critical": "{temperatureC}°C {icon}",
         "format": "<span size='13pt'>{icon}</span> {temperatureC}°C",
@@ -191,7 +191,8 @@
         "format-alt": "<span size='14pt'>{icon}</span>  {time}",
         // "format-good": "", // An empty format will hide the module
         // "format-full": "",
-        "format-icons": ["", "", "", "", ""]
+        "format-icons": ["", "", "", "", ""],
+        "on-click": "power-profile-switch"
     },
     "power-profiles-daemon": {
       "format": "{icon}",

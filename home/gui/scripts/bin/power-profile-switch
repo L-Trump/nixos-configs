@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+current_profile=$(powerprofilesctl list | grep '*' | awk '{sub(/:$/,""); print $2}')
+
+echo "Current: $current_profile"
+
+
+if [ "$current_profile" = "performance" ]; then
+    powerprofilesctl set balanced
+    echo "Set to Balanced"
+  	notify-send -u normal -r 1081 -i power-profile-balanced -t 1500 -a "Power Profile Daemon" "Profile Switched" "Balanced Mode"
+elif [ "$current_profile" = "balanced" ]; then
+    powerprofilesctl set power-saver
+    echo "Set to Power-Saver"
+  	notify-send -u normal -r 1081 -i power-profile-power-saver -t 1500 -a "Power Profile Daemon" "Profile Switched" "Power-Saver Mode"
+else
+    powerprofilesctl set performance
+    echo "Set to Performance"
+  	notify-send -u normal -r 1081 -i power-profile-performance -t 1500 -a "Power Profile Daemon" "Profile Switched" "Performance Mode"
+fi
