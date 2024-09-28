@@ -192,7 +192,7 @@
         // "format-good": "", // An empty format will hide the module
         // "format-full": "",
         "format-icons": ["", "", "", "", ""],
-        "on-click": "power-profile-switch"
+        "on-click-right": "power-profile-switch"
     },
     "power-profiles-daemon": {
       "format": "{icon}",
