@@ -5,5 +5,6 @@ in {
   ipu6-camera-hal = pkgs.callPackage ./ipu6-camera-hal {};
   ipu6epmtl-camera-hal = pkgs.callPackage ./ipu6-camera-hal {ipuVersion = "ipu6epmtl";};
   wpsoffice-cn = libsForQt5.callPackage ./wpsoffice-cn {};
-  openvswitch = pkgs.openvswitch.override {kernel = null;};
+  # openvswitch = pkgs.openvswitch.override {kernel = null;};
+  easytier = pkgs.callPackage ./easytier {};
 }
