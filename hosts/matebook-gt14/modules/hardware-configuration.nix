@@ -46,12 +46,9 @@
     # "xe.force_probe=7d55"
     "i915.enable_psr=0"
     "i915.enable_guc=3"
-    "snd-intel-dspcfg.dsp_driver=1"
-    "initcall_blacklist=simpledrm_platform_driver_init" # wait fix
+    "initcall_blacklist=simpledrm_platform_driver_init" # wait fix TODO
   ];
   boot.tmp.cleanOnBoot = true;
-
-  hardware.firmware = with pkgs; [sof-firmware];
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/bc5fbdc7-9582-4c3f-8afd-9c340e3e9ec5";

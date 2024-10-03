@@ -8,7 +8,6 @@
   darwin,
   withQuic ? false, # with QUIC protocol support
 }:
-
 rustPlatform.buildRustPackage rec {
   pname = "easytier";
   version = "2.0.0";
@@ -22,7 +21,7 @@ rustPlatform.buildRustPackage rec {
 
   cargoHash = "sha256-UegTL9ZdqLQYtcg8sJSGkie3ezt9OFMX0iVm/B1D91I=";
 
-  nativeBuildInputs = [ protobuf ];
+  nativeBuildInputs = [protobuf];
 
   buildInputs = lib.optionals stdenv.hostPlatform.isDarwin [
     darwin.apple_sdk.frameworks.Security
@@ -33,7 +32,7 @@ rustPlatform.buildRustPackage rec {
 
   doCheck = false; # tests failed due to heavy rely on network
 
-  passthru.updateScript = nix-update-script { };
+  passthru.updateScript = nix-update-script {};
 
   meta = {
     homepage = "https://github.com/EasyTier/EasyTier";
@@ -46,6 +45,6 @@ rustPlatform.buildRustPackage rec {
     mainProgram = "easytier-core";
     license = lib.licenses.asl20;
     platforms = with lib.platforms; unix ++ windows;
-    maintainers = with lib.maintainers; [ ltrump ];
+    maintainers = with lib.maintainers; [ltrump];
   };
 }
