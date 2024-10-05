@@ -27,11 +27,18 @@
           dontUnpack = true;
           setSourceRoot = "sourceRoot=`pwd`";
           installPhase = ''
-            mkdir -p $out/share/fonts
-            mkdir -p $out/share/fonts/opentype
-            mkdir -p $out/share/fonts/truetype
-            find -name \*.otf -exec mv {} $out/share/fonts/OTF/ \;
-            find -name \*.{ttf,ttc} -exec mv {} $out/share/fonts/TTF/ \;
+            if [ -d $src ]; then
+              cd $src
+              mkdir -p $out/share/fonts
+              mkdir -p $out/share/fonts/opentype
+              mkdir -p $out/share/fonts/truetype
+              mkdir -p $out/share/fonts/misc
+              find -name \*.otf -exec mv {} $out/share/fonts/opentype/ \;
+              find -name \*.otb -exec mv {} $out/share/fonts/opentype/ \;
+              find -name \*.ttf -exec mv {} $out/share/fonts/truetype/ \;
+              find -name \*.ttc -exec mv {} $out/share/fonts/truetype/ \;
+              find -name \*.bdf -exec mv {} $out/share/fonts/misc/ \;
+            fi
           '';
         };
     })

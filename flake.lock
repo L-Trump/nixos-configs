@@ -568,6 +568,22 @@
         "type": "github"
       }
     },
+    "myfonts": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1728138677,
+        "narHash": "sha256-h49al6wzwS0JD8d6Y3+QxbApjLYDMJdYEFfkvTA+gU0=",
+        "owner": "L-Trump",
+        "repo": "nixos-fonts",
+        "rev": "de8753d4fa08b787df872c7f358292c22d841edb",
+        "type": "github"
+      },
+      "original": {
+        "owner": "L-Trump",
+        "repo": "nixos-fonts",
+        "type": "github"
+      }
+    },
     "mysecrets": {
       "flake": false,
       "locked": {
@@ -919,6 +935,7 @@
         "hyprland": "hyprland",
         "impermanence": "impermanence",
         "lan-mouse": "lan-mouse",
+        "myfonts": "myfonts",
         "mysecrets": "mysecrets",
         "nix-matlab": "nix-matlab",
         "nixos-generators": "nixos-generators",
