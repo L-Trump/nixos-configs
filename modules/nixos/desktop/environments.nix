@@ -6,11 +6,11 @@
     gnumake
     python3
     python3Packages.pip
-    clang-tools
+    # clang-tools
     cmake
-    gccgo
-    go
-    nodejs_22
+    # gccgo
+    # go
+    # nodejs_22
   ];
 
   environment.pathsToLink = [
