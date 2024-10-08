@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  lib,
+  ...
+}: {
   programs.helix = {
     enable = true;
     package = pkgs.helix;
@@ -30,5 +34,11 @@
       # };
     };
   };
+
   programs.neovim.enable = true;
+
+  home.sessionVariables = {
+    EDITOR = lib.mkForce "hx";
+    SYSTEMD_EDITOR = lib.mkForce "hx";
+  };
 }
