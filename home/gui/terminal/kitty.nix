@@ -1,5 +1,5 @@
 {
-  config,
+  lib,
   pkgs,
   ...
 }: {
@@ -45,5 +45,9 @@
     extraConfig = ''
       scrollback_pager nvim -u NONE -R -M -c 'lua dofile("${./kitty-pager.lua}")(INPUT_LINE_NUMBER, CURSOR_LINE, CURSOR_COLUMN)' -
     '';
+  };
+
+  home.shellAliases = {
+    ssh = lib.mkForce "kitten ssh";
   };
 }
