@@ -1,12 +1,12 @@
 {
-  config,
+  pkgs-unstable,
   pkgs,
   lib,
   ...
 }: {
   home.packages = with pkgs; [
     onedriver
-    bitwarden-desktop
+    pkgs-unstable.bitwarden-desktop # wait for fix TODO
     rbw
     pinentry
     rofi-rbw-wayland

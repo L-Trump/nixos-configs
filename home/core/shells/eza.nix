@@ -3,7 +3,7 @@
   # useful in bash/zsh prompt
   programs.eza = {
     enable = true;
-    icons = true;
+    icons = "auto";
     git = true;
   };
   programs.fish.shellAliases = {

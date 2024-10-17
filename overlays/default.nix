@@ -7,6 +7,5 @@
   imports = [
     ./tools.nix
     ./packages.nix
-    ./ipu6.nix
   ];
 }
