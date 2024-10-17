@@ -130,7 +130,7 @@
       vrr = 2;
       key_press_enables_dpms = true;
       new_window_takes_over_fullscreen = 2;
-      animate_manual_resizes = true;
+      # animate_manual_resizes = true;
       # enable_swallow = true
       # swallow_regex = ^(Alacritty|kitty|footclient)$
     };
@@ -308,6 +308,25 @@
       "noborder, class:(lx-music-desktop)"
       "noblur, class:(lx-music-desktop)"
       "noshadow, class:(lx-music-desktop)"
+      # screenshots tools
+      # noanim isn't necessary but animations with these rules might look bad. use at your own discretion.
+      "noanim, class:^(flameshot)$"
+      "float, class:^(flameshot)$"
+      "move 0 0, class:^(flameshot)$"
+      "pin, class:^(flameshot)$"
+      "suppressevent fullscreen, class:^(flameshot)$"
+      "noanim, title:^(Snipper - Snipaste)$"
+      "float, title:^(Snipper - Snipaste)$"
+      "move 0 0, title:^(Snipper - Snipaste)$"
+      "pin, title:^(Snipper - Snipaste)$"
+      "suppressevent fullscreen, title:^(Snipper - Snipaste)$"
+      # set this to your leftmost monitor id, otherwise you have to move your cursor to the leftmost monitor
+      # before executing flameshot
+      "monitor 0, class:^(flameshot)$"
+      "monitor 0, title:^(Snipper - Snipaste)$"
+      "noborder, class:^(flameshot|Snipaste)$"
+      "noblur, class:^(flameshot|Snipaste)$"
+      "noshadow, class:^(flameshot|Snipaste)$"
     ];
 
     "plugin:touch_gestures" = {
