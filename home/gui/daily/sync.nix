@@ -7,6 +7,7 @@
   home.packages = with pkgs; [
     onedriver
     pkgs-unstable.bitwarden-desktop # wait for fix TODO
+    clouddrive2
     rbw
     pinentry
     rofi-rbw-wayland
@@ -23,6 +24,22 @@
       Restart = "on-abnormal";
       RestartSec = 3;
       RestartForceExitStatus = 2;
+    };
+    Install.WantedBy = ["default.target"];
+  };
+
+  systemd.user.services."clouddrive2" = {
+    Unit = {
+      Description = "CloudDrive";
+      Wants = ["network-online.target"];
+      After = ["network-online.target" "network.target"];
+    };
+    Service = {
+      Type = "exec";
+      Environment = [
+        "PATH=/run/wrappers/bin:/run/current-system/sw/bin:/etc/profiles/per-user/%u/bin"
+      ];
+      ExecStart = "${pkgs.clouddrive2}/bin/clouddrive";
     };
     Install.WantedBy = ["default.target"];
   };

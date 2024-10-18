@@ -12,4 +12,6 @@
       ];
     }
   ];
+
+  programs.fuse.userAllowOther = true;
 }

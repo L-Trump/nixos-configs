@@ -141,6 +141,7 @@ in {
         ".steam" # steam gamees
         ".xwechat"
         ".config/github-copilot" # nvim plugins
+        "Waytech" # clouddrive2
 
         # cloud native
         {
