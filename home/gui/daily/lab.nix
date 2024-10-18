@@ -10,5 +10,12 @@
     zotero
     nur.repos.linyinfeng.wemeet
     matlab
+    winetricks
+    wineWowPackages.waylandFull
+    lutris
   ];
+
+  home.sessionVariables = {
+    WINEPREFIX = config.xdg.dataHome + "/wine";
+  };
 }
