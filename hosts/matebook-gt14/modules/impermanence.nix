@@ -110,6 +110,7 @@ in {
         ".config/nnn" # NNN bookmarks
         ".config/fcitx5"
         ".config/copyq"
+        ".config/Bitwarden"
 
         # Logseq / Zotero
         ".config/Logseq"
