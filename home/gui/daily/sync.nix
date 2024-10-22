@@ -6,7 +6,7 @@
 }: {
   home.packages = with pkgs; [
     onedriver
-    pkgs-unstable.bitwarden-desktop # wait for fix TODO
+    bitwarden-desktop
     clouddrive2
     rbw
     pinentry
