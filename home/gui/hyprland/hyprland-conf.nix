@@ -327,6 +327,11 @@
       "noborder, class:^(flameshot|Snipaste)$"
       "noblur, class:^(flameshot|Snipaste)$"
       "noshadow, class:^(flameshot|Snipaste)$"
+      # Zotero
+      "float, class:^(Zotero)$, title:^(进度|Progress)$"
+      "center, class:^(Zotero)$, title:^(进度|Progress)$"
+      "noanim, class:^(Zotero)$, title:^(进度|Progress)$"
+      "maxsize 400 100, class:^(Zotero)$, title:^(进度|Progress)$"
     ];
 
     # "plugin:touch_gestures" = {
