@@ -6,5 +6,5 @@ in {
   # openvswitch = pkgs.openvswitch.override {kernel = null;};
   # easytier = pkgs.callPackage ./easytier {};
   clouddrive2 = pkgs.callPackage ./clouddrive2 {};
-  snipaste = pkgs.callPackage ./snipaste {};
+  # snipaste = pkgs.callPackage ./snipaste {};
 }
