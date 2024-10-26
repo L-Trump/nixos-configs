@@ -48,6 +48,6 @@
   };
 
   home.shellAliases = {
-    ssh = lib.mkForce "kitten ssh";
+    kssh = lib.mkForce "kitten ssh";
   };
 }
