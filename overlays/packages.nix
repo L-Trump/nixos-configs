@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  pkgs-stable,
   lib,
   ...
 }: {
@@ -10,7 +11,10 @@
         name = n;
         value = v;
       };
-      pkgAttrs = import ../packages {pkgs = prev;};
+      pkgAttrs = import ../packages {
+        inherit pkgs-stable;
+        pkgs = prev;
+      };
     in
       builtins.listToAttrs (map (n: nameValuePair n pkgAttrs.${n}) (builtins.attrNames pkgAttrs)))
   ];

@@ -73,10 +73,11 @@ in {
   packages = forAllSystems (
     system: let
       pkgs = nixpkgs.legacyPackages."${system}";
+      pkgs-stable = inputs.nixpkgs-stable.legacyPackages."${system}";
     in
       (allSystems.${system}.packages or {})
       // (
-        import ../packages {inherit pkgs;}
+        import ../packages {inherit pkgs pkgs-stable;}
       )
   );
 
