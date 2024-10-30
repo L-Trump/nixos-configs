@@ -378,11 +378,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1729728623,
-        "narHash": "sha256-IKacxuV6/3KyrBTk4G0KWyQyB2SmOhNUkMsNv142Wms=",
+        "lastModified": 1730306421,
+        "narHash": "sha256-KaPO5VV1k0NKVYwN3Nh7STgtkwIYu3XmXrp9Dduhkfk=",
         "owner": "horriblename",
         "repo": "hyprgrass",
-        "rev": "76063c5c66588ec0d4e70750741e8b706f620583",
+        "rev": "e3288ed6896366dfec5aa482020a1fd2bac55d93",
         "type": "github"
       },
       "original": {
@@ -407,11 +407,11 @@
         "xdph": "xdph"
       },
       "locked": {
-        "lastModified": 1729989895,
-        "narHash": "sha256-Bgrkba6KQHw1SOl1GC0Gyjsc58vB2UxdVURDLImE4KY=",
+        "lastModified": 1730282458,
+        "narHash": "sha256-J7DTSBuWRtcWy8ivmj8fXl5ovQLCH3t+Y6o+EQkRk5U=",
         "ref": "refs/heads/main",
-        "rev": "a3d3b4fd64a51a8c1663b450bd2a408f1f0fa9b3",
-        "revCount": 5380,
+        "rev": "5f721dce36651232ae245d872c17dfa3aae5cc6c",
+        "revCount": 5391,
         "submodules": true,
         "type": "git",
         "url": "https://github.com/hyprwm/Hyprland"

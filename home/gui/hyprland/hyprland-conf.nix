@@ -14,7 +14,7 @@
     "DESKTOP_SESSION"
   ];
   plugins = [
-    # inputs.hyprgrass.packages.${pkgs.system}.default # TODO wait for fix
+    inputs.hyprgrass.packages.${pkgs.system}.default
   ];
   settings = {
     monitor = [
@@ -334,20 +334,20 @@
       "maxsize 400 100, class:^(Zotero)$, title:^(进度|Progress)$"
     ];
 
-    # "plugin:touch_gestures" = {
-    #   sensitivity = 3.0;
-    #   hyprgrass-bindm = [
-    #     ", longpress:2, movewindow"
-    #     ", longpress:3, resizewindow"
-    #   ];
-    #   hyprgrass-bind = [
-    #     ", swipe:4:d, killactive:"
-    #     ", edge:r:u, exec, pactl set-sink-volume @DEFAULT_SINK@ +5%"
-    #     ", edge:r:d, exec, pactl set-sink-volume @DEFAULT_SINK@ -5%"
-    #     ", edge:l:u, exec, brightnessctl s 3%+"
-    #     ", edge:l:d, exec, brightnessctl s 3%-"
-    #   ];
-    # };
+    "plugin:touch_gestures" = {
+      sensitivity = 3.0;
+      hyprgrass-bindm = [
+        ", longpress:2, movewindow"
+        ", longpress:3, resizewindow"
+      ];
+      hyprgrass-bind = [
+        ", swipe:4:d, killactive:"
+        ", edge:r:u, exec, pactl set-sink-volume @DEFAULT_SINK@ +5%"
+        ", edge:r:d, exec, pactl set-sink-volume @DEFAULT_SINK@ -5%"
+        ", edge:l:u, exec, brightnessctl s 3%+"
+        ", edge:l:d, exec, brightnessctl s 3%-"
+      ];
+    };
   };
 
   extraConfig = ''
