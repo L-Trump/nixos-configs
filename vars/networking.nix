@@ -15,6 +15,9 @@ in rec {
     n100.ipv4 = "10.144.144.111";
     tencent-vm-jp.ipv4 = "10.144.144.253";
     dorm-router.ipv4 = "10.144.144.198";
+    gs445.ipv4 = "10.144.144.195";
+    oneplus-ace.ipv4 = "10.144.144.249";
+    matepad.ipv4 = "10.144.144.248";
     nas = {
       ipv4 = "10.144.144.110";
       ssh.port = 2233;
