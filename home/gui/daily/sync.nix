@@ -11,6 +11,7 @@
     rbw
     pinentry
     rofi-rbw-wayland
+    rustdesk-flutter
   ];
 
   services.syncthing.enable = true;
