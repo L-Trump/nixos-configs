@@ -56,6 +56,7 @@
     home-modules = map mylib.relativeToRoot [
       # common
       "home/default.nix"
+      "hosts/${name}/home"
       "secrets/home"
     ];
   };
