@@ -111,6 +111,7 @@ in {
         ".config/fcitx5"
         ".config/copyq"
         ".config/Bitwarden"
+        ".config/rustdesk"
 
         # Logseq / Zotero
         ".config/Logseq"
