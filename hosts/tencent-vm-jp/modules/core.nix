@@ -1,12 +1,22 @@
-{...}: {
-  networking.hostName = "tencent-vm-jp";
+{myvars, ...}: let
+  hostName = "tencent-vm-jp";
+  inherit (myvars) networking;
+in {
   # networking.networkmanager.enable = true; # Easiest to use and most distros use this by default.
 
   boot.tmp.cleanOnBoot = true;
   zramSwap.enable = true;
-  networking.domain = "localdomain";
   services.openssh.enable = true;
   services.resolved.enable = true;
+
+  networking = {
+    inherit hostName;
+    domain = "localdomain";
+    nameservers = [
+      "8.8.8.8" # googledns
+      "8.8.4.4" # googledns
+    ];
+  };
 
   # This option defines the first version of NixOS you have installed on this particular machine,
   # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.
