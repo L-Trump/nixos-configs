@@ -21,6 +21,8 @@
     wantedBy = ["multi-user.target"];
   };
 
+  hardware.opentabletdriver.enable = true;
+
   # systemd.services.touchegg = {
   #   description = "Touchegg Daemon";
   #   after = [ "touchscreen-workaround.service" ];

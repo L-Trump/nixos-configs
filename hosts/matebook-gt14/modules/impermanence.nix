@@ -112,6 +112,7 @@ in {
         ".config/copyq"
         ".config/Bitwarden"
         ".config/rustdesk"
+        ".config/OpenTabletDriver"
 
         # Logseq / Zotero
         ".config/Logseq"
