@@ -81,6 +81,7 @@ in {
       grim
       slurp
       grimblast
+      swappy
       copyq
       dex
       acpi

@@ -271,6 +271,7 @@
       "$mainMod, n, exec, term-nnn"
       "$mainMod ALT, v, exec, rofi-rbw"
       "$mainMod SHIFT, v, exec, copyq toggle"
+      "$mainMod SHIFT, p, exec, wl-paste | swappy -f -"
     ];
     bindm = [
       # Move/resize windows with mainMod + LMB/RMB and dragging
