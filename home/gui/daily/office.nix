@@ -12,6 +12,7 @@
     pkgs-stable.logseq
     vikunja
     typora
+    xournalpp
   ];
 
   programs.zathura = {

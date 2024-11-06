@@ -113,6 +113,7 @@ in {
         ".config/Bitwarden"
         ".config/rustdesk"
         ".config/OpenTabletDriver"
+        ".config/xournalpp"
 
         # Logseq / Zotero
         ".config/Logseq"
