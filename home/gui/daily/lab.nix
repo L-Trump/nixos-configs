@@ -13,6 +13,7 @@
     # winetricks
     # wineWowPackages.waylandFull
     # lutris
+    dbeaver-bin
   ];
 
   home.sessionVariables = {

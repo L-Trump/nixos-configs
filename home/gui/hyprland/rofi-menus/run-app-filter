@@ -10,6 +10,7 @@ set app_rule "^.*firefox|GDK_DPI" \
     "^.*remmina|GDK_DPI" \
     "^.*lx-music-desktop|NO_WAYLAND" \
     "^.*typora|WAYLAND_ELECTRON" \
+    "^.*dbeaver|NO_WAYLAND" \
     "^.*[Tt]hunar|GDK_DPI"
 
 set cmd $argv[1]
