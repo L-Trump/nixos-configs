@@ -10,9 +10,9 @@
     zotero
     nur.repos.linyinfeng.wemeet
     matlab
-    winetricks
-    wineWowPackages.waylandFull
-    lutris
+    # winetricks
+    # wineWowPackages.waylandFull
+    # lutris
   ];
 
   home.sessionVariables = {
