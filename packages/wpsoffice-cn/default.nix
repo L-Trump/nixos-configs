@@ -22,9 +22,9 @@
   cacert,
   libjpeg,
 }: let
-  pkgVersion = "12.1.0.17885";
+  pkgVersion = "12.1.0.17900";
   url = "https://wps-linux-personal.wpscdn.cn/wps/download/ep/Linux2023/${lib.last (lib.splitVersion pkgVersion)}/wps-office_${pkgVersion}_amd64.deb";
-  hash = "sha256-VFHDv4C3pgqe0fSbuO7T/HYUIjr67cxY3pnYh7q3cNk=";
+  hash = "sha256-i2EVCmDLE2gx7l2aAo+fW8onP/z+xlPIbQYwKhQ46+o=";
   uri = builtins.replaceStrings ["https://wps-linux-personal.wpscdn.cn"] [""] url;
   securityKey = "7f8faaaa468174dc1c9cd62e5f218a5b";
 in
