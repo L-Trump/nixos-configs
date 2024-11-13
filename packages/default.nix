@@ -6,7 +6,12 @@
   inherit (pkgs) lib libsForQt5;
 in {
   xdg-desktop-portal-termfilechooser = pkgs.callPackage ./xdg-desktop-portal-termfilechooser {};
-  wpsoffice-cn = libsForQt5.callPackage ./wpsoffice-cn {};
+  wpsoffice-cn = libsForQt5.callPackage ./wpsoffice {
+    useChineseVersion = true;
+  };
+  wpsoffice-365 = libsForQt5.callPackage ./wpsoffice {
+    use365Version = true;
+  };
   # openvswitch = pkgs-stable.openvswitch.override {kernel = null;};
   # easytier = pkgs.callPackage ./easytier {};
   # clouddrive2 = pkgs.callPackage ./clouddrive2 {};
