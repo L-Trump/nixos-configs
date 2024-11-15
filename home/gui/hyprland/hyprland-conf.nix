@@ -311,6 +311,9 @@
       "noborder, class:(lx-music-desktop)"
       "noblur, class:(lx-music-desktop)"
       "noshadow, class:(lx-music-desktop)"
+      # wps
+      "noblur, class:^(wps|wpspdf|wpp|et)$"
+      "noshadow, class:^(wps|wpspdf|wpp|et)$"
       # screenshots tools
       # noanim isn't necessary but animations with these rules might look bad. use at your own discretion.
       "noanim, class:^(flameshot)$"
