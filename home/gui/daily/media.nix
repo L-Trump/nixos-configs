@@ -45,7 +45,7 @@
         # obs-multi-rtmp
         # obs-source-clone
         # obs-shaderfilter
-        # obs-source-record
+        obs-source-record
         # obs-livesplit-one
         # looking-glass-obs
         # obs-vintage-filter
