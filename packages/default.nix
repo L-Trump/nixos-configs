@@ -12,6 +12,10 @@ in {
   wpsoffice-365 = libsForQt5.callPackage ./wpsoffice {
     use365Version = true;
   };
+  edrawmax = libsForQt5.callPackage ./edrawmax {};
+  edrawmax-cn = libsForQt5.callPackage ./edrawmax {
+    useChineseVersion = true;
+  };
   # openvswitch = pkgs-stable.openvswitch.override {kernel = null;};
   # easytier = pkgs.callPackage ./easytier {};
   # clouddrive2 = pkgs.callPackage ./clouddrive2 {};

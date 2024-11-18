@@ -14,6 +14,7 @@
     vikunja
     typora
     xournalpp
+    edrawmax-cn
   ];
 
   programs.zathura = {
