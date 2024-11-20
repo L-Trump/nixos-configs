@@ -15,6 +15,7 @@
     typora
     xournalpp
     edrawmax-cn
+    siyuan
   ];
 
   programs.zathura = {

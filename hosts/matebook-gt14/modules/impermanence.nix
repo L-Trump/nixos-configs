@@ -175,6 +175,12 @@ in {
         ".vscode-insiders"
         ".config/Code/User"
         ".config/Code - Insiders/User"
+
+        # SiYuan
+        # ".config/SiYuan"
+        ".config/SiYuan-Electron"
+        ".config/siyuan"
+        "SiYuan"
       ];
       files = [
         ".cache/rofi3.druncache"
