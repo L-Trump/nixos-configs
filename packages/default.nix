@@ -16,6 +16,7 @@ in {
   edrawmax-cn = libsForQt5.callPackage ./edrawmax {
     useChineseVersion = true;
   };
+  siyuan = pkgs.callPackage ./siyuan {};
   # openvswitch = pkgs-stable.openvswitch.override {kernel = null;};
   # easytier = pkgs.callPackage ./easytier {};
   # clouddrive2 = pkgs.callPackage ./clouddrive2 {};
