@@ -51,9 +51,9 @@
   boot.tmp.cleanOnBoot = true;
 
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/bc5fbdc7-9582-4c3f-8afd-9c340e3e9ec5";
+    device = "/dev/disk/by-label/nixos";
     fsType = "btrfs";
-    options = ["subvol=@root" "compress=zstd"];
+    options = ["subvol=@root" "noatime" "compress=zstd"];
   };
 
   # clean on boot
@@ -83,7 +83,7 @@
   '';
 
   fileSystems."/btr_pool" = {
-    device = "/dev/disk/by-uuid/bc5fbdc7-9582-4c3f-8afd-9c340e3e9ec5";
+    device = "/dev/disk/by-label/nixos";
     fsType = "btrfs";
     # btrfs's top-level subvolume, internally has an id 5
     # we can access all other subvolumes from this subvolume.
@@ -91,34 +91,51 @@
   };
 
   fileSystems."/nix" = {
-    device = "/dev/disk/by-uuid/bc5fbdc7-9582-4c3f-8afd-9c340e3e9ec5";
+    device = "/dev/disk/by-label/nixos";
     fsType = "btrfs";
     options = ["subvol=@nix" "noatime" "compress=zstd"];
   };
 
   fileSystems."/persistent" = {
-    device = "/dev/disk/by-uuid/bc5fbdc7-9582-4c3f-8afd-9c340e3e9ec5";
+    device = "/dev/disk/by-label/nixos";
     fsType = "btrfs";
     options = ["subvol=@persistent" "noatime" "compress=zstd"];
     neededForBoot = true;
   };
 
   fileSystems."/snapshots" = {
-    device = "/dev/disk/by-uuid/bc5fbdc7-9582-4c3f-8afd-9c340e3e9ec5";
+    device = "/dev/disk/by-label/nixos";
     fsType = "btrfs";
-    options = ["subvol=@snapshots" "compress=zstd"];
+    options = ["subvol=@snapshots" "noatime" "compress=zstd"];
   };
 
   fileSystems."/tmp" = {
-    device = "/dev/disk/by-uuid/bc5fbdc7-9582-4c3f-8afd-9c340e3e9ec5";
+    device = "/dev/disk/by-label/nixos";
     fsType = "btrfs";
     options = ["subvol=@tmp" "compress=zstd"];
   };
 
-  fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/bc5fbdc7-9582-4c3f-8afd-9c340e3e9ec5";
+  # mount swap subvolume in readonly mode. 
+  fileSystems."/swap" = {
+    device = "/dev/disk/by-label/nixos";
     fsType = "btrfs";
-    options = ["subvol=@boot" "compress=zstd"];
+    options = ["subvol=@swap" "ro"];
+  };
+
+  # remount swapfile in read-write mode
+  fileSystems."/swap/swapfile" = {
+    # the swapfile is located in /swap subvolume, so we need to mount /swap first.
+    depends = ["/swap"];
+
+    device = "/swap/swapfile";
+    fsType = "none";
+    options = ["bind" "rw"];
+  };
+
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-label/nixos";
+    fsType = "btrfs";
+    options = ["subvol=@boot" "noatime" "compress=zstd"];
   };
 
   fileSystems."/boot/efi" = {
@@ -127,7 +144,10 @@
     options = ["fmask=0022" "dmask=0022"];
   };
 
-  swapDevices = [{device = "/dev/disk/by-uuid/b60ee5c2-c058-44c5-b3a2-7d3872da5505";}];
+  swapDevices = [
+    {device = "/swap/swapfile";}
+  ];
+
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
