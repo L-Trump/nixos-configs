@@ -16,6 +16,7 @@
     xournalpp
     edrawmax-cn
     siyuan
+    tesseract # for siyuan OCR, ~1GB space consumption
   ];
 
   programs.zathura = {
