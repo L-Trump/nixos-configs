@@ -115,7 +115,7 @@
     options = ["subvol=@tmp" "compress=zstd"];
   };
 
-  # mount swap subvolume in readonly mode. 
+  # mount swap subvolume in readonly mode.
   fileSystems."/swap" = {
     device = "/dev/disk/by-label/nixos";
     fsType = "btrfs";
@@ -147,7 +147,6 @@
   swapDevices = [
     {device = "/swap/swapfile";}
   ];
-
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
