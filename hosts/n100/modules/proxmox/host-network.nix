@@ -46,43 +46,12 @@ in {
     "vm.swappiness" = 0; # don't swap unless absolutely necessary
   };
 
-  environment.systemPackages = with pkgs; [
-    # Validate Hardware Virtualization Support via:
-    #   virt-host-validate qemu
-    libvirt
-    kubevirt # virtctl
-
-    # used by kubernetes' ovs-cni plugin
-    # https://github.com/k8snetworkplumbingwg/multus-cni
-    multus-cni
-  ];
-
   # Workaround for longhorn running on NixOS
   # https://github.com/longhorn/longhorn/issues/2166
   systemd.tmpfiles.rules = [
     "L+ /usr/local/bin - - - - /run/current-system/sw/bin/"
   ];
-  # Longhorn uses open-iscsi to create block devices.
-  services.openiscsi = {
-    name = "iqn.2020-08.org.linux-iscsi.initiatorhost:${hostName}";
-    enable = true;
-  };
 
-  # Enable the Open vSwitch as a systemd service
-  # It's required by kubernetes' ovs-cni plugin.
-  virtualisation.vswitch = {
-    enable = true;
-    # reset the Open vSwitch configuration database to a default configuration on every start of the systemd ovsdb.service
-    resetOnStart = false;
-  };
-  networking.vswitches = {
-    # https://github.com/k8snetworkplumbingwg/ovs-cni/blob/main/docs/demo.md
-    ovsbr1 = {
-      # Attach the interfaces to OVS bridge
-      # This interface should not used by the host itself!
-      interfaces.${iface} = {};
-    };
-  };
   networking = {
     inherit hostName;
     inherit (networking) defaultGateway nameservers;
@@ -90,7 +59,8 @@ in {
     # Manage the interface with OVS instead of networkmanager
     networkmanager.unmanaged = [iface];
     # Set the host's address on the OVS bridge interface instead of the physical interface!
-    interfaces.ovsbr1 = networking.hostsInterface.${hostName}.interfaces.${iface};
+    interfaces.vmbr0 = networking.hostsInterface.${hostName}.interfaces.${iface};
+    bridges.vmbr0.interfaces = [iface];
     enableIPv6 = true;
   };
 }

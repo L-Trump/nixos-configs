@@ -74,5 +74,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
       url = "gitlab:doronbehar/nix-matlab";
     };
+    # Proxmox on NixOS
+    proxmox-nixos = {
+      inputs.nixpkgs-unstable.follows = "nixpkgs";
+      url = "github:SaumonNet/proxmox-nixos";
+    };
   };
 }
