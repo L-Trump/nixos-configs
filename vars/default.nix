@@ -19,7 +19,7 @@
   #    2. Never leave the device and never sent over the network.
   # 2. Or just use hardware security keys like Yubikey/CanoKey.
   sshAuthorizedKeys = [
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM4EX2pnEnMWLxi5Es3sGtrF11xi7vPv+DS3A5nFWlQ2 ltrump@mbgt"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIELKxC3ntw44oEB+HnFwrDQOudiVmf9XnO3W+P2HA+1N ltrump@mbgt"
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIJvcGCqT9GbTjxRHUFL8wp6nNXKIvtiFGhZD05yrFSb ltrump@fallback"
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIy+DeKN/Lzov2h8cDsOjOwtRAA6c5WcTlQCwUpv9zB0 ltrump@oldfallback"
   ];
