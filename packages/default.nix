@@ -19,14 +19,10 @@ in {
     useChineseVersion = true;
   };
 
-  # TODO wait upstream merge https://nixpk.gs/pr-tracker.html?pr=357032
-  siyuan = pkgs.callPackage ./siyuan {};
-
-  # TODO wait upstream merge https://nixpk.gs/pr-tracker.html?pr=357050
-  linuxPackages_latest = pkgs.linuxPackages_latest.extend (_: _: {
-    ipu6-drivers = pkgs.linuxPackages_latest.callPackage ./ipu6-drivers {};
-  });
-
+  # siyuan = pkgs.callPackage ./siyuan {};
+  # linuxPackages_latest = pkgs.linuxPackages_latest.extend (_: _: {
+  #   ipu6-drivers = pkgs.linuxPackages_latest.callPackage ./ipu6-drivers {};
+  # });
   # openvswitch = pkgs-stable.openvswitch.override {kernel = null;};
   # easytier = pkgs.callPackage ./easytier {};
   # clouddrive2 = pkgs.callPackage ./clouddrive2 {};
