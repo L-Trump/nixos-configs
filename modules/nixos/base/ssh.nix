@@ -25,20 +25,5 @@
 
   # Add terminfo database of all known terminals to the system profile.
   # https://github.com/NixOS/nixpkgs/blob/nixos-24.05/nixos/modules/config/terminfo.nix
-  # environment.enableAllTerminfo = true;
-  environment.systemPackages = map (x: x.terminfo) (with pkgs.pkgsBuildBuild; [
-    alacritty
-    # contour # contour build failed, wait for fix TODO
-    foot
-    kitty
-    mtm
-    rio
-    rxvt-unicode-unwrapped
-    rxvt-unicode-unwrapped-emoji
-    st
-    termite
-    tmux
-    wezterm
-    yaft
-  ]);
+  environment.enableAllTerminfo = true;
 }
