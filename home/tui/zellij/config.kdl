@@ -301,8 +301,7 @@ themes {
 //
 theme "catppuccin-mocha"
 
-// TODO: wait for upstream fix
-support_kitty_keyboard_protocol false
+// support_kitty_keyboard_protocol false
 
 // The name of the default layout to load on startup
 // Default: "default"
