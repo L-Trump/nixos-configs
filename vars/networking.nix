@@ -18,6 +18,7 @@ in rec {
     gs445.ipv4 = "10.144.144.195";
     oneplus-ace.ipv4 = "10.144.144.249";
     matepad.ipv4 = "10.144.144.248";
+    homewin.ipv4 = "10.144.144.240";
     nas = {
       ipv4 = "10.144.144.110";
       ssh.port = 2233;
