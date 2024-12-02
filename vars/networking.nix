@@ -19,6 +19,7 @@ in rec {
     oneplus-ace.ipv4 = "10.144.144.249";
     matepad.ipv4 = "10.144.144.248";
     homewin.ipv4 = "10.144.144.240";
+    nucwin.ipv4 = "10.144.144.241";
     nas = {
       ipv4 = "10.144.144.110";
       ssh.port = 2233;
