@@ -34,17 +34,19 @@
 
       # nerdfonts
       # https://github.com/NixOS/nixpkgs/blob/nixos-24.05/pkgs/data/fonts/nerdfonts/shas.nix
-      (nerdfonts.override {
-        fonts = [
-          # symbols icon only
-          "NerdFontsSymbolsOnly"
-          # Characters
-          "FiraCode"
-          "JetBrainsMono"
-          "Iosevka"
-          "SourceCodePro"
-        ];
-      })
+      nerd-fonts.symbols-only
+      nerd-fonts.sauce-code-pro
+      # (nerdfonts.override {
+      #   fonts = [
+      #     # symbols icon only
+      #     "NerdFontsSymbolsOnly"
+      #     # Characters
+      #     "FiraCode"
+      #     "JetBrainsMono"
+      #     "Iosevka"
+      #     "SourceCodePro"
+      #   ];
+      # })
       julia-mono
       dejavu_fonts
     ];
