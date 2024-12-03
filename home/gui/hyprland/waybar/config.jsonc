@@ -138,7 +138,7 @@
     "clock": {
         // "timezone": "America/New_York",
         "interval": 1,
-        "format": "<span size='14pt'></span>  {:%I:%M %p}",
+        "format": "<span size='14pt'></span> {:%I:%M %p}",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
         "calendar": {
             // "mode"          : "year",
@@ -184,7 +184,7 @@
             "warning": 30,
             "critical": 15
         },
-        "format": "<span rise='-1pt' size='14pt'>{icon}</span>  {capacity}%",
+        "format": "<span rise='-1pt' size='14pt'>{icon}</span> {capacity}%",
         "format-full": "<span size='14pt'>{icon}</span>  {capacity}%",
         "format-charging": "<span size='14pt'></span> {capacity}%",
         "format-plugged": "<span size='14pt'></span>  {capacity}%",

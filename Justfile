@@ -190,8 +190,8 @@ list-failed:
 waybar-test:
   rm -rf $HOME/.config/waybar/config.jsonc
   rm -rf $HOME/.config/waybar/style.css
-  rsync -avz --copy-links --chmod=D2755,F744 ./home/hyprland/waybar/config.jsonc $HOME/.config/waybar/config.jsonc
-  rsync -avz --copy-links --chmod=D2755,F744 ./home/hyprland/waybar/style.css $HOME/.config/waybar/style.css
+  rsync -avz --copy-links --chmod=D2755,F744 ./home/gui/hyprland/waybar/config.jsonc $HOME/.config/waybar/config.jsonc
+  rsync -avz --copy-links --chmod=D2755,F744 ./home/gui/hyprland/waybar/style.css $HOME/.config/waybar/style.css
 
 [group('waybar')]
 waybar-clean:
