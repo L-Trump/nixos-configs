@@ -22,11 +22,11 @@
       url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # Hyprland gestures
-    hyprgrass = {
-      url = "github:horriblename/hyprgrass";
-      inputs.hyprland.follows = "hyprland"; # IMPORTANT
-    };
+    # # Hyprland gestures
+    # hyprgrass = {
+    #   url = "github:horriblename/hyprgrass";
+    #   inputs.hyprland.follows = "hyprland"; # IMPORTANT
+    # };
     # xddxdd packages, for qq/wechat
     nur-xddxdd = {
       url = "github:xddxdd/nur-packages";
