@@ -14,7 +14,7 @@
     vikunja
     typora
     xournalpp
-    edrawmax-cn
+    # edrawmax-cn
     siyuan
     tesseract # for siyuan OCR, ~1GB space consumption
   ];
