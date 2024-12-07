@@ -19,7 +19,9 @@ in {
     useChineseVersion = true;
   };
 
-  # siyuan = pkgs.callPackage ./siyuan {};
+  # Wait upstream merge, https://nixpk.gs/pr-tracker.html?pr=362889
+  siyuan = pkgs.callPackage ./siyuan {};
+
   # linuxPackages_latest = pkgs.linuxPackages_latest.extend (_: _: {
   #   ipu6-drivers = pkgs.linuxPackages_latest.callPackage ./ipu6-drivers {};
   # });
