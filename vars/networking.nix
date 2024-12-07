@@ -32,10 +32,10 @@ in rec {
       ipv4 = "10.144.144.197";
       ssh.user = "caddy";
     };
-    eo-acs = {
-      ipv4 = "10.144.144.199";
-      ssh.user = "caddy";
-    };
+    # eo-acs = {
+    #   ipv4 = "10.144.144.199";
+    #   ssh.user = "caddy";
+    # };
     eo-hw = {
       ipv4 = "10.144.144.200";
       ssh.user = "caddy";
