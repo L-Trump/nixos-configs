@@ -1,16 +1,20 @@
 {
-  config,
+  inputs,
   myvars,
   lib,
   pkgs,
   nixpkgs,
   ...
 }: {
+  imports = [
+    # XDDXDD cache substituter
+    inputs.nur-xddxdd.nixosModules.nix-cache-attic
+  ];
   # auto upgrade nix to the unstable version
   # https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/tools/package-management/nix/default.nix#L284
   nix.package = pkgs.nixVersions.latest;
   nix.settings = {
-    substituters = [
+    substituters = lib.mkBefore [
       "https://mirrors.ustc.edu.cn/nix-channels/store"
       "https://mirror.sjtu.edu.cn/nix-channels/store"
       "https://nix-community.cachix.org"

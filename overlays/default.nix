@@ -7,5 +7,6 @@
   imports = [
     ./tools.nix
     ./packages.nix
+    ./nurs.nix
   ];
 }
