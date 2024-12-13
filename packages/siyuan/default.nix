@@ -34,20 +34,20 @@ let
 in
 stdenv.mkDerivation (finalAttrs: {
   pname = "siyuan";
-  version = "3.1.14";
+  version = "3.1.15";
 
   src = fetchFromGitHub {
     owner = "siyuan-note";
     repo = "siyuan";
     rev = "v${finalAttrs.version}";
-    hash = "sha256-78MgZtTWh0/Ar+Di3e4CyaL1HGfzonwtk0Zk3SP/39U=";
+    hash = "sha256-O4kiDpFOTh+ATkFSUyQPgxJeG3Datf/Tp0rZ5b+r42Q=";
   };
 
   kernel = buildGo123Module {
     name = "${finalAttrs.pname}-${finalAttrs.version}-kernel";
     inherit (finalAttrs) src;
     sourceRoot = "${finalAttrs.src.name}/kernel";
-    vendorHash = "sha256-3824v9jesohYn+hIiV6ag+rVOCNbgrLVNyT/2lElgkQ=";
+    vendorHash = "sha256-NHbKis6B19B+q9VltkF2SRtaRTNDugmOArtBZXYQqKQ=";
 
     patches = [
       (substituteAll {
