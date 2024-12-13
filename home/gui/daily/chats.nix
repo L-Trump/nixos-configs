@@ -1,7 +1,7 @@
 {pkgs, ...}: {
   home.packages = with pkgs; [
     qq
-    wechat-uos-without-sandbox
+    wechat-uos
     telegram-desktop
   ];
 
