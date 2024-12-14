@@ -10,7 +10,7 @@
     # inputs.helix-driver.overlays.default
     (final: prev: {
       nur-xddxdd =
-        import inputs.nur-xddxdd.overlays.default final prev;
+        (inputs.nur-xddxdd.overlays.default final prev);
     })
   ];
 }
