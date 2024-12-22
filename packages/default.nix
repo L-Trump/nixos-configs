@@ -22,11 +22,13 @@ in {
   # Wait upstream merge, https://nixpk.gs/pr-tracker.html?pr=362889
   siyuan = pkgs.callPackage ./siyuan {};
 
+  # Wait upstream merge, https://nixpk.gs/pr-tracker.html?pr=367097
+  easytier = pkgs.callPackage ./easytier {};
+
   # linuxPackages_latest = pkgs.linuxPackages_latest.extend (_: _: {
   #   ipu6-drivers = pkgs.linuxPackages_latest.callPackage ./ipu6-drivers {};
   # });
   # openvswitch = pkgs-stable.openvswitch.override {kernel = null;};
-  # easytier = pkgs.callPackage ./easytier {};
   # clouddrive2 = pkgs.callPackage ./clouddrive2 {};
   # snipaste = pkgs.callPackage ./snipaste {};
 }
