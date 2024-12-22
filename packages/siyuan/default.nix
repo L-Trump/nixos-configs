@@ -34,20 +34,20 @@ let
 in
 stdenv.mkDerivation (finalAttrs: {
   pname = "siyuan";
-  version = "3.1.15";
+  version = "3.1.16";
 
   src = fetchFromGitHub {
     owner = "siyuan-note";
     repo = "siyuan";
     rev = "v${finalAttrs.version}";
-    hash = "sha256-O4kiDpFOTh+ATkFSUyQPgxJeG3Datf/Tp0rZ5b+r42Q=";
+    hash = "sha256-8+Gz9AuxmK2hOApRZ2b1+rROOG94EBJR3pyp8YwtgiA=";
   };
 
   kernel = buildGo123Module {
     name = "${finalAttrs.pname}-${finalAttrs.version}-kernel";
     inherit (finalAttrs) src;
     sourceRoot = "${finalAttrs.src.name}/kernel";
-    vendorHash = "sha256-NHbKis6B19B+q9VltkF2SRtaRTNDugmOArtBZXYQqKQ=";
+    vendorHash = "sha256-B2pGXs0IN5WhNHoFgTufd46q60RNvWzNdwoCxpayYC8=";
 
     patches = [
       (substituteAll {
@@ -89,7 +89,7 @@ stdenv.mkDerivation (finalAttrs: {
       src
       sourceRoot
       ;
-    hash = "sha256-DLmLRrfHx1nhid25qJvReI+MwT3Lm+AD1tQjx0QPoeU=";
+    hash = "sha256-LlQdfRGsBn3IZWKSUqH5tAljXnWanuFXO2x+Wi3on7E=";
   };
 
   sourceRoot = "${finalAttrs.src.name}/app";
