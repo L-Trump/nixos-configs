@@ -25,10 +25,11 @@
     ];
     exec-once = ["brightnessctl -d platform::micmute s 0"];
     bindl = [
+      # TODO wait https://github.com/hyprwm/aquamarine/pull/122 released
       # trigger when the switch is turning on
-      '', switch:on:Lid Switch, exec, hyprctl keyword monitor "eDP-1, disable"''
+      # '', switch:on:Lid Switch, exec, hyprctl keyword monitor "eDP-1, disable"''
       # trigger when the switch is turning off
-      '', switch:off:Lid Switch, exec, hyprctl keyword monitor "eDP-1, preferred, 0x0, auto"''
+      # '', switch:off:Lid Switch, exec, hyprctl keyword monitor "eDP-1, preferred, 0x0, auto"''
     ];
   };
 }

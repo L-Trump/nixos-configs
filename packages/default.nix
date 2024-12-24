@@ -19,10 +19,10 @@ in {
     useChineseVersion = true;
   };
 
-  # Wait upstream merge, https://nixpk.gs/pr-tracker.html?pr=362889
+  # TODO Wait upstream merge, https://nixpk.gs/pr-tracker.html?pr=362889
   siyuan = pkgs.callPackage ./siyuan {};
 
-  # Wait upstream merge, https://nixpk.gs/pr-tracker.html?pr=367097
+  # TODO Wait upstream merge, https://nixpk.gs/pr-tracker.html?pr=367097
   easytier = pkgs.callPackage ./easytier {};
 
   # linuxPackages_latest = pkgs.linuxPackages_latest.extend (_: _: {
