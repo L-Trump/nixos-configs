@@ -44,6 +44,7 @@
     parted
     fuse
     fuse3
+    nfs-utils
   ];
 
   programs.fish.enable = true;
