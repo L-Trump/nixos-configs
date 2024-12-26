@@ -2,6 +2,7 @@
   config,
   pkgs,
   pkgs-stable,
+  pkgs-unstable,
   lib,
   ...
 }: {
@@ -12,7 +13,7 @@
         value = v;
       };
       pkgAttrs = import ../packages {
-        inherit pkgs-stable;
+        inherit pkgs-stable pkgs-unstable;
         pkgs = prev;
       };
     in

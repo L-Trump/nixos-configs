@@ -1,6 +1,6 @@
 {
   pkgs ? import <nixpkgs> {},
-  pkgs-stable,
+  pkgs-unstable,
   ...
 }: let
   inherit (pkgs) lib libsForQt5;
@@ -19,12 +19,12 @@ in {
     useChineseVersion = true;
   };
 
-  # TODO Wait upstream merge, https://nixpk.gs/pr-tracker.html?pr=362889
-  siyuan = pkgs.callPackage ./siyuan {};
+  # Some package derived from unstable repo
+  siyuan = pkgs-unstable.siyuan;
+  easytier = pkgs-unstable.easytier;
 
-  # TODO Wait upstream merge, https://nixpk.gs/pr-tracker.html?pr=367097
-  easytier = pkgs.callPackage ./easytier {};
-
+  # siyuan = pkgs.callPackage ./siyuan {};
+  # easytier = pkgs.callPackage ./easytier {};
   # linuxPackages_latest = pkgs.linuxPackages_latest.extend (_: _: {
   #   ipu6-drivers = pkgs.linuxPackages_latest.callPackage ./ipu6-drivers {};
   # });

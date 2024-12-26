@@ -74,10 +74,11 @@ in {
     system: let
       pkgs = nixpkgs.legacyPackages."${system}";
       pkgs-stable = inputs.nixpkgs-stable.legacyPackages."${system}";
+      pkgs-unstable = inputs.nixpkgs-unstable.legacyPackages."${system}";
     in
       (allSystems.${system}.packages or {})
       // (
-        import ../packages {inherit pkgs pkgs-stable;}
+        import ../packages {inherit pkgs pkgs-stable pkgs-unstable;}
       )
   );
 
