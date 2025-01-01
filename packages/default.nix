@@ -23,7 +23,7 @@ in {
   siyuan = pkgs-unstable.siyuan;
   # easytier = pkgs-unstable.easytier;
 
-  # TODO wait ryantm update
+  # TODO wait upstream merge https://nixpk.gs/pr-tracker.html?pr=369513
   easytier = pkgs.callPackage ./easytier {};
 
   # siyuan = pkgs.callPackage ./siyuan {};
