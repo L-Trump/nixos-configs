@@ -21,11 +21,10 @@ in {
 
   # Some package derived from unstable repo
   siyuan = pkgs-unstable.siyuan;
-  # easytier = pkgs-unstable.easytier;
+  easytier = pkgs-unstable.easytier;
 
-  # TODO wait upstream merge https://nixpk.gs/pr-tracker.html?pr=369513
-  easytier = pkgs.callPackage ./easytier {};
-
+  # siyuan = pkgs.callPackage ./siyuan {};
+  # easytier = pkgs.callPackage ./easytier {};
   # siyuan = pkgs.callPackage ./siyuan {};
   # linuxPackages_latest = pkgs.linuxPackages_latest.extend (_: _: {
   #   ipu6-drivers = pkgs.linuxPackages_latest.callPackage ./ipu6-drivers {};

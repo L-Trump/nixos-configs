@@ -3,7 +3,7 @@
   stdenv,
   fetchFromGitHub,
   buildGo123Module,
-  substituteAll,
+  replaceVars,
   pandoc,
   nodejs,
   pnpm_9,
@@ -11,6 +11,7 @@
   makeWrapper,
   makeDesktopItem,
   copyDesktopItems,
+  nix-update-script,
 }:
 
 let
@@ -34,24 +35,23 @@ let
 in
 stdenv.mkDerivation (finalAttrs: {
   pname = "siyuan";
-  version = "3.1.16";
+  version = "3.1.18";
 
   src = fetchFromGitHub {
     owner = "siyuan-note";
     repo = "siyuan";
     rev = "v${finalAttrs.version}";
-    hash = "sha256-8+Gz9AuxmK2hOApRZ2b1+rROOG94EBJR3pyp8YwtgiA=";
+    hash = "sha256-hUPHWVULyHQgGNTpLZKDk6hUlBIK1ouYAYecr0oUe/M=";
   };
 
   kernel = buildGo123Module {
     name = "${finalAttrs.pname}-${finalAttrs.version}-kernel";
     inherit (finalAttrs) src;
     sourceRoot = "${finalAttrs.src.name}/kernel";
-    vendorHash = "sha256-B2pGXs0IN5WhNHoFgTufd46q60RNvWzNdwoCxpayYC8=";
+    vendorHash = "sha256-1JwUQ/WhR1O3LTevI2kWk+FNpH4FBVgF46d+W6M7UBg=";
 
     patches = [
-      (substituteAll {
-        src = ./set-pandoc-path.patch;
+      (replaceVars ./set-pandoc-path.patch {
         pandoc_path = lib.getExe pandoc;
       })
     ];
@@ -89,7 +89,7 @@ stdenv.mkDerivation (finalAttrs: {
       src
       sourceRoot
       ;
-    hash = "sha256-LlQdfRGsBn3IZWKSUqH5tAljXnWanuFXO2x+Wi3on7E=";
+    hash = "sha256-357iBgxevtXus0Dpa8+LHKsO42HoHibkhRSy+tpD8jo=";
   };
 
   sourceRoot = "${finalAttrs.src.name}/app";
@@ -141,7 +141,12 @@ stdenv.mkDerivation (finalAttrs: {
 
   passthru = {
     inherit (finalAttrs.kernel) goModules; # this tricks nix-update into also updating the kernel goModules FOD
-    updateScript = ./update.sh;
+    updateScript = nix-update-script {
+      extraArgs = [
+        "--version-regex"
+        "^v(\\d+\\.\\d+\\.\\d+)$"
+      ];
+    };
   };
 
   meta = {
