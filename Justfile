@@ -70,6 +70,7 @@ gc:
   # garbage collect all unused nix store entries(for the user - home-manager)
   # https://github.com/LnL7/nix-darwin/issues/237
   nix-collect-garbage --delete-older-than 7d
+  nix-collect-garbage --delete-older-than 7d --option use-xdg-base-directories true
 
 # Enter a shell session which has all the necessary tools for this flake
 [linux]
