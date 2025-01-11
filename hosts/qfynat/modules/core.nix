@@ -1,8 +1,11 @@
-{myvars, lib, ...}: let
+{
+  myvars,
+  lib,
+  ...
+}: let
   hostName = "qfynat";
 in {
   # networking.networkmanager.enable = true; # Easiest to use and most distros use this by default.
-
 
   boot.tmp.cleanOnBoot = true;
   zramSwap.enable = true;
