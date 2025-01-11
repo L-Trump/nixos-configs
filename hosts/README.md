@@ -2,7 +2,8 @@
 
 1. `matebook-gt14`: My main laptop, Huawei Matebook GT14 2024, for daily use.
 1. `n100`: N100 NUC in home, as homelab.
-1. `tencent-vm-jp`: Virtual machine on Tencent Cloud, located in japan.
+1. `tencent-vm-jp`: Virtual machine on Tencent Cloud, located in Japan.
+1. `aliyun-vm-sh`: Virtual machine on Ailyun, located in Shanghai, China.
 1. `qfynat`: A NAT vps hosted by qfyidc, located in Hubei, China.
 1. `iso`: For install/live image generation.
 

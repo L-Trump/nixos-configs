@@ -14,6 +14,7 @@ in rec {
     matebook-gt14.ipv4 = "10.144.144.250";
     n100.ipv4 = "10.144.144.111";
     tencent-vm-jp.ipv4 = "10.144.144.253";
+    aliyun-vm-sh.ipv4 = "10.144.144.251";
     qfynat.ipv4 = "10.144.144.252";
     dorm-router.ipv4 = "10.144.144.198";
     gs445.ipv4 = "10.144.144.195";
