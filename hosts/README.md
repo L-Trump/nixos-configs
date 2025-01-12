@@ -5,6 +5,7 @@
 1. `tencent-vm-jp`: Virtual machine on Tencent Cloud, located in Japan.
 1. `aliyun-vm-sh`: Virtual machine on Ailyun, located in Shanghai, China.
 1. `qfynat`: A NAT vps hosted by qfyidc, located in Hubei, China.
+1. `rebai-nat`: A NAT vps hosted by RebaiCloud, located in Qinghai, China.
 1. `iso`: For install/live image generation.
 
 ## How to add a new host
