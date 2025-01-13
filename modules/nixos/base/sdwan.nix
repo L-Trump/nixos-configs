@@ -7,13 +7,16 @@
 }: let
   inherit (myvars.networking) hostsRecord;
   easytier-pkg = pkgs.easytier;
-  cfg.enable = builtins.hasAttr "easytier-conf" config.age.secrets;
+  cfg.et.enable = builtins.hasAttr "easytier-conf" config.age.secrets;
+  cfg.cf.enable = builtins.hasAttr "cf-tunnel-conf" config.age.secrets;
 in {
   services.tailscale.enable = true;
 
-  environment.systemPackages = [easytier-pkg];
-  networking.hosts = lib.mkIf cfg.enable hostsRecord;
-  systemd.services.easytier-ltnet = lib.mkIf cfg.enable {
+  environment.systemPackages =
+    [easytier-pkg] ++ lib.optionals cfg.cf.enable [pkgs.cloudflared];
+
+  networking.hosts = lib.mkIf cfg.et.enable hostsRecord;
+  systemd.services.easytier-ltnet = lib.mkIf cfg.et.enable {
     path = with pkgs; [easytier-pkg iproute2 bash];
     description = "EasyTier Service";
     wants = ["network-online.target" "nss-lookup.target"];
@@ -24,5 +27,15 @@ in {
       Restart = "on-failure";
     };
     wantedBy = ["multi-user.target"];
+  };
+
+  services.cloudflared = lib.mkIf cfg.cf.enable {
+    enable = true;
+    user = "root";
+    group = "root";
+    tunnels.et-ltnet = {
+      credentialsFile = "${config.age.secrets.cf-tunnel-conf.path}";
+      default = "http_status:404";
+    };
   };
 }
