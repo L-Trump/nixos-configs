@@ -1,15 +1,14 @@
 {
-  config,
   lib,
   mymodules,
   ...
-} @ args:
-with lib; let
+}: let
   rawcfg = mymodules;
 in {
   imports =
     [
       ./base
+      ./extras
       ../base
       ../options.nix
     ]
