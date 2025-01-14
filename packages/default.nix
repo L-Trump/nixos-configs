@@ -19,6 +19,8 @@ in {
     useChineseVersion = true;
   };
 
+  nezha-agent = pkgs.callPackage ./nezha-agent {};
+
   # Some package derived from unstable repo
   siyuan = pkgs-unstable.siyuan;
   easytier = pkgs-unstable.easytier;
