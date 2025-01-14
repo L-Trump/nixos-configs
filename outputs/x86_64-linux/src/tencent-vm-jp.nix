@@ -29,6 +29,9 @@
       game.enable = false;
       keyremap.enable = false;
     };
+    server = {
+      nezha-agent.enable = true;
+    };
   };
   myconfigs.myhome = {
     tuiExtra = {

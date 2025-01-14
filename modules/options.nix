@@ -25,5 +25,9 @@ in {
       game.enable = mkEnableOption "Games";
       keyremap.enable = mkEnableOption "Remap capslock and escape";
     };
+
+    server = {
+      nezha-agent.enable = mkEnableOption "Enable nezha-monitor agent";
+    };
   };
 }
