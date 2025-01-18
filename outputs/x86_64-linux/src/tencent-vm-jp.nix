@@ -31,6 +31,7 @@
     };
     server = {
       nezha-agent.enable = true;
+      easytier.enable = true;
     };
   };
   myconfigs.myhome = {

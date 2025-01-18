@@ -27,6 +27,9 @@
       game.enable = false;
       keyremap.enable = true;
     };
+    server = {
+      easytier.enable = true;
+    };
   };
   myconfigs.myhome = {
     tuiExtra = {

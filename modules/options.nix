@@ -1,4 +1,8 @@
-{lib, ...}:
+{
+  lib,
+  myvars,
+  ...
+}:
 with lib; let
   cfg = config.mymodules;
 in {
@@ -29,6 +33,13 @@ in {
     server = {
       nezha-agent.enable = mkEnableOption "Enable nezha-monitor agent";
       rustdesk-server.enable = mkEnableOption "Enable rustdesk server";
+      easytier = {
+        enable = mkEnableOption "Enable easytier with web controller";
+        config-server = mkOption {
+          type = types.str;
+          default = "${myvars.username}";
+        };
+      };
     };
   };
 }
