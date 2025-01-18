@@ -31,6 +31,7 @@
     };
     server = {
       nezha-agent.enable = true;
+      rustdesk-server.enable = true;
     };
   };
   myconfigs.myhome = {

@@ -28,6 +28,7 @@ in {
 
     server = {
       nezha-agent.enable = mkEnableOption "Enable nezha-monitor agent";
+      rustdesk-server.enable = mkEnableOption "Enable rustdesk server";
     };
   };
 }
