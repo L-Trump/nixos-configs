@@ -54,32 +54,52 @@ in {
       # lxd.enable = true;
     };
 
-    environment.systemPackages = mkIf cfg.qemu.enable (with pkgs; [
-      # This script is used to install the arm translation layer for waydroid
-      # so that we can install arm apks on x86_64 waydroid
-      #
-      # https://github.com/casualsnek/waydroid_script
-      # https://github.com/AtaraxiaSjel/nur/tree/master/pkgs/waydroid-script
-      # https://wiki.archlinux.org/title/Waydroid#ARM_Apps_Incompatible
-      # nur-ataraxiasjel.packages.${pkgs.system}.waydroid-script
+    environment.systemPackages = with pkgs;
+      lib.optionals cfg.qemu.enable [
+        # This script is used to install the arm translation layer for waydroid
+        # so that we can install arm apks on x86_64 waydroid
+        #
+        # https://github.com/casualsnek/waydroid_script
+        # https://github.com/AtaraxiaSjel/nur/tree/master/pkgs/waydroid-script
+        # https://wiki.archlinux.org/title/Waydroid#ARM_Apps_Incompatible
+        # nur-ataraxiasjel.packages.${pkgs.system}.waydroid-script
 
-      # Need to add [File (in the menu bar) -> Add connection] when start for the first time
-      # virt-manager
+        # Need to add [File (in the menu bar) -> Add connection] when start for the first time
+        # virt-manager
 
-      # QEMU/KVM(HostCpuOnly), provides:
-      #   qemu-storage-daemon qemu-edid qemu-ga
-      #   qemu-pr-helper qemu-nbd elf2dmp qemu-img qemu-io
-      #   qemu-kvm qemu-system-x86_64 qemu-system-aarch64 qemu-system-i386
-      qemu_kvm
+        # QEMU/KVM(HostCpuOnly), provides:
+        #   qemu-storage-daemon qemu-edid qemu-ga
+        #   qemu-pr-helper qemu-nbd elf2dmp qemu-img qemu-io
+        #   qemu-kvm qemu-system-x86_64 qemu-system-aarch64 qemu-system-i386
+        qemu_kvm
 
-      # Install QEMU(other architectures), provides:
-      #   ......
-      #   qemu-loongarch64 qemu-system-loongarch64
-      #   qemu-riscv64 qemu-system-riscv64 qemu-riscv32  qemu-system-riscv32
-      #   qemu-system-arm qemu-arm qemu-armeb qemu-system-aarch64 qemu-aarch64 qemu-aarch64_be
-      #   qemu-system-xtensa qemu-xtensa qemu-system-xtensaeb qemu-xtensaeb
-      #   ......
-      qemu
-    ]);
+        # Install QEMU(other architectures), provides:
+        #   ......
+        #   qemu-loongarch64 qemu-system-loongarch64
+        #   qemu-riscv64 qemu-system-riscv64 qemu-riscv32  qemu-system-riscv32
+        #   qemu-system-arm qemu-arm qemu-armeb qemu-system-aarch64 qemu-aarch64 qemu-aarch64_be
+        #   qemu-system-xtensa qemu-xtensa qemu-system-xtensaeb qemu-xtensaeb
+        #   ......
+        qemu
+      ]
+      ++ lib.optionals cfg.docker.enable [
+        docker-compose
+        dive # explore docker layers
+        lazydocker # Docker terminal UI.
+        skopeo # copy/sync images between registries and local storage
+        go-containerregistry # provides `crane` & `gcrane`, it's similar to skopeo
+
+        # kubectl
+        # kubectx
+        # kubebuilder
+        # istioctl
+        # clusterctl # for kubernetes cluster-api
+        # kubevirt # virtctl
+        # kubernetes-helm
+        # fluxcd
+        # argocd
+
+        ko # build go project to container image
+      ];
   };
 }

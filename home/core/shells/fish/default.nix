@@ -1,11 +1,9 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
-}: {
+{pkgs, lib, ...}: {
   programs.fish = {
     enable = true;
+    interactiveShellInit = ''
+      set fish_greeting
+    '';
     plugins = with pkgs; [
       {
         name = "done";
@@ -43,14 +41,28 @@
     };
   };
 
-  programs.bash = {
-    enable = true;
-    enableCompletion = true;
-  };
+  xdg.configFile = with lib.attrsets;
+    (
+      mapAttrs'
+      (
+        path: _type:
+          nameValuePair ("fish/functions/" + path)
+          {source = ./fish-funcs + "/${path}";}
+      )
+      (filterAttrs
+        (path: _type: lib.strings.hasSuffix ".fish" path)
+        (builtins.readDir ./fish-funcs))
+    )
+    // (
+      mapAttrs'
+      (
+        path: _type:
+          nameValuePair ("fish/conf.d/" + path)
+          {source = ./fish-confs + "/${path}";}
+      )
+      (filterAttrs
+        (path: _type: lib.strings.hasSuffix ".fish" path)
+        (builtins.readDir ./fish-confs))
+    );
 
-  home.shellAliases = {
-    nv = "nvim";
-    clr = "clear";
-    ssh = "TERM=xterm-256color command ssh";
-  };
 }

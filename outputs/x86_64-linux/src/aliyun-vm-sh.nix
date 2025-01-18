@@ -37,9 +37,9 @@
   };
   myconfigs.myhome = {
     tuiExtra = {
-      enable = true;
+      enable = false;
       mail.enable = false;
-      lsp.enable = true;
+      lsp.enable = false;
       # lsp.lang = ["all"];
     };
     desktop = {

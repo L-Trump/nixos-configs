@@ -5,6 +5,7 @@
     fastfetch
     vim
     neovim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    helix
     just # justfile
     nushell # nushell
     fish # fish shell
@@ -54,5 +55,5 @@
   programs.bcc.enable = true;
 
   # replace default editor with neovim
-  environment.variables.EDITOR = "nvim";
+  environment.variables.EDITOR = "hx";
 }

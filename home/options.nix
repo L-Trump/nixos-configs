@@ -6,7 +6,7 @@
 with lib; {
   options.myhome = {
     tuiExtra = {
-      enable = mkEnableOption "Extra TUI configs";
+      enable = mkEnableOption "Extra TUI configs (mainly for developing)";
       mail.enable = mkEnableOption "E-Mail related";
       lsp = {
         enable = mkEnableOption "Enable language server protocols programs";

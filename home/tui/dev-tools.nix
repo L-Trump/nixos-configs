@@ -18,10 +18,10 @@
     colmena # nixos's remote deployment tool
 
     # db related
-    # pkgs-unstable.mycli
-    # pkgs-unstable.pgcli
-    # mongosh
-    # sqlite
+    pkgs-unstable.mycli
+    pkgs-unstable.pgcli
+    mongosh
+    sqlite
 
     # embedded development
     minicom
