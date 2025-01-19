@@ -1,4 +1,8 @@
-{pkgs, lib, ...}: {
+{
+  pkgs,
+  lib,
+  ...
+}: {
   programs.fish = {
     enable = true;
     interactiveShellInit = ''
@@ -64,5 +68,4 @@
         (path: _type: lib.strings.hasSuffix ".fish" path)
         (builtins.readDir ./fish-confs))
     );
-
 }

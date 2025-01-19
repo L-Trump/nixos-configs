@@ -5,7 +5,7 @@
 }: let
   hostName = "n100";
   inherit (myvars) networking;
-  inherit (networking.hostsAddr.physical.${hostName}) iface;
+  inherit (networking.hostsAddr.physical.${hostName}) iface ipv4 gateway;
 in {
   # supported file systems, so we can mount any removable disks with these filesystems
   boot.supportedFilesystems = [
@@ -40,7 +40,7 @@ in {
     "net.ipv4.neigh.default.gc_interval" = 60;
     "net.ipv4.neigh.default.gc_stale_time" = 120;
 
-    "net.ipv6.conf.all.disable_ipv6" = 1; # disable ipv6
+    # "net.ipv6.conf.all.disable_ipv6" = 1; # disable ipv6
 
     # --- memory --- #
     "vm.swappiness" = 0; # don't swap unless absolutely necessary
@@ -53,14 +53,41 @@ in {
   ];
 
   networking = {
-    inherit hostName;
-    inherit (networking) defaultGateway nameservers;
+    # inherit hostName;
+    # inherit (networking) defaultGateway nameservers;
 
     # Manage the interface with OVS instead of networkmanager
     networkmanager.unmanaged = [iface];
     # Set the host's address on the OVS bridge interface instead of the physical interface!
-    interfaces.vmbr0 = networking.hostsInterface.${hostName}.interfaces.${iface};
-    bridges.vmbr0.interfaces = [iface];
-    enableIPv6 = true;
+    # interfaces.vmbr0 = networking.hostsInterface.${hostName}.interfaces.${iface};
+    # bridges.vmbr0.interfaces = [iface];
+    # enableIPv6 = true;
+  };
+
+  systemd.network = {
+    enable = true;
+    wait-online = {
+      anyInterface = true;
+      timeout = 30;
+    };
+    netdevs."vmbr0".netdevConfig = {
+      Name = "vmbr0";
+      Kind = "bridge";
+    };
+    networks."10-lan" = {
+      matchConfig.Name = [iface "microvm-*"];
+      networkConfig.Bridge = "vmbr0";
+      linkConfig.RequiredForOnline = "enslaved";
+    };
+    networks."10-lan-bridge" = {
+      matchConfig.Name = "vmbr0";
+      networkConfig = {
+        Address = [ipv4];
+        Gateway = gateway;
+        DNS = networking.nameservers;
+        IPv6AcceptRA = true;
+      };
+      linkConfig.RequiredForOnline = "routable";
+    };
   };
 }
