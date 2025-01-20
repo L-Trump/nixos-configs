@@ -26,6 +26,7 @@
       xorg.enable = true;
       game.enable = false;
       keyremap.enable = true;
+      remote-desktop.sunshine.enable = true;
     };
     server = {
       easytier.enable = true;

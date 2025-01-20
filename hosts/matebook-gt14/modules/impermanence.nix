@@ -114,6 +114,7 @@ in {
         ".config/rustdesk"
         ".config/OpenTabletDriver"
         ".config/xournalpp"
+        ".config/sunshine"
 
         # Logseq / Zotero
         ".config/Logseq"

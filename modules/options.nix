@@ -15,6 +15,7 @@ in {
       };
       docker.enable = mkEnableOption "Enable docker server";
       qemu.enable = mkEnableOption "QEMU KVM";
+      microvm.enable = mkEnableOption "Enable MicroVM";
     };
 
     desktop = {
@@ -28,6 +29,9 @@ in {
       xorg.enable = mkEnableOption "Xorg Display Server";
       game.enable = mkEnableOption "Games";
       keyremap.enable = mkEnableOption "Remap capslock and escape";
+      remote-desktop = {
+        sunshine.enable = mkEnableOption "Enable sunshine remote desktop";
+      };
     };
 
     server = {

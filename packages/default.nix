@@ -23,6 +23,9 @@ in {
 
   sctgdesk-server = pkgs.callPackage ./sctgdesk-server {};
 
+  # TODO wait upstream merge https://nixpk.gs/pr-tracker.html?pr=375153
+  sunshine = pkgs.callPackage ./sunshine {};
+
   # Some package derived from unstable repo
   siyuan = pkgs-unstable.siyuan;
   # easytier = pkgs-unstable.easytier;
