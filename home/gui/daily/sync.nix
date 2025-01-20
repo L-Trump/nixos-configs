@@ -26,7 +26,7 @@
       RestartSec = 3;
       RestartForceExitStatus = 2;
     };
-    Install.WantedBy = ["default.target"];
+    # Install.WantedBy = ["default.target"];
   };
 
   systemd.user.services."clouddrive2" = {
