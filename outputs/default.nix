@@ -12,7 +12,7 @@
   genSpecialArgs = system:
     inputs
     // {
-      inherit mylib myvars inputs;
+      inherit mylib myvars inputs genSpecialArgs;
 
       # use unstable branch for some packages to get the latest updates
       pkgs-unstable = import inputs.nixpkgs-unstable {

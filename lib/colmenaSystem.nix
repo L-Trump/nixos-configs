@@ -10,10 +10,13 @@
   ssh-user,
   genSpecialArgs,
   specialArgs ? (genSpecialArgs system),
+  mymodules ? {},
   myhome ? {},
   ...
 }: let
   inherit (inputs) home-manager;
+  _spArgs = specialArgs // {inherit mymodules myhome;};
+  spArgs = _spArgs // {specialArgs = _spArgs;};
 in
   {name, ...}: {
     deployment = {
@@ -31,13 +34,7 @@ in
           ({config, ...}: {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-
-            home-manager.extraSpecialArgs =
-              specialArgs
-              // {
-                inherit myhome;
-                systemConfig = config;
-              };
+            home-manager.extraSpecialArgs = spArgs;
             home-manager.users."${myvars.username}".imports = home-modules;
           })
         ]
