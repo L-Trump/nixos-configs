@@ -6,49 +6,19 @@
   lib,
   myvars,
   mylib,
+  mypresets,
   system,
   genSpecialArgs,
   ...
 } @ args: let
   # Huawei Matebook-GT14
-  name = "n100";
+  name = "qfynat";
   tags = [name];
   ssh-user = "root";
 
-  myconfigs.mymodules = {
-    virtualization = {
-      enable = true;
-      docker.enable = true;
-      qemu.enable = true;
-    };
-    desktop = {
-      enable = false;
-      animeboot.enable = false;
-      wayland.enable = false;
-      xorg.enable = false;
-      game.enable = false;
-      keyremap.enable = true;
-    };
-    server = {
-      nezha-agent.enable = true;
-      easytier.enable = true;
-    };
-  };
-  myconfigs.myhome = {
-    tuiExtra = {
-      enable = true;
-      mail.enable = false;
-      lsp.enable = true;
-      # lsp.lang = ["all"];
-    };
-    desktop = {
-      enable = false;
-      wayland.enable = false;
-      xorg.enable = false;
-      daily.enable = false;
-      daily.game.enable = false;
-    };
-  };
+  preset = mypresets.bare;
+  myconfigs.mymodules = preset.mymodules;
+  myconfigs.myhome = preset.myhome;
   modules = {
     nixos-modules = map mylib.relativeToRoot [
       # common
@@ -60,7 +30,6 @@
     home-modules = map mylib.relativeToRoot [
       # common
       "home/default.nix"
-      "hosts/${name}/home"
       "secrets/home"
     ];
   };

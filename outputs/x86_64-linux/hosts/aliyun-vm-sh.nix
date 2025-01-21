@@ -6,49 +6,23 @@
   lib,
   myvars,
   mylib,
+  mypresets,
   system,
   genSpecialArgs,
   ...
 } @ args: let
   # Huawei Matebook-GT14
-  name = "tencent-vm-jp";
-  tags = [name "vm-jp"];
+  name = "aliyun-vm-sh";
+  tags = [name "vm-sh"];
   ssh-user = "root";
 
-  myconfigs.mymodules = {
-    virtualization = {
-      enable = true;
-      docker.enable = true;
-      qemu.enable = false;
-    };
-    desktop = {
-      enable = false;
-      animeboot.enable = false;
-      wayland.enable = false;
-      xorg.enable = false;
-      game.enable = false;
-      keyremap.enable = false;
-    };
+  preset = mypresets.server;
+  myconfigs.mymodules = lib.recursiveUpdate preset.mymodules {
     server = {
-      nezha-agent.enable = true;
-      easytier.enable = true;
+      rustdesk-server.enable = true;
     };
   };
-  myconfigs.myhome = {
-    tuiExtra = {
-      enable = false;
-      mail.enable = false;
-      lsp.enable = false;
-      # lsp.lang = ["all"];
-    };
-    desktop = {
-      enable = false;
-      wayland.enable = false;
-      xorg.enable = false;
-      daily.enable = false;
-      daily.game.enable = false;
-    };
-  };
+  myconfigs.myhome = preset.myhome;
   modules = {
     nixos-modules = map mylib.relativeToRoot [
       # common
@@ -73,6 +47,6 @@ in {
 
   colmenaMeta = {
     nodeNixpkgs."${name}" = import inputs.nixpkgs {inherit system;};
-    nodeSpecialArgs."${name}" = {inherit (myconfigs) mymodules;};
+    nodeSpecialArgs."${name}" = {inherit (myconfigs) myhome mymodules;};
   };
 }

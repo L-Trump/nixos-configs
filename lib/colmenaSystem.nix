@@ -15,8 +15,7 @@
   ...
 }: let
   inherit (inputs) home-manager;
-  _spArgs = specialArgs // {inherit mymodules myhome;};
-  spArgs = _spArgs // {specialArgs = _spArgs;};
+  spArgs = specialArgs // {inherit mymodules myhome;};
 in
   {name, ...}: {
     deployment = {

@@ -5,6 +5,7 @@
   inputs,
   lib,
   myvars,
+  mypresets,
   mylib,
   system,
   genSpecialArgs,
@@ -13,40 +14,9 @@
   # Huawei Matebook-GT14
   name = "matebook-gt14";
   dname = "matebook-gt14";
-  myconfigs.mymodules = {
-    virtualization = {
-      enable = true;
-      docker.enable = true;
-      qemu.enable = false;
-    };
-    desktop = {
-      enable = true;
-      animeboot.enable = true;
-      wayland.enable = true;
-      xorg.enable = true;
-      game.enable = false;
-      keyremap.enable = true;
-      remote-desktop.sunshine.enable = true;
-    };
-    server = {
-      easytier.enable = true;
-    };
-  };
-  myconfigs.myhome = {
-    tuiExtra = {
-      enable = true;
-      mail.enable = true;
-      lsp.enable = true;
-      lsp.lang = ["all"];
-    };
-    desktop = {
-      enable = true;
-      wayland.enable = true;
-      xorg.enable = true;
-      daily.enable = true;
-      daily.game.enable = false;
-    };
-  };
+  preset = mypresets.daily;
+  myconfigs.mymodules = preset.mymodules;
+  myconfigs.myhome = preset.myhome;
   modules = {
     nixos-modules = map mylib.relativeToRoot [
       # common

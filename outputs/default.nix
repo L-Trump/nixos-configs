@@ -6,6 +6,7 @@
   inherit (inputs.nixpkgs) lib;
   mylib = import ../lib {inherit lib;};
   myvars = import ../vars {inherit lib;};
+  mypresets = import ./config-presets {inherit lib;};
 
   # Add my custom lib, vars, nixpkgs instance, and all the inputs to specialArgs,
   # genSpecialArgs = { inherit mylib inputs nixpkgs; };
@@ -31,7 +32,7 @@
     };
 
   # This is the args for all the haumea modules in this folder.
-  args = {inherit inputs lib mylib myvars genSpecialArgs;};
+  args = {inherit inputs lib mylib myvars mypresets genSpecialArgs;};
 
   # modules for each supported system
   nixosSystems = {

@@ -6,6 +6,7 @@
   lib,
   myvars,
   mylib,
+  mypresets,
   system,
   genSpecialArgs,
   ...
@@ -15,40 +16,9 @@
   tags = [name];
   ssh-user = "root";
 
-  myconfigs.mymodules = {
-    virtualization = {
-      enable = true;
-      docker.enable = true;
-      qemu.enable = false;
-    };
-    desktop = {
-      enable = false;
-      animeboot.enable = false;
-      wayland.enable = false;
-      xorg.enable = false;
-      game.enable = false;
-      keyremap.enable = false;
-    };
-    server = {
-      nezha-agent.enable = true;
-      easytier.enable = true;
-    };
-  };
-  myconfigs.myhome = {
-    tuiExtra = {
-      enable = false;
-      mail.enable = false;
-      lsp.enable = false;
-      # lsp.lang = ["all"];
-    };
-    desktop = {
-      enable = false;
-      wayland.enable = false;
-      xorg.enable = false;
-      daily.enable = false;
-      daily.game.enable = false;
-    };
-  };
+  preset = mypresets.server;
+  myconfigs.mymodules = preset.mymodules;
+  myconfigs.myhome = preset.myhome;
   modules = {
     nixos-modules = map mylib.relativeToRoot [
       # common
