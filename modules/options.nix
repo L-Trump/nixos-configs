@@ -1,6 +1,7 @@
 {
   lib,
   myvars,
+  options,
   ...
 }:
 with lib; let
@@ -15,7 +16,15 @@ in {
       };
       docker.enable = mkEnableOption "Enable docker server";
       qemu.enable = mkEnableOption "QEMU KVM";
-      microvm.enable = mkEnableOption "Enable MicroVM";
+      microvm = {
+        host.enable = mkEnableOption "Enable MicroVM Host";
+        host.infras = mkOption {
+          type = types.listOf types.str;
+          default = [];
+          description = "VM Infrastructures on host";
+        };
+        guest.enable = mkEnableOption "Enable MicroVM Guest";
+      };
     };
 
     desktop = {

@@ -6,16 +6,22 @@
   inherit (inputs) haumea;
 
   # Contains all the flake outputs of this system architecture.
-  data = haumea.lib.load {
-    src = ./src;
-    inputs = args;
-  };
+  data =
+    (haumea.lib.load {
+      src = ./hosts;
+      inputs = args;
+    })
+    // (haumea.lib.load {
+      src = ./microvms;
+      inputs = args;
+    });
   # nix file names is redundant, so we remove it.
   dataWithoutPaths = builtins.attrValues data;
 
   # Merge all the machine's data into a single attribute set.
   outputs = {
     nixosConfigurations = lib.attrsets.mergeAttrsList (map (it: it.nixosConfigurations or {}) dataWithoutPaths);
+    microvm-infras = lib.attrsets.mergeAttrsList (map (it: it.microvm-infras or {}) dataWithoutPaths);
     packages = lib.attrsets.mergeAttrsList (map (it: it.packages or {}) dataWithoutPaths);
     # colmena contains some meta info, which need to be merged carefully.
     colmenaMeta = {

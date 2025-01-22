@@ -4,7 +4,10 @@
       enable = false;
       docker.enable = false;
       qemu.enable = false;
-      microvm.enable = false;
+      microvm = {
+        host.enable = false;
+        guest.enable = false;
+      };
     };
     desktop = {
       enable = false;

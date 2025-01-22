@@ -1,6 +1,7 @@
 {lib, ...}: {
   nixosSystem = import ./nixosSystem.nix;
   colmenaSystem = import ./colmenaSystem.nix;
+  microvmInfra = import ./microvmInfra.nix;
 
   relativeToRoot = lib.path.append ../.;
   scanPaths = path:

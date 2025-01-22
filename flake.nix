@@ -71,13 +71,18 @@
     };
     # NixOS matlab wrapper
     nix-matlab = {
-      inputs.nixpkgs.follows = "nixpkgs";
       url = "gitlab:doronbehar/nix-matlab";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     # Proxmox on NixOS
     proxmox-nixos = {
-      inputs.nixpkgs-unstable.follows = "nixpkgs";
       url = "github:SaumonNet/proxmox-nixos";
+      inputs.nixpkgs-unstable.follows = "nixpkgs";
+    };
+    # MicroVM
+    microvm = {
+      url = "github:astro/microvm.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 }

@@ -1,0 +1,56 @@
+{
+  # NOTE: the args not used in this file CAN NOT be removed!
+  # because haumea pass argument lazily,
+  # and these arguments are used in the functions like `mylib.nixosSystem`, `mylib.colmenaSystem`, etc.
+  inputs,
+  lib,
+  myvars,
+  mylib,
+  mypresets,
+  system,
+  genSpecialArgs,
+  ...
+} @ args: let
+  # Huawei Matebook-GT14
+  name = "microvm-umy";
+  tags = [name "vm-umy"];
+  ssh-user = "root";
+
+  preset = lib.recursiveUpdate mypresets.server {mymodules.virtualization.microvm.guest.enable = true;};
+  myconfigs.mymodules = preset.mymodules;
+  myconfigs.myhome = preset.myhome;
+  infra-configs = preset;
+  modules = {
+    nixos-modules = map mylib.relativeToRoot [
+      # common
+      "secrets/modules"
+      "modules/nixos/default.nix"
+      # host specific
+      "hosts/microvms/${name}/modules"
+    ];
+    home-modules = map mylib.relativeToRoot [
+      # common
+      "home/default.nix"
+      "secrets/home"
+    ];
+  };
+  infra-modules = modules;
+
+  systemArgs = modules // args // myconfigs;
+  infraArgs = infra-modules // args // infra-configs;
+in {
+  nixosConfigurations."${name}" = mylib.nixosSystem systemArgs;
+
+  microvm-infras."${name}" = mylib.microvmInfra infraArgs;
+
+  colmena."${name}" =
+    mylib.colmenaSystem (systemArgs // {inherit tags ssh-user;});
+
+  colmenaMeta = {
+    nodeNixpkgs."${name}" = import inputs.nixpkgs {
+      inherit system;
+      config = myvars.nixpkgs-config;
+    };
+    nodeSpecialArgs."${name}" = {inherit (myconfigs) mymodules myhome;};
+  };
+}
