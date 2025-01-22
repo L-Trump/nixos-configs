@@ -18,9 +18,15 @@
 
   preset = mypresets.server;
   myconfigs.mymodules = lib.recursiveUpdate preset.mymodules {
-    virtualization.qemu.enable = true;
+    virtualization = {
+      qemu.enable = true;
+      microvm.host = {
+        enable = true;
+        infras = ["microvm-umy"];
+      };
+    };
   };
-  myconfigs.myhome = lib.recursiveUpdate mypresets.myhome {
+  myconfigs.myhome = lib.recursiveUpdate preset.myhome {
     tuiExtra = {
       enable = true;
       lsp.enable = true;
@@ -51,7 +57,10 @@ in {
     mylib.colmenaSystem (systemArgs // {inherit tags ssh-user;});
 
   colmenaMeta = {
-    nodeNixpkgs."${name}" = import inputs.nixpkgs {inherit system;};
+    nodeNixpkgs."${name}" = import inputs.nixpkgs {
+      inherit system;
+      config = myvars.nixpkgs-config;
+    };
     nodeSpecialArgs."${name}" = {inherit (myconfigs) mymodules;};
   };
 }

@@ -42,7 +42,10 @@ in {
     mylib.colmenaSystem (systemArgs // {inherit tags ssh-user;});
 
   colmenaMeta = {
-    nodeNixpkgs."${name}" = import inputs.nixpkgs {inherit system;};
+    nodeNixpkgs."${name}" = import inputs.nixpkgs {
+      inherit system;
+      config = myvars.nixpkgs-config;
+    };
     nodeSpecialArgs."${name}" = {inherit (myconfigs) mymodules;};
   };
 }

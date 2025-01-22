@@ -19,15 +19,12 @@
       pkgs-unstable = import inputs.nixpkgs-unstable {
         inherit system; # refer the `system` parameter form outer scope recursively
         # To use chrome, we need to allow the installation of non-free software
-        config.allowUnfree = true;
+        config = myvars.nixpkgs-config;
       };
       pkgs-stable = import inputs.nixpkgs-stable {
         inherit system;
         # To use chrome, we need to allow the installation of non-free software
-        config.allowUnfree = true;
-        config.permittedInsecurePackages = [
-          "electron-27.3.11" # deps for logseq
-        ];
+        config = myvars.nixpkgs-config;
       };
     };
 
@@ -61,7 +58,10 @@ in {
         system = "x86_64-linux";
       in {
         # default nixpkgs & specialArgs
-        nixpkgs = import nixpkgs {inherit system;};
+        nixpkgs = import nixpkgs {
+          inherit system;
+          config = myvars.nixpkgs-config;
+        };
         specialArgs = genSpecialArgs system;
         # per-node nixpkgs & specialArgs
         nodeNixpkgs = lib.attrsets.mergeAttrsList (map (it: it.colmenaMeta.nodeNixpkgs or {}) nixosSystemValues);
@@ -69,6 +69,10 @@ in {
       };
     }
     // lib.attrsets.mergeAttrsList (map (it: it.colmena or {}) nixosSystemValues);
+
+  # MicroVM infras configs
+  microvm-infras =
+    lib.attrsets.mergeAttrsList (map (it: it.microvm-infras or {}) nixosSystemValues);
 
   # Packages
   packages = forAllSystems (

@@ -35,7 +35,7 @@
     options = lib.mkDefault "--delete-older-than 7d";
   };
 
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs.config = myvars.nixpkgs-config;
 
   # make `nix run nixpkgs#nixpkgs` use the same nixpkgs as the one used by this flake.
   nix.registry.nixpkgs.flake = nixpkgs;
