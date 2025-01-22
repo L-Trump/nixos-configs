@@ -24,6 +24,7 @@ in {
           description = "VM Infrastructures on host";
         };
         guest.enable = mkEnableOption "Enable MicroVM Guest";
+        guest.isInfra = (mkEnableOption "Current build is infra or not") // {default = true;};
       };
     };
 

@@ -7,6 +7,7 @@
       microvm = {
         host.enable = false;
         guest.enable = false;
+        guest.isInfra = false;
       };
     };
     desktop = {

@@ -19,7 +19,8 @@
   preset = lib.recursiveUpdate mypresets.server {mymodules.virtualization.microvm.guest.enable = true;};
   myconfigs.mymodules = preset.mymodules;
   myconfigs.myhome = preset.myhome;
-  infra-configs = preset;
+  infra-configs.mymodules = lib.recursiveUpdate preset.mymodules {virtualization.microvm.guest.isInfra = true;};
+  infra-configs.myhome = preset.myhome;
   modules = {
     nixos-modules = map mylib.relativeToRoot [
       # common
@@ -42,6 +43,10 @@ in {
   nixosConfigurations."${name}" = mylib.nixosSystem systemArgs;
 
   microvm-infras."${name}" = mylib.microvmInfra infraArgs;
+
+  packages = {
+    "${name}" = inputs.self.nixosConfigurations."${name}".config.microvm.declaredRunner;
+  };
 
   colmena."${name}" =
     mylib.colmenaSystem (systemArgs // {inherit tags ssh-user;});
