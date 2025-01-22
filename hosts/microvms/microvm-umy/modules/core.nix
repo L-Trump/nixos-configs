@@ -12,6 +12,8 @@ in {
   services.openssh.enable = true;
   services.resolved.enable = true;
 
+  hardware.graphics.enable = true;
+
   networking = {
     inherit hostName;
     useDHCP = true;

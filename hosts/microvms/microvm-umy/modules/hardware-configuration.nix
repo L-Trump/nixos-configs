@@ -16,6 +16,7 @@
     hypervisor = "qemu";
     graphics.enable = true;
     qemu.extraArgs = [
+      "-display" "egl-headless,gl=on"
       "-vnc" ":10"
       "-vga" "qxl"
       "-device" "virtio-keyboard"
