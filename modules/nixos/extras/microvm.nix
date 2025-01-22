@@ -8,6 +8,7 @@
   cfg = config.mymodules.virtualization;
 in {
   imports = [
+    inputs.microvm.nixosModules.microvm
     inputs.microvm.nixosModules.host
   ];
 
@@ -15,6 +16,7 @@ in {
   nix.settings.auto-optimise-store = lib.mkIf cfg.microvm.guest.enable (lib.mkForce false);
 
   microvm = lib.mkMerge [
+    (lib.mkIf (!cfg.enable || !cfg.microvm.guest.enable) {guest.enable = false;})
     (lib.mkIf (!cfg.enable || !cfg.microvm.host.enable) {host.enable = false;})
     (lib.mkIf (cfg.enable && cfg.microvm.host.enable) {
       host.enable = true;
