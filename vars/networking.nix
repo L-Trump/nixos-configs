@@ -13,6 +13,7 @@ in rec {
   hostsAddr.easytier = {
     matebook-gt14.ipv4 = "10.144.144.250";
     n100.ipv4 = "10.144.144.111";
+    microvm-umy.ipv4 = "10.144.144.112";
     tencent-vm-jp.ipv4 = "10.144.144.253";
     aliyun-vm-sh.ipv4 = "10.144.144.251";
     qfynat.ipv4 = "10.144.144.252";
@@ -51,6 +52,11 @@ in rec {
     n100 = {
       iface = "enp2s0";
       ipv4 = "192.168.2.111/24";
+      gateway = "192.168.2.1";
+    };
+    microvm-umy = {
+      iface = "enp*";
+      ipv4 = "192.168.2.112/24";
       gateway = "192.168.2.1";
     };
   };

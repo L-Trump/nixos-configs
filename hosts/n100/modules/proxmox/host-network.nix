@@ -41,6 +41,8 @@ in {
     "net.ipv4.neigh.default.gc_stale_time" = 120;
 
     # "net.ipv6.conf.all.disable_ipv6" = 1; # disable ipv6
+    "net.ipv6.conf.all.forwarding" = 1;
+    "net.ipv6.conf.default.forwarding" = 1;
 
     # --- memory --- #
     "vm.swappiness" = 0; # don't swap unless absolutely necessary

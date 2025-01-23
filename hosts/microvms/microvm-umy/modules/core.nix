@@ -13,15 +13,11 @@ in {
   services.resolved.enable = true;
 
   hardware.graphics.enable = true;
+  hardware.graphics.enable32Bit = true;
 
   networking = {
     inherit hostName;
-    useDHCP = true;
     domain = "localdomain";
-    nameservers = [
-      "223.5.5.5"
-      "8.8.8.8" # googledns
-    ];
   };
 
   # This option defines the first version of NixOS you have installed on this particular machine,

@@ -16,7 +16,7 @@
   tags = [name "vm-umy"];
   ssh-user = "root";
 
-  preset = lib.recursiveUpdate mypresets.server {mymodules.virtualization.microvm.guest.enable = true;};
+  preset = lib.recursiveUpdate mypresets.daily {mymodules.virtualization.microvm.guest.enable = true;};
   myconfigs.mymodules = preset.mymodules;
   myconfigs.myhome = preset.myhome;
   infra-configs.mymodules = lib.recursiveUpdate preset.mymodules {virtualization.microvm.guest.isInfra = true;};
@@ -33,6 +33,8 @@
       # common
       "home/default.nix"
       "secrets/home"
+      # host specific
+      "hosts/microvms/${name}/home"
     ];
   };
   infra-modules = modules;

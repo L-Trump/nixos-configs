@@ -15,6 +15,8 @@
   microvm = {
     hypervisor = "qemu";
     graphics.enable = true;
+    vcpu = 2;  # 2c2g
+    mem = 2000;
     qemu.extraArgs = [
       "-display" "egl-headless,gl=on"
       "-vnc" ":10"
@@ -49,7 +51,8 @@
       {
         image = "root-overlay.img";
         mountPoint = "/";
-        size = 8192;
+        fsType = "btrfs";
+        size = 20480; # 20GiB
       }
     ];
   };
