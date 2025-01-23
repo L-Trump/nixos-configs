@@ -115,6 +115,7 @@ in {
         ".config/OpenTabletDriver"
         ".config/xournalpp"
         ".config/sunshine"
+        ".config/Moonlight Game Streaming Project"
 
         # Logseq / Zotero
         ".config/Logseq"
