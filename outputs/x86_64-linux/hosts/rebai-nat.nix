@@ -13,6 +13,7 @@
 } @ args: let
   # Huawei Matebook-GT14
   name = "rebai-nat";
+  # tags = [name "all" "vps"];
   tags = [name];
   ssh-user = "root";
 

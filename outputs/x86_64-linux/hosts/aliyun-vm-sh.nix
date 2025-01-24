@@ -13,7 +13,7 @@
 } @ args: let
   # Huawei Matebook-GT14
   name = "aliyun-vm-sh";
-  tags = [name "vm-sh"];
+  tags = [name "vm-sh" "all" "vps"];
   ssh-user = "root";
 
   preset = mypresets.server;

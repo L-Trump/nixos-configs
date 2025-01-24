@@ -13,7 +13,7 @@
 } @ args: let
   # Huawei Matebook-GT14
   name = "microvm-umy";
-  tags = [name "vm-umy"];
+  tags = [name];
   ssh-user = "root";
 
   preset = lib.recursiveUpdate mypresets.daily {mymodules.virtualization.microvm.guest.enable = true;};

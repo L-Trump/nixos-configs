@@ -13,7 +13,7 @@
 } @ args: let
   # Huawei Matebook-GT14
   name = "tencent-vm-jp";
-  tags = [name "vm-jp"];
+  tags = [name "vm-jp" "all" "vps"];
   ssh-user = "root";
 
   preset = mypresets.server;
