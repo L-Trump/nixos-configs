@@ -31,7 +31,7 @@ in {
   # easytier = pkgs-unstable.easytier;
 
   # siyuan = pkgs.callPackage ./siyuan {};
-  easytier = pkgs.callPackage ./easytier {}; # TODO wait r-ryantm update
+  easytier = pkgs.callPackage ./easytier {}; # TODO wait upstream merge https://nixpk.gs/pr-tracker.html?pr=376259
   # siyuan = pkgs.callPackage ./siyuan {};
   # linuxPackages_latest = pkgs.linuxPackages_latest.extend (_: _: {
   #   ipu6-drivers = pkgs.linuxPackages_latest.callPackage ./ipu6-drivers {};

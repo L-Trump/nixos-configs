@@ -7,6 +7,7 @@
 1. `qfynat`: A NAT vps hosted by qfyidc, located in Hubei, China.
 1. `rebai-nat`: A NAT vps hosted by RebaiCloud, located in Qinghai, China.
 1. `iso`: For install/live image generation.
+1. `microvms/microvm-umy`: MicroVM machine with daily use configs
 
 ## How to add a new host
 
@@ -24,5 +25,5 @@
    1. Add easytier config for the new hosts if needed.
 1. Under `vars/networking.nix`
    1. Add the new host's physical IP address if the new host is in local network.
-   1. Add the new host's easytier IP address if available.
    1. Skip this step if the new host is not in the local network or is a mobile device.
+   1. Add the new host's easytier IP address if available.
