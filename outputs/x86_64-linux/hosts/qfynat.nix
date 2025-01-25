@@ -16,7 +16,7 @@
   tags = [name "all" "vps"];
   ssh-user = "root";
 
-  preset = mypresets.bare;
+  preset = mypresets.server;
   myconfigs.mymodules = preset.mymodules;
   myconfigs.myhome = preset.myhome;
   modules = {
