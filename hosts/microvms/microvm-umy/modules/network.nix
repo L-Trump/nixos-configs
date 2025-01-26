@@ -7,6 +7,7 @@
   inherit (myvars) networking;
   inherit (networking.hostsAddr.physical.${hostName}) iface ipv4 gateway;
 in {
+  networking.useDHCP = false;
   systemd.network = {
     enable = true;
     wait-online = {

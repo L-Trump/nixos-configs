@@ -9,6 +9,11 @@ in rec {
     "119.29.29.29" # dnspod
     "8.8.8.8" # googledns
   ];
+  nameservers6 = [
+    "2400:3200::1" # alidns
+    "2402:4e00::" # dnspod
+    "2001:4860:4860::8888" # googledns
+  ];
 
   hostsAddr.easytier = {
     matebook-gt14.ipv4 = "10.144.144.250";
@@ -16,11 +21,12 @@ in rec {
     microvm-umy.ipv4 = "10.144.144.112";
     tencent-vm-jp.ipv4 = "10.144.144.253";
     aliyun-vm-sh.ipv4 = "10.144.144.251";
+    chick-vm-cd.ipv4 = "10.144.144.249";
     qfynat.ipv4 = "10.144.144.252";
     rebai-nat.ipv4 = "10.144.144.247";
     dorm-router.ipv4 = "10.144.144.198";
     gs445.ipv4 = "10.144.144.195";
-    oneplus-ace.ipv4 = "10.144.144.249";
+    oneplus-ace.ipv4 = "10.144.144.239";
     matepad.ipv4 = "10.144.144.248";
     homewin.ipv4 = "10.144.144.240";
     nucwin.ipv4 = "10.144.144.241";

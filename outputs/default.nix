@@ -1,11 +1,14 @@
 {
   self,
   nixpkgs,
+  mysecrets,
   ...
 } @ inputs: let
   inherit (inputs.nixpkgs) lib;
   mylib = import ../lib {inherit lib;};
-  myvars = import ../vars {inherit lib;};
+  vars = import ../vars {inherit lib;};
+  secret-vars = import "${mysecrets}/vars" {inherit lib;};
+  myvars = lib.recursiveUpdate vars secret-vars;
   mypresets = import ./config-presets {inherit lib;};
 
   # Add my custom lib, vars, nixpkgs instance, and all the inputs to specialArgs,
