@@ -1,8 +1,10 @@
-{ lib
-, stdenv
-, fetchFromGitHub
-, ivsc-driver
-, kernel
+{
+  lib,
+  stdenv,
+  fetchFromGitHub,
+  fetchpatch,
+  ivsc-driver,
+  kernel,
 }:
 
 stdenv.mkDerivation rec {
@@ -12,12 +14,23 @@ stdenv.mkDerivation rec {
   src = fetchFromGitHub {
     owner = "intel";
     repo = "ipu6-drivers";
-    rev = "0ad4988248d7e9382498a0b47fc78bb990b29a58";
-    hash = "sha256-UFvwuoAzwk1k4YiUK+4EeMKeTx9nVvBgBN5JKAfqZkQ=";
+    rev = "13c466ebdaaa0578e82bf3039b63eb0b3f472b72";
+    hash = "sha256-yBqcgqAEw6K2uG6zzerNaUePui1Ds+8+LcBG2bDfS/k=";
   };
 
   patches = [
     "${src}/patches/0001-v6.10-IPU6-headers-used-by-PSYS.patch"
+
+    # Fix compilation with kernels >= 6.13
+    # https://github.com/intel/ipu6-drivers/pull/321
+    (fetchpatch {
+      url = "https://github.com/intel/ipu6-drivers/pull/321/commits/414f2d94b5a10e142c22c87e03168957791f5661.patch";
+      hash = "sha256-fuEQO83qnXTwZlQXGOjSaJeexjlpqKXd+YLLbfq4xzk=";
+    })
+    (fetchpatch {
+      url = "https://github.com/intel/ipu6-drivers/pull/321/commits/8ac01026f4efbe5697a931af6c3499bd7315bdb6.patch";
+      hash = "sha256-hU8R5WAe0lgFz6cR1PAi83+KJYWolohJj9E9jX2zyno=";
+    })
   ];
 
   postPatch = ''
@@ -30,7 +43,7 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = kernel.moduleBuildDependencies;
 
-  makeFlags = kernel.makeFlags ++ [
+  makeFlags = kernel.moduleMakeFlags ++ [
     "KERNELRELEASE=${kernel.modDirVersion}"
     "KERNEL_SRC=${kernel.dev}/lib/modules/${kernel.modDirVersion}/build"
   ];

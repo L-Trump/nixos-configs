@@ -30,9 +30,9 @@ in {
   siyuan = pkgs.callPackage ./siyuan {}; # TODO wait upstream merge https://nixpk.gs/pr-tracker.html?pr=377207
   # easytier = pkgs.callPackage ./easytier {};
   # siyuan = pkgs.callPackage ./siyuan {};
-  # linuxPackages_latest = pkgs.linuxPackages_latest.extend (_: _: {
-  #   ipu6-drivers = pkgs.linuxPackages_latest.callPackage ./ipu6-drivers {};
-  # });
+  linuxPackages_latest = pkgs.linuxPackages_latest.extend (_: _: {
+    ipu6-drivers = pkgs.linuxPackages_latest.callPackage ./ipu6-drivers {};
+  });
   # openvswitch = pkgs-stable.openvswitch.override {kernel = null;};
   # clouddrive2 = pkgs.callPackage ./clouddrive2 {};
   # snipaste = pkgs.callPackage ./snipaste {};
