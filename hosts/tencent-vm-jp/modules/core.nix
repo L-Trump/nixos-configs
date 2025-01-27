@@ -1,4 +1,8 @@
-{myvars, ...}: let
+{
+  myvars,
+  lib,
+  ...
+}: let
   hostName = "tencent-vm-jp";
   inherit (myvars) networking;
 in {
@@ -17,6 +21,10 @@ in {
       "8.8.4.4" # googledns
     ];
   };
+
+  nix.settings.substituters = lib.mkForce [
+    "https://nix-community.cachix.org"
+  ];
 
   # This option defines the first version of NixOS you have installed on this particular machine,
   # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.
