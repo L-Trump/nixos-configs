@@ -26,6 +26,7 @@
           space = "file_picker_in_current_buffer_directory";
           w = ":w";
           q = ":q";
+          x = ":bc";
         };
         esc = ["collapse_selection" "keep_primary_selection"];
       };
