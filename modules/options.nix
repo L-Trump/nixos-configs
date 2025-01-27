@@ -49,6 +49,7 @@ in {
       nezha-server.enable = mkEnableOption "Enable nezha-monitor server";
       rustdesk-server.enable = mkEnableOption "Enable rustdesk server";
       duplicati.enable = mkEnableOption "Enable duplicati backup tool";
+      vaultwarden.enable = mkEnableOption "Enable vaultwarden password manager";
       easytier = {
         enable = mkEnableOption "Enable easytier with web controller";
         config-server = mkOption {

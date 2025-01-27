@@ -22,6 +22,7 @@
       rustdesk-server.enable = true;
       nezha-server.enable = true;
       duplicati.enable = true;
+      vaultwarden.enable = true;
     };
   };
   myconfigs.myhome = preset.myhome;

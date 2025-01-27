@@ -25,6 +25,7 @@
       nezha-server.enable = false;
       rustdesk-server.enable = false;
       duplicati.enable = false;
+      vaultwarden.enable = false;
     };
   };
 
