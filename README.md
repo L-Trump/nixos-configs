@@ -62,7 +62,7 @@ Below are some of the components used for my daily machine.
 - [Mail Workflow](./home/tui/mail/) - [aerc (reader)](./home/tui/mail/aerc/) + [offlineimap (imap sync)](./home/tui/mail/offlineimap/) + [imapnotify (monitor)](./home/tui/mail/imapnotify/)
 - [AnimeBoot (GRUB + plymouth)](./modules/nixos/desktop/animeboot/)
 - [SJTU VPN](./modules/nixos/desktop/vpn/)
-- [SDWan (easytier + tailscale)](./modules/nixos/extras/sdwan.nix)
+- [SDWan (easytier + tailscale)](./modules/nixos/server/sdwan.nix)
 
 ## Hyprland + Neovim + Helix
 
@@ -91,7 +91,7 @@ See [./secrets](./secrets) for details.
   - `nixos/` - NixOS modules
     - `basic/` - modules for all hosts
     - `desktop/` - modules for desktop hosts
-    - `extras/` - optional modules
+    - `server/` - optional modules
   - `options.nix` - my custom NixOS module options
 - `home` - common Home-Manager modules
   - `core/` - hm modules for all hosts

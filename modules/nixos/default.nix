@@ -8,7 +8,7 @@ in {
   imports =
     [
       ./base
-      ./extras
+      ./server
       ../base
       ../options.nix
     ]
