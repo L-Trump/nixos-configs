@@ -46,6 +46,7 @@ in {
 
     server = {
       nezha-agent.enable = mkEnableOption "Enable nezha-monitor agent";
+      nezha-server.enable = mkEnableOption "Enable nezha-monitor server";
       rustdesk-server.enable = mkEnableOption "Enable rustdesk server";
       easytier = {
         enable = mkEnableOption "Enable easytier with web controller";

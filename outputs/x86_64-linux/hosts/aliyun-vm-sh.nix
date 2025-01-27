@@ -20,6 +20,7 @@
   myconfigs.mymodules = lib.recursiveUpdate preset.mymodules {
     server = {
       rustdesk-server.enable = true;
+      nezha-server.enable = true;
     };
   };
   myconfigs.myhome = preset.myhome;

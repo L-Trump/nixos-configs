@@ -1,0 +1,48 @@
+{
+  myvars,
+  config,
+  lib,
+  ...
+}: let
+  inherit (config.networking) hostName;
+  et-ip = myvars.networking.hostsAddr.easytier."${hostName}".ipv4;
+  cfg = config.mymodules.server.nezha-server;
+in {
+  config = lib.mkIf cfg.enable {
+    virtualisation.oci-containers.containers."nezha-server" = {
+      image = "registry.cn-shanghai.aliyuncs.com/naibahq/nezha-dashboard";
+      volumes = [
+        "/data/docker/nezha-server/data:/dashboard/data:rw"
+      ];
+      ports = [
+        "127.0.0.1:8008:8008/tcp"
+        "${et-ip}:8008:8008/tcp"
+      ];
+      log-driver = "journald";
+      extraOptions = [
+        "--network-alias=nezha-server"
+        "--network=oci_net"
+      ];
+    };
+    systemd.services."docker-nezha-server" = {
+      serviceConfig = {
+        Restart = lib.mkOverride 90 "always";
+        RestartMaxDelaySec = lib.mkOverride 90 "1m";
+        RestartSec = lib.mkOverride 90 "100ms";
+        RestartSteps = lib.mkOverride 90 9;
+      };
+      after = [
+        "docker-network-oci_net.service"
+      ];
+      requires = [
+        "docker-network-oci_net.service"
+      ];
+      partOf = [
+        "docker-compose-oci-root.target"
+      ];
+      wantedBy = [
+        "docker-compose-oci-root.target"
+      ];
+    };
+  };
+}

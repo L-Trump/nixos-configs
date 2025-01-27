@@ -21,6 +21,7 @@
     };
     server = {
       nezha-agent.enable = false;
+      nezha-server.enable = false;
       rustdesk-server.enable = false;
       easytier.enable = false;
     };

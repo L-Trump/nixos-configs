@@ -30,6 +30,7 @@ in {
     virtualisation = mkIf (cfg.docker.enable) {
       docker = {
         enable = true;
+        autoPrune.enable = true;
         daemon.settings = {
           # enables pulling using containerd, which supports restarting from a partial pull
           # https://docs.docker.com/storage/containerd/
