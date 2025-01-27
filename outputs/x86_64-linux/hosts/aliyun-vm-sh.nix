@@ -21,6 +21,7 @@
     server = {
       rustdesk-server.enable = true;
       nezha-server.enable = true;
+      duplicati.enable = true;
     };
   };
   myconfigs.myhome = preset.myhome;

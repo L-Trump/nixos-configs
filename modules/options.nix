@@ -48,6 +48,7 @@ in {
       nezha-agent.enable = mkEnableOption "Enable nezha-monitor agent";
       nezha-server.enable = mkEnableOption "Enable nezha-monitor server";
       rustdesk-server.enable = mkEnableOption "Enable rustdesk server";
+      duplicati.enable = mkEnableOption "Enable duplicati backup tool";
       easytier = {
         enable = mkEnableOption "Enable easytier with web controller";
         config-server = mkOption {

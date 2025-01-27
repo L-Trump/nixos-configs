@@ -20,10 +20,11 @@
       remote-desktop.sunshine.enable = false;
     };
     server = {
+      easytier.enable = false;
       nezha-agent.enable = false;
       nezha-server.enable = false;
       rustdesk-server.enable = false;
-      easytier.enable = false;
+      duplicati.enable = false;
     };
   };
 
