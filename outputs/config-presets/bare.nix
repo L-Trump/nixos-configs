@@ -26,6 +26,7 @@
       rustdesk-server.enable = false;
       duplicati.enable = false;
       vaultwarden.enable = false;
+      homepage-dashboard.enable = false;
     };
   };
 

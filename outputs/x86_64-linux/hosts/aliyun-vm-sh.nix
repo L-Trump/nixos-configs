@@ -23,6 +23,7 @@
       nezha-server.enable = true;
       duplicati.enable = true;
       vaultwarden.enable = true;
+      homepage-dashboard.enable = true;
     };
   };
   myconfigs.myhome = preset.myhome;

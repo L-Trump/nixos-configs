@@ -50,6 +50,7 @@ in {
       rustdesk-server.enable = mkEnableOption "Enable rustdesk server";
       duplicati.enable = mkEnableOption "Enable duplicati backup tool";
       vaultwarden.enable = mkEnableOption "Enable vaultwarden password manager";
+      homepage-dashboard.enable = mkEnableOption "Enable homepage-dashboard";
       easytier = {
         enable = mkEnableOption "Enable easytier with web controller";
         config-server = mkOption {
