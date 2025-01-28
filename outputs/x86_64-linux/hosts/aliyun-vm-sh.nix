@@ -24,6 +24,7 @@
       duplicati.enable = true;
       vaultwarden.enable = true;
       homepage-dashboard.enable = true;
+      minio.enable = true;
     };
   };
   myconfigs.myhome = preset.myhome;

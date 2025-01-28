@@ -51,6 +51,7 @@ in {
       duplicati.enable = mkEnableOption "Enable duplicati backup tool";
       vaultwarden.enable = mkEnableOption "Enable vaultwarden password manager";
       homepage-dashboard.enable = mkEnableOption "Enable homepage-dashboard";
+      minio.enable = mkEnableOption "Enable minio s3 storage";
       easytier = {
         enable = mkEnableOption "Enable easytier with web controller";
         config-server = mkOption {
