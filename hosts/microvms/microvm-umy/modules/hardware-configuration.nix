@@ -12,6 +12,16 @@
     (modulesPath + "/profiles/qemu-guest.nix")
   ];
 
+  boot.supportedFilesystems = [
+    "ext4"
+    "btrfs"
+    "xfs"
+    "ntfs"
+    "fat"
+    "vfat"
+    "exfat"
+  ];
+
   microvm = {
     hypervisor = "qemu";
     graphics.enable = true;

@@ -25,6 +25,15 @@
     canTouchEfiVariables = true;
     efiSysMountPoint = "/boot/efi";
   };
+  boot.supportedFilesystems = [
+    "ext4"
+    "btrfs"
+    "xfs"
+    "ntfs"
+    "fat"
+    "vfat"
+    "exfat"
+  ];
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/21cd3737-5f09-404f-9d22-82f226e7346d";

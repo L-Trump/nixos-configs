@@ -19,6 +19,15 @@
   boot.kernelParams = ["console=ttyS0,115200n8" "console=tty0"];
   boot.loader.grub.enable = true;
   boot.loader.grub.device = "/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi0"; # or "nodev" for efi only
+  boot.supportedFilesystems = [
+    "ext4"
+    "btrfs"
+    "xfs"
+    "ntfs"
+    "fat"
+    "vfat"
+    "exfat"
+  ];
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/b4bca98c-2d91-4c0f-b09f-f7af99dd4466";

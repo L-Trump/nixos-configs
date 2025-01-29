@@ -10,6 +10,15 @@
   boot.initrd.kernelModules = ["nvme"];
   boot.kernelModules = ["kvm-intel"];
   boot.extraModulePackages = [];
+  boot.supportedFilesystems = [
+    "ext4"
+    "btrfs"
+    "xfs"
+    "ntfs"
+    "fat"
+    "vfat"
+    "exfat"
+  ];
 
   boot.loader.grub.device = "/dev/vda";
   fileSystems."/" = {
