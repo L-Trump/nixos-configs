@@ -9,7 +9,7 @@ in {
   services.nezha-agent-dev = lib.mkIf cfg.enable {
     enable = true;
     settings = {
-      server = "10.144.144.251:8008";
+      server = "aliyun-vm-sh.ltnet:8008";
       disableCommandExecute = false;
     };
     genUuid = true;
