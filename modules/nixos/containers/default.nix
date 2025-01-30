@@ -13,10 +13,10 @@
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = true;
-      ExecStop = "docker network rm -f oci_net";
+      ExecStop = "${pkgs.docker}/bin/docker network rm -f oci_net";
     };
     script = ''
-      docker network inspect oci_net || docker network create oci_net
+      ${pkgs.docker}/bin/docker network inspect oci_net || ${pkgs.docker}/bin/docker network create oci_net
     '';
     partOf = ["docker-compose-oci-root.target"];
     wantedBy = ["docker-compose-oci-root.target"];
