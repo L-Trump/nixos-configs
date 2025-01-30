@@ -20,8 +20,14 @@ in rec {
     n100.ipv4 = "10.144.144.111";
     microvm-umy.ipv4 = "10.144.144.112";
     tencent-vm-jp.ipv4 = "10.144.144.253";
-    aliyun-vm-sh.ipv4 = "10.144.144.251";
-    chick-vm-cd.ipv4 = "10.144.144.249";
+    aliyun-vm-sh = {
+      ipv4 = "10.144.144.251";
+      domainPrefix = ["s3" "backup"];
+    };
+    chick-vm-cd = {
+      ipv4 = "10.144.144.249";
+      domainPrefix = ["s3" "backup"];
+    };
     qfynat.ipv4 = "10.144.144.252";
     rebai-nat.ipv4 = "10.144.144.247";
     dorm-router.ipv4 = "10.144.144.198";
@@ -69,10 +75,15 @@ in rec {
 
   hostsRecord =
     lib.attrsets.foldlAttrs
-    (acc: host: val:
+    (acc: host: val: let
+      prefix =
+        if builtins.hasAttr "domainPrefix" val
+        then val.domainPrefix
+        else [];
+    in
       acc
       // {
-        "${val.ipv4}" = ["${host}.ltnet"];
+        "${val.ipv4}" = ["${host}.ltnet"] ++ (builtins.map (f: f + ".${host}.ltnet") prefix);
       })
     {}
     hostsAddr.easytier;
