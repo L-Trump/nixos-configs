@@ -70,6 +70,12 @@
     options = ["subvol=@boot"];
   };
 
+  fileSystems."/data" = {
+    device = "/dev/disk/by-uuid/fa39640a-3f93-4872-98ee-b81a04e9d655";
+    fsType = "xfs";
+    options = ["noatime"];
+  };
+
   swapDevices = [{device = "/swap/swapfile";}];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
