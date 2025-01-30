@@ -10,7 +10,10 @@
   cfg.et-ltnet.enable = builtins.hasAttr "easytier-conf" config.age.secrets;
   cfg.et = config.mymodules.server.easytier;
 in {
-  services.tailscale.enable = true;
+  services.tailscale = {
+    enable = true;
+    openFirewall = true;
+  };
 
   environment.systemPackages = [easytier-pkg];
 
@@ -39,5 +42,21 @@ in {
       Restart = "on-failure";
     };
     wantedBy = ["multi-user.target"];
+  };
+
+  networking.firewall = {
+    trustedInterfaces = ["easytier.ltnet"];
+    allowedTCPPortRanges = [
+      {
+        from = 11010;
+        to = 11020;
+      }
+    ];
+    allowedUDPPortRanges = [
+      {
+        from = 11010;
+        to = 11020;
+      }
+    ];
   };
 }

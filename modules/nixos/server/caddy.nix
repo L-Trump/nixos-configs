@@ -16,10 +16,14 @@
     then config.age.secrets.caddyfile.path
     else plainCfgPath;
 in {
-  environment.systemPackages = lib.mkIf cfg.enable [pkgs.caddy];
+  config = lib.mkIf cfg.enable {
+    environment.systemPackages = [pkgs.caddy];
 
-  services.caddy = lib.mkIf cfg.enable {
-    enable = true;
-    configFile = cfgPath;
+    services.caddy = {
+      enable = true;
+      configFile = cfgPath;
+    };
+    # General public ports
+    networking.firewall.allowedTCPPorts = [80 443 8080 8443];
   };
 }

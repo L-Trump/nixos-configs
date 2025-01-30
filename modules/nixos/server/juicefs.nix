@@ -50,6 +50,7 @@ in {
           protected-mode = "no";
         };
       };
+
       systemd.services.redis-juicefs-meta = {
         after = ["easytier-ltnet.service"];
         serviceConfig.Restart = "on-failure";

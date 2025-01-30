@@ -9,6 +9,7 @@
   cfg = config.mymodules.server.nezha-server;
 in {
   config = lib.mkIf cfg.enable {
+    networking.firewall.allowedTCPPorts = [8008];
     virtualisation.oci-containers.containers."nezha-server" = {
       image = "registry.cn-shanghai.aliyuncs.com/naibahq/nezha-dashboard";
       volumes = [

@@ -14,6 +14,7 @@ in {
 
   networking = {
     inherit hostName;
+    firewall.enable = true;
     usePredictableInterfaceNames = false;
     domain = "localdomain";
     nameservers = [

@@ -7,18 +7,23 @@
   cfg = config.mymodules.server.rustdesk-server;
   pro-package = pkgs.sctgdesk-server;
 in {
-  services.rustdesk-server = lib.mkIf cfg.enable {
-    enable = true;
-    package = pro-package;
-    signal = {
+  config = lib.mkIf cfg.enable {
+    services.rustdesk-server = {
       enable = true;
-      extraArgs = ["-c" "${config.age.secrets.hbbs-conf.path}"];
+      package = pro-package;
+      signal = {
+        enable = true;
+        extraArgs = ["-c" "${config.age.secrets.hbbs-conf.path}"];
+      };
+      relay.enable = true;
+      openFirewall = true;
     };
-    relay.enable = true;
-  };
-  # Use config file for hbbs
-  systemd.services.rustdesk-signal = lib.mkIf cfg.enable {
-    serviceConfig.ExecStart =
-      lib.mkForce "${pro-package}/bin/hbbs -c ${config.age.secrets.hbbs-conf.path}";
+    # Use config file for hbbs
+    systemd.services.rustdesk-signal = {
+      serviceConfig.ExecStart =
+        lib.mkForce "${pro-package}/bin/hbbs -c ${config.age.secrets.hbbs-conf.path}";
+    };
+    # Allow port 21114 (Api server)
+    networking.firewall.allowedTCPPorts = [21114];
   };
 }

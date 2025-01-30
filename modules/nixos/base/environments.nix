@@ -46,6 +46,7 @@
     fuse
     fuse3
     nfs-utils
+    nixos-firewall-tool # a tool that temporarily manage nixos firewall
   ];
 
   programs.fish.enable = true;

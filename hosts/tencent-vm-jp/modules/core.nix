@@ -15,6 +15,7 @@ in {
 
   networking = {
     inherit hostName;
+    firewall.enable = true;
     domain = "localdomain";
     nameservers = [
       "8.8.8.8" # googledns
