@@ -15,7 +15,11 @@
   name = "matebook-gt14";
   dname = "matebook-gt14";
   preset = mypresets.daily;
-  myconfigs.mymodules = preset.mymodules;
+  myconfigs.mymodules = lib.recursiveUpdate preset.mymodules {
+    server = {
+      juicefs.enable = true;
+    };
+  };
   myconfigs.myhome = preset.myhome;
   modules = {
     nixos-modules = map mylib.relativeToRoot [

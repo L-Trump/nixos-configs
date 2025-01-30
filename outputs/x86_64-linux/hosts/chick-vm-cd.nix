@@ -20,7 +20,9 @@
   myconfigs.mymodules = lib.recursiveUpdate preset.mymodules {
     server = {
       duplicati.enable = true;
-      # minio.enable = true;
+      minio.enable = true;
+      juicefs.enable = true;
+      redis.juicefs-meta.enable = true;
     };
   };
   myconfigs.myhome = preset.myhome;

@@ -28,6 +28,10 @@
       vaultwarden.enable = false;
       homepage-dashboard.enable = false;
       minio.enable = false;
+      juicefs.enable = false;
+      redis = {
+        juicefs-meta.enable = false;
+      };
     };
   };
 

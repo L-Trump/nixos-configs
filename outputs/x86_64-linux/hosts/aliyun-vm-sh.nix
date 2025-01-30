@@ -25,6 +25,11 @@
       vaultwarden.enable = true;
       homepage-dashboard.enable = true;
       minio.enable = true;
+      juicefs.enable = true;
+      redis.juicefs-meta = {
+        enable = true;
+        isSlave = true;
+      };
     };
   };
   myconfigs.myhome = preset.myhome;

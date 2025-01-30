@@ -25,6 +25,13 @@
         infras = ["microvm-umy"];
       };
     };
+    server = {
+      juicefs.enable = true;
+      redis.juicefs-meta = {
+        enable = true;
+        isSlave = true;
+      };
+    };
   };
   myconfigs.myhome = lib.recursiveUpdate preset.myhome {
     tuiExtra = {

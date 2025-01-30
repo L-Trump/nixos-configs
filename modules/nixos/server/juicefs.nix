@@ -1,0 +1,59 @@
+{
+  myvars,
+  pkgs,
+  config,
+  lib,
+  ...
+}: let
+  inherit (config.networking) hostName;
+  et-ip = myvars.networking.hostsAddr.easytier."${hostName}".ipv4;
+  cfg = config.mymodules.server.juicefs;
+  dcfg = config.mymodules.server.redis.juicefs-meta;
+  pkg = pkgs.juicefs;
+  master = {
+    host = "chick-vm-cd.ltnet";
+    port = dcfg.port;
+  };
+in {
+  config = lib.mkMerge [
+    (lib.mkIf cfg.enable {
+      mymodules.server.juicefs.meta-url = lib.mkDefault "redis://${master.host}:${toString master.port}/1";
+      environment.systemPackages = [pkg];
+      fileSystems."/data/juicefs" = {
+        device = cfg.meta-url;
+        fsType = "juicefs";
+        options = ["_netdev" "writeback"];
+      };
+      # systemd.mounts = [
+      #   {
+      #     description = "JuiceFS";
+      #     type = "juicefs";
+      #     what = cfg.meta-url;
+      #     where = "/data/juicefs";
+      #     options = "_netdev,allow_other,writeback_cache,background";
+      #     after = ["easytier-ltnet.service"];
+      #     wantedBy = ["remote-fs.target" "multi-user.target"];
+      #   }
+      # ];
+    })
+
+    (lib.mkIf dcfg.enable {
+      services.redis.servers.juicefs-meta = {
+        enable = true;
+        bind = et-ip;
+        port = dcfg.port;
+        slaveOf = lib.mkIf dcfg.isSlave {
+          ip = master.host;
+          port = master.port;
+        };
+        settings = {
+          protected-mode = "no";
+        };
+      };
+      systemd.services.redis-juicefs-meta = {
+        after = ["easytier-ltnet.service"];
+        serviceConfig.Restart = "on-failure";
+      };
+    })
+  ];
+}

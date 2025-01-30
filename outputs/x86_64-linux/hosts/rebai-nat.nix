@@ -18,7 +18,11 @@
   ssh-user = "root";
 
   preset = mypresets.server;
-  myconfigs.mymodules = preset.mymodules;
+  myconfigs.mymodules = lib.recursiveUpdate preset.mymodules {
+    server = {
+      juicefs.enable = true;
+    };
+  };
   myconfigs.myhome = preset.myhome;
   modules = {
     nixos-modules = map mylib.relativeToRoot [

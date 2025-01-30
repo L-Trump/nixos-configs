@@ -52,6 +52,23 @@ in {
       vaultwarden.enable = mkEnableOption "Enable vaultwarden password manager";
       homepage-dashboard.enable = mkEnableOption "Enable homepage-dashboard";
       minio.enable = mkEnableOption "Enable minio s3 storage";
+      juicefs = {
+        enable = mkEnableOption "Enable juicefs daemon";
+        meta-url = mkOption {
+          type = types.str;
+          description = "Metadata url for juicefs";
+        };
+      };
+      redis = {
+        juicefs-meta = {
+          enable = mkEnableOption "Enable juicefs meta redis database";
+          port = mkOption {
+            type = types.port;
+            default = 6379;
+          };
+          isSlave = mkEnableOption "Whether the databse is slave";
+        };
+      };
       easytier = {
         enable = mkEnableOption "Enable easytier with web controller";
         config-server = mkOption {
