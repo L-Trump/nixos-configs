@@ -24,10 +24,10 @@ in {
   sctgdesk-server = pkgs.callPackage ./sctgdesk-server {};
 
   # Some package derived from unstable repo
-  # siyuan = pkgs-unstable.siyuan;
+  siyuan = pkgs-unstable.siyuan;
   easytier = pkgs-unstable.easytier;
 
-  siyuan = pkgs.callPackage ./siyuan {}; # TODO wait upstream merge https://nixpk.gs/pr-tracker.html?pr=377207
+  # siyuan = pkgs.callPackage ./siyuan {};
   # easytier = pkgs.callPackage ./easytier {};
   # siyuan = pkgs.callPackage ./siyuan {};
   linuxPackages_latest = pkgs.linuxPackages_latest.extend (_: _: {
