@@ -42,6 +42,7 @@ in {
         enable = true;
         bind = et-ip;
         port = dcfg.port;
+        appendOnly = true;
         slaveOf = lib.mkIf dcfg.isSlave {
           ip = master.host;
           port = master.port;
