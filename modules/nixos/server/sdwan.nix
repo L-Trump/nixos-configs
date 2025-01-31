@@ -21,7 +21,7 @@ in {
   systemd.services.easytier-ltnet = lib.mkIf cfg.et-ltnet.enable {
     path = with pkgs; [easytier-pkg iproute2 bash];
     description = "EasyTier Service";
-    wants = ["network-online.target" "nss-lookup.target"];
+    # wants = ["network-online.target" "nss-lookup.target"];
     after = ["network-online.target" "nss-lookup.target"];
     serviceConfig = {
       Type = "simple";

@@ -52,6 +52,7 @@ in {
       vaultwarden.enable = mkEnableOption "Enable vaultwarden password manager";
       homepage-dashboard.enable = mkEnableOption "Enable homepage-dashboard";
       minio.enable = mkEnableOption "Enable minio s3 storage";
+      alist.enable = mkEnableOption "Enable Alist file driver";
       juicefs = {
         enable = mkEnableOption "Enable juicefs daemon";
         meta-url = mkOption {

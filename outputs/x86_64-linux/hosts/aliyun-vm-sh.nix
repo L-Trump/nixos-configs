@@ -24,7 +24,7 @@
       duplicati.enable = true;
       vaultwarden.enable = true;
       homepage-dashboard.enable = true;
-      # minio.enable = true;
+      alist.enable = true;
       juicefs.enable = true;
       redis.juicefs-meta = {
         enable = true;

@@ -21,6 +21,7 @@
     server = {
       duplicati.enable = true;
       minio.enable = true;
+      alist.enable = true;
       juicefs.enable = true;
       redis.juicefs-meta.enable = true;
     };
