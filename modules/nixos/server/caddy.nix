@@ -22,6 +22,7 @@ in {
     services.caddy = {
       enable = true;
       configFile = cfgPath;
+      enableReload = false;
     };
     # General public ports
     networking.firewall.allowedTCPPorts = [80 443 8080 8443];
