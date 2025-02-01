@@ -28,13 +28,27 @@ in {
       #   {
       #     description = "JuiceFS";
       #     type = "juicefs";
+      #     requires = ["network.target" "easytier-ltnet.service"];
+      #     after = ["multi-user.target"];
       #     what = cfg.meta-url;
       #     where = "/data/juicefs";
       #     options = "_netdev,allow_other,writeback_cache,background";
-      #     after = ["easytier-ltnet.service"];
       #     wantedBy = ["remote-fs.target" "multi-user.target"];
       #   }
       # ];
+      systemd.services.juicefs-s3-gateway = lib.mkIf cfg.enableS3Gateway {
+        description = "JuiceFS S3 Gateway";
+        requires = ["network.target" "easytier-ltnet.service"];
+        after = ["multi-user.target"];
+        serviceConfig = {
+          Type = "simple";
+          User = "root";
+          ExecStart = "${pkg}/bin/juicefs gateway ${cfg.meta-url} localhost:8260";
+          Restart = "on-failure";
+          EnvironmentFile = config.age.secrets.jfs-s3-env.path;
+        };
+        wantedBy = ["multi-user.target"];
+      };
     })
 
     (lib.mkIf dcfg.enable {

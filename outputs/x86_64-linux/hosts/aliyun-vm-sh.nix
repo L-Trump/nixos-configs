@@ -25,7 +25,10 @@
       vaultwarden.enable = true;
       homepage-dashboard.enable = true;
       alist.enable = true;
-      juicefs.enable = true;
+      juicefs = {
+        enable = true;
+        enableS3Gateway = true;
+      };
       redis.juicefs-meta = {
         enable = true;
         isSlave = true;

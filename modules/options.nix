@@ -55,6 +55,7 @@ in {
       alist.enable = mkEnableOption "Enable Alist file driver";
       juicefs = {
         enable = mkEnableOption "Enable juicefs daemon";
+        enableS3Gateway = mkEnableOption "Enable juicefs s3 gateway";
         meta-url = mkOption {
           type = types.str;
           description = "Metadata url for juicefs";
