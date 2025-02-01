@@ -12,7 +12,8 @@ in {
 
     systemd.services.alist = {
       description = "Alist Driver";
-      after = ["network.target"];
+      wants = ["network-online.target" "nss-lookup.target"];
+      after = ["network-online.target" "nss-lookup.target"];
       serviceConfig = {
         Type = "simple";
         ExecStart = "${pkg}/bin/alist server";
