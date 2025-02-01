@@ -21,7 +21,6 @@
     server = {
       rustdesk-server.enable = true;
       nezha-server.enable = true;
-      duplicati.enable = true;
       kopia-server.enable = true;
       vaultwarden.enable = true;
       homepage-dashboard.enable = true;
