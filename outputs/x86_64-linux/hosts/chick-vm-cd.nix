@@ -20,6 +20,7 @@
   myconfigs.mymodules = lib.recursiveUpdate preset.mymodules {
     server = {
       duplicati.enable = true;
+      kopia-server.enable = true;
       minio.enable = true;
       alist.enable = true;
       juicefs.enable = true;

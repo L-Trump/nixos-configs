@@ -15,5 +15,6 @@ The modules in this directory are used in my cloud servers
 | rustdesk-server    | [::]:(21114-21118)      | rustdesk server       |
 | vaultwarden        | localhost:8222          | secrests manager      |
 | nezha-server       | et-ip:8008              | nezha dashboard       |
+| kopia              | localhost:51515         | Kopia backup service  |
 
 **Note:** et-ip means the virtual ipv4 address in easytier, indicating the service can only be accessed in the internal network.
