@@ -23,6 +23,7 @@ in {
     description = "EasyTier Service";
     wants = ["network-online.target" "nss-lookup.target"];
     after = ["network-online.target" "nss-lookup.target"];
+    restartTriggers = [config.age.secrets.easytier-conf.path];
     serviceConfig = {
       Type = "simple";
       ExecStart = "${easytier-pkg}/bin/easytier-core -c ${config.age.secrets.easytier-conf.path} --multi-thread";
