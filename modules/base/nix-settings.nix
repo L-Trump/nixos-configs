@@ -15,8 +15,10 @@
   nix.package = pkgs.nixVersions.latest;
   nix.settings = {
     substituters = lib.mkBefore [
-      "https://mirrors.ustc.edu.cn/nix-channels/store"
-      "https://mirror.sjtu.edu.cn/nix-channels/store"
+      # Priority of the official substititer is 40
+      # See https://cache.nixos.org/nix-cache-info
+      "https://mirrors.ustc.edu.cn/nix-channels/store?priority=37"
+      "https://mirror.sjtu.edu.cn/nix-channels/store?priority=38"
       "https://nix-community.cachix.org"
     ];
     trusted-public-keys = [
