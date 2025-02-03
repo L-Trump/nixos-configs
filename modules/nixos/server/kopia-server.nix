@@ -11,7 +11,7 @@ in {
   config = lib.mkIf cfg.enable {
     environment.systemPackages = [pkg];
     systemd.services.kopia-server = {
-      path = with pkgs; [pkg rclone config.programs.ssh.package];
+      path = with pkgs; [pkg rclone config.programs.ssh.package "/run/wrappers"];
       description = "Kopia backup server";
       wants = ["network-online.target"];
       after = ["network-online.target" "multi-user.target"];
