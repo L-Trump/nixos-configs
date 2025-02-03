@@ -46,6 +46,7 @@ in {
 
       "/var/log"
       "/var/lib"
+      "/data"
 
       # created by modules/nixos/misc/fhs-fonts.nix
       # for flatpak apps
