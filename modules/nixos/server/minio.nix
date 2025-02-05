@@ -11,8 +11,8 @@ in {
 
     dataDir = ["/data/app/minio/data"];
     configDir = "/data/app/minio/config";
-    listenAddress = "127.0.0.1:9096";
-    consoleAddress = "127.0.0.1:9097"; # Web UI
+    listenAddress = ":9096";
+    consoleAddress = ":9097"; # Web UI
     region = "us-east-1"; # default to us-east-1, same as AWS S3.
 
     # File containing the MINIO_ROOT_USER, default is “minioadmin”, and MINIO_ROOT_PASSWORD (length >= 8), default is “minioadmin”;
