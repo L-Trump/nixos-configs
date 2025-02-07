@@ -22,6 +22,8 @@ in {
     domain = "localdomain";
   };
 
+  services.qemuGuest.enable = true;
+
   systemd.network = {
     enable = true;
     wait-online = {
