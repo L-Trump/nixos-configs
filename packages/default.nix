@@ -3,7 +3,7 @@
   pkgs-unstable,
   ...
 }: let
-  inherit (pkgs) lib libsForQt5;
+  inherit (pkgs) lib libsForQt5 fetchFromGitHub;
 in {
   xdg-desktop-portal-termfilechooser = pkgs.callPackage ./xdg-desktop-portal-termfilechooser {};
 
@@ -27,11 +27,27 @@ in {
   siyuan = pkgs-unstable.siyuan;
   easytier = pkgs-unstable.easytier;
 
+  # TODO wait fix https://github.com/NixOS/nixpkgs/issues/380196
+  lldb = pkgs.lldb.overrideAttrs {
+    dontCheckForBrokenSymlinks = true;
+  };
+  tela-icon-theme = pkgs.tela-icon-theme.overrideAttrs {
+    dontCheckForBrokenSymlinks = true;
+  };
+
   # siyuan = pkgs.callPackage ./siyuan {};
   # easytier = pkgs.callPackage ./easytier {};
   # siyuan = pkgs.callPackage ./siyuan {};
-  linuxPackages_latest = pkgs.linuxPackages_latest.extend (_: _: {
-    ipu6-drivers = pkgs.linuxPackages_latest.callPackage ./ipu6-drivers {};
+  linuxPackages_latest = pkgs.linuxPackages_latest.extend (_: prev: {
+    # ipu6-drivers = pkgs.linuxPackages_latest.callPackage ./ipu6-drivers {};
+    ipu6-drivers = prev.ipu6-drivers.overrideAttrs (_: _: {
+      src = fetchFromGitHub {
+        owner = "intel";
+        repo = "ipu6-drivers";
+        rev = "e2136ae84dac25d6e0be071bda460d852bb975d1";
+        hash = "sha256-HLo3gC61+nRUMzonc3d5uwy+OmWQMQkLAGj15Ynbcoc=";
+      };
+    });
   });
   # openvswitch = pkgs-stable.openvswitch.override {kernel = null;};
   # clouddrive2 = pkgs.callPackage ./clouddrive2 {};
