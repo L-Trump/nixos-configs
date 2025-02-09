@@ -13,6 +13,7 @@ in {
   services.resolved.enable = true;
   boot.loader.grub.enable = true;
   boot.loader.grub.device = "/dev/vda"; # or "nodev" for efi only
+  services.qemuGuest.enable = true;
 
   networking = {
     inherit hostName;

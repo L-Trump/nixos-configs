@@ -11,6 +11,7 @@ in {
   zramSwap.enable = true;
   services.openssh.enable = true;
   services.resolved.enable = true;
+  services.qemuGuest.enable = true;
 
   networking = {
     inherit hostName;
