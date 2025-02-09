@@ -19,26 +19,26 @@ in {
     (lib.mkIf cfg.enable {
       mymodules.server.juicefs.meta-url = lib.mkDefault "redis://${master.host}:${toString master.port}/1";
       environment.systemPackages = [pkg];
-      fileSystems."/data/juicefs" = {
-        device = cfg.meta-url;
-        fsType = "juicefs";
-        options = ["_netdev" "writeback"];
-      };
-      # systemd.mounts = [
-      #   {
-      #     description = "JuiceFS";
-      #     type = "juicefs";
-      #     requires = ["network.target" "easytier-ltnet.service"];
-      #     after = ["multi-user.target"];
-      #     what = cfg.meta-url;
-      #     where = "/data/juicefs";
-      #     options = "_netdev,allow_other,writeback_cache,background";
-      #     wantedBy = ["remote-fs.target" "multi-user.target"];
-      #   }
-      # ];
+      # fileSystems."/data/juicefs" = {
+      #   device = cfg.meta-url;
+      #   fsType = "juicefs";
+      #   options = ["_netdev" "writeback"];
+      # };
+      systemd.mounts = [
+        {
+          description = "JuiceFS";
+          type = "juicefs";
+          requires = ["network-online.target" "easytier-ltnet.service"];
+          after = ["multi-user.target"];
+          what = cfg.meta-url;
+          where = "/data/juicefs";
+          options = "allow_other,writeback_cache";
+          wantedBy = ["multi-user.target" "remote-fs.target"];
+        }
+      ];
       systemd.services.juicefs-s3-gateway = lib.mkIf cfg.enableS3Gateway {
         description = "JuiceFS S3 Gateway";
-        requires = ["network.target" "easytier-ltnet.service"];
+        requires = ["network-online.target" "easytier-ltnet.service"];
         after = ["multi-user.target"];
         serviceConfig = {
           Type = "simple";
