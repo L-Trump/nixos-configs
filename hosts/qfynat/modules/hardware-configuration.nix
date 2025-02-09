@@ -14,38 +14,59 @@
 
   boot.initrd.availableKernelModules = ["ahci" "ata_piix" "uhci_hcd" "sr_mod" "virtio_pci" "virtio_blk" "virtio_scsi" "xen_blkfront" "vmw_pvscsi"];
   boot.initrd.kernelModules = [];
-  boot.kernelModules = [];
+  boot.kernelModules = ["kvm-intel"];
   boot.extraModulePackages = [];
   boot.kernelParams = ["console=ttyS0,115200n8" "console=tty0"];
 
+  boot.supportedFilesystems = [
+    "ext4"
+    "btrfs"
+    "xfs"
+    "ntfs"
+    "fat"
+    "vfat"
+    "exfat"
+  ];
+
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/43abc56d-7e4e-4437-b687-47ea6daccd50";
+    device = "/dev/disk/by-uuid/b83714c4-b346-44cf-b3be-867ce8f78c15";
     fsType = "btrfs";
     options = ["subvol=@root"];
   };
 
+  fileSystems."/btrfs-root" = {
+    device = "/dev/disk/by-uuid/b83714c4-b346-44cf-b3be-867ce8f78c15";
+    fsType = "btrfs";
+  };
+
   fileSystems."/nix" = {
-    device = "/dev/disk/by-uuid/43abc56d-7e4e-4437-b687-47ea6daccd50";
+    device = "/dev/disk/by-uuid/b83714c4-b346-44cf-b3be-867ce8f78c15";
     fsType = "btrfs";
     options = ["subvol=@nix"];
   };
 
   fileSystems."/snapshots" = {
-    device = "/dev/disk/by-uuid/43abc56d-7e4e-4437-b687-47ea6daccd50";
+    device = "/dev/disk/by-uuid/b83714c4-b346-44cf-b3be-867ce8f78c15";
     fsType = "btrfs";
     options = ["subvol=@snapshots"];
   };
 
   fileSystems."/tmp" = {
-    device = "/dev/disk/by-uuid/43abc56d-7e4e-4437-b687-47ea6daccd50";
+    device = "/dev/disk/by-uuid/b83714c4-b346-44cf-b3be-867ce8f78c15";
     fsType = "btrfs";
     options = ["subvol=@tmp"];
   };
 
   fileSystems."/swap" = {
-    device = "/dev/disk/by-uuid/43abc56d-7e4e-4437-b687-47ea6daccd50";
+    device = "/dev/disk/by-uuid/b83714c4-b346-44cf-b3be-867ce8f78c15";
     fsType = "btrfs";
     options = ["subvol=@swap"];
+  };
+
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-uuid/b83714c4-b346-44cf-b3be-867ce8f78c15";
+    fsType = "btrfs";
+    options = ["subvol=@boot"];
   };
 
   swapDevices = [{device = "/swap/swapfile";}];
