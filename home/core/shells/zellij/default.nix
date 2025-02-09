@@ -1,6 +1,9 @@
 {
   programs.zellij = {
     enable = true;
+    enableBashIntegration = false;
+    enableZshIntegration = false;
+    enableFishIntegration = false;
   };
   # only works in bash/zsh, not nushell
   home.shellAliases = {
