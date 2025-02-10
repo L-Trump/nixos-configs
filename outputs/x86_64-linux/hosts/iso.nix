@@ -5,6 +5,7 @@
   inputs,
   lib,
   myvars,
+  mypresets,
   mylib,
   system,
   genSpecialArgs,
@@ -13,34 +14,21 @@
   # Huawei Matebook-GT14
   name = "iso";
   dname = "iso";
-  myconfigs.mymodules = {
-    virtualization = {
-      enable = false;
-    };
+  preset = mypresets.bare;
+  myconfigs.mymodules = lib.recursiveUpdate preset.mymodules {
     desktop = {
       enable = true;
-      animeboot.enable = false;
       wayland.enable = true;
-      xorg.enable = false;
-      game.enable = false;
       keyremap.enable = true;
     };
     server = {
       easytier.enable = true;
     };
   };
-  myconfigs.myhome = {
-    tuiExtra = {
-      enable = false;
-      mail.enable = false;
-      lsp.enable = true;
-    };
+  myconfigs.myhome = lib.recursiveUpdate preset.myhome {
     desktop = {
       enable = true;
       wayland.enable = true;
-      xorg.enable = false;
-      daily.enable = false;
-      daily.game.enable = false;
     };
   };
   base-modules = {
