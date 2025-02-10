@@ -22,18 +22,22 @@ in {
       # fileSystems."/data/juicefs" = {
       #   device = cfg.meta-url;
       #   fsType = "juicefs";
-      #   options = ["_netdev" "writeback"];
+      #   options = ["_netdev" "nofail" "writeback"];
       # };
       systemd.mounts = [
         {
           description = "JuiceFS";
           type = "juicefs";
-          requires = ["network-online.target" "easytier-ltnet.service"];
-          after = ["multi-user.target"];
+          requires = ["easytier-ltnet.service"];
+          wants = ["network-online.target"];
+          after = ["network-online.target"];
           what = cfg.meta-url;
           where = "/data/juicefs";
-          options = "allow_other,writeback_cache";
+          options = "_netdev,nofail,allow_other,writeback_cache";
           wantedBy = ["multi-user.target" "remote-fs.target"];
+          mountConfig = {
+            TimeoutSec = "20s";
+          };
         }
       ];
       systemd.services.juicefs-s3-gateway = lib.mkIf cfg.enableS3Gateway {
