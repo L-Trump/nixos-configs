@@ -1,24 +1,26 @@
 #!/usr/bin/env nix-shell
-#!nix-shell -i bash -p bash skopeo coreutils
+#!nix-shell -i bash -p bash skopeo coreutils jq
 
 cd "${0%/*}" || exit
 
 NIX_FILE="../vars/containers.nix"
 
 # 函数：获取镜像的最新 tag
-get_latest_tag() {
+get_latest_version() {
     local image_url=$1
-    # 获取 latest 标签的 digest
-    LATEST_DIGEST=$(skopeo inspect "docker://$image_url:latest" --format "{{.Digest}}" 2>/dev/null)
+    local latest_tag=${2:-"latest"}  # 如果未提供 latest_tag，则默认为 "latest"
+
+    # 获取 latest_tag 标签的 digest
+    LATEST_DIGEST=$(skopeo inspect "docker://$image_url:$latest_tag" --format "{{.Digest}}" 2>/dev/null)
     if [ -z "$LATEST_DIGEST" ]; then
-        echo "无法获取 latest 标签的 digest，请检查镜像地址是否正确：$image_url"
-        exit 1
+        echo "无法获取 $latest_tag 标签的 digest，请检查镜像地址是否正确：$image_url"
+        return 1
     fi
 
     # 获取所有标签并倒序排序
     TAGS=$(skopeo list-tags "docker://$image_url" | jq -r '.Tags[]' | sort -V -r)
 
-    # 筛选与 latest digest 相同的标签，并排除 latest 和不包含数字的标签
+    # 筛选与 latest_tag digest 相同的标签，并排除 latest_tag 和不包含数字的标签
     for TAG in $TAGS; do
         if ! [[ "$TAG" =~ [0-9] ]]; then
             continue
@@ -31,7 +33,7 @@ get_latest_tag() {
     done
 
     # 如果没有找到符合条件的标签
-    echo "未找到与 latest 指向相同 digest 的版本"
+    echo "未找到与 $latest_tag 指向相同 digest 的版本"
     return 1
 }
 
@@ -48,20 +50,21 @@ update_nix_file() {
         index=$(echo "$entry" | jq -r '.key')
         image=$(echo "$entry" | jq -r '.value.image')
         current_tag=$(echo "$entry" | jq -r '.value.tag')
+        latest_tag=$(echo "$entry" | jq -r '.value.latestTag // "latest"')
 
         # 调用函数获取最新 tag
-        latest_tag=$(get_latest_tag "$image")
+        latest_version=$(get_latest_version "$image" "$latest_tag")
 
         if [ $? -ne 0 ]; then
             echo "更新镜像 $image 失败"
             continue
         fi
 
-        echo "$index: $current_tag -> $latest_tag"
+        echo "$index: $current_tag -> $latest_version"
 
         # 使用 sed 更新 Nix 文件中的 tag
-        sed -i "/$index = {/,/}/ s|tag = \".*\";|tag = \"$latest_tag\";|" "$nix_file"
-        echo "已更新镜像 $image 的 tag 为 $latest_tag"
+        sed -i "/$index = {/,/}/ s|tag = \".*\";|tag = \"$latest_version\";|" "$nix_file"
+        echo "已更新镜像 $image 的 tag 为 $latest_version"
     done <<< "$entries"
 }
 

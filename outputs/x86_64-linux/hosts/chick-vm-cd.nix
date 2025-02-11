@@ -23,6 +23,7 @@
       minio.enable = true;
       alist.enable = true;
       juicefs.enable = true;
+      immich.machine-learning.enable = true;
       redis.juicefs-meta.enable = true;
     };
   };

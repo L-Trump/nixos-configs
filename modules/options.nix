@@ -54,6 +54,9 @@ in {
       homepage-dashboard.enable = mkEnableOption "Enable homepage-dashboard";
       minio.enable = mkEnableOption "Enable minio s3 storage";
       alist.enable = mkEnableOption "Enable Alist file driver";
+      immich = {
+        machine-learning.enable = mkEnableOption "Enable immich machine-learning";
+      };
       juicefs = {
         enable = mkEnableOption "Enable juicefs daemon";
         enableS3Gateway = mkEnableOption "Enable juicefs s3 gateway";
