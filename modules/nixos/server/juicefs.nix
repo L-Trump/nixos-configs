@@ -33,7 +33,7 @@ in {
           after = ["network-online.target"];
           what = cfg.meta-url;
           where = "/data/juicefs";
-          options = "_netdev,nofail,allow_other,writeback_cache";
+          options = "_netdev,nofail,allow_other,writeback_cache,writeback,free-space-ratio=0.5";
           wantedBy = ["multi-user.target" "remote-fs.target"];
           mountConfig = {
             TimeoutSec = "20s";
