@@ -8,4 +8,8 @@ _: {
     tag = "v1.126.1";
     latestTag = "release";
   };
+  siyuan-server = {
+    image = "docker.1panel.live/b3log/siyuan";
+    tag = "v3.1.21";
+  };
 }

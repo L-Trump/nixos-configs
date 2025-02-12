@@ -30,6 +30,7 @@
       homepage-dashboard.enable = false;
       minio.enable = false;
       alist.enable = false;
+      siyuan-server.enable = false;
       immich.machine-learning.enable = false;
       juicefs.enable = false;
       redis = {

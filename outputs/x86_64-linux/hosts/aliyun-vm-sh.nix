@@ -25,6 +25,7 @@
       vaultwarden.enable = true;
       homepage-dashboard.enable = true;
       alist.enable = true;
+      siyuan-server.enable = true;
       juicefs = {
         enable = true;
         enableS3Gateway = true;

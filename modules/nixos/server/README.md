@@ -18,5 +18,6 @@ The modules in this directory are used in my cloud servers
 | kopia              | localhost:51515         | Kopia backup service     |
 | alist              | localhost:(5244/5246)   | Kopia backup service     |
 | immich (ml)        | et-ip:3003              | Immich machine learning  |
+| siyuan-server      | et-ip:6806              | Siyuan docker            |
 
 **Note:** et-ip means the virtual ipv4 address in easytier, indicating the service can only be accessed in the internal network.
