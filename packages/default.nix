@@ -24,18 +24,15 @@ in {
   sctgdesk-server = pkgs.callPackage ./sctgdesk-server {};
 
   # Some package derived from unstable repo
-  siyuan = pkgs-unstable.siyuan;
+  # siyuan = pkgs-unstable.siyuan;
   easytier = pkgs-unstable.easytier;
 
-  # TODO wait fix https://github.com/NixOS/nixpkgs/issues/380196
-  lldb = pkgs.lldb.overrideAttrs {
-    dontCheckForBrokenSymlinks = true;
-  };
+  # TODO wait fix https://github.com/NixOS/nixpkgs/issues/381521
   tela-icon-theme = pkgs.tela-icon-theme.overrideAttrs {
     dontCheckForBrokenSymlinks = true;
   };
 
-  # siyuan = pkgs.callPackage ./siyuan {};
+  siyuan = pkgs.callPackage ./siyuan {};  # TODO wait r-ryantm update
   # easytier = pkgs.callPackage ./easytier {};
   # siyuan = pkgs.callPackage ./siyuan {};
   linuxPackages_latest = pkgs.linuxPackages_latest.extend (_: prev: {
