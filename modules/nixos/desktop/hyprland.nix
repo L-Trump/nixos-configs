@@ -11,6 +11,7 @@
 in {
   config = lib.mkIf cfg.enable {
     programs.hyprland.enable = true;
+    programs.hyprland.withUWSM = true;
     environment.systemPackages = [
       pkgs.wl-clipboard-rs
     ];
