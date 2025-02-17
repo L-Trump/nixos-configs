@@ -36,16 +36,17 @@ in {
     open = false;
     # Optionally, you may need to select the appropriate driver version for your specific GPU.
     # https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/os-specific/linux/nvidia-x11/default.nix
-    # package = config.boot.kernelPackages.nvidiaPackages.stable;
+    package = config.boot.kernelPackages.nvidiaPackages.beta;
 
+    nvidiaSettings = true;
     # required by most wayland compositors!
     modesetting.enable = true;
     powerManagement.enable = true;
-    # powerManagement.finegrained = true;
-    prime.sync.enable = true;
+    powerManagement.finegrained = true;
+    # prime.sync.enable = true;
     prime.offload = {
-      enable = false;
-      # enableOffloadCmd = true;
+      enable = true;
+      enableOffloadCmd = true;
     };
   };
 
@@ -54,6 +55,7 @@ in {
     enable = true;
     # needed by nvidia-docker
     enable32Bit = true;
+    extraPackages = with pkgs; [vaapiVdpau amdvlk ocl-icd];
   };
 
   nixpkgs.config.cudaSupport = true;

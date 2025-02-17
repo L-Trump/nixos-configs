@@ -1,11 +1,11 @@
 #!/usr/bin/env fish
 
-set prefix_name GDK_DPI NO_WAYLAND
-set prefix_exec "GDK_DPI_SCALE=1" "WAYLAND_DISPLAY="
+set prefix_name GDK_DPI NO_WAYLAND NVIDIA_OFFLOAD
+set prefix_exec "GDK_DPI_SCALE=1" "WAYLAND_DISPLAY=" nvidia-offload
 set append_name WAYLAND_ELECTRON
 set append_exec "--enable-wayland-ime --ozone-platform-hint=auto --enable-features=WaylandWindowDecorations"
-set app_rule "^.*firefox|GDK_DPI" \
-    "^.*TETR.IO|GDK_DPI" \
+set app_rule "^.*firefox|GDK_DPI NVIDIA_OFFLOAD" \
+    "^.*TETR.IO|GDK_DPI NVIDIA_OFFLOAD" \
     "^.*virt-manager|GDK_DPI" \
     "^.*remmina|GDK_DPI" \
     "^.*lx-music-desktop|NO_WAYLAND" \
@@ -20,6 +20,9 @@ for rule_str in $app_rule
     echo $rule_str | read -d '|' rule pnames
     if string match -qr $rule $cmd
         for pname in (string split ' ' $pnames)
+            if test $pname = NVIDIA_OFFLOAD; and not command -qv nvidia-offload
+                continue
+            end
             if contains $pname $prefix_name
                 set pexec $prefix_exec[(contains -i $pname $prefix_name)]
                 set -a prefix $pexec
