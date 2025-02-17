@@ -4,7 +4,7 @@
   ...
 }: {
   enable = true;
-  systemd.enable = false; # Conflict with UWSM
+  # systemd.enable = false; # Conflict with UWSM
   systemd.variables = [
     "DISPLAY"
     "HYPRLAND_INSTANCE_SIGNATURE"

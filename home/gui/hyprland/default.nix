@@ -25,12 +25,12 @@ in {
     programs.fish = {
       interactiveShellInit = ''
         # auto login
-        if uwsm check may-start
-          uwsm start hyprland-uwsm.desktop
-        end
-        # if test -z $DISPLAY; and test -n "$XDG_VTNR"; and test $XDG_VTNR -eq 1; and test "$(tty)" = "/dev/tty1"; and test "$(fgconsole 2>/dev/null || echo 1)" -eq 1
-        #     Hyprland
+        # if uwsm check may-start
+        #   uwsm start hyprland-uwsm.desktop
         # end
+        if test -z $DISPLAY; and test -n "$XDG_VTNR"; and test $XDG_VTNR -eq 1; and test "$(tty)" = "/dev/tty1"; and test "$(fgconsole 2>/dev/null || echo 1)" -eq 1
+            Hyprland
+        end
       '';
     };
 
