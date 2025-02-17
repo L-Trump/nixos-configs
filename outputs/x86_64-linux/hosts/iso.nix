@@ -11,7 +11,6 @@
   genSpecialArgs,
   ...
 } @ args: let
-  # Huawei Matebook-GT14
   name = "iso";
   dname = "iso";
   preset = mypresets.bare;

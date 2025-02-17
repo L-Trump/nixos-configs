@@ -17,6 +17,7 @@ in rec {
 
   hostsAddr.easytier = {
     matebook-gt14.ipv4 = "10.144.144.250";
+    rog-ga502.ipv4 = "10.144.144.247";
     n100.ipv4 = "10.144.144.111";
     microvm-umy.ipv4 = "10.144.144.112";
     tencent-vm-jp.ipv4 = "10.144.144.253";

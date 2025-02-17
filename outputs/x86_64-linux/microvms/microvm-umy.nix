@@ -11,7 +11,6 @@
   genSpecialArgs,
   ...
 } @ args: let
-  # Huawei Matebook-GT14
   name = "microvm-umy";
   tags = [name];
   ssh-user = "root";

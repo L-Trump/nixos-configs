@@ -11,7 +11,6 @@
   genSpecialArgs,
   ...
 } @ args: let
-  # Huawei Matebook-GT14
   name = "qfynat";
   tags = [name "all" "vps"];
   ssh-user = "root";

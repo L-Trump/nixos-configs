@@ -5,34 +5,21 @@
   inputs,
   lib,
   myvars,
-  mylib,
   mypresets,
+  mylib,
   system,
   genSpecialArgs,
   ...
 } @ args: let
-  name = "aliyun-vm-sh";
-  tags = [name "vm-sh" "all" "vps"];
+  name = "rog-ga502";
+  tags = [name];
   ssh-user = "root";
 
-  preset = mypresets.server;
+  preset = mypresets.daily;
   myconfigs.mymodules = lib.recursiveUpdate preset.mymodules {
     server = {
-      rustdesk-server.enable = true;
-      nezha-server.enable = true;
+      juicefs.enable = true;
       kopia-server.enable = true;
-      vaultwarden.enable = true;
-      homepage-dashboard.enable = true;
-      alist.enable = true;
-      siyuan-server.enable = true;
-      juicefs = {
-        enable = true;
-        enableS3Gateway = true;
-      };
-      redis.juicefs-meta = {
-        enable = true;
-        isSlave = true;
-      };
     };
   };
   myconfigs.myhome = preset.myhome;
@@ -48,9 +35,10 @@
       # common
       "home/default.nix"
       "secrets/home"
+      # host specific
+      "hosts/${name}/home"
     ];
   };
-
   systemArgs = modules // args // myconfigs;
 in {
   nixosConfigurations."${name}" = mylib.nixosSystem systemArgs;
@@ -63,6 +51,6 @@ in {
       inherit system;
       config = myvars.nixpkgs-config;
     };
-    nodeSpecialArgs."${name}" = {inherit (myconfigs) myhome mymodules;};
+    nodeSpecialArgs."${name}" = {inherit (myconfigs) mymodules;};
   };
 }

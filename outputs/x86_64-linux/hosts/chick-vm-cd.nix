@@ -11,7 +11,6 @@
   genSpecialArgs,
   ...
 } @ args: let
-  # Huawei Matebook-GT14
   name = "chick-vm-cd";
   tags = [name "vm-cd" "all" "vps"];
   ssh-user = "root";
