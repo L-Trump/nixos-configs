@@ -20,7 +20,9 @@
       '', switch:off:Lid Switch, exec, hyprctl keyword monitor "eDP-1, preferred, 0x0, auto"''
     ];
     env = [
-      "LIBVA_DRIVER_NAME,nvidia"
+      "GBM_BACKEND,nvidia-drm"
+      # "AQ_DRM_DEVICES,/dev/dri/by-name/nvidia-card:/dev/dri/by-name/amd-card"
+      # "LIBVA_DRIVER_NAME,nvidia"
       "__GLX_VENDOR_LIBRARY_NAME,nvidia"
       "MOZ_DISABLE_RDD_SANDBOX,1"
     ];

@@ -1,4 +1,5 @@
 {
+  inputs,
   config,
   pkgs,
   lib,
@@ -14,6 +15,7 @@
         --set __VK_LAYER_NV_optimus NVIDIA_only
     ''
   );
+  nvidia-package = config.boot.kernelPackages.nvidiaPackages.latest;
 in {
   # ===============================================================================================
   # for Nvidia GPU
@@ -29,14 +31,15 @@ in {
     "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
     # Since NVIDIA does not load kernel mode setting by default,
     # enabling it is required to make Wayland compositors function properly.
-    "nvidia_drm.fbdev=1"
+    "nvidia-drm.fbdev=1"
   ];
   services.xserver.videoDrivers = ["nvidia"]; # will install nvidia-vaapi-driver by default
   hardware.nvidia = {
     open = false;
     # Optionally, you may need to select the appropriate driver version for your specific GPU.
     # https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/os-specific/linux/nvidia-x11/default.nix
-    package = config.boot.kernelPackages.nvidiaPackages.beta;
+    package = pkgs.nvidia-patch.patch-nvenc (pkgs.nvidia-patch.patch-fbc nvidia-package);
+    # package = nvidia-package;
 
     nvidiaSettings = true;
     # required by most wayland compositors!
@@ -72,5 +75,6 @@ in {
       #   withNvcodec = true;
       # };
     })
+    inputs.nvidia-patch.overlays.default
   ];
 }

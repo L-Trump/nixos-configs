@@ -46,9 +46,17 @@ in {
 
   services.logind.lidSwitch = "lock";
 
-  # services.udev.extraRules = ''
-  #   ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="intel_backlight", MODE="0666", RUN+="${pkgs.coreutils}/bin/chmod a+w /sys/class/backlight/%k/brightness"
-  # '';
+  hardware.opentabletdriver.enable = true;
+
+
+  services.udev.extraRules = ''
+    # Mount AMD card
+    SUBSYSTEM=="drm", ENV{ID_PATH}=="pci-0000:06:00.0", KERNEL=="card[0-9]*", SYMLINK+="dri/by-name/amd-card"
+    SUBSYSTEM=="drm", ENV{ID_PATH}=="pci-0000:06:00.0", KERNEL=="renderD[0-9]*", SYMLINK+="dri/by-name/amd-render"
+    # Mount NVIDIA card
+    SUBSYSTEM=="drm", ENV{ID_PATH}=="pci-0000:01:00.0", KERNEL=="card[0-9]*", SYMLINK+="dri/by-name/nvidia-card"
+    SUBSYSTEM=="drm", ENV{ID_PATH}=="pci-0000:01:00.0", KERNEL=="renderD[0-9]*", SYMLINK+="dri/by-name/nvidia-render"
+  '';
 
   # This option defines the first version of NixOS you have installed on this particular machine,
   # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.

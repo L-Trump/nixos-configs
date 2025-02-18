@@ -23,15 +23,17 @@ in {
 
   sctgdesk-server = pkgs.callPackage ./sctgdesk-server {};
 
-  obs-studio-plugins = pkgs.obs-studio-plugins // {
-    obs-nvfbc = pkgs.callPackage ./obs-nvfbc {};
-  };
+  obs-studio-plugins =
+    pkgs.obs-studio-plugins
+    // {
+      obs-nvfbc = pkgs.callPackage ./obs-nvfbc {};
+    };
 
   # Some package derived from unstable repo
   # siyuan = pkgs-unstable.siyuan;
   # easytier = pkgs-unstable.easytier;
 
-  siyuan = pkgs.callPackage ./siyuan {};  # TODO wait r-ryantm update
+  siyuan = pkgs.callPackage ./siyuan {}; # TODO wait r-ryantm update
   easytier = pkgs.callPackage ./easytier {}; # TODO wait merge https://nixpk.gs/pr-tracker.html?pr=383078
   # siyuan = pkgs.callPackage ./siyuan {};
   linuxPackages_latest = pkgs.linuxPackages_latest.extend (_: prev: {
