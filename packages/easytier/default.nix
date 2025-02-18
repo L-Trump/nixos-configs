@@ -4,26 +4,32 @@
   fetchFromGitHub,
   rustPlatform,
   protobuf,
+  llvmPackages,
   nix-update-script,
   darwin,
   withQuic ? false, # with QUIC protocol support
 }:
+
 rustPlatform.buildRustPackage rec {
   pname = "easytier";
-  version = "2.1.2";
+  version = "2.2.2";
 
   src = fetchFromGitHub {
     owner = "EasyTier";
     repo = "EasyTier";
     tag = "v${version}";
-    hash = "sha256-iY4HluL5TlYuKDBrz0fvLwJg/aX9lKiCyFs4V5WhQZs=";
+    hash = "sha256-Heb2ax2yUuGmqzIjrqjHUL3QZoofp7ATrIEN27ZA/Zs=";
   };
 
   useFetchCargoVendor = true;
 
-  cargoHash = "sha256-KV7CdSEbmR7HIfKsS1sKsPqMz9Ku/rfbV8WmFkMC9oI=";
+  cargoHash = "sha256-U2ZK9GlfTjXsA7Fjd288YDlqSZNl3vHryLG1FE/GH5c=";
 
-  nativeBuildInputs = [protobuf];
+  nativeBuildInputs = [
+    protobuf
+    llvmPackages.clang
+    rustPlatform.bindgenHook
+  ];
 
   buildInputs = lib.optionals stdenv.hostPlatform.isDarwin [
     darwin.apple_sdk.frameworks.Security
@@ -34,7 +40,7 @@ rustPlatform.buildRustPackage rec {
 
   doCheck = false; # tests failed due to heavy rely on network
 
-  passthru.updateScript = nix-update-script {};
+  passthru.updateScript = nix-update-script { };
 
   meta = {
     homepage = "https://github.com/EasyTier/EasyTier";
@@ -47,6 +53,6 @@ rustPlatform.buildRustPackage rec {
     mainProgram = "easytier-core";
     license = lib.licenses.asl20;
     platforms = with lib.platforms; unix ++ windows;
-    maintainers = with lib.maintainers; [ltrump];
+    maintainers = with lib.maintainers; [ ltrump ];
   };
 }

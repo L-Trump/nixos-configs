@@ -25,15 +25,15 @@ in {
 
   # Some package derived from unstable repo
   # siyuan = pkgs-unstable.siyuan;
-  easytier = pkgs-unstable.easytier;
+  # easytier = pkgs-unstable.easytier;
 
-  # TODO wait fix https://github.com/NixOS/nixpkgs/issues/381521
+  # TODO wait upstream merge https://nixpk.gs/pr-tracker.html?pr=380933
   tela-icon-theme = pkgs.tela-icon-theme.overrideAttrs {
     dontCheckForBrokenSymlinks = true;
   };
 
   siyuan = pkgs.callPackage ./siyuan {};  # TODO wait r-ryantm update
-  # easytier = pkgs.callPackage ./easytier {};
+  easytier = pkgs.callPackage ./easytier {}; # TODO wait merge https://nixpk.gs/pr-tracker.html?pr=383078
   # siyuan = pkgs.callPackage ./siyuan {};
   linuxPackages_latest = pkgs.linuxPackages_latest.extend (_: prev: {
     # ipu6-drivers = pkgs.linuxPackages_latest.callPackage ./ipu6-drivers {};
