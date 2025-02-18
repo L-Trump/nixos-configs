@@ -1,0 +1,13 @@
+diff --git a/nvfbc.c b/nvfbc.c
+index 74b0523..bee781a 100644
+--- a/nvfbc.c
++++ b/nvfbc.c
+@@ -614,7 +614,7 @@ static void* create(obs_data_t *settings, obs_source_t *source)
+ 	obs_leave_graphics();
+ #if !defined(_WIN32) || !_WIN32
+ #if LIBOBS_API_VER >= MAKE_SEMANTIC_VERSION(27, 0, 0)
+-	if (obs_get_nix_platform() != OBS_NIX_PLATFORM_X11_GLX) {
++	if (obs_get_nix_platform() != OBS_NIX_PLATFORM_INVALID) {
+ 		blog(LOG_ERROR, "%s", "This plugin requires a GLX context");
+ 		goto not_glx_err;
+ 	}

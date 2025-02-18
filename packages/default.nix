@@ -23,14 +23,13 @@ in {
 
   sctgdesk-server = pkgs.callPackage ./sctgdesk-server {};
 
+  obs-studio-plugins = pkgs.obs-studio-plugins // {
+    obs-nvfbc = pkgs.callPackage ./obs-nvfbc {};
+  };
+
   # Some package derived from unstable repo
   # siyuan = pkgs-unstable.siyuan;
   # easytier = pkgs-unstable.easytier;
-
-  # TODO wait upstream merge https://nixpk.gs/pr-tracker.html?pr=380933
-  tela-icon-theme = pkgs.tela-icon-theme.overrideAttrs {
-    dontCheckForBrokenSymlinks = true;
-  };
 
   siyuan = pkgs.callPackage ./siyuan {};  # TODO wait r-ryantm update
   easytier = pkgs.callPackage ./easytier {}; # TODO wait merge https://nixpk.gs/pr-tracker.html?pr=383078
