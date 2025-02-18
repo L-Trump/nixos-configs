@@ -20,6 +20,7 @@
     server = {
       juicefs.enable = true;
       kopia-server.enable = true;
+      alist.enable = true;
     };
   };
   myconfigs.myhome = preset.myhome;
