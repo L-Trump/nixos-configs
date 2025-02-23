@@ -2,7 +2,6 @@
   lib,
   stdenv,
   fetchFromGitHub,
-  fetchpatch,
   ivsc-driver,
   kernel,
   kernelModuleMakeFlags,
@@ -10,13 +9,13 @@
 
 stdenv.mkDerivation rec {
   pname = "ipu6-drivers";
-  version = "unstable-2024-11-19";
+  version = "unstable-2025-02-24";
 
   src = fetchFromGitHub {
     owner = "intel";
     repo = "ipu6-drivers";
-    rev = "e2136ae84dac25d6e0be071bda460d852bb975d1";
-    hash = "sha256-HLo3gC61+nRUMzonc3d5uwy+OmWQMQkLAGj15Ynbcoc=";
+    rev = "7af071481f3d2d3cef1e70113c10f62ac6351723";
+    hash = "sha256-pe7lqK+CHpgNWpC8GEZ3FKfYcuVuRUaWlW18D9AsrSk=";
   };
 
   patches = [

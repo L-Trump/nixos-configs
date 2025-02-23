@@ -4,7 +4,6 @@
   fetchFromGitHub,
   rustPlatform,
   protobuf,
-  llvmPackages,
   nix-update-script,
   darwin,
   withQuic ? false, # with QUIC protocol support
@@ -27,7 +26,6 @@ rustPlatform.buildRustPackage rec {
 
   nativeBuildInputs = [
     protobuf
-    llvmPackages.clang
     rustPlatform.bindgenHook
   ];
 

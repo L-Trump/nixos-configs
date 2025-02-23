@@ -30,22 +30,22 @@ in {
     };
 
   # Some package derived from unstable repo
-  # siyuan = pkgs-unstable.siyuan;
-  # easytier = pkgs-unstable.easytier;
+  siyuan = pkgs-unstable.siyuan;
+  easytier = pkgs-unstable.easytier;
 
-  siyuan = pkgs.callPackage ./siyuan {}; # TODO wait r-ryantm update
-  easytier = pkgs.callPackage ./easytier {}; # TODO wait merge https://nixpk.gs/pr-tracker.html?pr=383078
+  # siyuan = pkgs.callPackage ./siyuan {};
+  # easytier = pkgs.callPackage ./easytier {};
   # siyuan = pkgs.callPackage ./siyuan {};
   linuxPackages_latest = pkgs.linuxPackages_latest.extend (_: prev: {
-    # ipu6-drivers = pkgs.linuxPackages_latest.callPackage ./ipu6-drivers {};
-    ipu6-drivers = prev.ipu6-drivers.overrideAttrs (_: _: {
-      src = fetchFromGitHub {
-        owner = "intel";
-        repo = "ipu6-drivers";
-        rev = "e2136ae84dac25d6e0be071bda460d852bb975d1";
-        hash = "sha256-HLo3gC61+nRUMzonc3d5uwy+OmWQMQkLAGj15Ynbcoc=";
-      };
-    });
+    ipu6-drivers = pkgs.linuxPackages_latest.callPackage ./ipu6-drivers {};
+    # ipu6-drivers = prev.ipu6-drivers.overrideAttrs (_: _: {
+    #   src = fetchFromGitHub {
+    #     owner = "intel";
+    #     repo = "ipu6-drivers";
+    #     rev = "7af071481f3d2d3cef1e70113c10f62ac6351723";
+    #     hash = "sha256-pe7lqK+CHpgNWpC8GEZ3FKfYcuVuRUaWlW18D9AsrSk=";
+    #   };
+    # });
   });
   # openvswitch = pkgs-stable.openvswitch.override {kernel = null;};
   # clouddrive2 = pkgs.callPackage ./clouddrive2 {};
