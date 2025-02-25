@@ -48,7 +48,6 @@ in {
 
   hardware.opentabletdriver.enable = true;
 
-
   services.udev.extraRules = ''
     # Mount AMD card
     SUBSYSTEM=="drm", ENV{ID_PATH}=="pci-0000:06:00.0", KERNEL=="card[0-9]*", SYMLINK+="dri/by-name/amd-card"
