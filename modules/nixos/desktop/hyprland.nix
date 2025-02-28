@@ -10,7 +10,10 @@
   cfg = config.mymodules.desktop.wayland;
 in {
   config = lib.mkIf cfg.enable {
-    programs.hyprland.enable = true;
+    programs.hyprland = {
+      enable = true;
+      package = pkgs.hyprland-hidpi-xprop;
+    };
     # programs.hyprland.withUWSM = true;
     environment.systemPackages = [
       pkgs.wl-clipboard-rs

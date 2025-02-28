@@ -4,6 +4,7 @@
   ...
 }: {
   enable = true;
+  package = pkgs.hyprland-hidpi-xprop;
   # systemd.enable = false; # Conflict with UWSM
   systemd.variables = [
     "DISPLAY"

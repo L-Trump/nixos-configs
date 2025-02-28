@@ -4,6 +4,7 @@
   pkgs-stable,
   pkgs-unstable,
   lib,
+  inputs,
   ...
 }: {
   nixpkgs.overlays = [
@@ -13,7 +14,7 @@
         value = v;
       };
       pkgAttrs = import ../packages {
-        inherit pkgs-stable pkgs-unstable;
+        inherit pkgs-stable pkgs-unstable inputs;
         pkgs = prev;
       };
     in

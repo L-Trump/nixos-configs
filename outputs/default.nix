@@ -86,7 +86,7 @@ in {
     in
       (allSystems.${system}.packages or {})
       // (
-        import ../packages {inherit pkgs pkgs-stable pkgs-unstable;}
+        import ../packages {inherit pkgs pkgs-stable pkgs-unstable inputs;}
       )
   );
 

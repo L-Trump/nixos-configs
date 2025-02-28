@@ -1,6 +1,7 @@
 {
   pkgs ? import <nixpkgs> {},
   pkgs-unstable,
+  inputs,
   ...
 }: let
   inherit (pkgs) lib libsForQt5 fetchFromGitHub;
@@ -32,6 +33,17 @@ in {
   # Some package derived from unstable repo
   # siyuan = pkgs-unstable.siyuan;
   easytier = pkgs-unstable.easytier;
+
+  # inputs.hyprgrass.packages.${pkgs.system}.default
+  hyprland-hidpi-xprop = inputs.hyprland.packages.${pkgs.system}.default.overrideAttrs (final: prev: {
+    patches = [
+      (pkgs.fetchurl {
+        name = "xwayland-xprop-hidpi.patch";
+        url = "https://github.com/hyprwm/Hyprland/commit/e10a502c51abf4bfbaf4a3612f84800c07ac0d0d.patch";
+        hash = "sha256-F4j94qeTolnDOpMIqnowLZHjYLkToKucCuU/WUKnios=";
+      })
+    ];
+  });
 
   siyuan = pkgs.callPackage ./siyuan {}; # TODO wait r-ryantm update
   # easytier = pkgs.callPackage ./easytier {};
