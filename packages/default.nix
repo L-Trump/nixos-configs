@@ -36,17 +36,17 @@ in {
   # siyuan = pkgs.callPackage ./siyuan {};
   # easytier = pkgs.callPackage ./easytier {};
   # siyuan = pkgs.callPackage ./siyuan {};
-  linuxPackages_latest = pkgs.linuxPackages_latest.extend (_: prev: {
-    ipu6-drivers = pkgs.linuxPackages_latest.callPackage ./ipu6-drivers {};
-    # ipu6-drivers = prev.ipu6-drivers.overrideAttrs (_: _: {
-    #   src = fetchFromGitHub {
-    #     owner = "intel";
-    #     repo = "ipu6-drivers";
-    #     rev = "7af071481f3d2d3cef1e70113c10f62ac6351723";
-    #     hash = "sha256-pe7lqK+CHpgNWpC8GEZ3FKfYcuVuRUaWlW18D9AsrSk=";
-    #   };
-    # });
-  });
+  # linuxPackages_latest = pkgs.linuxPackages_latest.extend (_: prev: {
+  #   ipu6-drivers = pkgs.linuxPackages_latest.callPackage ./ipu6-drivers {};
+  #   ipu6-drivers = prev.ipu6-drivers.overrideAttrs (_: _: {
+  #     src = fetchFromGitHub {
+  #       owner = "intel";
+  #       repo = "ipu6-drivers";
+  #       rev = "7af071481f3d2d3cef1e70113c10f62ac6351723";
+  #       hash = "sha256-pe7lqK+CHpgNWpC8GEZ3FKfYcuVuRUaWlW18D9AsrSk=";
+  #     };
+  #   });
+  # });
   # openvswitch = pkgs-stable.openvswitch.override {kernel = null;};
   # clouddrive2 = pkgs.callPackage ./clouddrive2 {};
   # snipaste = pkgs.callPackage ./snipaste {};
