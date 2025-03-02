@@ -47,7 +47,20 @@ in {
         serviceConfig = {
           Type = "simple";
           User = "root";
-          ExecStart = "${pkg}/bin/juicefs gateway ${cfg.meta-url} localhost:8260";
+          ExecStart = "${pkg}/bin/juicefs gateway ${cfg.meta-url} 0.0.0.0:8260";
+          Restart = "on-failure";
+          EnvironmentFile = config.age.secrets.jfs-s3-env.path;
+        };
+        wantedBy = ["multi-user.target"];
+      };
+      systemd.services.juicefs-webdav-gateway = lib.mkIf cfg.enableWebdav {
+        description = "JuiceFS Webdav Gateway";
+        requires = ["network-online.target" "easytier-ltnet.service"];
+        after = ["multi-user.target"];
+        serviceConfig = {
+          Type = "simple";
+          User = "root";
+          ExecStart = "${pkg}/bin/juicefs webdav ${cfg.meta-url} 0.0.0.0:8261";
           Restart = "on-failure";
           EnvironmentFile = config.age.secrets.jfs-s3-env.path;
         };

@@ -21,7 +21,11 @@
       kopia-server.enable = true;
       minio.enable = true;
       alist.enable = true;
-      juicefs.enable = true;
+      juicefs = {
+        enable = true;
+        enableS3Gateway = true;
+        enableWebdav = true;
+      };
       immich.machine-learning.enable = true;
       redis.juicefs-meta.enable = true;
     };

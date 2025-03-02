@@ -11,6 +11,8 @@ The modules in this directory are used in my cloud servers
 | duplicati          | localhost:8200          | Backup tool              |
 | homepage-dashboard | localhost:8255          | Dashboard                |
 | redis-juicefs-meta | et-ip:6379              | JuiceFS Meta database    |
+| juicefs-s3-gateway | et-ip/localhost:8260    | JuiceFS S3 Gateway       |
+| juicefs-webdav     | et-ip/localhost:8261    | JuiceFS Webdav Gateway   |
 | minio              | localhost:(9096/9097)   | MinIO and its console    |
 | rustdesk-server    | [::]:(21114-21118)      | rustdesk server          |
 | vaultwarden        | localhost:8222          | secrests manager         |
