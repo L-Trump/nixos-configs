@@ -48,6 +48,7 @@ in {
 
       "/var/log"
       "/var/lib"
+      "/var/jfsCache" # JFS Cache dir
       "/data"
 
       # created by modules/nixos/misc/fhs-fonts.nix
