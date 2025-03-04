@@ -6,4 +6,10 @@
   # Power save
   services.power-profiles-daemon.enable = true;
   services.upower.enable = true;
+
+  # handle powerkey
+  services.logind.extraConfig = ''
+    # don’t shutdown when power button is short-pressed
+    HandlePowerKey=suspend
+  '';
 }
