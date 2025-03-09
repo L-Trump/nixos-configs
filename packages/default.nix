@@ -19,8 +19,6 @@ in {
     useChineseVersion = true;
   };
 
-  nezha-agent = pkgs.callPackage ./nezha-agent {};
-
   sctgdesk-server = pkgs.callPackage ./sctgdesk-server {};
 
   obs-studio-plugins =
@@ -30,10 +28,10 @@ in {
     };
 
   # Some package derived from unstable repo
-  # siyuan = pkgs-unstable.siyuan;
+  siyuan = pkgs-unstable.siyuan;
   easytier = pkgs-unstable.easytier;
 
-  siyuan = pkgs.callPackage ./siyuan {}; # TODO wait r-ryantm update
+  # siyuan = pkgs.callPackage ./siyuan {};
   # easytier = pkgs.callPackage ./easytier {};
   # siyuan = pkgs.callPackage ./siyuan {};
   # linuxPackages_latest = pkgs.linuxPackages_latest.extend (_: prev: {
@@ -51,4 +49,5 @@ in {
   # clouddrive2 = pkgs.callPackage ./clouddrive2 {};
   # snipaste = pkgs.callPackage ./snipaste {};
   # sunshine = pkgs.callPackage ./sunshine {};
+  # nezha-agent = pkgs.callPackage ./nezha-agent {};
 }
