@@ -7,10 +7,10 @@ if status is-interactive
     # Vi cursor style
     set -g fish_cursor_insert line
     # Fzf bindings for vi mode
-    bind -M default " ff" _fzf_search_directory
-    bind -M default " fgl" _fzf_search_git_log
-    bind -M default " fgs" _fzf_search_git_status
-    bind -M default " fh" _fzf_search_history
-    bind -M default -m insert "H" _fzf_search_history
-    bind -M default " fp" _fzf_search_history
+    bind -M default space,f,f _fzf_search_directory
+    bind -M default space,f,g,l _fzf_search_git_log
+    bind -M default space,f,g,s _fzf_search_git_status
+    bind -M default space,f,h _fzf_search_history
+    bind -M default -m insert H _fzf_search_history
+    bind -M default space,f,p _fzf_search_history
 end
