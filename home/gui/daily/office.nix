@@ -10,7 +10,7 @@
     # wpsoffice-cn
     wpsoffice-365
     nur.repos.rewine.ttf-wps-fonts
-    pkgs-stable.logseq
+    # pkgs-stable.logseq
     vikunja
     typora
     xournalpp
