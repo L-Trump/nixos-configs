@@ -1,6 +1,7 @@
 {
   pkgs ? import <nixpkgs> {},
   pkgs-unstable,
+  pkgs-stable,
   ...
 }: let
   inherit (pkgs) lib libsForQt5 fetchFromGitHub;
@@ -18,6 +19,9 @@ in {
   };
 
   sctgdesk-server = pkgs.callPackage ./sctgdesk-server {};
+
+  # TODO wait https://nixpk.gs/pr-tracker.html?pr=390171
+  rustdesk-flutter = pkgs-stable.rustdesk-flutter;
 
   obs-studio-plugins =
     pkgs.obs-studio-plugins
