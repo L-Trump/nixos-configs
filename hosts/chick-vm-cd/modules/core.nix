@@ -52,7 +52,7 @@ in {
 
   nix.settings.substituters = lib.mkForce [
     "https://mirrors.ustc.edu.cn/nix-channels/store"
-    "https://mirror.sjtu.edu.cn/nix-channels/store"
+    # "https://mirror.sjtu.edu.cn/nix-channels/store"
   ];
 
   # This option defines the first version of NixOS you have installed on this particular machine,
