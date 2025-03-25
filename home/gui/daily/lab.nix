@@ -6,7 +6,7 @@
   ...
 }: {
   home.packages = with pkgs; [
-    pkgs-stable.remmina
+    remmina
     zotero
     nur.repos.linyinfeng.wemeet
     matlab
