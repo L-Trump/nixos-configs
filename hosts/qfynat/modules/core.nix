@@ -4,6 +4,8 @@
   ...
 }: let
   hostName = "qfynat";
+  inherit (myvars) networking;
+  inherit (networking.hostsAddr.physical.${hostName}) iface ipv4 gateway;
 in {
   # networking.networkmanager.enable = true; # Easiest to use and most distros use this by default.
 
@@ -18,11 +20,25 @@ in {
   networking = {
     inherit hostName;
     usePredictableInterfaceNames = false;
+    useDHCP = false;
     domain = "localdomain";
-    nameservers = [
-      "8.8.8.8" # googledns
-      "8.8.4.4" # googledns
-    ];
+  };
+
+  systemd.network = {
+    enable = true;
+    wait-online = {
+      anyInterface = true;
+      timeout = 30;
+    };
+    networks."10-lan4" = {
+      matchConfig.Name = [iface];
+      networkConfig = {
+        Address = [ipv4];
+        Gateway = gateway;
+        DNS = networking.nameservers;
+      };
+      linkConfig.RequiredForOnline = "routable";
+    };
   };
 
   nix.settings.substituters = lib.mkForce [

@@ -71,6 +71,11 @@ in rec {
       ipv4 = "192.168.2.112/24";
       gateway = "192.168.2.1";
     };
+    qfynat = {
+      iface = "enp*";
+      ipv4 = "172.16.0.11/12";
+      gateway = "172.16.0.1";
+    };
   };
 
   hostsRecord =
