@@ -2,6 +2,7 @@
   pkgs ? import <nixpkgs> {},
   pkgs-unstable,
   pkgs-stable,
+  inputs,
   ...
 }: let
   inherit (pkgs) lib libsForQt5 fetchFromGitHub;
