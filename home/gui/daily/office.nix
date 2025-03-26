@@ -68,13 +68,13 @@
     };
   };
 
-  xdg.desktopEntries.logseq = {
-    name = "Logseq";
-    exec = ''env NIXOS_OZONE_WL=1 logseq --enable-wayland-ime %u'';
-    icon = "logseq";
-    settings.StartupWMClass = "logseq";
-    comment = "A privacy-first, open-source platform for knowledge management and collaboration.";
-    mimeType = ["x-scheme-handler/logseq"];
-    categories = ["Office" "Utility"];
-  };
+  # xdg.desktopEntries.logseq = {
+  #   name = "Logseq";
+  #   exec = ''env NIXOS_OZONE_WL=1 logseq --enable-wayland-ime %u'';
+  #   icon = "logseq";
+  #   settings.StartupWMClass = "logseq";
+  #   comment = "A privacy-first, open-source platform for knowledge management and collaboration.";
+  #   mimeType = ["x-scheme-handler/logseq"];
+  #   categories = ["Office" "Utility"];
+  # };
 }

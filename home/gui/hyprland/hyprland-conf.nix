@@ -160,7 +160,7 @@
     ];
     exec-once = [
       "swaylock"
-      "lxqt-policykit-agent"
+      "lxqt-policykit-agent" # Polkit
       "nm-applet"
       "fcitx5"
       "waybar"
