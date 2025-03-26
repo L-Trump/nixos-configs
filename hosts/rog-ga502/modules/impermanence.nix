@@ -98,6 +98,7 @@ in {
         ".cache/betterlockscreen"
         ".cache/nix"
         ".cache/onedriver"
+        ".cache/zellij"
 
         # Configs
         ".config/autostart"
