@@ -37,8 +37,8 @@ in {
 
   services.udev.packages = with pkgs; [
     gnome-settings-daemon
-    platformio # udev rules for platformio
-    openocd # required by platformio, see https://github.com/NixOS/nixpkgs/issues/224895
+    # platformio # udev rules for platformio
+    # openocd # required by platformio, see https://github.com/NixOS/nixpkgs/issues/224895
     android-udev-rules # required by adb
     openfpgaloader
   ];
