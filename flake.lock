@@ -759,11 +759,12 @@
         "narHash": "sha256-ijQjMUXJQQhpy86tEVe0bgxcsF1btDNw4amFQymAEQA=",
         "ref": "refs/heads/master",
         "rev": "307221166d4f91892b1b215df7a960bddeaaef88",
-        "revCount": 59,
+        "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/L-Trump/nixos-secrets.git"
       },
       "original": {
+        "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/L-Trump/nixos-secrets.git"
       }

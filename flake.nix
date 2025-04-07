@@ -50,12 +50,12 @@
     };
     # My secrets
     mysecrets = {
-      url = "git+ssh://git@github.com/L-Trump/nixos-secrets.git";
+      url = "git+ssh://git@github.com/L-Trump/nixos-secrets.git?shallow=1";
       flake = false;
     };
     # My fonts
     myfonts = {
-      url = "github:L-Trump/nixos-fonts";
+      url = "github:L-Trump/nixos-fonts?shallow=1";
       flake = false;
     };
     # Impermanence
