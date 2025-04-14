@@ -32,6 +32,7 @@
   xdg.configFile."xdg-desktop-portal-termfilechooser/config".text = ''
     [filechooser]
     cmd=${./ffnnn}
+    default_dir=$HOME/Downloads
   '';
 
   systemd.user.services.xdg-desktop-portal-termfilechooser = {
