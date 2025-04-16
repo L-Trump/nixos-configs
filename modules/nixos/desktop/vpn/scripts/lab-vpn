@@ -1,17 +1,60 @@
 #!/usr/bin/env bash
 
-openfortivpn -c /etc/.fortivpnconf &
-vpn_id=$!
-sleep 5
-echo "Clean route"
-ip route add 192.168.2.236 dev ppp0
-ip route add 192.168.2.238 dev ppp0
-ip route add 192.168.2.250 dev ppp0
-ip route del 112.86.83.102
-wait $vpn_id
+# routes to add
+declare -A ROUTES_TO_ADD=(
+    ["192.168.2.236"]="ppp0"
+    ["192.168.2.238"]="ppp0"
+    ["192.168.2.250"]="ppp0"
+)
 
-function clean {
-	kill $vpn_id
+# routes to delete
+declare -a ROUTES_TO_DELETE=(
+    "112.86.83.102"
+)
+
+# start fortivpn
+openfortivpn -c /etc/.fortivpnconf &
+vpn_pid=$!
+sleep 3
+
+check_and_fix_routes() {
+    # delete obsolete route
+    for route in "${ROUTES_TO_DELETE[@]}"; do
+        if ip route show | grep -q "^$route"; then
+            echo "Removing obsolete route: $route"
+            ip route del "$route"
+        fi
+    done
+
+    # add missing route
+    for ip in "${!ROUTES_TO_ADD[@]}"; do
+        local dev="${ROUTES_TO_ADD[$ip]}"
+        if ! ip route show | grep -q "^$ip dev $dev"; then
+            echo "Adding missing route: $ip → $dev"
+            ip route add "$ip" dev "$dev"
+        fi
+    done
 }
 
-trap clean EXIT
+check_and_fix_routes
+
+# route monitor
+(
+    while kill -0 $vpn_pid 2>/dev/null; do
+        check_and_fix_routes
+        sleep 3  # 每10秒检查一次
+    done
+) &
+monitor_pid=$!
+
+# wait for fortivpn exit
+wait $vpn_pid
+
+# cleanup
+cleanup() {
+    echo "Cleaning up..."
+    kill $vpn_pid 2>/dev/null
+    kill $monitor_pid 2>/dev/null
+}
+
+trap cleanup EXIT
