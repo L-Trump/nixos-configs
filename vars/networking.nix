@@ -33,6 +33,7 @@ in rec {
     dorm-router.ipv4 = "10.144.144.198";
     gs445.ipv4 = "10.144.144.195";
     oneplus-ace.ipv4 = "10.144.144.239";
+    rhcg-dell.ipv4 = "10.144.144.246";
     matepad.ipv4 = "10.144.144.248";
     homewin.ipv4 = "10.144.144.240";
     nucwin.ipv4 = "10.144.144.241";
