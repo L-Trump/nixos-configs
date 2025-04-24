@@ -21,9 +21,6 @@ in {
 
   sctgdesk-server = pkgs.callPackage ./sctgdesk-server {};
 
-  # TODO wait https://nixpk.gs/pr-tracker.html?pr=390171
-  rustdesk-flutter = pkgs-stable.rustdesk-flutter;
-
   obs-studio-plugins =
     pkgs.obs-studio-plugins
     // {
@@ -31,8 +28,8 @@ in {
     };
 
   # Some package derived from unstable repo
-  siyuan = pkgs-unstable.siyuan;
-  easytier = pkgs-unstable.easytier;
+  # siyuan = pkgs-unstable.siyuan;
+  # easytier = pkgs-unstable.easytier;
 
   # siyuan = pkgs.callPackage ./siyuan {};
   # easytier = pkgs.callPackage ./easytier {};
