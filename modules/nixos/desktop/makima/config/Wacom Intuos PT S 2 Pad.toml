@@ -1,0 +1,3 @@
+[settings]
+LAYOUT_SWITCHER = "BTN_RIGHT"
+NOTIFY_LAYOUT_SWITCH = "true"

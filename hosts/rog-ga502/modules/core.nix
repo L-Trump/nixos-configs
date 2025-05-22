@@ -46,7 +46,7 @@ in {
 
   services.logind.lidSwitch = "lock";
 
-  hardware.opentabletdriver.enable = true;
+  # hardware.opentabletdriver.enable = true;
 
   services.udev.extraRules = ''
     # Mount AMD card

@@ -1,0 +1,7 @@
+[settings]
+GRAB_DEVICE = "false"
+
+[remap]
+BTN_TOUCH = []
+BTN_STYLUS = []
+BTN_STYLUS2 = []

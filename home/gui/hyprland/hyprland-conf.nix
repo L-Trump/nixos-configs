@@ -117,6 +117,9 @@
         scroll_factor = 0.7;
         clickfinger_behavior = true;
       };
+      tablet = {
+        output = "current";
+      };
     };
 
     # https://wiki.hyprland.org/Configuring/Variables/#gestures
