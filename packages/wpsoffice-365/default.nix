@@ -1,43 +1,44 @@
 # From https://github.com/nix-community/nur-combined/blob/main/repos/novel2430/pkgs/wpsoffice-365/default.nix
-{
-  lib,
-  stdenv,
-  dpkg,
-  autoPatchelfHook,
-  alsa-lib,
-  at-spi2-core,
-  libtool,
-  libxkbcommon,
-  nspr,
-  mesa,
-  libtiff,
-  udev,
-  gtk3,
-  xorg,
-  cups,
-  pango,
-  libjpeg,
-  gdk-pixbuf,
-  libpulseaudio,
-  libbsd,
-  libusb1,
-  libmysqlclient,
-  freetype,
-  makeWrapper,
-  fetchurl,
-  pkg-config,
-  fontconfig,
-  fcitx5-qt,
-  glib,
-  libuuid,
-  libglvnd,
-  cairo,
-  libappindicator-gtk3,
-  qtbase,
-  fetchFromGitHub,
+# Install Scripts from AUR
+#   - https://aur.archlinux.org/packages/wps-office-365
+{ lib
+, stdenv
+, makeWrapper
+, fetchFromGitHub
+, fetchurl
+, dpkg
+, autoPatchelfHook
+, alsa-lib
+, at-spi2-core
+, libtool
+, libxkbcommon
+, nspr
+, mesa
+, libtiff
+, udev
+, gtk3
+, qtbase
+, xorg
+, cups
+, pango
+, freetype
+, libjpeg
+, libpulseaudio
+, fcitx5-qt
+, libbsd
+, libusb1
+, libmysqlclient
+, fontconfig
+, glib
+, libuuid
+, libglvnd
+, cairo
+, gdk-pixbuf
+# For wpscloudsvr wrapper
+, pkg-config
+, libappindicator-gtk3
 }:
 let
-  sources = import ./sources.nix;
   libs = [
     stdenv.cc.cc
     stdenv.cc.libc
@@ -87,22 +88,17 @@ let
   };
 in
 stdenv.mkDerivation rec {
-  pname = "wpsoffice";
-  version = sources.version;
+  pname = "wpsoffice-365";
+  # version = "12.8.2.18605";
+  version = "12.8.2.20327";
 
-  src = (
-    {
-      x86_64-linux = fetchurl {
-        url = sources.pro_amd64_url;
-        hash = sources.pro_amd64_hash;
-      };
-      aarch64-linux = fetchurl {
-        url = sources.pro_arm64_url;
-        hash = sources.pro_arm64_hash;
-      };
-    }
-    .${stdenv.system} or (throw "wpsoffice-365-${version}: ${stdenv.system} is unsupported.")
-  );
+  src = fetchurl {
+    # url = "https://wps-linux-365.wpscdn.cn/wps/download/ep/Linux365/18605/wps-office_${version}.AK.preload.sw_amd64.deb";
+    # hash = "sha256-fy238yjdaV6pZOPulAMRJlcj/IHeRDjgMgrTVC0JPLQ=";
+    url = "https://wps-linux-365.wpscdn.cn/wps/download/ep/Linux365/${lib.last (builtins.splitVersion version)}/wps-office_${version}.AK.preload.sw_amd64.deb";
+    hash = "sha256-N+2n6i7RCoKjAQ6Pds/dpfupnKR624RUiGj2cQQFpHk=";
+    curlOptsList = [ "-ehttps://365.wps.cn" ];
+  };
 
   unpackCmd = " dpkg -x $src .";
   sourceRoot = ".";
@@ -113,7 +109,7 @@ stdenv.mkDerivation rec {
     makeWrapper
     pkg-config
   ];
-
+  
   preBuild = ''
     addAutoPatchelfSearchPath ${libmysqlclient}/lib/mariadb/
   '';
@@ -220,20 +216,10 @@ stdenv.mkDerivation rec {
   '';
 
   meta = with lib; {
-    description = "Office suite, formerly Kingsoft Office";
-    homepage = "https://www.wps.com";
-    platforms = [
-      "x86_64-linux"
-      "aarch64-linux"
-    ];
+    description = "WPS Office, is an office productivity suite. (Enable wpscloudsvr-wrapper)";
+    homepage = "https://365.wps.cn";
+    platforms = [ "x86_64-linux" ];
     sourceProvenance = with sourceTypes; [ binaryNativeCode ];
-    hydraPlatforms = [ ];
     license = licenses.unfreeRedistributable;
-    maintainers = with maintainers; [
-      mlatus
-      th0rgal
-      rewine
-      pokon548
-    ];
   };
 }
