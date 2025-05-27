@@ -1,3 +1,20 @@
 [settings]
-LAYOUT_SWITCHER = "BTN_RIGHT"
+# LAYOUT_SWITCHER = "BTN_RIGHT"
 NOTIFY_LAYOUT_SWITCH = "true"
+# CUSTOM_MODIFIERS = "BTN_RIGHT-BTN_LEFT"
+SCROLL_SPEED = "10"
+# SCROLL_ACCEL = "0"
+
+[commands]
+BTN_RIGHT-BTN_LEFT = ["hyprctl -i 0 -r -- keyword device[wacom-intuos-pt-s-2-finger]:enabled true"]
+BTN_LEFT-BTN_RIGHT = ["hyprctl -i 0 -r -- keyword device[wacom-intuos-pt-s-2-finger]:enabled false"]
+
+# [remap]
+# BTN_RIGHT = [] # AUX 1
+# BTN_LEFT = [] # AUX 2
+# BTN_FORWARD = [] # AUX 3
+# BTN_BACK = [] # AUX 4
+
+[movements]
+BTN_FORWARD = "SCROLL_UP"
+BTN_BACK = "SCROLL_DOWN"

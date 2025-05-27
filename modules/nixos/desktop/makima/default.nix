@@ -11,6 +11,9 @@
       makima
       bash
       coreutils-full
+      "/run/wrappers/bin"
+      "/run/current-system/sw/bin"
+      "/etc/profiles/per-user/${myvars.username}/bin"
     ];
     restartIfChanged = true;
     restartTriggers = ["/etc/makima"];

@@ -16,7 +16,7 @@
   boot.initrd.kernelModules = [];
   boot.kernelModules = ["kvm-amd"];
   boot.extraModprobeConfig = "options kvm_amd nested=1"; # for intel cpu
-  boot.extraModulePackages = [];
+  boot.extraModulePackages = with config.boot.kernelPackages; [usbip];
 
   # supported file systems, so we can mount any removable disks with these filesystems
   boot.supportedFilesystems = [
