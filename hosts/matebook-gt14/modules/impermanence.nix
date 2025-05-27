@@ -99,6 +99,7 @@ in {
         ".cache/nix"
         ".cache/onedriver"
         ".cache/zellij"
+        ".vnc"
 
         # Configs
         ".config/autostart"

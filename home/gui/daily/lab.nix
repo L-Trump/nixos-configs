@@ -7,6 +7,7 @@
 }: {
   home.packages = with pkgs; [
     remmina
+    realvnc-vnc-viewer
     zotero
     nur.repos.linyinfeng.wemeet
     matlab
