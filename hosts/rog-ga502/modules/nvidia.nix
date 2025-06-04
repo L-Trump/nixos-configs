@@ -15,7 +15,7 @@
         --set __VK_LAYER_NV_optimus NVIDIA_only
     ''
   );
-  nvidia-package = config.boot.kernelPackages.nvidiaPackages.latest;
+  nvidia-package = config.boot.kernelPackages.nvidiaPackages.production;
 in {
   # ===============================================================================================
   # for Nvidia GPU
