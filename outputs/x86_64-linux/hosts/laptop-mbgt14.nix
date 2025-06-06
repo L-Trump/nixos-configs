@@ -18,7 +18,8 @@
   myconfigs.mymodules = lib.recursiveUpdate preset.mymodules {
     server = {
       juicefs.enable = true;
-      kopia-server.enable = true;
+      kopia-server.enable = false;
+      backrest.enable = true;
     };
   };
   myconfigs.myhome = preset.myhome;

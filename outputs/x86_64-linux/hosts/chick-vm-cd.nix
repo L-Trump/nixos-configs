@@ -18,7 +18,8 @@
   preset = mypresets.server;
   myconfigs.mymodules = lib.recursiveUpdate preset.mymodules {
     server = {
-      kopia-server.enable = true;
+      kopia-server.enable = false;
+      backrest.enable = true;
       minio.enable = true;
       alist.enable = true;
       juicefs = {

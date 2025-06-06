@@ -42,6 +42,7 @@ in {
       "/etc/nix/inputs"
       "/etc/rancher"
       "/etc/asusd"
+      "/etc/rclone"
       # "/etc/secureboot" # lanzaboote - secure boot
       # my secrets
       "/etc/agenix/"
@@ -122,6 +123,7 @@ in {
         ".config/xournalpp"
         ".config/sunshine"
         ".config/Moonlight Game Streaming Project"
+        ".config/rclone"
 
         # Logseq / Zotero
         ".config/Logseq"

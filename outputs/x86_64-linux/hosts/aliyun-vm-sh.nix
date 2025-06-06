@@ -20,7 +20,8 @@
     server = {
       rustdesk-server.enable = true;
       nezha-server.enable = true;
-      kopia-server.enable = true;
+      kopia-server.enable = false;
+      backrest.enable = true;
       vaultwarden.enable = true;
       homepage-dashboard.enable = true;
       alist.enable = true;
