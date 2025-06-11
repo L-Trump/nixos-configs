@@ -29,7 +29,7 @@ in {
 
   # Some package derived from unstable repo
   # siyuan = pkgs-unstable.siyuan;
-  # easytier = pkgs-unstable.easytier;
+  easytier = pkgs-unstable.easytier; # TODO wait merge https://nixpk.gs/pr-tracker.html?pr=414752
 
   # siyuan = pkgs.callPackage ./siyuan {};
   # easytier = pkgs.callPackage ./easytier {};
