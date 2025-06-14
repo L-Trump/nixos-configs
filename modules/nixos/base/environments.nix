@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{pkgs, config, ...}: {
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
@@ -47,6 +47,7 @@
     fuse3
     nfs-utils
     nixos-firewall-tool # a tool that temporarily manage nixos firewall
+    config.boot.kernelPackages.usbip
   ];
 
   programs.fish.enable = true;
