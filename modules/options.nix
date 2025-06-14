@@ -31,11 +31,12 @@ in {
     desktop = {
       enable = mkOption {
         type = types.bool;
-        default = cfg.desktop.wayland.enable || cfg.desktop.xorg.enable;
+        default = cfg.desktop.niri.enable || cfg.desktop.hyprland.enable || cfg.desktop.xorg.enable;
         description = "Enable Desktop Environments";
       };
       animeboot.enable = mkEnableOption "Enable anime boot with grub theme and plymouth";
-      wayland.enable = mkEnableOption "Wayland Display Server";
+      hyprland.enable = mkEnableOption "Hyprland WM";
+      niri.enable = mkEnableOption "Niri WM";
       xorg.enable = mkEnableOption "Xorg Display Server";
       game.enable = mkEnableOption "Games";
       keyremap.enable = mkEnableOption "Remap capslock and escape";

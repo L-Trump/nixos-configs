@@ -65,7 +65,11 @@ case $chosen in
     $displayoff)
 		loginctl lock-session
 		sleep 5
-		hyprctl dispatch dpms off
+		if [[ "$DESKTOP_SESSION" == "niri" ]]; then
+			niri msg action power-off-monitors
+		else
+			hyprctl dispatch dpms off
+		fi
         ;;
     $suspend)
 		ans=$(confirm_exit &)
@@ -92,6 +96,8 @@ case $chosen in
 				swaymsg exit
 			elif [[ "$DESKTOP_SESSION" == "Hyprland" ]]; then
 				hyprctl dispatch exit
+			elif [[ "$DESKTOP_SESSION" == "niri" ]]; then
+				niri msg action quit -s
 			fi
 		elif [[ $ans == "no" || $ans == "NO" || $ans == "n" || $ans == "N" ]]; then
 			exit 0

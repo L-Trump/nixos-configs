@@ -18,4 +18,5 @@
             )
         )
         (builtins.readDir path)));
+  toKDL = import ./toKDL.nix {inherit lib;};
 }

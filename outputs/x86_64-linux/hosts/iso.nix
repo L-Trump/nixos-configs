@@ -17,7 +17,7 @@
   myconfigs.mymodules = lib.recursiveUpdate preset.mymodules {
     desktop = {
       enable = true;
-      wayland.enable = true;
+      niri.enable = true;
       keyremap.enable = true;
     };
     server = {
@@ -27,7 +27,7 @@
   myconfigs.myhome = lib.recursiveUpdate preset.myhome {
     desktop = {
       enable = true;
-      wayland.enable = true;
+      niri.enable = true;
     };
   };
   base-modules = {

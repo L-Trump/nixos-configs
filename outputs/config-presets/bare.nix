@@ -13,7 +13,8 @@
     desktop = {
       enable = false;
       animeboot.enable = false;
-      wayland.enable = false;
+      hyprland.enable = false;
+      niri.enable = false;
       xorg.enable = false;
       game.enable = false;
       keyremap.enable = false;
@@ -49,7 +50,8 @@
     };
     desktop = {
       enable = false;
-      wayland.enable = false;
+      hyprland.enable = false;
+      niri.enable = false;
       xorg.enable = false;
       daily.enable = false;
       daily.game.enable = false;

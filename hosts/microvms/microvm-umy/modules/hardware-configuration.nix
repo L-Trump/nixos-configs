@@ -25,15 +25,20 @@
   microvm = {
     hypervisor = "qemu";
     graphics.enable = true;
-    vcpu = 2;  # 2c2g
+    vcpu = 2; # 2c2g
     mem = 2000;
     qemu.extraArgs = [
-      "-display" "egl-headless,gl=on"
-      "-vnc" ":10"
-      "-vga" "qxl"
-      "-device" "virtio-keyboard"
+      "-display"
+      "egl-headless,gl=on"
+      "-vnc"
+      ":10"
+      "-vga"
+      "qxl"
+      "-device"
+      "virtio-keyboard"
       "-usb"
-      "-device" "usb-tablet,bus=usb-bus.0"
+      "-device"
+      "usb-tablet,bus=usb-bus.0"
       # "-audiodev"
       # "pipewire,id=auddev0"
       # "-device"

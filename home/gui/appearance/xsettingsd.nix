@@ -20,7 +20,9 @@
         else "0";
       string = ''"${value}"'';
     }
-    .${builtins.typeOf value};
+    .${
+      builtins.typeOf value
+    };
 
   settings = {
     "Gtk/CursorThemeName" = config.home.pointerCursor.name;

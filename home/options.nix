@@ -3,7 +3,18 @@
   config,
   ...
 }:
-with lib; {
+with lib; let
+  kdlType = with lib.types;
+    nullOr (oneOf [
+      bool
+      int
+      float
+      str
+      path
+      (attrsOf kdlType)
+      (listOf kdlType)
+    ]);
+in {
   options.myhome = {
     tuiExtra = {
       enable = mkEnableOption "Extra TUI configs (mainly for developing)";
@@ -26,7 +37,15 @@ with lib; {
     };
     desktop = {
       enable = mkEnableOption "Enable Desktop Environment";
-      wayland.enable = mkEnableOption "Wayland Display Server" // {default = true;};
+      hyprland.enable = mkEnableOption "Hyprland WM" // {default = true;};
+      niri = {
+        enable = mkEnableOption "Niri WM" // {default = true;};
+        settings = mkOption {
+          type = types.submodule {freeformType = kdlType;};
+          default = {};
+          description = "Niri Configuration";
+        };
+      };
       xorg.enable = mkEnableOption "Xorg Display Server" // {default = true;};
       daily.enable = mkEnableOption "Daily stuffs";
       daily.game.enable = mkEnableOption "Games";
