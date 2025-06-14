@@ -11,9 +11,11 @@
 in {
   config = lib.mkIf cfg.enable {
     programs.hyprland.enable = true;
+    programs.niri.enable = true;
     # programs.hyprland.withUWSM = true;
-    environment.systemPackages = [
-      pkgs.wl-clipboard-rs
+    environment.systemPackages = with pkgs; [
+      wl-clipboard-rs
+      xwayland-satellite
     ];
     nix.settings = {
       substituters = ["https://hyprland.cachix.org"];
