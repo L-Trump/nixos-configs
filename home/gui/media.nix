@@ -11,7 +11,8 @@
     playerctl
     pulsemixer
 
-    ffmpeg-full
+    # ffmpeg-full
+    ffmpeg
 
     # images
     imv # Simple image viewer
