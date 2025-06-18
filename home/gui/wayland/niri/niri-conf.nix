@@ -363,7 +363,7 @@ let
       "Mod+Ctrl+R" = {reset-window-height = {};};
       "Mod+F" = {maximize-column = {};};
       "Mod+Shift+F" = {fullscreen-window = {};};
-      "Mod+Ctrl+F" = {toggle-windowed-fullscreen = {};};
+      "Mod+Ctrl+Shift+F" = {toggle-windowed-fullscreen = {};};
 
       # Expand the focused column to space not taken up by other fully visible columns.
       # Makes the column "fill the rest of the space".
