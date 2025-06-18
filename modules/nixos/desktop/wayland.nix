@@ -24,6 +24,14 @@ in {
     })
     (lib.mkIf cfg.niri.enable {
       programs.niri.enable = true;
+      programs.uwsm.enable = true;
+      programs.uwsm.waylandCompositors = {
+        niri = {
+          prettyName = "Niri";
+          comment = "Niri compositor managed by UWSM";
+          binPath = "/run/current-system/sw/bin/niri";
+        };
+      };
       environment.systemPackages = with pkgs; [
         wl-clipboard-rs
         xwayland-satellite

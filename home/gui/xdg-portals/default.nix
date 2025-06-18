@@ -1,6 +1,8 @@
 {
   config,
   pkgs,
+  lib,
+  myvars,
   ...
 }: {
   home.sessionVariables = {
@@ -51,7 +53,7 @@
       After = "graphical-session.target";
     };
     Service = {
-      Environment = "PATH=/run/wrappers/bin:/run/current-system/sw/bin:/etc/profiles/per-user/%u/bin";
+      Environment = "PATH=/run/wrappers/bin:/etc/profiles/per-user/${myvars.username}/bin:/run/current-system/sw/bin";
       Type = "dbus";
       BusName = "org.freedesktop.impl.portal.desktop.termfilechooser";
       ExecStart = "${pkgs.xdg-desktop-portal-termfilechooser}/libexec/xdg-desktop-portal-termfilechooser";

@@ -15,11 +15,18 @@ in {
       mylib.toKDL cfg.settings
     );
 
+    xdg.configFile."uwsm/env-niri".text = ''
+      export XDG_CURRENT_DESKTOP="niri";
+      export XDG_SESSION_DESKTOP="niri";
+      export DESKTOP_SESSION="niri";
+      export DISPLAY=":0";
+    '';
+
     programs.fish = {
-      interactiveShellInit = ''
+      interactiveShellInit = lib.mkAfter ''
         # auto login
         # if uwsm check may-start
-        #   uwsm start hyprland-uwsm.desktop
+        #   uwsm start niri-uwsm.desktop
         # end
         if test -z $DISPLAY; and test -n "$XDG_VTNR"; and test $XDG_VTNR -eq 1; and test "$(tty)" = "/dev/tty1"; and test "$(fgconsole 2>/dev/null || echo 1)" -eq 1
             niri-session

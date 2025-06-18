@@ -56,5 +56,10 @@
       __GLX_VENDOR_LIBRARY_NAME = "nvidia";
       MOZ_DISABLE_RDD_SANDBOX = "1";
     };
+    input = {
+      tablet = {
+        map-to-output = "HDMI-A-1";
+      };
+    };
   };
 }

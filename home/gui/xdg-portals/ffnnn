@@ -5,6 +5,7 @@ out="$5"
 file="${suggest##/*/}"
 
 echo "$@" >/tmp/ffnnn.log
+echo "$(env)" >>/tmp/ffnnn.log
 
 if [ "$save" = 1 ]; then
     touch "$suggest"

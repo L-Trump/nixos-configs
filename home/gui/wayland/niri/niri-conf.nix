@@ -4,7 +4,7 @@ let
   };
   settings = {
     environment = {
-      NIXOS_OZONE_WL = "1";
+      # NIXOS_OZONE_WL = "1";
       XMODIFIERS = "@im=fcitx";
       QT_IM_MODULE = "fcitx";
       QT_IM_MODULES = "wayland;fcitx;ibus";
@@ -112,6 +112,8 @@ let
       ["fish" "-c" "xwayland-satellite :0"]
       ["fish" "-c" "pkill nnn-dbus; nnn-dbus"]
       ["fish" "-c" "sleep 10 && my-mail-sync"]
+      ["systemctl" "--user" "restart" "xdg-desktop-portal.service"]
+      # ["fish" "-c" "uwsm finalize"]
     ];
     prefer-no-csd = {};
     screenshot-path = "~/Pictures/Screenshots/Niri_%Y-%m-%d_%H-%M-%S.png";
@@ -361,7 +363,7 @@ let
       "Mod+Ctrl+R" = {reset-window-height = {};};
       "Mod+F" = {maximize-column = {};};
       "Mod+Shift+F" = {fullscreen-window = {};};
-      # "Mod+Shift+F" = { toggle-windowed-fullscreen = {}; };
+      "Mod+Ctrl+F" = {toggle-windowed-fullscreen = {};};
 
       # Expand the focused column to space not taken up by other fully visible columns.
       # Makes the column "fill the rest of the space".

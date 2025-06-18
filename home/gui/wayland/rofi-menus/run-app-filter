@@ -1,7 +1,7 @@
 #!/usr/bin/env fish
 
 set prefix_name GDK_DPI NO_WAYLAND NVIDIA_OFFLOAD
-set prefix_exec "GDK_DPI_SCALE=1" "WAYLAND_DISPLAY=" nvidia-offload
+set prefix_exec "GDK_DPI_SCALE=1" "WAYLAND_DISPLAY= NIXOS_OZONE_WL=" nvidia-offload
 set append_name WAYLAND_ELECTRON
 set append_exec "--enable-wayland-ime --ozone-platform-hint=auto --enable-features=WaylandWindowDecorations"
 set app_rule "^.*firefox|GDK_DPI NVIDIA_OFFLOAD" \
@@ -11,6 +11,7 @@ set app_rule "^.*firefox|GDK_DPI NVIDIA_OFFLOAD" \
     "^.*lx-music-desktop|NO_WAYLAND" \
     "^.*typora|WAYLAND_ELECTRON" \
     "^.*dbeaver|NO_WAYLAND" \
+    "^.*bin/qq|NO_WAYLAND" \
     "^.*[Tt]hunar|GDK_DPI"
 
 set cmd $argv[1]

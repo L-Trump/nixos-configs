@@ -21,6 +21,7 @@ in {
       ./waybar
       ./swaylock.nix
     ];
+
   config = lib.mkIf cfg.enable {
     home.pointerCursor.x11.enable = true;
     programs.rofi = {
@@ -28,6 +29,7 @@ in {
       extraConfig.dpi = lib.mkForce 96;
       package = pkgs.rofi-wayland;
     };
+
     home.packages = with pkgs; [
       hyprpicker
       snipaste
@@ -40,6 +42,23 @@ in {
       dex
       acpi
     ];
+
+    xdg.configFile."uwsm/env".text = ''
+      export NIXOS_OZONE_WL="1";
+      export XMODIFIERS="@im=fcitx";
+      export QT_IM_MODULE="fcitx";
+      export QT_IM_MODULES="wayland;fcitx;ibus";
+      # GUI Toolkit backend
+      export GDK_BACKEND="wayland,x11,*";
+      export QT_QPA_PLATFORM="wayland;xcb";
+      export QT_AUTO_SCREEN_SCALE_FACTOR="1";
+      # Session Type env
+      export XDG_SESSION_TYPE="wayland";
+      export # Locale
+      export LANG="en_GB.UTF-8";
+      export LANGUAGE="zh_CN.UTF-8";
+    '';
+
     services.hyprpaper = {
       enable = true;
       settings = {
