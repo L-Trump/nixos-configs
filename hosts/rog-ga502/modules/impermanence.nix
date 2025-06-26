@@ -100,6 +100,7 @@ in {
         ".cache/nix"
         ".cache/onedriver"
         ".cache/zellij"
+        ".cache/restic"
         ".vnc"
 
         # Configs
