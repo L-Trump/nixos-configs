@@ -50,6 +50,7 @@ in {
       "/var/log"
       "/var/lib"
       "/var/jfsCache" # JFS Cache dir
+      "/var/cache"
       "/data"
 
       # created by modules/nixos/misc/fhs-fonts.nix
