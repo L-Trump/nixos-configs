@@ -27,12 +27,22 @@ in {
       obs-nvfbc = pkgs.callPackage ./obs-nvfbc {};
     };
 
+  niri = pkgs.niri.overrideAttrs (final: prev: { # TODO wait upstream merge
+    patches = [
+      (pkgs.fetchpatch {
+        name = "niri-support-shm.patch";
+        url = "https://github.com/YaLTeR/niri/pull/1791.patch";
+        hash = "sha256-Of+WA05jHnuV8rnz4ZjjQNzI8CcLLT8zoSnUg5n1APU=";
+      })
+    ];
+  });
+
   # Some package derived from unstable repo
   # siyuan = pkgs-unstable.siyuan;
   # easytier = pkgs-unstable.easytier;
 
   # siyuan = pkgs.callPackage ./siyuan {};
-  easytier = pkgs.callPackage ./easytier {};
+  # easytier = pkgs.callPackage ./easytier {};
   # siyuan = pkgs.callPackage ./siyuan {};
   # linuxPackages_latest = pkgs.linuxPackages_latest.extend (_: prev: {
   #   ipu6-drivers = pkgs.linuxPackages_latest.callPackage ./ipu6-drivers {};
