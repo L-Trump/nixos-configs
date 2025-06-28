@@ -30,7 +30,7 @@ in {
     pkg-wemeet-openbox-cast
     xwayland
     openbox
-    nur.repos.linyinfeng.wemeet
+    wemeet
   ];
   xdg.configFile."openbox/rc.xml".source = ./openbox-rc.xml;
   xdg.configFile."openbox/menu.xml".source = ./openbox-menu.xml;

@@ -9,7 +9,7 @@
     remmina
     realvnc-vnc-viewer
     zotero
-    nur.repos.linyinfeng.wemeet
+    wemeet
     matlab
     # winetricks
     # wineWowPackages.waylandFull
