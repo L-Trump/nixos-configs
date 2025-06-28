@@ -6,6 +6,7 @@
   mylib,
   pkgs,
   inputs,
+  lib,
   ...
 }: let
   inherit (inputs) nixos-hardware;

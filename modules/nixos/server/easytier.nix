@@ -13,21 +13,23 @@ let
 
   genFinalSettings =
     inst:
-    attrsets.filterAttrsRecursive (_: v: v != null) (
-      {
-        inherit (inst.settings)
-          instance_name
-          hostname
-          ipv4
-          dhcp
-          listeners
-          ;
-        network_identity = {
-          inherit (inst.settings) network_name network_secret;
-        };
-        peer = map (p: { uri = p; }) inst.settings.peers;
-      }
-      // inst.extraSettings
+    attrsets.filterAttrsRecursive (_: v: v != { }) (
+      attrsets.filterAttrsRecursive (_: v: v != null) (
+        {
+          inherit (inst.settings)
+            instance_name
+            hostname
+            ipv4
+            dhcp
+            listeners
+            ;
+          network_identity = {
+            inherit (inst.settings) network_name network_secret;
+          };
+          peer = map (p: { uri = p; }) inst.settings.peers;
+        }
+        // inst.extraSettings
+      )
     );
 
   genConfigFile =
