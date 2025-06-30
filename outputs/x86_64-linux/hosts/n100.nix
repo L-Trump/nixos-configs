@@ -20,8 +20,8 @@
     virtualization = {
       qemu.enable = true;
       microvm.host = {
-        enable = true;
-        infras = ["microvm-umy"];
+        enable = false;
+        # infras = ["microvm-umy"];
       };
     };
     server = {
