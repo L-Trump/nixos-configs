@@ -31,7 +31,7 @@
       vaultwarden.enable = false;
       homepage-dashboard.enable = false;
       minio.enable = false;
-      alist.enable = false;
+      openlist.enable = false;
       siyuan-server.enable = false;
       immich.machine-learning.enable = false;
       juicefs.enable = false;

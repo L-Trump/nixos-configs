@@ -19,7 +19,7 @@ The modules in this directory are used in my cloud servers
 | nezha-server       | et-ip:8008              | nezha dashboard          |
 | kopia              | localhost:51515         | Kopia backup service     |
 | backrest           | localhost:9898          | Backrest backup service  |
-| alist              | localhost:(5244/5246)   | alist server             |
+| openlist           | localhost:(5244/5246)   | openlist server          |
 | immich (ml)        | et-ip:3003              | Immich machine learning  |
 | siyuan-server      | et-ip:6806              | Siyuan docker            |
 

@@ -21,7 +21,7 @@
       kopia-server.enable = false;
       backrest.enable = true;
       minio.enable = true;
-      alist.enable = true;
+      openlist.enable = true;
       juicefs = {
         enable = true;
         enableS3Gateway = true;

@@ -55,7 +55,7 @@ in {
       vaultwarden.enable = mkEnableOption "Enable vaultwarden password manager";
       homepage-dashboard.enable = mkEnableOption "Enable homepage-dashboard";
       minio.enable = mkEnableOption "Enable minio s3 storage";
-      alist.enable = mkEnableOption "Enable Alist file driver";
+      openlist.enable = mkEnableOption "Enable OpenList file driver";
       siyuan-server.enable = mkEnableOption "Enable siyuan server";
       immich = {
         machine-learning.enable = mkEnableOption "Enable immich machine-learning";

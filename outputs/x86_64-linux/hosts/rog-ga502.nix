@@ -21,7 +21,7 @@
       juicefs.enable = true;
       kopia-server.enable = false;
       backrest.enable = true;
-      alist.enable = true;
+      openlist.enable = true;
     };
   };
   myconfigs.myhome = preset.myhome;

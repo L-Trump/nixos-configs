@@ -27,6 +27,10 @@ in {
       obs-nvfbc = pkgs.callPackage ./obs-nvfbc {};
     };
 
+  dbeaver-bin = pkgs-unstable.dbeaver-bin; # TODO wait https://nixpk.gs/pr-tracker.html?pr=421209
+
+  openlist = pkgs.callPackage ./openlist {}; # TODO wait https://nixpk.gs/pr-tracker.html?pr=422409
+
   niri = pkgs.niri.overrideAttrs (final: prev: { # TODO wait upstream merge
     patches = [
       (pkgs.fetchpatch {

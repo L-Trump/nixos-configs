@@ -24,7 +24,7 @@
       backrest.enable = true;
       vaultwarden.enable = true;
       homepage-dashboard.enable = true;
-      alist.enable = true;
+      openlist.enable = true;
       siyuan-server.enable = true;
       juicefs = {
         enable = true;

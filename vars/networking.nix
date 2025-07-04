@@ -23,11 +23,11 @@ in rec {
     tencent-vm-jp.ipv4 = "10.144.144.253";
     aliyun-vm-sh = {
       ipv4 = "10.144.144.251";
-      domainPrefix = ["kopia" "backrest" "backup" "alist"];
+      domainPrefix = ["kopia" "backrest" "backup" "alist" "olist"];
     };
     chick-vm-cd = {
       ipv4 = "10.144.144.249";
-      domainPrefix = ["s3" "backrest" "kopia" "backup" "alist"];
+      domainPrefix = ["s3" "backrest" "kopia" "backup" "alist" "olist"];
     };
     qfynat.ipv4 = "10.144.144.252";
     dorm-router.ipv4 = "10.144.144.198";
