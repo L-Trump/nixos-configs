@@ -52,6 +52,8 @@ update_nix_file() {
         current_tag=$(echo "$entry" | jq -r '.value.tag')
         latest_tag=$(echo "$entry" | jq -r '.value.latestTag // "latest"')
 
+        echo "开始更新 $image"
+
         # 调用函数获取最新 tag
         latest_version=$(get_latest_version "$image" "$latest_tag")
 
