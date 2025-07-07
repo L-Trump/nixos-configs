@@ -26,6 +26,7 @@
       homepage-dashboard.enable = true;
       openlist.enable = true;
       siyuan-server.enable = true;
+      cloudreve.master.enable = true;
       juicefs = {
         enable = true;
         enableS3Gateway = true;

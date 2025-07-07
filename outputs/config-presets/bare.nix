@@ -38,6 +38,9 @@
       redis = {
         juicefs-meta.enable = false;
       };
+      cloudreve = {
+        master.enable = false;
+      };
     };
   };
 

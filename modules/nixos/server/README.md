@@ -22,5 +22,6 @@ The modules in this directory are used in my cloud servers
 | openlist           | localhost:(5244/5246)   | openlist server          |
 | immich (ml)        | et-ip:3003              | Immich machine learning  |
 | siyuan-server      | et-ip:6806              | Siyuan docker            |
+| cloudreve-master   | et-ip:5212              | Cloudreve master node    |
 
 **Note:** et-ip means the virtual ipv4 address in easytier, indicating the service can only be accessed in the internal network.

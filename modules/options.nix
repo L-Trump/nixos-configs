@@ -57,6 +57,9 @@ in {
       minio.enable = mkEnableOption "Enable minio s3 storage";
       openlist.enable = mkEnableOption "Enable OpenList file driver";
       siyuan-server.enable = mkEnableOption "Enable siyuan server";
+      cloudreve = {
+        master.enable = mkEnableOption "Enable cloudreve master";
+      };
       immich = {
         machine-learning.enable = mkEnableOption "Enable immich machine-learning";
       };
