@@ -27,11 +27,8 @@ in {
       obs-nvfbc = pkgs.callPackage ./obs-nvfbc {};
     };
 
-  dbeaver-bin = pkgs-unstable.dbeaver-bin; # TODO wait https://nixpk.gs/pr-tracker.html?pr=421209
-
-  openlist = pkgs.callPackage ./openlist {}; # TODO wait https://nixpk.gs/pr-tracker.html?pr=422409
-
-  niri = pkgs.niri.overrideAttrs (final: prev: { # TODO wait upstream merge
+  niri = pkgs.niri.overrideAttrs (final: prev: {
+    # TODO wait upstream merge
     patches = [
       (pkgs.fetchpatch {
         name = "niri-support-shm.patch";
@@ -64,4 +61,6 @@ in {
   # snipaste = pkgs.callPackage ./snipaste {};
   # sunshine = pkgs.callPackage ./sunshine {};
   # nezha-agent = pkgs.callPackage ./nezha-agent {};
+  # dbeaver-bin = pkgs-unstable.dbeaver-bin;
+  # openlist = pkgs.callPackage ./openlist {};
 }
