@@ -6,6 +6,9 @@
   nixpkgs,
   ...
 }: {
+  imports = [
+    inputs.nix-index-database.hmModules.nix-index
+  ];
   # Save storage
   nix.settings.auto-optimise-store = true;
   nix.gc = {
@@ -16,4 +19,7 @@
 
   # make `nix run nixpkgs#nixpkgs` use the same nixpkgs as the one used by this flake.
   nix.registry.nixpkgs.flake = nixpkgs;
+
+  programs.nix-index.enable = true;
+  programs.nix-index-database.comma.enable = true;
 }

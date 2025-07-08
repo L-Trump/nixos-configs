@@ -9,6 +9,7 @@
   imports = [
     # XDDXDD cache substituter
     inputs.nur-xddxdd.nixosModules.nix-cache-attic
+    inputs.nix-index-database.nixosModules.nix-index
   ];
   # auto upgrade nix to the unstable version
   # https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/tools/package-management/nix/default.nix#L284
@@ -48,4 +49,7 @@
   nix.nixPath = lib.mkForce ["/etc/nix/inputs"];
   # https://github.com/NixOS/nix/issues/9574
   nix.settings.nix-path = lib.mkForce "nixpkgs=/etc/nix/inputs/nixpkgs";
+
+  programs.nix-index.enable = true;
+  programs.nix-index-database.comma.enable = true;
 }
