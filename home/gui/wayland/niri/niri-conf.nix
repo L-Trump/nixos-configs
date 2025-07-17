@@ -107,7 +107,6 @@ let
       ["systemctl" "--user" "restart" "fcitx5-daemon.service"]
       ["systemctl" "--user" "restart" "hyprpaper.service"]
       ["systemctl" "--user" "restart" "hypridle.service"]
-      ["fish" "-c" "sudo pkill clash-verge-service; sudo clash-verge-service"] # TODO remove after upstream merge https://nixpk.gs/pr-tracker.html?pr=420530
       ["copyq" "--start-server"]
       ["fish" "-c" "dex -a -s ~/.config/autostart"]
       ["fish" "-c" "xwayland-satellite :0"]
