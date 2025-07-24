@@ -7,8 +7,8 @@
     # e-book viewer(.epub/.mobi/...)
     # do not support .pdf
     foliate
-    # wpsoffice-cn
-    wpsoffice-365
+    wpsoffice-cn
+    # wpsoffice-365
     nur.repos.rewine.ttf-wps-fonts
     # pkgs-stable.logseq
     vikunja

@@ -9,9 +9,9 @@
 in {
   xdg-desktop-portal-termfilechooser = pkgs.callPackage ./xdg-desktop-portal-termfilechooser {};
 
-  wpsoffice-cn = libsForQt5.callPackage ./wpsoffice {
-    useChineseVersion = true;
-  };
+  # wpsoffice-cn = libsForQt5.callPackage ./wpsoffice {
+  #   useChineseVersion = true;
+  # };
   wpsoffice-365 = libsForQt5.callPackage ./wpsoffice-365 {};
 
   edrawmax = libsForQt5.callPackage ./edrawmax {};
