@@ -13,6 +13,7 @@ abbr -a nr. -- nix run
 abbr -a nrn -- nix run nixpkgs\#
 abbr -a nsh -- nix shell
 abbr -a nsn -- nix shell nixpkgs\#
+abbr -a psrg -- ps -aux \| rg -i
 
 if functions -q projectdo_build
     abbr -a b --function projectdo_build
