@@ -13,7 +13,7 @@
     # whitesur-cursors
     # whitesur-icon-theme
     adwaita-icon-theme
-    tela-icon-theme
+    (lib.hiPrio tela-icon-theme)
     papirus-icon-theme
   ];
 
