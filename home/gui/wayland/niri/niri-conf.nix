@@ -147,6 +147,11 @@ let
               title = "^Progress|进度$";
             };
           }
+          {
+            _props = {
+              title = "^Authentication Required$";
+            };
+          }
         ];
         open-floating = true;
       }
