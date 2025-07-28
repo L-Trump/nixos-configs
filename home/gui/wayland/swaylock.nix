@@ -33,7 +33,7 @@ in {
       bs-hl-color = "8BE9FD";
       datestr = "%a, %B %e";
       timestr = "%I:%M %p";
-      ignore-empty-password = true;
+      # ignore-empty-password = true;
       image = "${lock_wallpaper}";
 
       # grace=2
