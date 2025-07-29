@@ -1,0 +1,64 @@
+#!/usr/bin/env bash
+target_dir="$HOME/Videos/DynamicWallpapers"
+
+start_wallpapers() {
+  # Verify target directory exists
+  if [ ! -d "$target_dir" ]; then
+    echo "Error: Directory $target_dir not found" >&2
+    exit 1
+  fi
+
+  # Check if nvidia-offload command exists
+  if command -v nvidia-offload &>/dev/null; then
+    player="nvidia-offload mpvpaper"
+    echo "NVIDIA offload detected: Using dedicated GPU for wallpaper rendering"
+  else
+    player="mpvpaper"
+    echo "Using default rendering"
+  fi
+
+  while IFS= read -r -d '' filepath; do
+    # Extract base filename without extension
+    name=$(basename "$filepath" .mp4)
+
+    echo "Starting wallpaper: $name"
+
+    # Execute wallpaper command (runs in background)
+    $player -f -o "no-audio --hwdec=auto --mute=yes --no-osc --no-osd-bar --quiet --override-display-fps=15 --loop --input-ipc-server=/tmp/mpv-wallpaper-socket-${name}" \
+      -p "$name" "$filepath"
+
+    echo "Wallpaper $name launched successfully"
+  done < <(find "$target_dir" -maxdepth 1 -type f -name "*.mp4" -print0)
+}
+
+toggle_pause() {
+  for socket in /tmp/mpv-wallpaper-socket-*; do
+    if [ -S "$socket" ]; then
+      echo "Toggling pause for $socket"
+      echo 'cycle pause' | socat - "$socket" 2>/dev/null
+    fi
+  done
+}
+
+case "$1" in
+"")
+  if pgrep -f "mpvpaper" >/dev/null; then
+    echo "mpvpaper is running, toggling wallpaper pause state"
+    toggle_pause
+  else
+    echo "mpvpaper is not running, starting wallpapers"
+    start_wallpapers
+  fi
+  ;;
+stop)
+  echo "Stopping all mpvpaper processes"
+  pkill mpvpaper
+  rm /tmp/mpv-wallpaper-socket-*
+  ;;
+*)
+  echo "Usage:"
+  echo "  animebg           Start wallpapers or toggle pause state"
+  echo "  animebg stop      Stop all running mpvpaper processes"
+  exit 1
+  ;;
+esac

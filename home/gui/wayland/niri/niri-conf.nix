@@ -208,6 +208,8 @@ let
       "Mod+Alt+V" = {spawn = ["rofi-rbw"];};
       "Mod+Shift+V" = {spawn = ["copyq" "toggle"];};
       "Mod+P" = {spawn = ["fish" "-c" "wl-paste | swappy -f -"];};
+      "Mod+B" = {spawn = ["fish" "-c" "animebg"];};
+      "Mod+Shift+B" = {spawn = ["fish" "-c" "animebg stop"];};
 
       # Example volume keys mappings for PipeWire & WirePlumber.
       # The allow-when-locked=true property makes them work even when the session is locked.

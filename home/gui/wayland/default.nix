@@ -41,6 +41,7 @@ in {
       copyq
       dex
       acpi
+      mpvpaper
     ];
 
     xdg.configFile."uwsm/env".text = ''
