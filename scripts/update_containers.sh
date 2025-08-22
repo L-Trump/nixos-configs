@@ -5,6 +5,20 @@ cd "${0%/*}" || exit
 
 NIX_FILE="../vars/containers.nix"
 
+get_latest_digest() {
+    local image_url=$1
+    local latest_tag=${2:-"latest"}  # 如果未提供 latest_tag，则默认为 "latest"
+
+    LATEST_DIGEST=$(skopeo inspect "docker://$image_url:$latest_tag" --format "{{.Digest}}" 2>/dev/null)
+    if [ -z "$LATEST_DIGEST" ]; then
+        echo "无法获取 $latest_tag 标签的 digest，请检查镜像地址是否正确：$image_url"
+        return 1
+    fi
+
+    echo "$LATEST_DIGEST"
+    return 0
+}
+
 # 函数：获取镜像的最新 tag
 get_latest_version() {
     local image_url=$1
@@ -33,6 +47,7 @@ get_latest_version() {
     done
 
     # 如果没有找到符合条件的标签
+    echo "$TAGS"
     echo "未找到与 $latest_tag 指向相同 digest 的版本"
     return 1
 }
@@ -50,14 +65,27 @@ update_nix_file() {
         index=$(echo "$entry" | jq -r '.key')
         image=$(echo "$entry" | jq -r '.value.image')
         current_tag=$(echo "$entry" | jq -r '.value.tag')
+        current_digest=$(echo "$entry" | jq -r '.value.digest')
         latest_tag=$(echo "$entry" | jq -r '.value.latestTag // "latest"')
 
         echo "开始更新 $image"
+
+        latest_digest=$(get_latest_digest "$image" "$latest_tag")
+
+        if [ $? -ne 0 ]; then
+            echo "$latest_digest"
+            echo "更新镜像 $image 失败"
+            continue
+        fi
+
+        echo "$index: $current_digest -> $latest_digest"
+        sed -i "/$index = {/,/}/ s|digest = \".*\";|digest = \"$latest_digest\";|" "$nix_file"
 
         # 调用函数获取最新 tag
         latest_version=$(get_latest_version "$image" "$latest_tag")
 
         if [ $? -ne 0 ]; then
+            echo "$latest_version"
             echo "更新镜像 $image 失败"
             continue
         fi
