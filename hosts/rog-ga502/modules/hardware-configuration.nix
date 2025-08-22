@@ -57,11 +57,6 @@
   boot.initrd.postDeviceCommands = lib.mkAfter ''
     mkdir -p /btrfs_tmp
     mount -o subvolid=5,compress=zstd ${config.fileSystems."/".device} /btrfs_tmp
-    if [[ -e /btrfs_tmp/@root ]]; then
-        mkdir -p /btrfs_tmp/@snapshots/old_roots
-        timestamp=$(date --date="@$(stat -c %Y /btrfs_tmp/@root)" "+%Y-%m-%-d_%H:%M:%S")
-        mv /btrfs_tmp/@root "/btrfs_tmp/@snapshots/old_roots/$timestamp"
-    fi
 
     delete_subvolume_recursively() {
         IFS=$'\n'
@@ -74,6 +69,12 @@
     for i in $(find /btrfs_tmp/@snapshots/old_roots/ -maxdepth 1 -mtime +10); do
         delete_subvolume_recursively "$i"
     done
+
+    if [[ -e /btrfs_tmp/@root ]]; then
+        mkdir -p /btrfs_tmp/@snapshots/old_roots
+        timestamp=$(date --date="@$(stat -c %Y /btrfs_tmp/@root)" "+%Y-%m-%-d_%H:%M:%S")
+        mv /btrfs_tmp/@root "/btrfs_tmp/@snapshots/old_roots/$timestamp"
+    fi
 
     btrfs subvolume create /btrfs_tmp/@root
     umount /btrfs_tmp
