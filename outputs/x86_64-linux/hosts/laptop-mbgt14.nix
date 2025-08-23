@@ -20,7 +20,8 @@
       juicefs.enable = true;
       kopia-server.enable = false;
       backrest.enable = true;
-      openlist.enable = true;
+      openlist.enable = false;
+      nezha-agent.enable = true;
     };
   };
   myconfigs.myhome = preset.myhome;

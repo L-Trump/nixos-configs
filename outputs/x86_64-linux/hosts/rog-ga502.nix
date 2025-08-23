@@ -22,6 +22,7 @@
       kopia-server.enable = false;
       backrest.enable = true;
       openlist.enable = true;
+      nezha-agent.enable = true;
     };
   };
   myconfigs.myhome = preset.myhome;
