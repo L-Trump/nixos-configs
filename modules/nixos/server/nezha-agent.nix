@@ -9,7 +9,7 @@ in {
     enable = true;
     settings = {
       server = "aliyun-vm-sh.ltnet:8008";
-      disableCommandExecute = false;
+      disable_command_execute = false;
     };
     genUuid = true;
     clientSecretFile = "${config.age.secrets.nezha-agent-secret.path}";
