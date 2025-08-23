@@ -21,9 +21,11 @@
       "https://mirrors.ustc.edu.cn/nix-channels/store?priority=37"
       # "https://mirror.sjtu.edu.cn/nix-channels/store?priority=38"
       "https://nix-community.cachix.org"
+      "https://nixpkgs-update-cache.nix-community.org"
     ];
     trusted-public-keys = [
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      "nixpkgs-update-cache.nix-community.org-1:U8d6wiQecHUPJFSqHN9GSSmNkmdiFW7GW7WNAnHW0SM="
     ];
     trusted-users = [myvars.username];
     builders-use-substitutes = true;
