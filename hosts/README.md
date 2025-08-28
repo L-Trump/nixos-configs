@@ -5,6 +5,7 @@
 1. `n100`: N100 NUC in home, as homelab.
 1. `tencent-vm-jp`: Virtual machine on Tencent Cloud, located in Japan.
 1. `aliyun-vm-sh`: Virtual machine on Ailyun, located in Shanghai, China.
+1. `aliyun-vm-hk`: Virtual machine on Ailyun, located in HongKong, China.
 1. `chick-vm-cd`: Virtual machine on bigchick.xyz, located in Chengdu, Sichuan, China.
 1. `qfynat`: A NAT vps hosted by qfyidc, located in Hubei, China.
 1. `iso`: For install/live image generation.

@@ -25,6 +25,10 @@ in rec {
       ipv4 = "10.144.144.251";
       domainPrefix = ["kopia" "backrest" "backup" "alist" "olist"];
     };
+    aliyun-vm-hk = {
+      ipv4 = "10.144.144.245";
+      domainPrefix = ["backrest" "backup" "alist" "olist"];
+    };
     chick-vm-cd = {
       ipv4 = "10.144.144.249";
       domainPrefix = ["s3" "backrest" "kopia" "backup" "alist" "olist"];
