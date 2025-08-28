@@ -152,6 +152,12 @@ let
               title = "^Authentication Required$";
             };
           }
+          {
+            _props = {
+              app-id = "^wps|wpp|et$";
+              title = "^wps|wpp|et$";
+            };
+          }
         ];
         open-floating = true;
       }
