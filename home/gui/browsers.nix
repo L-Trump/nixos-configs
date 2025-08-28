@@ -5,7 +5,7 @@
   ...
 }: {
   home.packages = with pkgs; [
-    firefox
+    firefox-bin
     # google-chrome
     # microsoft-edge
   ];

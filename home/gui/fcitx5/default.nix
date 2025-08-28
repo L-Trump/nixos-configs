@@ -8,7 +8,7 @@
     fcitx5-chinese-addons
   ];
   fcitx5Package =
-    pkgs.libsForQt5.fcitx5-with-addons.override {addons = fcitx5Addons;};
+    pkgs.fcitx5-with-addons.override {addons = fcitx5Addons;};
   cfg.package = fcitx5Package;
 
   gtk2Cache =

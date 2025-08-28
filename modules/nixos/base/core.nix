@@ -8,8 +8,8 @@
   services.upower.enable = true;
 
   # handle powerkey
-  services.logind.extraConfig = ''
+  services.logind.settings.Login = {
     # don’t shutdown when power button is short-pressed
-    HandlePowerKey=suspend
-  '';
+    HandlePowerKey = "suspend";
+  };
 }

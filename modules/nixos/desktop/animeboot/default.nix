@@ -21,6 +21,9 @@ in {
       plymouth = {
         enable = true;
         theme = "breeze";
+        themePackages = with pkgs; [
+          kdePackages.breeze-plymouth
+        ];
       };
       # Enable "Silent Boot"
       initrd.verbose = false;

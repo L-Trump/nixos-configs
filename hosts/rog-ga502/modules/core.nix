@@ -44,7 +44,7 @@ in {
     clinfo
   ];
 
-  services.logind.lidSwitch = "lock";
+  services.logind.settings.Login.HandleLidSwitch = "lock";
 
   # hardware.opentabletdriver.enable = true;
 
