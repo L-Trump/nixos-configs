@@ -19,6 +19,7 @@
   myconfigs.mymodules = lib.recursiveUpdate preset.mymodules {
     server = {
       backrest.enable = true;
+      hubproxy.enable = true;
     };
   };
   myconfigs.myhome = preset.myhome;

@@ -25,9 +25,11 @@
       nezha-agent.enable = false;
       nezha-server.enable = false;
       rustdesk-server.enable = false;
+      rustdesk-api.enable = false;
       duplicati.enable = false;
       kopia-server.enable = false;
       backrest.enable = false;
+      hubproxy.enable = false;
       vaultwarden.enable = false;
       homepage-dashboard.enable = false;
       minio.enable = false;

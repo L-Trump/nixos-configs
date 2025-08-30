@@ -49,6 +49,7 @@ in {
       nezha-agent.enable = mkEnableOption "Enable nezha-monitor agent";
       nezha-server.enable = mkEnableOption "Enable nezha-monitor server";
       rustdesk-server.enable = mkEnableOption "Enable rustdesk server";
+      rustdesk-api.enable = mkEnableOption "Enable rustdesk api";
       duplicati.enable = mkEnableOption "Enable duplicati backup tool";
       kopia-server.enable = mkEnableOption "Enable duplicati backup tool";
       backrest.enable = mkEnableOption "Enable backrest (restic) backup tool";
@@ -57,6 +58,7 @@ in {
       minio.enable = mkEnableOption "Enable minio s3 storage";
       openlist.enable = mkEnableOption "Enable OpenList file driver";
       siyuan-server.enable = mkEnableOption "Enable siyuan server";
+      hubproxy.enable = mkEnableOption "Enable hubproxy server";
       cloudreve = {
         master.enable = mkEnableOption "Enable cloudreve master";
       };

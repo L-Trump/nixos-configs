@@ -20,6 +20,9 @@ in {
   };
 
   sctgdesk-server = pkgs.callPackage ./sctgdesk-server {};
+  rustdesk-server-pro = pkgs.callPackage ./rustdesk-server-pro {};
+
+  hubproxy = pkgs.callPackage ./hubproxy {};
 
   obs-studio-plugins =
     pkgs.obs-studio-plugins

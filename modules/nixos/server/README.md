@@ -14,12 +14,14 @@ The modules in this directory are used in my cloud servers
 | juicefs-s3-gateway | et-ip/localhost:8260    | JuiceFS S3 Gateway       |
 | juicefs-webdav     | et-ip/localhost:8261    | JuiceFS Webdav Gateway   |
 | minio              | localhost:(9096/9097)   | MinIO and its console    |
-| rustdesk-server    | [::]:(21114-21118)      | rustdesk server          |
+| rustdesk-server    | [::]:(21115-21119)      | rustdesk server          |
+| rustdesk-api       | [::]:(21114)            | rustdesk api server      |
 | vaultwarden        | localhost:8222          | secrests manager         |
 | nezha-server       | et-ip:8008              | nezha dashboard          |
 | kopia              | localhost:51515         | Kopia backup service     |
 | backrest           | localhost:9898          | Backrest backup service  |
 | openlist           | localhost:(5244/5246)   | openlist server          |
+| hubproxy           | localhost:5000          | hubproxy server          |
 | immich (ml)        | et-ip:3003              | Immich machine learning  |
 | siyuan-server      | et-ip:6806              | Siyuan docker            |
 | cloudreve-master   | et-ip:5212              | Cloudreve master node    |
