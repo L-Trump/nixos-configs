@@ -19,6 +19,7 @@
   myconfigs.mymodules = lib.recursiveUpdate preset.mymodules {
     server = {
       rustdesk-server.enable = true;
+      rustdesk-api.enable = true;
       nezha-server.enable = true;
       kopia-server.enable = false;
       backrest.enable = true;

@@ -5,7 +5,7 @@
   ...
 }: let
   cfg = config.mymodules.server.rustdesk-server;
-  pro-package = pkgs.sctgdesk-server;
+  pro-package = pkgs.rustdesk-server-pro;
 in {
   config = lib.mkIf cfg.enable {
     services.rustdesk-server = {
