@@ -15,14 +15,20 @@
     '';
   };
   cfg = config.mymodules.desktop.animeboot;
+  nixosBreezePlymouth = pkgs.kdePackages.breeze-plymouth.override {
+    logoFile = config.boot.plymouth.logo;
+    logoName = "nixos";
+    osName = "NixOS";
+    osVersion = config.system.nixos.release;
+  };
 in {
   config = lib.mkIf (cfg.enable) {
     boot = {
       plymouth = {
         enable = true;
         theme = "breeze";
-        themePackages = with pkgs; [
-          kdePackages.breeze-plymouth
+        themePackages = [
+          nixosBreezePlymouth
         ];
       };
       # Enable "Silent Boot"

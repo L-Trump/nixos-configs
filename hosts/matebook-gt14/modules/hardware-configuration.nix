@@ -40,7 +40,9 @@
     canTouchEfiVariables = true;
     efiSysMountPoint = "/boot/efi";
   };
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  # TODO kernel 6.16 freeze when suspend / sleep https://bbs.archlinux.org/viewtopic.php?id=307669
+  boot.kernelPackages = pkgs.linuxPackages_6_15;
+  # boot.kernelPackages = pkgs.linuxPackages_latest;
   # boot.kernelPackages = pkgs.linuxPackages_testing;
   boot.kernelParams = [
     # "xe.force_probe=7d55"
