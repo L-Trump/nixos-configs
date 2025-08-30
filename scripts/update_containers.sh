@@ -78,6 +78,11 @@ update_nix_file() {
             continue
         fi
 
+        if [ "$current_digest" = "$latest_digest" ]; then
+            echo "$image 的 digest 未发生变化，跳过更新"
+            continue
+        fi
+
         echo "$index: $current_digest -> $latest_digest"
         sed -i "/$index = {/,/}/ s|digest = \".*\";|digest = \"$latest_digest\";|" "$nix_file"
 

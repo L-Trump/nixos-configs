@@ -9,7 +9,7 @@
   et-ip = myvars.networking.hostsAddr.easytier."${hostName}".ipv4;
   cfg = config.mymodules.server.${name};
   container = myvars.containers.${name};
-  image = "${container.image}:${container.tag}";
+  image = "${container.image}@${container.digest}";
 in {
   config = lib.mkIf cfg.enable {
     networking.firewall.allowedTCPPorts = [8008];

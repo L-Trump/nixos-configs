@@ -10,7 +10,7 @@
   et-ip = myvars.networking.hostsAddr.easytier."${hostName}".ipv4;
 
   container = myvars.containers.cloudreve;
-  image = "${container.image}:${container.tag}";
+  image = "${container.image}@${container.digest}";
 
   container-redis = myvars.containers.cloudreve-redis;
   image-redis = "${container-redis.image}:${container-redis.tag}";
