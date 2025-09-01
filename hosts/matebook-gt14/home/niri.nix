@@ -9,6 +9,12 @@
       {
         _args = ["eDP-1"];
         scale = 2.0;
+        position = {
+          _props = {
+            x = 0;
+            y = 0;
+          };
+        };
       }
       {
         _args = ["Lenovo Group Limited LEN Y27q-20 0x01010101"];
@@ -45,6 +51,17 @@
         position = {
           _props = {
             x = 3360;
+            y = 0;
+          };
+        };
+      }
+      {
+        _args = ["ViewSonic Corporation VX3480-2K-PRO WYX241400015"];
+        mode = "3440x1440@60";
+        scale = 1.3;
+        position = {
+          _props = {
+            x = 1440;
             y = 0;
           };
         };
