@@ -108,7 +108,7 @@ let
       ["systemctl" "--user" "restart" "hyprpaper.service"]
       ["systemctl" "--user" "restart" "hypridle.service"]
       ["copyq" "--start-server"]
-      ["fish" "-c" "dex -a -s ~/.config/autostart"]
+      ["fish" "-c" "sleep 3; dex -a -s ~/.config/autostart"]
       # ["fish" "-c" "xwayland-satellite :0"]
       ["fish" "-c" "pkill nnn-dbus; nnn-dbus"]
       ["fish" "-c" "sleep 10 && my-mail-sync"]
