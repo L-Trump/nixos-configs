@@ -16,11 +16,11 @@ in {
   ];
 
   config = mkIf cfg.enable {
-    xresources.properties = {
-      "Xft.dpi" = 192;
-      "rofi.dpi" = 192;
-      "*.dpi" = 192;
-    };
+    # xresources.properties = {
+    #   "Xft.dpi" = 192;
+    #   "rofi.dpi" = 192;
+    #   "*.dpi" = 192;
+    # };
     home.pointerCursor.x11.enable = true;
 
     # programs.fish = {

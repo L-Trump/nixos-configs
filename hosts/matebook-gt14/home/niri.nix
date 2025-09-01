@@ -4,6 +4,11 @@
   pkgs,
   ...
 }: {
+  xresources.properties = {
+    "Xft.dpi" = 192;
+    "rofi.dpi" = 192;
+    "*.dpi" = 192;
+  };
   myhome.desktop.niri.settings = {
     output = [
       {

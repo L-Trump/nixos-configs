@@ -12,7 +12,7 @@ in
         animeboot.enable = true;
         niri.enable = true;
         hyprland.enable = true;
-        xorg.enable = true;
+        xorg.enable = false;
         game.enable = false;
         keyremap.enable = true;
         remote-desktop.sunshine.enable = true;
@@ -33,7 +33,7 @@ in
         enable = true;
         niri.enable = true;
         hyprland.enable = true;
-        xorg.enable = true;
+        xorg.enable = false;
         daily.enable = true;
         daily.game.enable = false;
       };
