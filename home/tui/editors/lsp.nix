@@ -40,7 +40,7 @@ in {
       ++ lib.optionals ((elem "all" cfg.lang) || (elem "c" cfg.lang)) [
         #-- c/c++
         cmake
-        # cmake-language-server # TODO wait pr merge 437306
+        cmake-language-server
         gnumake
         checkmake
         # c/c++ compiler, required by nvim-treesitter!

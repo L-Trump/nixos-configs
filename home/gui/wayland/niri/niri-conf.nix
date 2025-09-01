@@ -4,7 +4,7 @@ let
   };
   settings = {
     environment = {
-      # NIXOS_OZONE_WL = "1";
+      NIXOS_OZONE_WL = "1";
       XMODIFIERS = "@im=fcitx";
       QT_IM_MODULE = "fcitx";
       QT_IM_MODULES = "wayland;fcitx;ibus";
@@ -20,7 +20,7 @@ let
       # Locale
       LANG = "en_GB.UTF-8";
       LANGUAGE = "zh_CN.UTF-8";
-      DISPLAY = ":0";
+      # DISPLAY = ":0";
     };
 
     input = {
@@ -109,7 +109,7 @@ let
       ["systemctl" "--user" "restart" "hypridle.service"]
       ["copyq" "--start-server"]
       ["fish" "-c" "dex -a -s ~/.config/autostart"]
-      ["fish" "-c" "xwayland-satellite :0"]
+      # ["fish" "-c" "xwayland-satellite :0"]
       ["fish" "-c" "pkill nnn-dbus; nnn-dbus"]
       ["fish" "-c" "sleep 10 && my-mail-sync"]
       ["systemctl" "--user" "restart" "xdg-desktop-portal.service"]

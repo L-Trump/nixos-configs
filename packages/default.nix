@@ -1,17 +1,11 @@
 {
   pkgs ? import <nixpkgs> {},
-  pkgs-unstable,
-  pkgs-stable,
-  inputs,
+  pkgs-unstable  ? import <nixpkgs> {},
+  pkgs-stable  ? import <nixpkgs> {},
   ...
 }: let
   inherit (pkgs) lib libsForQt5 fetchFromGitHub;
 in {
-  xdg-desktop-portal-termfilechooser = pkgs.callPackage ./xdg-desktop-portal-termfilechooser {};
-
-  # wpsoffice-cn = libsForQt5.callPackage ./wpsoffice {
-  #   useChineseVersion = true;
-  # };
   wpsoffice-365 = libsForQt5.callPackage ./wpsoffice-365 {};
 
   edrawmax = libsForQt5.callPackage ./edrawmax {};
@@ -19,7 +13,6 @@ in {
     useChineseVersion = true;
   };
 
-  sctgdesk-server = pkgs.callPackage ./sctgdesk-server {};
   rustdesk-server-pro = pkgs.callPackage ./rustdesk-server-pro {};
 
   hubproxy = pkgs.callPackage ./hubproxy {};
@@ -30,23 +23,24 @@ in {
       obs-nvfbc = pkgs.callPackage ./obs-nvfbc {};
     };
 
-  niri = pkgs.niri.overrideAttrs (final: prev: {
-    # TODO wait upstream merge
-    patches = [
-      (pkgs.fetchpatch {
-        name = "niri-support-shm.patch";
-        url = "https://github.com/YaLTeR/niri/pull/1791.patch";
-        hash = "sha256-Of+WA05jHnuV8rnz4ZjjQNzI8CcLLT8zoSnUg5n1APU=";
-      })
-    ];
-  });
+  # niri = pkgs.niri.overrideAttrs (final: prev: {
+  #   # TODO wait upstream merge
+  #   patches = [
+  #     (pkgs.fetchpatch {
+  #       name = "niri-support-shm.patch";
+  #       url = "https://github.com/YaLTeR/niri/pull/1791.patch";
+  #       hash = "sha256-Of+WA05jHnuV8rnz4ZjjQNzI8CcLLT8zoSnUg5n1APU=";
+  #     })
+  #   ];
+  # });
 
   # Some package derived from unstable repo
   # siyuan = pkgs-unstable.siyuan;
   # easytier = pkgs-unstable.easytier;
+  niri = pkgs-unstable.niri; # TODO wait pr 438640 merge
 
   # siyuan = pkgs.callPackage ./siyuan {};
-  easytier = pkgs.callPackage ./easytier {};
+  # easytier = pkgs.callPackage ./easytier {};
   # siyuan = pkgs.callPackage ./siyuan {};
   # linuxPackages_latest = pkgs.linuxPackages_latest.extend (_: prev: {
   #   ipu6-drivers = pkgs.linuxPackages_latest.callPackage ./ipu6-drivers {};
@@ -66,4 +60,9 @@ in {
   # nezha-agent = pkgs.callPackage ./nezha-agent {};
   # dbeaver-bin = pkgs-unstable.dbeaver-bin;
   # openlist = pkgs.callPackage ./openlist {};
+  # xdg-desktop-portal-termfilechooser = pkgs.callPackage ./xdg-desktop-portal-termfilechooser {};
+  # sctgdesk-server = pkgs.callPackage ./sctgdesk-server {};
+  # wpsoffice-cn = libsForQt5.callPackage ./wpsoffice {
+  #   useChineseVersion = true;
+  # };
 }
