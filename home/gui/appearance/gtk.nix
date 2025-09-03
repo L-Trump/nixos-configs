@@ -6,6 +6,7 @@
 }: {
   # Themes
   home.packages = with pkgs; [
+    gtk3
     adw-gtk3 # Adwaita
     libadwaita
     orchis-theme
