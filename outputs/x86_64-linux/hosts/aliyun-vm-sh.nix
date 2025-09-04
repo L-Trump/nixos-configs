@@ -28,6 +28,7 @@
       openlist.enable = true;
       siyuan-server.enable = true;
       cloudreve.master.enable = true;
+      xpipe-webtop.enable = true;
       juicefs = {
         enable = true;
         enableS3Gateway = true;

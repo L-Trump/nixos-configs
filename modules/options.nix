@@ -59,6 +59,7 @@ in {
       openlist.enable = mkEnableOption "Enable OpenList file driver";
       siyuan-server.enable = mkEnableOption "Enable siyuan server";
       hubproxy.enable = mkEnableOption "Enable hubproxy server";
+      xpipe-webtop.enable = mkEnableOption "Enable xpipe webtop";
       cloudreve = {
         master.enable = mkEnableOption "Enable cloudreve master";
       };
