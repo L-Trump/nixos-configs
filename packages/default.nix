@@ -23,21 +23,21 @@ in {
       obs-nvfbc = pkgs.callPackage ./obs-nvfbc {};
     };
 
-  # niri = pkgs.niri.overrideAttrs (final: prev: {
-  #   # TODO wait upstream merge
-  #   patches = [
-  #     (pkgs.fetchpatch {
-  #       name = "niri-support-shm.patch";
-  #       url = "https://github.com/YaLTeR/niri/pull/1791.patch";
-  #       hash = "sha256-Of+WA05jHnuV8rnz4ZjjQNzI8CcLLT8zoSnUg5n1APU=";
-  #     })
-  #   ];
-  # });
+  niri = pkgs.niri.overrideAttrs (final: prev: {
+    # TODO wait upstream merge  https://github.com/YaLTeR/niri/pull/1791
+    patches = [
+      (pkgs.fetchpatch {
+        name = "niri-support-shm.patch";
+        url = "https://github.com/wrvsrx/niri/compare/tag_support-shm-sharing~17..tag_support-shm-sharing.patch";
+        hash = "sha256-aqsbn8iHtepiyG6dPVFvUt8qWWbvU+sZ6AGhQ8RYSko=";
+      })
+    ];
+  });
 
   # Some package derived from unstable repo
   # siyuan = pkgs-unstable.siyuan;
   # easytier = pkgs-unstable.easytier;
-  niri = pkgs-unstable.niri; # TODO wait pr 438640 merge
+  # niri = pkgs-unstable.niri;
 
   # siyuan = pkgs.callPackage ./siyuan {};
   # easytier = pkgs.callPackage ./easytier {};
