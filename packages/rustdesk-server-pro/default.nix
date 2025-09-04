@@ -9,13 +9,13 @@ let
 in
 stdenv.mkDerivation rec {
   pname = "rustdesk-server-pro";
-  version = "0.0.9-f3";
+  version = "0.1.2";
 
   src = fetchurl {
     url = "https://github.com/lejianwen/rustdesk-server/releases/download/v${version}/rustdesk-server-linux-${arch}.zip";
     sha256 = {
-      x86_64-linux = "sha256-EnMzM0iL41C/yLRfAOGPrAWivR0EJmv7RA+A7HG7CR4=";
-      aarch64-linux = "sha256-9MiUOgptRjo4tXyoz4sqFlE5J3IjKA/EW41xt0SRcYA=";
+      x86_64-linux = "sha256-Kj1sCCI7Go+3ISEdY5gLxQHBpf1oCGK8jef3/5JYo0o=";
+      aarch64-linux = "sha256-jN+/fYjkHAwLIcGHY3C95C2VHofJmb2cGK6m+B+JBeU=";
     }.${stdenv.hostPlatform.system} or (throw "unsupported system ${stdenv.hostPlatform.system}");
   };
 

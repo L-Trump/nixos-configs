@@ -32,7 +32,11 @@ _: {
   };
   rustdesk-api = {
     image = "gh.mmm.fan/lejianwen/rustdesk-api";
-    tag = "v2.6.27";
-    digest = "sha256:c754634ee4ace54abdbe244a562bcf98e964f2eeac7321ff4d6bc8fbab08e0d3";
+    tag = "v2.6.28";
+    digest = "sha256:d96056624bd380567401621ee3921b546642db2aa8274501de151e2111859c4c";
+  };
+  xpipe-webtop = {
+    image = "gh.mmm.fan/ghcr.io/xpipe-io/xpipe-webtop";
+    digest = "sha256:ef5732612be689a128ebd0751e12f846051ee450a7616617ca40aad1962ef6a0";
   };
 }
