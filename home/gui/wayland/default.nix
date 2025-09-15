@@ -27,7 +27,7 @@ in {
     programs.rofi = {
       enable = true;
       extraConfig.dpi = lib.mkForce 96;
-      package = pkgs.rofi-wayland;
+      package = pkgs.rofi;
     };
 
     home.packages = with pkgs; [
