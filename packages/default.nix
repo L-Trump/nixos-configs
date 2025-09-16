@@ -43,13 +43,13 @@ in {
   # easytier = pkgs.callPackage ./easytier {};
   # siyuan = pkgs.callPackage ./siyuan {};
   # linuxPackages_latest = pkgs.linuxPackages_latest.extend (_: prev: {
-  #   ipu6-drivers = pkgs.linuxPackages_latest.callPackage ./ipu6-drivers {};
+  #   # ipu6-drivers = pkgs.linuxPackages_latest.callPackage ./ipu6-drivers {};
   #   ipu6-drivers = prev.ipu6-drivers.overrideAttrs (_: _: {
   #     src = fetchFromGitHub {
   #       owner = "intel";
   #       repo = "ipu6-drivers";
-  #       rev = "7af071481f3d2d3cef1e70113c10f62ac6351723";
-  #       hash = "sha256-pe7lqK+CHpgNWpC8GEZ3FKfYcuVuRUaWlW18D9AsrSk=";
+  #       rev = "69b2fde9edcbc24128b91541fdf2791fbd4bf7a4";
+  #       hash = "sha256-uiRbbSw7tQ3Fn297D1I7i7hyaNtpOWER4lvPMSTpwpk=";
   #     };
   #   });
   # });

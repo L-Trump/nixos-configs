@@ -38,6 +38,8 @@ in {
   #   Option "TearFree" "true"
   # '';
 
+  services.logind.settings.Login.HandleLidSwitch = "lock";
+
   hardware.graphics.enable = true;
   hardware.graphics.enable32Bit = true;
   hardware.graphics.extraPackages = with pkgs; [
@@ -48,7 +50,7 @@ in {
 
   hardware.intelgpu.driver = "xe";
 
-  hardware.ipu6.enable = true;
+  hardware.ipu6.enable = false;
   hardware.ipu6.platform = "ipu6epmtl";
   # services.fprintd = {
   #   enable = true;
