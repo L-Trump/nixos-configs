@@ -1,7 +1,7 @@
 {
   pkgs ? import <nixpkgs> {},
-  pkgs-unstable  ? import <nixpkgs> {},
-  pkgs-stable  ? import <nixpkgs> {},
+  pkgs-unstable ? import <nixpkgs> {},
+  pkgs-stable ? import <nixpkgs> {},
   ...
 }: let
   inherit (pkgs) lib libsForQt5 fetchFromGitHub;
@@ -40,7 +40,7 @@ in {
   # niri = pkgs-unstable.niri;
 
   # siyuan = pkgs.callPackage ./siyuan {};
-  # easytier = pkgs.callPackage ./easytier {};
+  easytier = pkgs.callPackage ./easytier {}; # TODO wait pr 444427 and 444547 merge
   # siyuan = pkgs.callPackage ./siyuan {};
   # linuxPackages_latest = pkgs.linuxPackages_latest.extend (_: prev: {
   #   # ipu6-drivers = pkgs.linuxPackages_latest.callPackage ./ipu6-drivers {};
