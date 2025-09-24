@@ -14,7 +14,8 @@
     # winetricks
     # wineWowPackages.waylandFull
     # lutris
-    dbeaver-bin
+    # dbeaver-bin
+    dbeaver-ultimate
   ];
 
   home.sessionVariables = {

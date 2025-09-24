@@ -34,6 +34,9 @@ in {
     ];
   });
 
+  dbeaver-agent = pkgs.callPackage ./dbeaver-agent {};
+  dbeaver-ultimate = pkgs.callPackage ./dbeaver-ultimate {};
+
   # Some package derived from unstable repo
   # siyuan = pkgs-unstable.siyuan;
   # easytier = pkgs-unstable.easytier;

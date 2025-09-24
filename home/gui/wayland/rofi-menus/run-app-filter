@@ -10,7 +10,6 @@ set app_rule "^.*firefox|GDK_DPI NVIDIA_OFFLOAD" \
     "^.*remmina|GDK_DPI" \
     "^.*lx-music-desktop|NO_WAYLAND" \
     "^.*typora|WAYLAND_ELECTRON" \
-    "^.*dbeaver|NO_WAYLAND" \
     "^.*bin/qq|NO_WAYLAND" \
     "^.*[Tt]hunar|GDK_DPI"
 

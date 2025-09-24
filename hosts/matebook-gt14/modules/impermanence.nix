@@ -150,6 +150,7 @@ in {
         ".m2" # maven
         ".gradle" # gradle
         ".pyenv"
+        ".eclipse"
 
         # misc
         ".pki"
