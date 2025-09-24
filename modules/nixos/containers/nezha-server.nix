@@ -3,16 +3,18 @@
   config,
   lib,
   ...
-}: let
+}:
+let
   inherit (config.networking) hostName;
   name = "nezha-server";
   et-ip = myvars.networking.hostsAddr.easytier."${hostName}".ipv4;
   cfg = config.mymodules.server.${name};
   container = myvars.containers.${name};
   image = "${container.image}@${container.digest}";
-in {
+in
+{
   config = lib.mkIf cfg.enable {
-    networking.firewall.allowedTCPPorts = [8008];
+    networking.firewall.allowedTCPPorts = [ 8008 ];
     virtualisation.oci-containers.containers.${name} = {
       inherit image;
       volumes = [

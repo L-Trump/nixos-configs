@@ -5,9 +5,11 @@
   lib,
   ...
 }:
-with lib; let
+with lib;
+let
   rawcfg = myhome;
-in {
+in
+{
   home = {
     inherit (myvars) username;
     homeDirectory = "/home/${myvars.username}";
@@ -17,13 +19,12 @@ in {
 
   programs.home-manager.enable = true;
 
-  imports =
-    [
-      ./options.nix
-      ./core
-    ]
-    ++ optional rawcfg.tuiExtra.enable ./tui
-    ++ optional rawcfg.desktop.enable ./gui;
+  imports = [
+    ./options.nix
+    ./core
+  ]
+  ++ optional rawcfg.tuiExtra.enable ./tui
+  ++ optional rawcfg.desktop.enable ./gui;
 
   myhome = rawcfg;
 }

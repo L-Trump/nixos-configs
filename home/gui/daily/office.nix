@@ -2,7 +2,8 @@
   pkgs,
   pkgs-stable,
   ...
-}: {
+}:
+{
   home.packages = with pkgs; [
     # e-book viewer(.epub/.mobi/...)
     # do not support .pdf

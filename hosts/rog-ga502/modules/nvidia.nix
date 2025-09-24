@@ -4,9 +4,10 @@
   pkgs,
   lib,
   ...
-}: let
+}:
+let
   steam-offload = lib.hiPrio (
-    pkgs.runCommand "steam-override" {nativeBuildInputs = [pkgs.makeWrapper];} ''
+    pkgs.runCommand "steam-override" { nativeBuildInputs = [ pkgs.makeWrapper ]; } ''
       mkdir -p $out/bin
       makeWrapper ${config.programs.steam.package}/bin/steam $out/bin/steam \
         --set __NV_PRIME_RENDER_OFFLOAD 1 \
@@ -24,24 +25,23 @@
     settingsSha256 = "sha256-o2zUnYFUQjHOcCrB0w/4L6xI1hVUXLAWgG2Y26BowBE=";
     persistencedSha256 = "sha256-2g5z7Pu8u2EiAh5givP5Q1Y4zk4Cbb06W37rf768NFU=";
   };
-in {
+in
+{
   # ===============================================================================================
   # for Nvidia GPU
   # ===============================================================================================
 
   # https://wiki.hyprland.org/Nvidia/
-  environment.systemPackages =
-    (lib.optionals config.programs.steam.enable [steam-offload])
-    ++ [
-      pkgs.nvtopPackages.full
-    ];
+  environment.systemPackages = (lib.optionals config.programs.steam.enable [ steam-offload ]) ++ [
+    pkgs.nvtopPackages.full
+  ];
   boot.kernelParams = [
     "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
     # Since NVIDIA does not load kernel mode setting by default,
     # enabling it is required to make Wayland compositors function properly.
     "nvidia-drm.fbdev=1"
   ];
-  services.xserver.videoDrivers = ["nvidia"]; # will install nvidia-vaapi-driver by default
+  services.xserver.videoDrivers = [ "nvidia" ]; # will install nvidia-vaapi-driver by default
   hardware.nvidia = {
     open = true;
     # Optionally, you may need to select the appropriate driver version for your specific GPU.
@@ -66,7 +66,11 @@ in {
     enable = true;
     # needed by nvidia-docker
     enable32Bit = true;
-    extraPackages = with pkgs; [vaapiVdpau amdvlk ocl-icd];
+    extraPackages = with pkgs; [
+      vaapiVdpau
+      amdvlk
+      ocl-icd
+    ];
   };
 
   nixpkgs.config.cudaSupport = true;

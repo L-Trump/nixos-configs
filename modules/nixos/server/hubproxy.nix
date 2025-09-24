@@ -3,17 +3,25 @@
   pkgs,
   lib,
   ...
-}: let
+}:
+let
   cfg = config.mymodules.server.hubproxy;
   pkg = pkgs.hubproxy;
-in {
+in
+{
   config = lib.mkIf cfg.enable {
-    environment.systemPackages = [pkg];
+    environment.systemPackages = [ pkg ];
 
     systemd.services.hubproxy = {
       description = "Hubproxy Server";
-      wants = ["network-online.target" "nss-lookup.target"];
-      after = ["network-online.target" "nss-lookup.target"];
+      wants = [
+        "network-online.target"
+        "nss-lookup.target"
+      ];
+      after = [
+        "network-online.target"
+        "nss-lookup.target"
+      ];
       serviceConfig = {
         Type = "simple";
         ExecStart = "${pkg}/bin/hubproxy";
@@ -22,7 +30,7 @@ in {
         RuntimeDirectory = "hubproxy";
         WorkingDirectory = "/var/lib/hubproxy";
       };
-      wantedBy = ["multi-user.target"];
+      wantedBy = [ "multi-user.target" ];
     };
 
     # networking.firewall.allowedTCPPorts = [5244];

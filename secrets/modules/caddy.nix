@@ -3,12 +3,14 @@
   config,
   lib,
   ...
-}: let
+}:
+let
   inherit (inputs) mysecrets;
   inherit (config.networking) hostName;
   inherit (builtins) pathExists;
   hostConf = "${mysecrets}/caddy/caddyfile-${hostName}.age";
-in {
+in
+{
   age.secrets.caddyfile = lib.mkIf (pathExists hostConf) {
     file = hostConf;
     owner = "caddy";

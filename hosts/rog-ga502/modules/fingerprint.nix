@@ -1,5 +1,6 @@
 # See https://wiki.nixos.org/wiki/Fingerprint_scanner
-{pkgs, ...}: {
+{ pkgs, ... }:
+{
   environment.systemPackages = with pkgs; [
     bitwarden-desktop
   ];
@@ -7,7 +8,7 @@
     enable = true;
   };
   systemd.services.fprintd = {
-    wantedBy = ["multi-user.target"];
+    wantedBy = [ "multi-user.target" ];
     serviceConfig.Type = "simple";
   };
 

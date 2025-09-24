@@ -2,10 +2,12 @@
   inputs,
   myvars,
   ...
-}: let
+}:
+let
   inherit (inputs) impermanence agenix;
   inherit (myvars) username;
-in {
+in
+{
   imports = [
     impermanence.nixosModules.impermanence
     agenix.nixosModules.default
@@ -203,5 +205,5 @@ in {
 
   # Impermanence will copy permissions from source dir
   # Chown to <username>:users
-  systemd.tmpfiles.rules = ["d /nix/persistent/home/${username} 700 ${username} users"];
+  systemd.tmpfiles.rules = [ "d /nix/persistent/home/${username} 700 ${username} users" ];
 }

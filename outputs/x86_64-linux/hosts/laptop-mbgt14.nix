@@ -10,7 +10,8 @@
   system,
   genSpecialArgs,
   ...
-} @ args: let
+}@args:
+let
   # Huawei Matebook-GT14
   name = "matebook-gt14";
   dname = "matebook-gt14";
@@ -42,7 +43,8 @@
     ];
   };
   systemArgs = modules // args // myconfigs;
-in {
+in
+{
   nixosConfigurations = {
     # host with hyprland compositor
     "${name}" = mylib.nixosSystem systemArgs;

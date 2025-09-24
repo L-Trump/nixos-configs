@@ -3,10 +3,12 @@
   config,
   lib,
   ...
-}: let
+}:
+let
   cfg.cf.enable = builtins.hasAttr "cf-tunnel-conf" config.age.secrets;
-in {
-  environment.systemPackages = lib.mkIf cfg.cf.enable [pkgs.cloudflared];
+in
+{
+  environment.systemPackages = lib.mkIf cfg.cf.enable [ pkgs.cloudflared ];
   services.cloudflared = lib.mkIf cfg.cf.enable {
     enable = true;
     # user = "root";

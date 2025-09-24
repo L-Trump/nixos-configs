@@ -2,9 +2,11 @@
   myvars,
   lib,
   ...
-}: let
+}:
+let
   hostName = "microvm-umy";
-in {
+in
+{
   # networking.networkmanager.enable = true; # Easiest to use and most distros use this by default.
 
   boot.tmp.cleanOnBoot = true;

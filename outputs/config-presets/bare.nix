@@ -1,4 +1,5 @@
-{...}: {
+{ ... }:
+{
   mymodules = {
     virtualization = {
       enable = false;

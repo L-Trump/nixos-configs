@@ -1,4 +1,5 @@
 # Device specific home settings
-{lib, ...}: {
+{ lib, ... }:
+{
   services.hypridle.enable = lib.mkForce false;
 }

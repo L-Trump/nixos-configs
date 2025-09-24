@@ -14,10 +14,12 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://github.com/sky22333/hubproxy/releases/download/v${version}/hubproxy-v${version}-linux-${arch}.tar.gz";
-    sha256 = {
-      x86_64-linux = "sha256-haYf1dr30FANIEf18tCZoBAiKsTvQ2pMGTs2ZRW5dhM=";
-      aarch64-linux = "sha256-lciY5mLAp7OPqvfCQTeK6VF+ZXycjFCmR3+2WjwGT40=";
-    }.${stdenv.hostPlatform.system} or (throw "unsupported system ${stdenv.hostPlatform.system}");
+    sha256 =
+      {
+        x86_64-linux = "sha256-haYf1dr30FANIEf18tCZoBAiKsTvQ2pMGTs2ZRW5dhM=";
+        aarch64-linux = "sha256-lciY5mLAp7OPqvfCQTeK6VF+ZXycjFCmR3+2WjwGT40=";
+      }
+      .${stdenv.hostPlatform.system} or (throw "unsupported system ${stdenv.hostPlatform.system}");
   };
 
   nativeBuildInputs = [

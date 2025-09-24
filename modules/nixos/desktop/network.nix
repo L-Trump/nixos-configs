@@ -1,4 +1,5 @@
-{pkgs, ...}: {
+{ pkgs, ... }:
+{
   # Clash
   programs.clash-verge = {
     enable = true;

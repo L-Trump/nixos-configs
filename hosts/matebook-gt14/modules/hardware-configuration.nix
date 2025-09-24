@@ -7,16 +7,26 @@
   pkgs,
   modulesPath,
   ...
-}: {
+}:
+{
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
-  boot.initrd.availableKernelModules = ["xhci_pci" "ahci" "thunderbolt" "nvme" "usbhid" "usb_storage" "sd_mod" "sdhci_pci"];
-  boot.initrd.kernelModules = [];
-  boot.kernelModules = ["kvm-intel"];
+  boot.initrd.availableKernelModules = [
+    "xhci_pci"
+    "ahci"
+    "thunderbolt"
+    "nvme"
+    "usbhid"
+    "usb_storage"
+    "sd_mod"
+    "sdhci_pci"
+  ];
+  boot.initrd.kernelModules = [ ];
+  boot.kernelModules = [ "kvm-intel" ];
   boot.extraModprobeConfig = "options kvm_intel nested=1"; # for intel cpu
-  boot.extraModulePackages = with config.boot.kernelPackages; [usbip];
+  boot.extraModulePackages = with config.boot.kernelPackages; [ usbip ];
 
   # supported file systems, so we can mount any removable disks with these filesystems
   boot.supportedFilesystems = [
@@ -54,7 +64,11 @@
   fileSystems."/" = {
     device = "/dev/disk/by-label/nixos";
     fsType = "btrfs";
-    options = ["subvol=@root" "noatime" "compress=zstd"];
+    options = [
+      "subvol=@root"
+      "noatime"
+      "compress=zstd"
+    ];
   };
 
   # clean on boot
@@ -89,65 +103,93 @@
     fsType = "btrfs";
     # btrfs's top-level subvolume, internally has an id 5
     # we can access all other subvolumes from this subvolume.
-    options = ["subvolid=5"];
+    options = [ "subvolid=5" ];
   };
 
   fileSystems."/nix" = {
     device = "/dev/disk/by-label/nixos";
     fsType = "btrfs";
-    options = ["subvol=@nix" "noatime" "compress=zstd"];
+    options = [
+      "subvol=@nix"
+      "noatime"
+      "compress=zstd"
+    ];
   };
 
   fileSystems."/persistent" = {
     device = "/dev/disk/by-label/nixos";
     fsType = "btrfs";
-    options = ["subvol=@persistent" "noatime" "compress=zstd"];
+    options = [
+      "subvol=@persistent"
+      "noatime"
+      "compress=zstd"
+    ];
     neededForBoot = true;
   };
 
   fileSystems."/snapshots" = {
     device = "/dev/disk/by-label/nixos";
     fsType = "btrfs";
-    options = ["subvol=@snapshots" "noatime" "compress=zstd"];
+    options = [
+      "subvol=@snapshots"
+      "noatime"
+      "compress=zstd"
+    ];
   };
 
   fileSystems."/tmp" = {
     device = "/dev/disk/by-label/nixos";
     fsType = "btrfs";
-    options = ["subvol=@tmp" "compress=zstd"];
+    options = [
+      "subvol=@tmp"
+      "compress=zstd"
+    ];
   };
 
   # mount swap subvolume in readonly mode.
   fileSystems."/swap" = {
     device = "/dev/disk/by-label/nixos";
     fsType = "btrfs";
-    options = ["subvol=@swap" "ro"];
+    options = [
+      "subvol=@swap"
+      "ro"
+    ];
   };
 
   # remount swapfile in read-write mode
   fileSystems."/swap/swapfile" = {
     # the swapfile is located in /swap subvolume, so we need to mount /swap first.
-    depends = ["/swap"];
+    depends = [ "/swap" ];
 
     device = "/swap/swapfile";
     fsType = "none";
-    options = ["bind" "rw"];
+    options = [
+      "bind"
+      "rw"
+    ];
   };
 
   fileSystems."/boot" = {
     device = "/dev/disk/by-label/nixos";
     fsType = "btrfs";
-    options = ["subvol=@boot" "noatime" "compress=zstd"];
+    options = [
+      "subvol=@boot"
+      "noatime"
+      "compress=zstd"
+    ];
   };
 
   fileSystems."/boot/efi" = {
     device = "/dev/disk/by-uuid/9A77-5167";
     fsType = "vfat";
-    options = ["fmask=0022" "dmask=0022"];
+    options = [
+      "fmask=0022"
+      "dmask=0022"
+    ];
   };
 
   swapDevices = [
-    {device = "/swap/swapfile";}
+    { device = "/swap/swapfile"; }
   ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking

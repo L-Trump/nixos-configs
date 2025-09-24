@@ -13,10 +13,12 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://github.com/lejianwen/rustdesk-server/releases/download/v${version}/rustdesk-server-linux-${arch}.zip";
-    sha256 = {
-      x86_64-linux = "sha256-Kj1sCCI7Go+3ISEdY5gLxQHBpf1oCGK8jef3/5JYo0o=";
-      aarch64-linux = "sha256-jN+/fYjkHAwLIcGHY3C95C2VHofJmb2cGK6m+B+JBeU=";
-    }.${stdenv.hostPlatform.system} or (throw "unsupported system ${stdenv.hostPlatform.system}");
+    sha256 =
+      {
+        x86_64-linux = "sha256-Kj1sCCI7Go+3ISEdY5gLxQHBpf1oCGK8jef3/5JYo0o=";
+        aarch64-linux = "sha256-jN+/fYjkHAwLIcGHY3C95C2VHofJmb2cGK6m+B+JBeU=";
+      }
+      .${stdenv.hostPlatform.system} or (throw "unsupported system ${stdenv.hostPlatform.system}");
   };
 
   nativeBuildInputs = [ unzip ];

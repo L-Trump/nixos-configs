@@ -3,10 +3,12 @@
   pkgs,
   lib,
   ...
-}: {
+}:
+{
   nixpkgs.overlays = [
     (final: prev: {
-      mkScriptsPackage = name: src:
+      mkScriptsPackage =
+        name: src:
         prev.stdenvNoCC.mkDerivation {
           inherit name src;
           dontUnpack = true;
@@ -21,7 +23,8 @@
           '';
         };
 
-      mkFontPackage = name: src:
+      mkFontPackage =
+        name: src:
         pkgs.stdenvNoCC.mkDerivation {
           inherit name src;
           dontUnpack = true;

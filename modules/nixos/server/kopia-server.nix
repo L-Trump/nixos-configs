@@ -3,18 +3,28 @@
   pkgs,
   lib,
   ...
-}: let
+}:
+let
   cfg = config.mymodules.server.kopia-server;
   pkg = pkgs.kopia;
   address = "127.0.0.1:51515";
-in {
+in
+{
   config = lib.mkIf cfg.enable {
-    environment.systemPackages = [pkg];
+    environment.systemPackages = [ pkg ];
     systemd.services.kopia-server = {
-      path = with pkgs; [pkg rclone config.programs.ssh.package "/run/wrappers"];
+      path = with pkgs; [
+        pkg
+        rclone
+        config.programs.ssh.package
+        "/run/wrappers"
+      ];
       description = "Kopia backup server";
-      wants = ["network-online.target"];
-      after = ["network-online.target" "multi-user.target"];
+      wants = [ "network-online.target" ];
+      after = [
+        "network-online.target"
+        "multi-user.target"
+      ];
       environment = {
         KOPIA_CONFIG_PATH = "/var/lib/kopia-server/config/repository.config";
         KOPIA_LOG_DIR = "/var/lib/kopia-server/logs";
@@ -34,7 +44,7 @@ in {
         Restart = "on-failure";
         RestartSec = 30;
       };
-      wantedBy = ["multi-user.target"];
+      wantedBy = [ "multi-user.target" ];
     };
   };
 }

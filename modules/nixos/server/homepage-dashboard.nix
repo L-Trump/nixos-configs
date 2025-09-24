@@ -3,10 +3,12 @@
   lib,
   inputs,
   ...
-}: let
+}:
+let
   cfg = config.mymodules.server.homepage-dashboard;
   cfgDir = "${inputs.mysecrets}/homepage-dashboard";
-in {
+in
+{
   services.homepage-dashboard = lib.mkIf cfg.enable {
     enable = true;
     listenPort = 8225;

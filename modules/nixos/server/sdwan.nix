@@ -4,7 +4,8 @@
   lib,
   inputs,
   ...
-}: let
+}:
+let
   inherit (lib) mkDefault;
   inherit (inputs) mysecrets;
   inherit (myvars.networking) hostsRecord;
@@ -14,18 +15,20 @@
   cfg.et-ltnet.hasConf = hasAttr "easytier-conf" config.age.secrets;
   cfg.et-ltnet.enableSetting = hasAttr "${hostName}" myvars.networking.hostsAddr.easytier;
   cfg.et-ltnet.envFiles =
-    []
+    [ ]
     ++ lib.optional (hasAttr "et-ltnet-env" config.age.secrets) config.age.secrets.et-ltnet-env.path
     ++ lib.optional (hasAttr "et-ltnet-env-host" config.age.secrets) config.age.secrets.et-ltnet-env-host.path;
   cfg.et = config.mymodules.server.easytier;
   commonConf =
-    if (pathExists "${mysecrets}/easytier/ltnet.nix")
-    then (import "${mysecrets}/easytier/ltnet.nix" {inherit lib;})
-    else {};
+    if (pathExists "${mysecrets}/easytier/ltnet.nix") then
+      (import "${mysecrets}/easytier/ltnet.nix" { inherit lib; })
+    else
+      { };
   hostConf =
-    if (pathExists "${mysecrets}/easytier/ltnet-${hostName}.nix")
-    then (import "${mysecrets}/easytier/ltnet-${hostName}.nix" {inherit lib;})
-    else {};
+    if (pathExists "${mysecrets}/easytier/ltnet-${hostName}.nix") then
+      (import "${mysecrets}/easytier/ltnet-${hostName}.nix" { inherit lib; })
+    else
+      { };
   ltnetSettings = lib.mkMerge [
     {
       environmentFiles = cfg.et-ltnet.envFiles;
@@ -42,7 +45,7 @@
         ];
       };
       extraSettings = {
-        exit_nodes = [];
+        exit_nodes = [ ];
         rpc_portal = mkDefault "127.0.0.1:15888";
         flags = {
           default_protocol = mkDefault "tcp";
@@ -70,7 +73,8 @@
     commonConf
     hostConf
   ];
-in {
+in
+{
   services.tailscale = {
     enable = true;
     openFirewall = true;
@@ -84,16 +88,14 @@ in {
       (lib.mkIf (cfg.et-ltnet.hasConf) {
         configFile = config.age.secrets.easytier-conf.path;
       })
-      (lib.mkIf (!cfg.et-ltnet.hasConf
-        && cfg.et-ltnet.enableSetting)
-      ltnetSettings)
+      (lib.mkIf (!cfg.et-ltnet.hasConf && cfg.et-ltnet.enableSetting) ltnetSettings)
     ];
   };
 
   networking = lib.mkIf (cfg.et.enable && cfg.et-ltnet.enable) {
     hosts = lib.mkIf cfg.et-ltnet.enable hostsRecord;
     firewall = {
-      trustedInterfaces = ["easytier.ltnet"];
+      trustedInterfaces = [ "easytier.ltnet" ];
       allowedTCPPortRanges = [
         {
           from = 11010;

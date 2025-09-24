@@ -3,10 +3,12 @@
   config,
   inputs,
   ...
-}: let
+}:
+let
   inherit (inputs) mysecrets;
   cfg = config.myhome.tuiExtra.mail;
-in {
+in
+{
   config = lib.mkIf cfg.enable {
     age.secrets.aerc-accounts = {
       file = "${mysecrets}/mail/aerc-accounts.conf.age";

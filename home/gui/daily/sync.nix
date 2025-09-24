@@ -3,7 +3,8 @@
   pkgs,
   lib,
   ...
-}: {
+}:
+{
   home.packages = with pkgs; [
     onedriver
     bitwarden-desktop
@@ -32,8 +33,11 @@
   systemd.user.services."clouddrive2" = {
     Unit = {
       Description = "CloudDrive";
-      Wants = ["network-online.target"];
-      After = ["network-online.target" "network.target"];
+      Wants = [ "network-online.target" ];
+      After = [
+        "network-online.target"
+        "network.target"
+      ];
     };
     Service = {
       Type = "exec";
@@ -42,6 +46,6 @@
       ];
       ExecStart = "${pkgs.clouddrive2}/bin/clouddrive";
     };
-    Install.WantedBy = ["default.target"];
+    Install.WantedBy = [ "default.target" ];
   };
 }

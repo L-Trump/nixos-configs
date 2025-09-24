@@ -5,7 +5,8 @@
   lib,
   myvars,
   ...
-}: let
+}:
+let
   inherit (inputs) mysecrets;
   inherit (config.networking) hostName;
   inherit (builtins) pathExists;
@@ -13,7 +14,8 @@
   commonEnv = "${mysecrets}/easytier/ltnet-env.age";
   hostEnv = "${mysecrets}/easytier/ltnet-env-${hostName}.age";
   enableSetting = builtins.hasAttr "${hostName}" myvars.networking.hostsAddr.easytier;
-in {
+in
+{
   age.secrets.easytier-conf = lib.mkIf (pathExists hostConf) {
     file = hostConf;
     path = "/etc/easytier/ltnet.conf";

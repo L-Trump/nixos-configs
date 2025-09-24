@@ -4,55 +4,59 @@
   config,
   lib,
   ...
-}: let
+}:
+let
   inherit (lib) mkIf;
   inherit (builtins) elem;
   cfg = config.myhome.tuiExtra.lsp;
-in {
+in
+{
   config = mkIf cfg.enable {
-    home.packages = with pkgs; (
-      lib.optionals ((elem "all" cfg.lang) || (elem "nix" cfg.lang)) [
-        #-- nix
-        nil
-        # rnix-lsp
-        # nixd
-        statix # Lints and suggestions for the nix programming language
-        deadnix # Find and remove unused code in .nix source files
-        alejandra # Nix Code Formatter
-      ]
-      ++ lib.optionals ((elem "all" cfg.lang) || (elem "markdown" cfg.lang)) [
-        #-- markdown
-        marksman # language server for markdown
-        glow # markdown previewer
-      ]
-      ++ lib.optionals ((elem "all" cfg.lang) || (elem "rust" cfg.lang)) [
-        #-- rust
-        rust-analyzer
-        cargo # rust package manager
-        rustfmt
-      ]
-      ++ lib.optionals ((elem "all" cfg.lang) || (elem "bash" cfg.lang)) [
-        #-- bash
-        nodePackages.bash-language-server
-        shellcheck
-        shfmt
-      ]
-      ++ lib.optionals ((elem "all" cfg.lang) || (elem "c" cfg.lang)) [
-        #-- c/c++
-        cmake
-        cmake-language-server
-        gnumake
-        checkmake
-        # c/c++ compiler, required by nvim-treesitter!
-        gcc
-        gdb
-        # c/c++ tools with clang-tools, the unwrapped version won't
-        # add alias like `cc` and `c++`, so that it won't conflict with gcc
-        # llvmPackages.clang-unwrapped
-        clang-tools
-        lldb
-      ]
-    );
+    home.packages =
+      with pkgs;
+      (
+        lib.optionals ((elem "all" cfg.lang) || (elem "nix" cfg.lang)) [
+          #-- nix
+          nil
+          # rnix-lsp
+          # nixd
+          statix # Lints and suggestions for the nix programming language
+          deadnix # Find and remove unused code in .nix source files
+          alejandra # Nix Code Formatter
+        ]
+        ++ lib.optionals ((elem "all" cfg.lang) || (elem "markdown" cfg.lang)) [
+          #-- markdown
+          marksman # language server for markdown
+          glow # markdown previewer
+        ]
+        ++ lib.optionals ((elem "all" cfg.lang) || (elem "rust" cfg.lang)) [
+          #-- rust
+          rust-analyzer
+          cargo # rust package manager
+          rustfmt
+        ]
+        ++ lib.optionals ((elem "all" cfg.lang) || (elem "bash" cfg.lang)) [
+          #-- bash
+          nodePackages.bash-language-server
+          shellcheck
+          shfmt
+        ]
+        ++ lib.optionals ((elem "all" cfg.lang) || (elem "c" cfg.lang)) [
+          #-- c/c++
+          cmake
+          cmake-language-server
+          gnumake
+          checkmake
+          # c/c++ compiler, required by nvim-treesitter!
+          gcc
+          gdb
+          # c/c++ tools with clang-tools, the unwrapped version won't
+          # add alias like `cc` and `c++`, so that it won't conflict with gcc
+          # llvmPackages.clang-unwrapped
+          clang-tools
+          lldb
+        ]
+      );
   };
 
   # home.packages = with pkgs; (

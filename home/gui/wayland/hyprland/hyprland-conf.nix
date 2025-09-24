@@ -2,7 +2,8 @@
   pkgs,
   inputs,
   ...
-}: {
+}:
+{
   enable = true;
   # systemd.enable = false; # Conflict with UWSM
   systemd.variables = [

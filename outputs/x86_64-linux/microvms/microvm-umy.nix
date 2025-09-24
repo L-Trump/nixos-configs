@@ -10,15 +10,20 @@
   system,
   genSpecialArgs,
   ...
-} @ args: let
+}@args:
+let
   name = "microvm-umy";
-  tags = [name];
+  tags = [ name ];
   ssh-user = "root";
 
-  preset = lib.recursiveUpdate mypresets.daily {mymodules.virtualization.microvm.guest.enable = true;};
+  preset = lib.recursiveUpdate mypresets.daily {
+    mymodules.virtualization.microvm.guest.enable = true;
+  };
   myconfigs.mymodules = preset.mymodules;
   myconfigs.myhome = preset.myhome;
-  infra-configs.mymodules = lib.recursiveUpdate preset.mymodules {virtualization.microvm.guest.isInfra = true;};
+  infra-configs.mymodules = lib.recursiveUpdate preset.mymodules {
+    virtualization.microvm.guest.isInfra = true;
+  };
   infra-configs.myhome = preset.myhome;
   modules = {
     nixos-modules = map mylib.relativeToRoot [
@@ -40,7 +45,8 @@
 
   systemArgs = modules // args // myconfigs;
   infraArgs = infra-modules // args // infra-configs;
-in {
+in
+{
   nixosConfigurations."${name}" = mylib.nixosSystem systemArgs;
 
   microvm-infras."${name}" = mylib.microvmInfra infraArgs;
@@ -49,14 +55,13 @@ in {
     "${name}" = inputs.self.nixosConfigurations."${name}".config.microvm.declaredRunner;
   };
 
-  colmena."${name}" =
-    mylib.colmenaSystem (systemArgs // {inherit tags ssh-user;});
+  colmena."${name}" = mylib.colmenaSystem (systemArgs // { inherit tags ssh-user; });
 
   colmenaMeta = {
     nodeNixpkgs."${name}" = import inputs.nixpkgs {
       inherit system;
       config = myvars.nixpkgs-config;
     };
-    nodeSpecialArgs."${name}" = {inherit (myconfigs) mymodules myhome;};
+    nodeSpecialArgs."${name}" = { inherit (myconfigs) mymodules myhome; };
   };
 }

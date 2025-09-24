@@ -10,9 +10,15 @@
   system,
   genSpecialArgs,
   ...
-} @ args: let
+}@args:
+let
   name = "aliyun-vm-hk";
-  tags = [name "vm-hk" "all" "vps"];
+  tags = [
+    name
+    "vm-hk"
+    "all"
+    "vps"
+  ];
   ssh-user = "root";
 
   preset = mypresets.server;
@@ -39,17 +45,17 @@
   };
 
   systemArgs = modules // args // myconfigs;
-in {
+in
+{
   nixosConfigurations."${name}" = mylib.nixosSystem systemArgs;
 
-  colmena."${name}" =
-    mylib.colmenaSystem (systemArgs // {inherit tags ssh-user;});
+  colmena."${name}" = mylib.colmenaSystem (systemArgs // { inherit tags ssh-user; });
 
   colmenaMeta = {
     nodeNixpkgs."${name}" = import inputs.nixpkgs {
       inherit system;
       config = myvars.nixpkgs-config;
     };
-    nodeSpecialArgs."${name}" = {inherit (myconfigs) myhome mymodules;};
+    nodeSpecialArgs."${name}" = { inherit (myconfigs) myhome mymodules; };
   };
 }

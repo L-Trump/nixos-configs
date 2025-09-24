@@ -5,11 +5,13 @@
   myhome,
   ...
 }:
-with lib; let
+with lib;
+let
   i3-scripts = pkgs.mkScriptsPackage "my-i3-scripts" ./scripts;
   rawcfg = myhome.desktop.xorg;
   cfg = config.myhome.desktop.xorg;
-in {
+in
+{
   imports = optionals rawcfg.enable [
     ./picom.nix
     ./polybar

@@ -4,9 +4,11 @@
   options,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.mymodules;
-in {
+in
+{
   options.mymodules = {
     virtualization = {
       enable = mkOption {
@@ -20,11 +22,13 @@ in {
         host.enable = mkEnableOption "Enable MicroVM Host";
         host.infras = mkOption {
           type = types.listOf types.str;
-          default = [];
+          default = [ ];
           description = "VM Infrastructures on host";
         };
         guest.enable = mkEnableOption "Enable MicroVM Guest";
-        guest.isInfra = (mkEnableOption "Current build is infra or not") // {default = true;};
+        guest.isInfra = (mkEnableOption "Current build is infra or not") // {
+          default = true;
+        };
       };
     };
 

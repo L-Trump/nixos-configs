@@ -5,38 +5,38 @@
   config,
   lib,
   ...
-}: let
+}:
+let
   cfg = config.mymodules.desktop.xorg;
-in {
-  config =
-    {
-      services.xserver.enable = lib.mkDefault false;
-    }
-    // lib.mkIf cfg.enable
-    {
-      # Enable the X11 windowing system.
-      services.xserver.enable = true;
-      services.xserver = {
-        autorun = false;
+in
+{
+  config = {
+    services.xserver.enable = lib.mkDefault false;
+  }
+  // lib.mkIf cfg.enable {
+    # Enable the X11 windowing system.
+    services.xserver.enable = true;
+    services.xserver = {
+      autorun = false;
 
-        desktopManager.xterm.enable = false;
-        displayManager = {
-          startx.enable = true;
-          # defaultSession = "none+i3";
-        };
-
-        # Configure keymap in X11
-        xkb.layout = "us";
-        # xkb.options = "eurosign:e,caps:escape";
-
-        windowManager.i3.enable = true;
+      desktopManager.xterm.enable = false;
+      displayManager = {
+        startx.enable = true;
+        # defaultSession = "none+i3";
       };
 
-      systemd.user.targets.i3-session = {
-        description = "i3 session";
-        bindsTo = ["graphical-session.target"];
-        wants = ["graphical-session-pre.target"];
-        after = ["graphical-session-pre.target"];
-      };
+      # Configure keymap in X11
+      xkb.layout = "us";
+      # xkb.options = "eurosign:e,caps:escape";
+
+      windowManager.i3.enable = true;
     };
+
+    systemd.user.targets.i3-session = {
+      description = "i3 session";
+      bindsTo = [ "graphical-session.target" ];
+      wants = [ "graphical-session-pre.target" ];
+      after = [ "graphical-session-pre.target" ];
+    };
+  };
 }

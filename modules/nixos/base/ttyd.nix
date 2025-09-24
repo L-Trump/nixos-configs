@@ -2,7 +2,8 @@
   lib,
   myvars,
   ...
-}: {
+}:
+{
   services.ttyd = {
     enable = true;
     writeable = true;

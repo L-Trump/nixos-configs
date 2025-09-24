@@ -14,10 +14,12 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://github.com/sctg-development/sctgdesk-server/releases/download/${version}/linux_static_${version}_${arch}.zip";
-    sha256 = {
-      x86_64-linux = "sha256-P9Xd+whQLjNHGJVeAPpJaPeL7S0GvqTxzNBXVZhI6HI=";
-      aarch64-linux = "sha256-Hb25wI7iySQuLbs4pvv3zaCuEtpDsxjiZYHk2cQhaXc=";
-    }.${stdenv.hostPlatform.system} or (throw "unsupported system ${stdenv.hostPlatform.system}");
+    sha256 =
+      {
+        x86_64-linux = "sha256-P9Xd+whQLjNHGJVeAPpJaPeL7S0GvqTxzNBXVZhI6HI=";
+        aarch64-linux = "sha256-Hb25wI7iySQuLbs4pvv3zaCuEtpDsxjiZYHk2cQhaXc=";
+      }
+      .${stdenv.hostPlatform.system} or (throw "unsupported system ${stdenv.hostPlatform.system}");
   };
 
   nativeBuildInputs = [ unzip ];

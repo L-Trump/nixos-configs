@@ -14,12 +14,14 @@ stdenv.mkDerivation rec {
 
   src = fetchzip {
     url = "https://github.com/cloud-fs/cloud-fs.github.io/releases/download/v${version}/clouddrive-2-${os}-${arch}-${version}.tgz";
-    sha256 = {
-      x86_64-linux = "sha256-t6Jbbm/G1GjHCRQPbBVymr5q2nLLEOROpn0T6SvzMS4=";
-      aarch64-linux = "sha256-VxG5jGX5KXuIpxfBmlhukuZzfAM8O9a9e5BaIjIRJ8I=";
-      x86_64-darwin = "sha256-W5mTrgVWXKdjc0wZRdVNuw5+Pp0PUrGLXjmu3UQQbGw=";
-      aarch64-darwin = "sha256-aNxKTM/2TDVqMnZCFojWLgpKkzyZSP42SFIODpZuGsY=";
-    }.${stdenv.hostPlatform.system} or (throw "unsupported system ${stdenv.hostPlatform.system}");
+    sha256 =
+      {
+        x86_64-linux = "sha256-t6Jbbm/G1GjHCRQPbBVymr5q2nLLEOROpn0T6SvzMS4=";
+        aarch64-linux = "sha256-VxG5jGX5KXuIpxfBmlhukuZzfAM8O9a9e5BaIjIRJ8I=";
+        x86_64-darwin = "sha256-W5mTrgVWXKdjc0wZRdVNuw5+Pp0PUrGLXjmu3UQQbGw=";
+        aarch64-darwin = "sha256-aNxKTM/2TDVqMnZCFojWLgpKkzyZSP42SFIODpZuGsY=";
+      }
+      .${stdenv.hostPlatform.system} or (throw "unsupported system ${stdenv.hostPlatform.system}");
   };
 
   nativeBuildInputs = [ makeWrapper ];
@@ -49,8 +51,13 @@ stdenv.mkDerivation rec {
     '';
     mainProgram = "clouddrive";
     license = lib.licenses.unfree;
-    platforms = [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin"];
+    platforms = [
+      "x86_64-linux"
+      "aarch64-linux"
+      "x86_64-darwin"
+      "aarch64-darwin"
+    ];
     sourceProvenance = with lib.sourceTypes; [ binaryNativeCode ];
-    maintainers = with lib.maintainers; [ltrump];
+    maintainers = with lib.maintainers; [ ltrump ];
   };
 }

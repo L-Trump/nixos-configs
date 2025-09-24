@@ -2,14 +2,16 @@
   config,
   lib,
   ...
-}: let
+}:
+let
   cfg = config.mymodules.server.minio;
-in {
+in
+{
   services.minio = lib.mkIf cfg.enable {
     enable = true;
     browser = true; # Enable or disable access to web UI.
 
-    dataDir = ["/data/app/minio/data"];
+    dataDir = [ "/data/app/minio/data" ];
     configDir = "/data/app/minio/config";
     listenAddress = ":9096";
     consoleAddress = ":9097"; # Web UI

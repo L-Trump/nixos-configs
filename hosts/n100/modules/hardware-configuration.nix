@@ -7,15 +7,23 @@
   pkgs,
   modulesPath,
   ...
-}: {
+}:
+{
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
-  boot.initrd.availableKernelModules = ["xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" "sdhci_pci"];
-  boot.initrd.kernelModules = [];
-  boot.kernelModules = ["kvm-intel"];
-  boot.extraModulePackages = [];
+  boot.initrd.availableKernelModules = [
+    "xhci_pci"
+    "ahci"
+    "usbhid"
+    "usb_storage"
+    "sd_mod"
+    "sdhci_pci"
+  ];
+  boot.initrd.kernelModules = [ ];
+  boot.kernelModules = [ "kvm-intel" ];
+  boot.extraModulePackages = [ ];
 
   boot.supportedFilesystems = [
     "ext4"
@@ -46,43 +54,46 @@
     fsType = "btrfs";
     # btrfs's top-level subvolume, internally has an id 5
     # we can access all other subvolumes from this subvolume.
-    options = ["subvolid=5"];
+    options = [ "subvolid=5" ];
   };
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/12f13149-888b-4a28-8e27-a8af46860de6";
     fsType = "btrfs";
-    options = ["subvol=@root"];
+    options = [ "subvol=@root" ];
   };
 
   fileSystems."/nix" = {
     device = "/dev/disk/by-uuid/12f13149-888b-4a28-8e27-a8af46860de6";
     fsType = "btrfs";
-    options = ["subvol=@nix"];
+    options = [ "subvol=@nix" ];
   };
 
   fileSystems."/home" = {
     device = "/dev/disk/by-uuid/12f13149-888b-4a28-8e27-a8af46860de6";
     fsType = "btrfs";
-    options = ["subvol=@home"];
+    options = [ "subvol=@home" ];
   };
 
   fileSystems."/snapshots" = {
     device = "/dev/disk/by-uuid/12f13149-888b-4a28-8e27-a8af46860de6";
     fsType = "btrfs";
-    options = ["subvol=@snapshots"];
+    options = [ "subvol=@snapshots" ];
   };
 
   fileSystems."/swap" = {
     device = "/dev/disk/by-uuid/12f13149-888b-4a28-8e27-a8af46860de6";
     fsType = "btrfs";
-    options = ["subvol=@swap"];
+    options = [ "subvol=@swap" ];
   };
 
   fileSystems."/boot/efi" = {
     device = "/dev/disk/by-uuid/C53E-B753";
     fsType = "vfat";
-    options = ["fmask=0022" "dmask=0022"];
+    options = [
+      "fmask=0022"
+      "dmask=0022"
+    ];
   };
 
   swapDevices = [

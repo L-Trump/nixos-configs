@@ -5,15 +5,15 @@
   mylib,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.myhome.desktop.niri;
-in {
+in
+{
   config = mkIf cfg.enable {
     myhome.desktop.niri.settings = import ./niri-conf.nix;
 
-    xdg.configFile."niri/config.kdl".source = pkgs.writeText "config.kdl" (
-      mylib.toKDL cfg.settings
-    );
+    xdg.configFile."niri/config.kdl".source = pkgs.writeText "config.kdl" (mylib.toKDL cfg.settings);
 
     xdg.configFile."uwsm/env-niri".text = ''
       export XDG_CURRENT_DESKTOP="niri";

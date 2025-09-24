@@ -29,7 +29,7 @@ stdenv.mkDerivation {
 
   strictDeps = true;
 
-  depsBuildBuild = [pkg-config];
+  depsBuildBuild = [ pkg-config ];
 
   nativeBuildInputs = [
     meson
@@ -82,7 +82,7 @@ stdenv.mkDerivation {
   meta = {
     homepage = "https://github.com/GermainZ/xdg-desktop-portal-termfilechooser";
     description = "Xdg-desktop-portal backend for wlroots and the likes of ranger";
-    maintainers = with lib.maintainers; [soispha];
+    maintainers = with lib.maintainers; [ soispha ];
     platforms = lib.platforms.linux;
     license = lib.licenses.mit;
   };

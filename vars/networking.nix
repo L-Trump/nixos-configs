@@ -1,9 +1,11 @@
-{lib}: let
+{ lib }:
+let
   sshDefault = {
     port = 22;
     user = "ltrump";
   };
-in rec {
+in
+rec {
   nameservers = [
     "223.5.5.5" # alidns
     "119.29.29.29" # dnspod
@@ -23,15 +25,33 @@ in rec {
     tencent-vm-jp.ipv4 = "10.144.144.253";
     aliyun-vm-sh = {
       ipv4 = "10.144.144.251";
-      domainPrefix = ["kopia" "backrest" "backup" "alist" "olist"];
+      domainPrefix = [
+        "kopia"
+        "backrest"
+        "backup"
+        "alist"
+        "olist"
+      ];
     };
     aliyun-vm-hk = {
       ipv4 = "10.144.144.245";
-      domainPrefix = ["backrest" "backup" "alist" "olist"];
+      domainPrefix = [
+        "backrest"
+        "backup"
+        "alist"
+        "olist"
+      ];
     };
     chick-vm-cd = {
       ipv4 = "10.144.144.249";
-      domainPrefix = ["s3" "backrest" "kopia" "backup" "alist" "olist"];
+      domainPrefix = [
+        "s3"
+        "backrest"
+        "kopia"
+        "backup"
+        "alist"
+        "olist"
+      ];
     };
     qfynat.ipv4 = "10.144.144.252";
     dorm-router.ipv4 = "10.144.144.198";
@@ -83,20 +103,16 @@ in rec {
     };
   };
 
-  hostsRecord =
-    lib.attrsets.foldlAttrs
-    (acc: host: val: let
-      prefix =
-        if builtins.hasAttr "domainPrefix" val
-        then val.domainPrefix
-        else [];
+  hostsRecord = lib.attrsets.foldlAttrs (
+    acc: host: val:
+    let
+      prefix = if builtins.hasAttr "domainPrefix" val then val.domainPrefix else [ ];
     in
-      acc
-      // {
-        "${val.ipv4}" = ["${host}.ltnet"] ++ (builtins.map (f: f + ".${host}.ltnet") prefix);
-      })
-    {}
-    hostsAddr.easytier;
+    acc
+    // {
+      "${val.ipv4}" = [ "${host}.ltnet" ] ++ (builtins.map (f: f + ".${host}.ltnet") prefix);
+    }
+  ) { } hostsAddr.easytier;
 
   ssh = {
     # define the host alias for remote builders
@@ -111,29 +127,22 @@ in rec {
     #     Port 22
     #   ...
     # '';
-    extraConfig =
-      lib.attrsets.foldlAttrs
-      (acc: host: val: let
-        ssh =
-          sshDefault
-          // (
-            if builtins.hasAttr "ssh" val
-            then val.ssh
-            else {}
-          );
+    extraConfig = lib.attrsets.foldlAttrs (
+      acc: host: val:
+      let
+        ssh = sshDefault // (if builtins.hasAttr "ssh" val then val.ssh else { });
       in
-        acc
-        + ''
-          Host ${host}
-            HostName ${val.ipv4}
-            Port ${toString ssh.port}
-            User ${ssh.user}
-          Host ${host}.ltnet
-            HostName ${val.ipv4}
-            Port ${toString ssh.port}
-            User ${ssh.user}
-        '')
-      ""
-      hostsAddr.easytier;
+      acc
+      + ''
+        Host ${host}
+          HostName ${val.ipv4}
+          Port ${toString ssh.port}
+          User ${ssh.user}
+        Host ${host}.ltnet
+          HostName ${val.ipv4}
+          Port ${toString ssh.port}
+          User ${ssh.user}
+      ''
+    ) "" hostsAddr.easytier;
   };
 }

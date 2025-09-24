@@ -3,17 +3,25 @@
   pkgs,
   lib,
   ...
-}: let
+}:
+let
   cfg = config.mymodules.server.openlist;
   pkg = pkgs.openlist;
-in {
+in
+{
   config = lib.mkIf cfg.enable {
-    environment.systemPackages = [pkg];
+    environment.systemPackages = [ pkg ];
 
     systemd.services.openlist = {
       description = "OpenList Driver";
-      wants = ["network-online.target" "nss-lookup.target"];
-      after = ["network-online.target" "nss-lookup.target"];
+      wants = [
+        "network-online.target"
+        "nss-lookup.target"
+      ];
+      after = [
+        "network-online.target"
+        "nss-lookup.target"
+      ];
       serviceConfig = {
         Type = "simple";
         ExecStart = "${pkg}/bin/OpenList server";
@@ -22,7 +30,7 @@ in {
         RuntimeDirectory = "openlist";
         WorkingDirectory = "/var/lib/openlist";
       };
-      wantedBy = ["multi-user.target"];
+      wantedBy = [ "multi-user.target" ];
     };
 
     # networking.firewall.allowedTCPPorts = [5244];

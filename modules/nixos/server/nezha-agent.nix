@@ -2,9 +2,11 @@
   config,
   lib,
   ...
-}: let
+}:
+let
   cfg = config.mymodules.server.nezha-agent;
-in {
+in
+{
   services.nezha-agent = lib.mkIf cfg.enable {
     enable = true;
     settings = {

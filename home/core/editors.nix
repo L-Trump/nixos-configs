@@ -2,7 +2,8 @@
   pkgs,
   lib,
   ...
-}: {
+}:
+{
   programs.helix = {
     enable = true;
     package = pkgs.helix;
@@ -28,7 +29,10 @@
           q = ":q";
           x = ":bc";
         };
-        esc = ["collapse_selection" "keep_primary_selection"];
+        esc = [
+          "collapse_selection"
+          "keep_primary_selection"
+        ];
       };
       # keys.insert = {
       #   j.k = "normal_mode";

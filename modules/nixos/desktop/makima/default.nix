@@ -2,8 +2,9 @@
   pkgs,
   myvars,
   ...
-}: {
-  environment.systemPackages = [pkgs.makima];
+}:
+{
+  environment.systemPackages = [ pkgs.makima ];
   environment.etc."makima".source = ./config;
   systemd.services."makima" = {
     description = "Makima remappinig daemon";
@@ -16,7 +17,7 @@
       "/etc/profiles/per-user/${myvars.username}/bin"
     ];
     restartIfChanged = true;
-    restartTriggers = ["/etc/makima"];
+    restartTriggers = [ "/etc/makima" ];
     environment = {
       MAKIMA_CONFIG = "/etc/makima";
     };
@@ -28,6 +29,6 @@
       User = myvars.username;
       Group = "input";
     };
-    wantedBy = ["default.target"];
+    wantedBy = [ "default.target" ];
   };
 }

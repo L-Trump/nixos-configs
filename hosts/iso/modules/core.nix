@@ -7,7 +7,8 @@
   pkgs,
   inputs,
   ...
-}: {
+}:
+{
   # Use the systemd-boot EFI boot loader.
   networking.hostName = "iso"; # Define your hostname.
   # Pick only one of the below networking options.

@@ -4,9 +4,11 @@
   config,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.mymodules.virtualization;
-in {
+in
+{
   config = mkIf (cfg.enable) {
     ###################################################################################
     #
@@ -25,7 +27,7 @@ in {
     # boot.kernelModules = ["kvm-intel"];
     # boot.extraModprobeConfig = "options kvm_intel nested=1"; # for intel cpu
 
-    boot.kernelModules = ["vfio-pci"];
+    boot.kernelModules = [ "vfio-pci" ];
 
     virtualisation = mkIf (cfg.docker.enable) {
       docker = {
@@ -34,7 +36,9 @@ in {
         daemon.settings = {
           # enables pulling using containerd, which supports restarting from a partial pull
           # https://docs.docker.com/storage/containerd/
-          "features" = {"containerd-snapshotter" = true;};
+          "features" = {
+            "containerd-snapshotter" = true;
+          };
         };
 
         # start dockerd on boot.
@@ -55,7 +59,8 @@ in {
       # lxd.enable = true;
     };
 
-    environment.systemPackages = with pkgs;
+    environment.systemPackages =
+      with pkgs;
       lib.optionals cfg.qemu.enable [
         # This script is used to install the arm translation layer for waydroid
         # so that we can install arm apks on x86_64 waydroid

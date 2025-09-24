@@ -10,7 +10,8 @@
   system,
   genSpecialArgs,
   ...
-} @ args: let
+}@args:
+let
   name = "iso";
   dname = "iso";
   preset = mypresets.bare;
@@ -44,7 +45,8 @@
       "secrets/home"
     ];
   };
-in {
+in
+{
   nixosConfigurations = {
     # host with hyprland compositor
     "${name}" = mylib.nixosSystem (base-modules // args // myconfigs);

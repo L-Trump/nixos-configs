@@ -4,7 +4,8 @@
   pkgs,
   lib,
   ...
-}: {
+}:
+{
   wayland.windowManager.hyprland.settings = {
     monitor = lib.mkBefore [
       "eDP-1,preferred,0x0,1.333333"

@@ -7,16 +7,30 @@
   pkgs,
   modulesPath,
   ...
-}: {
+}:
+{
   imports = [
     (modulesPath + "/profiles/qemu-guest.nix")
   ];
 
-  boot.initrd.availableKernelModules = ["ahci" "ata_piix" "uhci_hcd" "sr_mod" "virtio_pci" "virtio_blk" "virtio_scsi" "xen_blkfront" "vmw_pvscsi"];
-  boot.initrd.kernelModules = [];
-  boot.kernelModules = ["kvm-intel"];
-  boot.extraModulePackages = [];
-  boot.kernelParams = ["console=ttyS0,115200n8" "console=tty0"];
+  boot.initrd.availableKernelModules = [
+    "ahci"
+    "ata_piix"
+    "uhci_hcd"
+    "sr_mod"
+    "virtio_pci"
+    "virtio_blk"
+    "virtio_scsi"
+    "xen_blkfront"
+    "vmw_pvscsi"
+  ];
+  boot.initrd.kernelModules = [ ];
+  boot.kernelModules = [ "kvm-intel" ];
+  boot.extraModulePackages = [ ];
+  boot.kernelParams = [
+    "console=ttyS0,115200n8"
+    "console=tty0"
+  ];
 
   boot.supportedFilesystems = [
     "ext4"
@@ -31,7 +45,7 @@
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/b83714c4-b346-44cf-b3be-867ce8f78c15";
     fsType = "btrfs";
-    options = ["subvol=@root"];
+    options = [ "subvol=@root" ];
   };
 
   fileSystems."/btrfs-root" = {
@@ -42,34 +56,34 @@
   fileSystems."/nix" = {
     device = "/dev/disk/by-uuid/b83714c4-b346-44cf-b3be-867ce8f78c15";
     fsType = "btrfs";
-    options = ["subvol=@nix"];
+    options = [ "subvol=@nix" ];
   };
 
   fileSystems."/snapshots" = {
     device = "/dev/disk/by-uuid/b83714c4-b346-44cf-b3be-867ce8f78c15";
     fsType = "btrfs";
-    options = ["subvol=@snapshots"];
+    options = [ "subvol=@snapshots" ];
   };
 
   fileSystems."/tmp" = {
     device = "/dev/disk/by-uuid/b83714c4-b346-44cf-b3be-867ce8f78c15";
     fsType = "btrfs";
-    options = ["subvol=@tmp"];
+    options = [ "subvol=@tmp" ];
   };
 
   fileSystems."/swap" = {
     device = "/dev/disk/by-uuid/b83714c4-b346-44cf-b3be-867ce8f78c15";
     fsType = "btrfs";
-    options = ["subvol=@swap"];
+    options = [ "subvol=@swap" ];
   };
 
   fileSystems."/boot" = {
     device = "/dev/disk/by-uuid/b83714c4-b346-44cf-b3be-867ce8f78c15";
     fsType = "btrfs";
-    options = ["subvol=@boot"];
+    options = [ "subvol=@boot" ];
   };
 
-  swapDevices = [{device = "/swap/swapfile";}];
+  swapDevices = [ { device = "/swap/swapfile"; } ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's

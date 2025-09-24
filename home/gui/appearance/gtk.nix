@@ -3,7 +3,8 @@
   pkgs,
   lib,
   ...
-}: {
+}:
+{
   # Themes
   home.packages = with pkgs; [
     gtk3

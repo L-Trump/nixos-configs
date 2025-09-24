@@ -3,10 +3,12 @@
   config,
   lib,
   ...
-}: let
+}:
+let
   inherit (inputs) mysecrets;
   cfg = config.mymodules.server.kopia-server;
-in {
+in
+{
   age.secrets.kopia-env = lib.mkIf cfg.enable {
     file = "${mysecrets}/kopia/kopia.env.age";
   };

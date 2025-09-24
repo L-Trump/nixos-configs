@@ -3,19 +3,33 @@
   pkgs,
   lib,
   ...
-}: let
+}:
+let
   cfg = config.mymodules.server.backrest;
   pkg = pkgs.backrest;
   pkg-restic = pkgs.restic;
   address = "127.0.0.1:9898";
-in {
+in
+{
   config = lib.mkIf cfg.enable {
-    environment.systemPackages = [pkg pkg-restic];
+    environment.systemPackages = [
+      pkg
+      pkg-restic
+    ];
     systemd.services.backrest = {
-      path = with pkgs; [pkg pkg-restic rclone config.programs.ssh.package "/run/wrappers"];
+      path = with pkgs; [
+        pkg
+        pkg-restic
+        rclone
+        config.programs.ssh.package
+        "/run/wrappers"
+      ];
       description = "Backrest (restic) backup server";
-      wants = ["network-online.target"];
-      after = ["network-online.target" "multi-user.target"];
+      wants = [ "network-online.target" ];
+      after = [
+        "network-online.target"
+        "multi-user.target"
+      ];
       environment = {
         BACKREST_PORT = address;
         BACKREST_CONFIG = "/var/lib/backrest/config/config.json";
@@ -33,7 +47,7 @@ in {
         Restart = "on-failure";
         RestartSec = 30;
       };
-      wantedBy = ["multi-user.target"];
+      wantedBy = [ "multi-user.target" ];
     };
   };
 }

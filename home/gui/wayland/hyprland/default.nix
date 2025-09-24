@@ -5,11 +5,13 @@
   pkgs,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.myhome.desktop.hyprland;
-in {
+in
+{
   config = mkIf cfg.enable {
-    wayland.windowManager.hyprland = import ./hyprland-conf.nix {inherit pkgs inputs;};
+    wayland.windowManager.hyprland = import ./hyprland-conf.nix { inherit pkgs inputs; };
 
     # programs.fish = {
     #   interactiveShellInit = ''

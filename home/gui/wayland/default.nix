@@ -5,22 +5,23 @@
   mylib,
   myhome,
   ...
-}: let
-  wallpaper_umy = builtins.path {path = ../../../wallpapers/Meumy/91689568_p1.jpg;};
-  wallpaper_merry = builtins.path {path = ../../../wallpapers/Meumy/91689568_p6.jpg;};
+}:
+let
+  wallpaper_umy = builtins.path { path = ../../../wallpapers/Meumy/91689568_p1.jpg; };
+  wallpaper_merry = builtins.path { path = ../../../wallpapers/Meumy/91689568_p6.jpg; };
   cfg.niri = myhome.desktop.niri;
   cfg.hyprland = myhome.desktop.hyprland;
   cfg.enable = cfg.niri.enable || cfg.hyprland.enable;
-in {
-  imports =
-    [
-      ./niri
-      ./hyprland
-    ]
-    ++ lib.optionals cfg.enable [
-      ./waybar
-      ./swaylock.nix
-    ];
+in
+{
+  imports = [
+    ./niri
+    ./hyprland
+  ]
+  ++ lib.optionals cfg.enable [
+    ./waybar
+    ./swaylock.nix
+  ];
 
   config = lib.mkIf cfg.enable {
     home.pointerCursor.x11.enable = true;

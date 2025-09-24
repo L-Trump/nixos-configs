@@ -2,11 +2,13 @@
   pkgs,
   myvars,
   ...
-}: let
+}:
+let
   hostName = "microvm-umy";
   inherit (myvars) networking;
   inherit (networking.hostsAddr.physical.${hostName}) iface ipv4 gateway;
-in {
+in
+{
   networking.useDHCP = false;
   systemd.network = {
     enable = true;
@@ -15,9 +17,9 @@ in {
       timeout = 30;
     };
     networks."20-lan" = {
-      matchConfig.Name = [iface];
+      matchConfig.Name = [ iface ];
       networkConfig = {
-        Address = [ipv4];
+        Address = [ ipv4 ];
         Gateway = gateway;
         DNS = networking.nameservers;
         IPv6AcceptRA = true;

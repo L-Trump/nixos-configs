@@ -4,15 +4,17 @@
   lib,
   inputs,
   ...
-}: let
+}:
+let
   name = "rustdesk-api";
   cfg = config.mymodules.server.${name};
   container = myvars.containers.${name};
   image = "${container.image}@${container.digest}";
   envfile = "${inputs.mysecrets}/rustdesk-server/api.env";
-in {
+in
+{
   config = lib.mkIf cfg.enable {
-    networking.firewall.allowedTCPPorts = [8008];
+    networking.firewall.allowedTCPPorts = [ 8008 ];
     virtualisation.oci-containers.containers.${name} = {
       inherit image;
       environmentFiles = [

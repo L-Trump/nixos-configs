@@ -2,9 +2,11 @@
   config,
   lib,
   ...
-}: let
+}:
+let
   cfg = config.mymodules.server.vaultwarden;
-in {
+in
+{
   services.vaultwarden = lib.mkIf cfg.enable {
     enable = true;
     dbBackend = "sqlite";

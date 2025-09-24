@@ -3,8 +3,10 @@
   pkgs,
   lib,
   ...
-}: let
-  mkIconPackage = name: src:
+}:
+let
+  mkIconPackage =
+    name: src:
     pkgs.stdenvNoCC.mkDerivation {
       inherit name src;
       dontUnpack = true;
@@ -15,7 +17,8 @@
       '';
     };
   meumy-merry-cursors = mkIconPackage "meumy-merry-cursors" ./merry_cursors;
-in {
+in
+{
   home.pointerCursor = {
     name = "meumy-merry-cursors";
     size = 16;

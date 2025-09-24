@@ -2,10 +2,12 @@
   myvars,
   lib,
   ...
-}: let
+}:
+let
   hostName = "tencent-vm-jp";
   inherit (myvars) networking;
-in {
+in
+{
   # networking.networkmanager.enable = true; # Easiest to use and most distros use this by default.
 
   boot.tmp.cleanOnBoot = true;

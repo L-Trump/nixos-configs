@@ -3,7 +3,8 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   meumy-grub-theme = pkgs.stdenvNoCC.mkDerivation {
     name = "meumy-grub-theme";
     src = ./meumy-grub-theme;
@@ -21,7 +22,8 @@
     osName = "NixOS";
     osVersion = config.system.nixos.release;
   };
-in {
+in
+{
   config = lib.mkIf (cfg.enable) {
     boot = {
       plymouth = {

@@ -2,10 +2,12 @@
   inputs,
   pkgs,
   ...
-}: let
+}:
+let
   inherit (inputs) myfonts;
   win-fonts = pkgs.mkFontPackage "win-fonts" "${myfonts}/winfonts";
-in {
+in
+{
   home.packages = [
     win-fonts
   ];

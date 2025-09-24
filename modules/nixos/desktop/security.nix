@@ -3,14 +3,15 @@
   myvars,
   pkgs,
   ...
-}: {
+}:
+{
   # security with polkit
   security.polkit.enable = true;
   # security with gnome-kering
   services.gnome.gnome-keyring.enable = true;
   services.gnome.gcr-ssh-agent.enable = false;
 
-  environment.systemPackages = with pkgs; [lxqt.lxqt-policykit];
+  environment.systemPackages = with pkgs; [ lxqt.lxqt-policykit ];
 
   # gpg agent with pinentry
   programs.gnupg.agent = {

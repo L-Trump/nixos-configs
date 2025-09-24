@@ -3,10 +3,10 @@
   lib,
   myhome,
   ...
-}: let
+}:
+let
   rawcfg = myhome.desktop.daily;
-in {
-  imports =
-    lib.optionals rawcfg.enable
-    (mylib.scanPaths ./.);
+in
+{
+  imports = lib.optionals rawcfg.enable (mylib.scanPaths ./.);
 }

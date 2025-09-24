@@ -3,27 +3,30 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   pkg-nnn-dbus = pkgs.stdenv.mkDerivation {
     name = "nnn-dbus";
     propagatedBuildInputs = with pkgs; [
       gobject-introspection
-      (python3.withPackages (pyPkgs:
-        with pyPkgs; [
+      (python3.withPackages (
+        pyPkgs: with pyPkgs; [
           pip
           pygobject3
           pycairo
           pydbus
-        ]))
+        ]
+      ))
     ];
-    nativeBuildInputs = with pkgs; [wrapGAppsHook];
+    nativeBuildInputs = with pkgs; [ wrapGAppsHook ];
     dontUnpack = true;
     installPhase = ''
       install -Dm755 ${./nnn-dbus} $out/bin/nnn-dbus
     '';
   };
   nnn-scripts = pkgs.mkScriptsPackage "nnn-scripts" ./scripts;
-in {
+in
+{
   home.packages = with pkgs; [
     pkg-nnn-dbus
     nnn-scripts
@@ -31,7 +34,7 @@ in {
 
   programs.nnn = {
     enable = true;
-    package = lib.mkForce (pkgs.nnn.override {withNerdIcons = true;});
+    package = lib.mkForce (pkgs.nnn.override { withNerdIcons = true; });
     bookmarks = {
       n = "~/nixos-configs";
       u = "~/Onedrive/上交";
@@ -67,8 +70,13 @@ in {
     comment = "Terminal file manager";
     exec = "${nnn-scripts}/bin/term-nnn %f";
     icon = "nnn";
-    mimeType = ["inode/directory"];
-    categories = ["System" "FileTools" "FileManager" "ConsoleOnly"];
+    mimeType = [ "inode/directory" ];
+    categories = [
+      "System"
+      "FileTools"
+      "FileManager"
+      "ConsoleOnly"
+    ];
     settings.Keywords = "File;Manager;Management;Explorer;Launcher";
   };
 }

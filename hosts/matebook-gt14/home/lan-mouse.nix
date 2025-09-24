@@ -3,7 +3,8 @@
   inputs,
   lib,
   ...
-}: {
+}:
+{
   imports = [
     inputs.lan-mouse.homeManagerModules.default
   ];
@@ -23,5 +24,5 @@
       };
     };
   };
-  systemd.user.services.lan-mouse.Install.WantedBy = lib.mkForce [];
+  systemd.user.services.lan-mouse.Install.WantedBy = lib.mkForce [ ];
 }

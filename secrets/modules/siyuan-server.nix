@@ -3,10 +3,12 @@
   config,
   lib,
   ...
-}: let
+}:
+let
   inherit (inputs) mysecrets;
   cfg = config.mymodules.server.siyuan-server;
-in {
+in
+{
   age.secrets.siyuan-server-env = lib.mkIf cfg.enable {
     file = "${mysecrets}/siyuan-server/siyuan.env.age";
   };

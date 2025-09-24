@@ -6,7 +6,8 @@
   lib,
   pkgs,
   ...
-}: {
+}:
+{
   systemd.services.touchscreen-workaround = {
     description = "Workaround for i2c-hid-based touchscreen";
     after = [
@@ -18,7 +19,7 @@
       Type = "oneshot";
       ExecStart = "${pkgs.bash}/bin/bash -c '${pkgs.kmod}/bin/modprobe -r i2c_hid_acpi; ${pkgs.kmod}/bin/modprobe i2c_hid_acpi'";
     };
-    wantedBy = ["multi-user.target"];
+    wantedBy = [ "multi-user.target" ];
   };
 
   hardware.opentabletdriver.enable = true;

@@ -1,42 +1,43 @@
 # From https://github.com/nix-community/nur-combined/blob/main/repos/novel2430/pkgs/wpsoffice-365/default.nix
 # Install Scripts from AUR
 #   - https://aur.archlinux.org/packages/wps-office-365
-{ lib
-, stdenv
-, makeWrapper
-, fetchFromGitHub
-, fetchurl
-, dpkg
-, autoPatchelfHook
-, alsa-lib
-, at-spi2-core
-, libtool
-, libxkbcommon
-, nspr
-, mesa
-, libtiff
-, udev
-, gtk3
-, qtbase
-, xorg
-, cups
-, pango
-, freetype
-, libjpeg
-, libpulseaudio
-, fcitx5-qt
-, libbsd
-, libusb1
-, libmysqlclient
-, fontconfig
-, glib
-, libuuid
-, libglvnd
-, cairo
-, gdk-pixbuf
-# For wpscloudsvr wrapper
-, pkg-config
-, libappindicator-gtk3
+{
+  lib,
+  stdenv,
+  makeWrapper,
+  fetchFromGitHub,
+  fetchurl,
+  dpkg,
+  autoPatchelfHook,
+  alsa-lib,
+  at-spi2-core,
+  libtool,
+  libxkbcommon,
+  nspr,
+  mesa,
+  libtiff,
+  udev,
+  gtk3,
+  qtbase,
+  xorg,
+  cups,
+  pango,
+  freetype,
+  libjpeg,
+  libpulseaudio,
+  fcitx5-qt,
+  libbsd,
+  libusb1,
+  libmysqlclient,
+  fontconfig,
+  glib,
+  libuuid,
+  libglvnd,
+  cairo,
+  gdk-pixbuf,
+  # For wpscloudsvr wrapper
+  pkg-config,
+  libappindicator-gtk3,
 }:
 let
   libs = [
@@ -112,7 +113,7 @@ stdenv.mkDerivation rec {
     makeWrapper
     pkg-config
   ];
-  
+
   preBuild = ''
     addAutoPatchelfSearchPath ${libmysqlclient}/lib/mariadb/
   '';

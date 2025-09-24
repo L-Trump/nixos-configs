@@ -7,16 +7,29 @@
   pkgs,
   modulesPath,
   ...
-}: {
+}:
+{
   imports = [
     (modulesPath + "/profiles/qemu-guest.nix")
   ];
 
-  boot.initrd.availableKernelModules = ["ahci" "ata_piix" "uhci_hcd" "sr_mod" "virtio_pci" "virtio_scsi" "xen_blkfront" "vmw_pvscsi"];
-  boot.initrd.kernelModules = [];
-  boot.kernelModules = ["kvm-intel"];
-  boot.extraModulePackages = [];
-  boot.kernelParams = ["console=ttyS0,115200n8" "console=tty0"];
+  boot.initrd.availableKernelModules = [
+    "ahci"
+    "ata_piix"
+    "uhci_hcd"
+    "sr_mod"
+    "virtio_pci"
+    "virtio_scsi"
+    "xen_blkfront"
+    "vmw_pvscsi"
+  ];
+  boot.initrd.kernelModules = [ ];
+  boot.kernelModules = [ "kvm-intel" ];
+  boot.extraModulePackages = [ ];
+  boot.kernelParams = [
+    "console=ttyS0,115200n8"
+    "console=tty0"
+  ];
   boot.loader.grub.enable = true;
   boot.loader.grub.device = "/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi0"; # or "nodev" for efi only
   boot.supportedFilesystems = [
@@ -32,7 +45,7 @@
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/b4bca98c-2d91-4c0f-b09f-f7af99dd4466";
     fsType = "btrfs";
-    options = ["subvol=@root"];
+    options = [ "subvol=@root" ];
   };
 
   fileSystems."/btrfs-root" = {
@@ -43,40 +56,40 @@
   fileSystems."/nix" = {
     device = "/dev/disk/by-uuid/b4bca98c-2d91-4c0f-b09f-f7af99dd4466";
     fsType = "btrfs";
-    options = ["subvol=@nix"];
+    options = [ "subvol=@nix" ];
   };
 
   fileSystems."/snapshots" = {
     device = "/dev/disk/by-uuid/b4bca98c-2d91-4c0f-b09f-f7af99dd4466";
     fsType = "btrfs";
-    options = ["subvol=@snapshots"];
+    options = [ "subvol=@snapshots" ];
   };
 
   fileSystems."/tmp" = {
     device = "/dev/disk/by-uuid/b4bca98c-2d91-4c0f-b09f-f7af99dd4466";
     fsType = "btrfs";
-    options = ["subvol=@tmp"];
+    options = [ "subvol=@tmp" ];
   };
 
   fileSystems."/swap" = {
     device = "/dev/disk/by-uuid/b4bca98c-2d91-4c0f-b09f-f7af99dd4466";
     fsType = "btrfs";
-    options = ["subvol=@swap"];
+    options = [ "subvol=@swap" ];
   };
 
   fileSystems."/boot" = {
     device = "/dev/disk/by-uuid/b4bca98c-2d91-4c0f-b09f-f7af99dd4466";
     fsType = "btrfs";
-    options = ["subvol=@boot"];
+    options = [ "subvol=@boot" ];
   };
 
   fileSystems."/data" = {
     device = "/dev/disk/by-uuid/fa39640a-3f93-4872-98ee-b81a04e9d655";
     fsType = "xfs";
-    options = ["noatime"];
+    options = [ "noatime" ];
   };
 
-  swapDevices = [{device = "/swap/swapfile";}];
+  swapDevices = [ { device = "/swap/swapfile"; } ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's

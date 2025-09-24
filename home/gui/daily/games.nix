@@ -3,9 +3,11 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   cfg = config.myhome.desktop.daily.game;
-in {
+in
+{
   config = lib.mkMerge [
     (lib.mkIf cfg.enable {
       home.packages = with pkgs; [
@@ -16,7 +18,7 @@ in {
       ];
     })
     {
-      home.packages = with pkgs; [moonlight-qt];
+      home.packages = with pkgs; [ moonlight-qt ];
     }
   ];
 }

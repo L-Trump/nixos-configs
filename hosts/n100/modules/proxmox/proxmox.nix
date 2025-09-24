@@ -3,13 +3,15 @@
   pkgs,
   pkgs-stable,
   ...
-}: let
+}:
+let
   system = pkgs-stable.stdenv.hostPlatform.system;
-in {
+in
+{
   imports = [
     inputs.proxmox-nixos.nixosModules.proxmox-ve
   ];
-  environment.systemPackages = with pkgs; [swtpm];
+  environment.systemPackages = with pkgs; [ swtpm ];
   environment.etc."swtpm_setup.conf".source = "${pkgs.swtpm}/etc/swtpm_setup.conf";
   services.proxmox-ve = {
     enable = true;

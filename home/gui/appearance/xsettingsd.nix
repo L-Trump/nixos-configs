@@ -3,26 +3,22 @@
   pkgs,
   lib,
   ...
-}: let
-  renderSettings = settings:
-    lib.concatStrings (lib.mapAttrsToList renderSetting settings);
+}:
+let
+  renderSettings = settings: lib.concatStrings (lib.mapAttrsToList renderSetting settings);
 
   renderSetting = key: value: ''
     ${key} ${renderValue value}
   '';
 
-  renderValue = value:
+  renderValue =
+    value:
     {
       int = toString value;
-      bool =
-        if value
-        then "1"
-        else "0";
+      bool = if value then "1" else "0";
       string = ''"${value}"'';
     }
-    .${
-      builtins.typeOf value
-    };
+    .${builtins.typeOf value};
 
   settings = {
     "Gtk/CursorThemeName" = config.home.pointerCursor.name;
@@ -32,14 +28,17 @@
     "Net/ThemeName" = config.gtk.theme.name;
     # "Xft/DPI" = 196608;
   };
-in {
+in
+{
   services.xsettingsd.enable = true;
 
   xdg.configFile."xsettingsd/xsettingsd.fix.conf" = {
     text = renderSettings settings;
     onChange = ''
       ${pkgs.rsync}/bin/rsync --chmod 644 $VERBOSE_ARG \
-          ${config.xdg.configFile."xsettingsd/xsettingsd.fix.conf".source} ${config.xdg.configHome}/xsettingsd/xsettingsd.conf
+          ${
+            config.xdg.configFile."xsettingsd/xsettingsd.fix.conf".source
+          } ${config.xdg.configHome}/xsettingsd/xsettingsd.conf
     '';
   };
 

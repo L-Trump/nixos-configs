@@ -2,9 +2,11 @@
   config,
   lib,
   ...
-}: let
+}:
+let
   cfg = config.mymodules.desktop.remote-desktop;
-in {
+in
+{
   services.sunshine = lib.mkIf cfg.sunshine.enable {
     enable = true;
     openFirewall = true;

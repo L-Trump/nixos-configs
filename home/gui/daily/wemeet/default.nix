@@ -2,7 +2,8 @@
   pkgs,
   lib,
   ...
-}: let
+}:
+let
   pkg-wemeet-openbox-cast = pkgs.stdenv.mkDerivation {
     name = "wemeet-openbox-cast";
     propagatedBuildInputs = with pkgs; [
@@ -10,22 +11,24 @@
       gst_all_1.gstreamer
       gst_all_1.gst-plugins-base
       pipewire
-      (python3.withPackages (pyPkgs:
-        with pyPkgs; [
+      (python3.withPackages (
+        pyPkgs: with pyPkgs; [
           pygobject3
           pycairo
           pydbus
           dbus-python
-        ]))
+        ]
+      ))
     ];
-    nativeBuildInputs = with pkgs; [wrapGAppsHook];
+    nativeBuildInputs = with pkgs; [ wrapGAppsHook ];
     dontUnpack = true;
     installPhase = ''
       install -Dm755 ${./scripts/xdp-screen-cast} $out/bin/xdp-screen-cast
       install -Dm755 ${./scripts/wemeet-openbox-cast} $out/bin/wemeet-openbox-cast
     '';
   };
-in {
+in
+{
   home.packages = with pkgs; [
     pkg-wemeet-openbox-cast
     xwayland
@@ -38,8 +41,8 @@ in {
     name = "Wemeet (OpenBox)";
     exec = ''${pkg-wemeet-openbox-cast}/bin/wemeet-openbox-cast %u'';
     icon = "wemeetapp";
-    mimeType = ["x-scheme-handler/wemeet"];
-    categories = ["AudioVideo"];
+    mimeType = [ "x-scheme-handler/wemeet" ];
+    categories = [ "AudioVideo" ];
     settings."Name[zh_CN]" = "腾讯会议 (OpenBox)";
   };
 }

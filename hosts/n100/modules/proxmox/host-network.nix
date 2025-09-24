@@ -2,11 +2,13 @@
   pkgs,
   myvars,
   ...
-}: let
+}:
+let
   hostName = "n100";
   inherit (myvars) networking;
   inherit (networking.hostsAddr.physical.${hostName}) iface ipv4 gateway;
-in {
+in
+{
   # supported file systems, so we can mount any removable disks with these filesystems
   boot.supportedFilesystems = [
     "ext4"
@@ -20,7 +22,10 @@ in {
     "nfs" # required by longhorn
   ];
 
-  boot.kernelModules = ["kvm-intel" "vfio-pci"];
+  boot.kernelModules = [
+    "kvm-intel"
+    "vfio-pci"
+  ];
   boot.extraModprobeConfig = "options kvm_intel nested=1"; # for amd cpu
 
   boot.kernel.sysctl = {
@@ -59,7 +64,7 @@ in {
     # inherit (networking) defaultGateway nameservers;
 
     # Manage the interface with OVS instead of networkmanager
-    networkmanager.unmanaged = [iface];
+    networkmanager.unmanaged = [ iface ];
     # Set the host's address on the OVS bridge interface instead of the physical interface!
     # interfaces.vmbr0 = networking.hostsInterface.${hostName}.interfaces.${iface};
     # bridges.vmbr0.interfaces = [iface];
@@ -77,14 +82,17 @@ in {
       Kind = "bridge";
     };
     networks."10-lan" = {
-      matchConfig.Name = [iface "microvm-*"];
+      matchConfig.Name = [
+        iface
+        "microvm-*"
+      ];
       networkConfig.Bridge = "vmbr0";
       linkConfig.RequiredForOnline = "enslaved";
     };
     networks."10-lan-bridge" = {
       matchConfig.Name = "vmbr0";
       networkConfig = {
-        Address = [ipv4];
+        Address = [ ipv4 ];
         Gateway = gateway;
         DNS = networking.nameservers;
         IPv6AcceptRA = true;

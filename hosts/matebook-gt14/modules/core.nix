@@ -8,9 +8,11 @@
   inputs,
   lib,
   ...
-}: let
+}:
+let
   inherit (inputs) nixos-hardware;
-in {
+in
+{
   imports = [
     # Hardware
     nixos-hardware.nixosModules.common-cpu-intel
@@ -33,7 +35,7 @@ in {
     naturalScrolling = true;
     clickMethod = "clickfinger";
   };
-  services.xserver.videoDrivers = ["modesetting"];
+  services.xserver.videoDrivers = [ "modesetting" ];
   # services.xserver.deviceSection = ''
   #   Option "TearFree" "true"
   # '';

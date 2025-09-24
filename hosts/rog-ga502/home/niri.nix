@@ -4,15 +4,16 @@
   pkgs,
   lib,
   ...
-}: {
+}:
+{
   myhome.desktop.niri.settings = {
     output = [
       {
-        _args = ["eDP-1"];
+        _args = [ "eDP-1" ];
         scale = 1.333333;
       }
       {
-        _args = ["Lenovo Group Limited LEN Y27q-20 0x01010101"];
+        _args = [ "Lenovo Group Limited LEN Y27q-20 0x01010101" ];
         scale = 1.6;
         position = {
           _props = {
@@ -22,7 +23,7 @@
         };
       }
       {
-        _args = ["Dell Inc. DELL SE2722H CVW0WP3"];
+        _args = [ "Dell Inc. DELL SE2722H CVW0WP3" ];
         position = {
           _props = {
             x = 1440;
@@ -31,7 +32,7 @@
         };
       }
       {
-        _args = ["Dell Inc. DELL D2721H C1SSW53"];
+        _args = [ "Dell Inc. DELL D2721H C1SSW53" ];
         mode = "1920x1080@60";
         position = {
           _props = {
@@ -41,7 +42,7 @@
         };
       }
       {
-        _args = ["Dell Inc. DELL SE2722H H6RZVP3"];
+        _args = [ "Dell Inc. DELL SE2722H H6RZVP3" ];
         mode = "1920x1080@60";
         position = {
           _props = {

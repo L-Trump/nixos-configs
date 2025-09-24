@@ -4,7 +4,8 @@
   config,
   lib,
   ...
-}: let
+}:
+let
   inherit (config.networking) hostName;
   et-ip = myvars.networking.hostsAddr.easytier."${hostName}".ipv4;
   cfg = config.mymodules.server.juicefs;
@@ -14,11 +15,12 @@
     host = "chick-vm-cd.ltnet";
     port = dcfg.port;
   };
-in {
+in
+{
   config = lib.mkMerge [
     (lib.mkIf cfg.enable {
       mymodules.server.juicefs.meta-url = lib.mkDefault "redis://${master.host}:${toString master.port}/1";
-      environment.systemPackages = [pkg];
+      environment.systemPackages = [ pkg ];
       # fileSystems."/data/juicefs" = {
       #   device = cfg.meta-url;
       #   fsType = "juicefs";
@@ -28,13 +30,16 @@ in {
         {
           description = "JuiceFS";
           type = "juicefs";
-          requires = ["easytier-ltnet.service"];
-          wants = ["network-online.target"];
-          after = ["network-online.target"];
+          requires = [ "easytier-ltnet.service" ];
+          wants = [ "network-online.target" ];
+          after = [ "network-online.target" ];
           what = cfg.meta-url;
           where = "/data/juicefs";
           options = "_netdev,nofail,allow_other,writeback_cache,writeback,free-space-ratio=0.5";
-          wantedBy = ["multi-user.target" "remote-fs.target"];
+          wantedBy = [
+            "multi-user.target"
+            "remote-fs.target"
+          ];
           mountConfig = {
             TimeoutSec = "20s";
           };
@@ -42,8 +47,11 @@ in {
       ];
       systemd.services.juicefs-s3-gateway = lib.mkIf cfg.enableS3Gateway {
         description = "JuiceFS S3 Gateway";
-        requires = ["network-online.target" "easytier-ltnet.service"];
-        after = ["multi-user.target"];
+        requires = [
+          "network-online.target"
+          "easytier-ltnet.service"
+        ];
+        after = [ "multi-user.target" ];
         serviceConfig = {
           Type = "simple";
           User = "root";
@@ -51,12 +59,15 @@ in {
           Restart = "on-failure";
           EnvironmentFile = config.age.secrets.jfs-s3-env.path;
         };
-        wantedBy = ["multi-user.target"];
+        wantedBy = [ "multi-user.target" ];
       };
       systemd.services.juicefs-webdav-gateway = lib.mkIf cfg.enableWebdav {
         description = "JuiceFS Webdav Gateway";
-        requires = ["network-online.target" "easytier-ltnet.service"];
-        after = ["multi-user.target"];
+        requires = [
+          "network-online.target"
+          "easytier-ltnet.service"
+        ];
+        after = [ "multi-user.target" ];
         serviceConfig = {
           Type = "simple";
           User = "root";
@@ -64,7 +75,7 @@ in {
           Restart = "on-failure";
           EnvironmentFile = config.age.secrets.jfs-s3-env.path;
         };
-        wantedBy = ["multi-user.target"];
+        wantedBy = [ "multi-user.target" ];
       };
     })
 
@@ -84,7 +95,7 @@ in {
       };
 
       systemd.services.redis-juicefs-meta = {
-        after = ["easytier-ltnet.service"];
+        after = [ "easytier-ltnet.service" ];
         serviceConfig.Restart = "on-failure";
       };
     })

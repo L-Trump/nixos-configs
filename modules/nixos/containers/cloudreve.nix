@@ -3,7 +3,8 @@
   config,
   lib,
   ...
-}: let
+}:
+let
   inherit (config.networking) hostName;
   name = "cloudreve-master";
   cfg = config.mymodules.server.cloudreve.master;
@@ -38,7 +39,8 @@
       "docker-compose-oci-root.target"
     ];
   };
-in {
+in
+{
   config = lib.mkIf cfg.enable {
     # networking.firewall.allowedTCPPorts = [3003];
     virtualisation.oci-containers.containers."${name}-backend" = {

@@ -3,7 +3,8 @@
   config,
   lib,
   ...
-}: let
+}:
+let
   inherit (config.networking) hostName;
   name = "siyuan-server";
   cfg = config.mymodules.server.siyuan-server;
@@ -11,7 +12,8 @@
 
   container = myvars.containers.${name};
   image = "${container.image}@${container.digest}";
-in {
+in
+{
   config = lib.mkIf cfg.enable {
     # networking.firewall.allowedTCPPorts = [3003];
     virtualisation.oci-containers.containers.${name} = {

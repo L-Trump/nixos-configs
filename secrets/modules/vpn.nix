@@ -3,9 +3,11 @@
   config,
   lib,
   ...
-}: let
+}:
+let
   inherit (inputs) mysecrets;
-in {
+in
+{
   age.secrets.ipsec-conf = lib.mkIf config.mymodules.desktop.enable {
     file = "${mysecrets}/vpn/ipsec.conf.age";
     path = "/etc/ipsec.conf";

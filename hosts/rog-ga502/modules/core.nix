@@ -7,9 +7,11 @@
   pkgs,
   inputs,
   ...
-}: let
+}:
+let
   inherit (inputs) nixos-hardware;
-in {
+in
+{
   imports = [
     # Hardware
     nixos-hardware.nixosModules.asus-zephyrus-ga502

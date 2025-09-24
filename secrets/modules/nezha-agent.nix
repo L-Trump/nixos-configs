@@ -3,10 +3,12 @@
   config,
   lib,
   ...
-}: let
+}:
+let
   inherit (inputs) mysecrets;
   cfg = config.mymodules.server.nezha-agent;
-in {
+in
+{
   age.secrets.nezha-agent-secret = lib.mkIf cfg.enable {
     file = "${mysecrets}/nezha/agent-secret.age";
   };
