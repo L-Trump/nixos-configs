@@ -24,6 +24,7 @@
   sshAuthorizedKeys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIELKxC3ntw44oEB+HnFwrDQOudiVmf9XnO3W+P2HA+1N ltrump@mbgt"
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL6Ic0uPufIiXRVYx/RN1lJIDHCreWEDALDifiLbgTkH ltrump@rog"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIB3HTnnSqW08xkgIEKHyRyIB9H2qEkRAnbe/pOlN3uoT ltrump@n100"
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIJvcGCqT9GbTjxRHUFL8wp6nNXKIvtiFGhZD05yrFSb ltrump@fallback"
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIy+DeKN/Lzov2h8cDsOjOwtRAA6c5WcTlQCwUpv9zB0 ltrump@oldfallback"
   ];
