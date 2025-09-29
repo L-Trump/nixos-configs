@@ -74,7 +74,7 @@ gc:
 
 [group('nix')]
 gcall:
-  sudo nix profile wipe-history --profile /etc/profiles/per-user/system
+  sudo nix profile wipe-history --profile /nix/var/nix/profiles/system
   sudo nix profile wipe-history --profile /etc/profiles/per-user/ltrump
   nix profile wipe-history --profile ~/.nix-profile
   sudo nix-collect-garbage -d
@@ -83,7 +83,7 @@ gcall:
 
 [group('nix')]
 gc7d:
-  sudo nix profile wipe-history --profile /etc/profiles/per-user/system --older-than 7d
+  sudo nix profile wipe-history --profile /nix/var/nix/profiles/system --older-than 7d
   sudo nix profile wipe-history --profile /etc/profiles/per-user/ltrump --older-than 7d
   nix profile wipe-history --profile ~/.nix-profile --older-than 7d
   sudo nix-collect-garbage --delete-older-than 7d
