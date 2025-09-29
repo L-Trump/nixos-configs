@@ -86,20 +86,20 @@ update_nix_file() {
         echo "$index: $current_digest -> $latest_digest"
         sed -i "/$index = {/,/}/ s|digest = \".*\";|digest = \"$latest_digest\";|" "$nix_file"
 
-        # 调用函数获取最新 tag
-        latest_version=$(get_latest_version "$image" "$latest_tag")
+        # # 调用函数获取最新 tag
+        # latest_version=$(get_latest_version "$image" "$latest_tag")
 
-        if [ $? -ne 0 ]; then
-            echo "$latest_version"
-            echo "更新镜像 $image 失败"
-            continue
-        fi
+        # if [ $? -ne 0 ]; then
+        #     echo "$latest_version"
+        #     echo "更新镜像 $image 失败"
+        #     continue
+        # fi
 
-        echo "$index: $current_tag -> $latest_version"
+        # echo "$index: $current_tag -> $latest_version"
 
-        # 使用 sed 更新 Nix 文件中的 tag
-        sed -i "/$index = {/,/}/ s|tag = \".*\";|tag = \"$latest_version\";|" "$nix_file"
-        echo "已更新镜像 $image 的 tag 为 $latest_version"
+        # # 使用 sed 更新 Nix 文件中的 tag
+        # sed -i "/$index = {/,/}/ s|tag = \".*\";|tag = \"$latest_version\";|" "$nix_file"
+        # echo "已更新镜像 $image 的 tag 为 $latest_version"
     done <<< "$entries"
 }
 
