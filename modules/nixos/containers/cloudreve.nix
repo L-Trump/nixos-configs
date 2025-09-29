@@ -14,10 +14,10 @@ let
   image = "${container.image}@${container.digest}";
 
   container-redis = myvars.containers.cloudreve-redis;
-  image-redis = "${container-redis.image}:${container-redis.tag}";
+  image-redis = "${container-redis.image}@${container-redis.digest}";
 
   container-postgresql = myvars.containers.cloudreve-postgresql;
-  image-postgresql = "${container-postgresql.image}:${container-postgresql.tag}";
+  image-postgresql = "${container-postgresql.image}@${container-postgresql.digest}";
 
   serviceConfig = {
     serviceConfig = {
