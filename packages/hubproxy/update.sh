@@ -1,9 +1,10 @@
 #!/usr/bin/env nix-shell
 #!nix-shell -i bash -p bash curl coreutils jq common-updater-scripts
+BASEDIR="$(dirname "$0")/.."
 
 latestTag=$(curl -sSfL ${GITHUB_TOKEN:+-u ":$GITHUB_TOKEN"} https://api.github.com/repos/sky22333/hubproxy/releases/latest | jq -r ".tag_name")
 latestVersion="$(expr "$latestTag" : 'v\(.*\)')"
-currentVersion=$(nix-instantiate --eval -E "with import ./. {}; hubproxy.version" | tr -d '"')
+currentVersion=$(nix-instantiate --eval -E "with import ${BASEDIR} {}; hubproxy.version" | tr -d '"')
 
 echo "latest  version: $latestVersion"
 echo "current version: $currentVersion"
@@ -19,5 +20,5 @@ for i in \
     prefetch=$(nix-prefetch-url "https://github.com/sky22333/hubproxy/releases/download/v$latestVersion/hubproxy-v${latestVersion}-linux-$2.tar.gz")
     hash=$(nix-hash --type sha256 --to-sri "$prefetch")
 
-    update-source-version hubproxy "$latestVersion" "$hash" --system="$1" --ignore-same-version
+    (cd "${BASEDIR}" && update-source-version hubproxy "$latestVersion" "$hash" --system="$1" --ignore-same-version)
 done

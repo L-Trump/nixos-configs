@@ -5,7 +5,6 @@ BASEDIR="$(dirname "$0")/.."
 echo "$BASEDIR"
 
 latestVersion=$(curl "https://api.github.com/repos/dbeaver/dbeaver/tags" | jq -r '.[0].name')
-latestVersion="25.2.0"
 currentVersion=$(nix-instantiate --eval -E "with import ${BASEDIR} {}; dbeaver-ultimate.version" | tr -d '"')
 
 echo "latest  version: $latestVersion"
@@ -23,8 +22,6 @@ do
     set -- $i
     prefetch=$(nix-prefetch-url "https://dbeaver.com/downloads-ultimate/$latestVersion/dbeaver-ue-$latestVersion-$2")
     hash=$(nix-hash --type sha256 --to-sri $prefetch)
-
-    echo "$1 $hash"
 
     (cd "${BASEDIR}" && update-source-version dbeaver-ultimate $latestVersion $hash --system=$1 --ignore-same-version)
 done
