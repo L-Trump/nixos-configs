@@ -45,7 +45,7 @@ in
   # niri = pkgs-unstable.niri;
 
   # siyuan = pkgs.callPackage ./siyuan {};
-  easytier = pkgs.callPackage ./easytier { }; # TODO wait pr 444942 merge
+  # easytier = pkgs.callPackage ./easytier { };
   # siyuan = pkgs.callPackage ./siyuan {};
   # linuxPackages_latest = pkgs.linuxPackages_latest.extend (_: prev: {
   #   # ipu6-drivers = pkgs.linuxPackages_latest.callPackage ./ipu6-drivers {};

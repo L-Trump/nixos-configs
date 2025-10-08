@@ -16,15 +16,15 @@ let
         --set __VK_LAYER_NV_optimus NVIDIA_only
     ''
   );
-  nvidia-package = config.boot.kernelPackages.nvidiaPackages.beta;
-  # nvidia-package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
-  #   version = "575.64.05";
-  #   sha256_64bit = "sha256-hfK1D5EiYcGRegss9+H5dDr/0Aj9wPIJ9NVWP3dNUC0=";
-  #   sha256_aarch64 = "sha256-GRE9VEEosbY7TL4HPFoyo0Ac5jgBHsZg9sBKJ4BLhsA=";
-  #   openSha256 = "sha256-mcbMVEyRxNyRrohgwWNylu45vIqF+flKHnmt47R//KU=";
-  #   settingsSha256 = "sha256-o2zUnYFUQjHOcCrB0w/4L6xI1hVUXLAWgG2Y26BowBE=";
-  #   persistencedSha256 = "sha256-2g5z7Pu8u2EiAh5givP5Q1Y4zk4Cbb06W37rf768NFU=";
-  # };
+  # nvidia-package = config.boot.kernelPackages.nvidiaPackages.latest;
+  nvidia-package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
+    version = "580.82.09";
+    sha256_64bit = "sha256-Puz4MtouFeDgmsNMKdLHoDgDGC+QRXh6NVysvltWlbc=";
+    sha256_aarch64 = "sha256-6tHiAci9iDTKqKrDIjObeFdtrlEwjxOHJpHfX4GMEGQ=";
+    openSha256 = "sha256-YB+mQD+oEDIIDa+e8KX1/qOlQvZMNKFrI5z3CoVKUjs=";
+    settingsSha256 = "sha256-um53cr2Xo90VhZM1bM2CH4q9b/1W2YOqUcvXPV6uw2s=";
+    persistencedSha256 = "sha256-lbYSa97aZ+k0CISoSxOMLyyMX//Zg2Raym6BC4COipU=";
+  };
 in
 {
   # ===============================================================================================
@@ -68,7 +68,7 @@ in
     enable32Bit = true;
     extraPackages = with pkgs; [
       vaapiVdpau
-      amdvlk
+      # amdvlk
       ocl-icd
     ];
   };
