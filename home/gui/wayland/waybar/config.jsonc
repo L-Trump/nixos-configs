@@ -260,7 +260,7 @@
         // "exec": "$HOME/.config/waybar/mediaplayer.py --player spotify 2> /dev/null" // Filter player based on name
     },
     "custom/maildir": {
-        "format": "<span size='14pt' rise='-2pt'>{icon}</span> {}",
+        "format": "<span size='14pt' rise='-2pt'>{icon}</span> {text}",
         "format-icons": "",
         "exec": "count-unread-mail",
         "interval": 5,
