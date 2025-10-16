@@ -44,6 +44,7 @@ in
   # easytier = pkgs-unstable.easytier;
   # niri = pkgs-unstable.niri;
 
+  # intel-graphics-compiler =  pkgs-unstable.intel-graphics-compiler;
   # siyuan = pkgs.callPackage ./siyuan {};
   # easytier = pkgs.callPackage ./easytier { };
   # siyuan = pkgs.callPackage ./siyuan {};
