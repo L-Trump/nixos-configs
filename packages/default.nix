@@ -17,6 +17,8 @@ in
 
   rustdesk-server-pro = pkgs.callPackage ./rustdesk-server-pro { };
 
+  canokey-manager = pkgs.callPackage ./canokey-manager { };
+
   hubproxy = pkgs.callPackage ./hubproxy { };
 
   obs-studio-plugins = pkgs.obs-studio-plugins // {
