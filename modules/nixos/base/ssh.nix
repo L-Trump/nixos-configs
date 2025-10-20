@@ -19,7 +19,7 @@
   # so that you don’t have to type in passphrases every time you make an SSH connection.
   # Use `ssh-add` to add a key to the agent.
   programs.ssh = myvars.networking.ssh // {
-    startAgent = false;
+    startAgent = true;
   };
 
   # Add terminfo database of all known terminals to the system profile.

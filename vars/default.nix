@@ -29,7 +29,8 @@
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIy+DeKN/Lzov2h8cDsOjOwtRAA6c5WcTlQCwUpv9zB0 ltrump@oldfallback"
     # Canokeys
     "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC66ULVKuy/SWYAgPKq9liIhvmQLNbSaJS1oaxSLoLx+pw+pvTd9z/bf650mvLcH5el/4eqhzW9kVoB3kBmNWg2aZZthLXAnfqFRucY9rDbDN98XOy0jw39hRC7m1luRdES1QUTzWtXAoi2JgycE9dy+HsjqN1oyQHb6NfmEArZfs+0/RgAyl5ayh++XMalx6KSBYsq+tDLoVs4PI6XJFR7JMqwgQzo3spSbKVQ5rx0hlxH9kf0IfJCS2GMT//JxSkix4XYIymcuMXUOEFarjlg1O7oRmd0BHIRmGfCVIg8IpUTb3rPiWY6Ua8Hbeia+f8Noagt3/q+aOjNl7co+bmdXpx2udLcTUzAq18DxO81yqinA20LYe9IXsE1pknhUTA4UaJUTdFJDrLcAbLjMSwhRNm37RmAAWU7ugSKlCNWPAmejTDzNeeNnfhWK+3TERw+QgVEQJMbFoiEs+oN6RyVfy0uDbLDEuFKnPIaYCLSOD+3zSQ4XLytUkGc/Fm+Eri8eVyfDkMQnpv7YLG13+SgtcuREE/yRlb4gFNLxkWKKhv7hGmvfrgYyzfrqHw7GViVqvhmK1zuXGkni9ppyw7dguAuEmYSMUrfkSqJtH+/Ti5HM0BE36b11c9+WiogqYfHXI52eKjo+/9DKzl5tVIgN/aVFDEFOvs/3MZ8xKHFnQ== ltrump@canokey1gpg"
-    "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIJ/VpHz7T4D3CB/yCghb90vh0mOm6HO/5n1e7fTlBqTOAAAAC3NzaDpjYW5va2V5 ltrump@canokey1sk"
+    "no-touch-required sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIHoTg4W/O+6l0fXHtL4IB5KazxpvWzRjZjueyoXd2lPkAAAADHNzaDpjYW5va2V5MQ== ltrump@canokey1sk"
+    # "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIJ/VpHz7T4D3CB/yCghb90vh0mOm6HO/5n1e7fTlBqTOAAAAC3NzaDpjYW5va2V5 ltrump@canokey1sk"
     "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIK8bliYIlfotqUnT0ktB8QRBuiZcV6XceUpsUrPuh+uJAAAAC3NzaDpjYW5va2V5 ltrump@canokey2sk"
   ];
 }
