@@ -19,13 +19,13 @@
 let
   dbeaver-agent = maven.buildMavenPackage rec {
     pname = "dbeaver-agent";
-    version = "25.1";
+    version = "25.2";
 
     src = fetchFromGitHub {
       owner = "wgzhao";
       repo = "dbeaver-agent";
       tag = "v${version}";
-      hash = "sha256-Hc5CDglXQxccufQuUk/XubywjtwZ4P33qe8nAN6wZUQ=";
+      hash = "sha256-m+kkIP9WnNa/sXVuHUuUUnamcAvFE3l68G2sERsAyMw=";
     };
 
     mvnHash = "sha256-OVZ34S4O/gucb9pR+IpMAsG7+I/3QKa8+Q0ZIc3STpw=";
@@ -35,7 +35,7 @@ let
 
       mkdir -p $out/share/dbeaver-agent
       cp -r target/* $out/share/dbeaver-agent/
-      cp -rf $out/share/dbeaver-agent/dbeaver-agent-${version}-jar-with-dependencies.jar $out/share/dbeaver-agent/dbeaver-agent.jar
+      cp -rf $out/share/dbeaver-agent/dbeaver-agent-${version}-SNAPSHOT-jar-with-dependencies.jar $out/share/dbeaver-agent/dbeaver-agent.jar
 
       runHook postInstall
     '';
