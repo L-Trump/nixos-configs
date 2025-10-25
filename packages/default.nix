@@ -41,6 +41,13 @@ in
   dbeaver-agent = pkgs.callPackage ./dbeaver-agent { };
   dbeaver-ultimate = pkgs.callPackage ./dbeaver-ultimate { };
 
+  lxqt = pkgs-unstable.lxqt; # TODO wait pr merge 454500
+  copyq = pkgs-unstable.copyq; # TODO wait pr merge 454590
+  fcitx5 = pkgs-unstable.fcitx5; # TODO wait pr merge 454184
+  fcitx5-with-addons = pkgs-unstable.fcitx5-with-addons; # TODO wait pr merge 454184
+  fcitx5-chinese-addons = pkgs-unstable.fcitx5-with-addons; # TODO wait pr merge 454184
+  fcitx5-configtool = pkgs-unstable.fcitx5-configtool; # TODO wait pr merge 454184
+
   # Some package derived from unstable repo
   # siyuan = pkgs-unstable.siyuan;
   # easytier = pkgs-unstable.easytier;
