@@ -1,15 +1,14 @@
 {
   config,
   pkgs,
-  pkgs-unstable, # TODO wait pr merge 454184
   ...
 }:
 let
-  fcitx5Addons = with pkgs-unstable; [
+  fcitx5Addons = with pkgs; [
     fcitx5-configtool
     fcitx5-chinese-addons
   ];
-  fcitx5Package = pkgs-unstable.fcitx5-with-addons.override { addons = fcitx5Addons; };
+  fcitx5Package = pkgs.fcitx5-with-addons.override { addons = fcitx5Addons; };
   cfg.package = fcitx5Package;
 
   gtk2Cache =

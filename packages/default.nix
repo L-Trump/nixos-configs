@@ -41,9 +41,6 @@ in
   dbeaver-agent = pkgs.callPackage ./dbeaver-agent { };
   dbeaver-ultimate = pkgs.callPackage ./dbeaver-ultimate { };
 
-  lxqt = pkgs-unstable.lxqt; # TODO wait pr merge 454500
-  copyq = pkgs-unstable.copyq; # TODO wait pr merge 454590
-
   # Some package derived from unstable repo
   # siyuan = pkgs-unstable.siyuan;
   # easytier = pkgs-unstable.easytier;
