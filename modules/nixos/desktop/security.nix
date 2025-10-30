@@ -4,6 +4,27 @@
   pkgs,
   ...
 }:
+let
+  pinentry-auto = pkgs.writeShellApplication {
+    name = "pinentry-auto";
+    runtimeInputs = with pkgs; [
+      pinentry-qt
+      pinentry-curses
+    ];
+    text = ''
+      set -eu
+      # Configuration -- adjust these to your liking
+      PINENTRY_TERMINAL='${pkgs.pinentry-curses}/bin/pinentry'
+      PINENTRY_X11='${pkgs.pinentry-qt}/bin/pinentry'
+      # Action happens below!
+      if [ -n "''${DISPLAY-}" ]; then
+          exec "$PINENTRY_X11" "$@"
+      else
+          exec "$PINENTRY_TERMINAL" "$@"
+      fi
+    '';
+  };
+in
 {
   # security with polkit
   security.polkit.enable = true;
@@ -19,7 +40,7 @@
   # gpg agent with pinentry
   programs.gnupg.agent = {
     enable = true;
-    pinentryPackage = pkgs.pinentry-qt;
+    pinentryPackage = pinentry-auto;
   };
 
   # autologin
