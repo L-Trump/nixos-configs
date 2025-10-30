@@ -25,6 +25,9 @@
       push.autoSetupRemote = true;
       pull.rebase = true;
 
+      commit.gpgSign = true;
+      tag.gpgSign = true;
+
       aliases = {
         # common aliases
         br = "branch";
