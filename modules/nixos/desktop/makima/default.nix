@@ -7,6 +7,7 @@
   environment.systemPackages = [ pkgs.makima ];
   environment.etc."makima".source = ./config;
   systemd.services."makima" = {
+    enable = false;
     description = "Makima remappinig daemon";
     path = with pkgs; [
       makima

@@ -12,7 +12,7 @@ lib.recursiveUpdate bare {
       enable = true;
       animeboot.enable = true;
       niri.enable = true;
-      hyprland.enable = true;
+      hyprland.enable = false;
       xorg.enable = false;
       game.enable = false;
       keyremap.enable = true;
@@ -33,7 +33,7 @@ lib.recursiveUpdate bare {
     desktop = {
       enable = true;
       niri.enable = true;
-      hyprland.enable = true;
+      hyprland.enable = false;
       xorg.enable = false;
       daily.enable = true;
       daily.game.enable = false;
