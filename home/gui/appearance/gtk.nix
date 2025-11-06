@@ -24,7 +24,7 @@
 
     font = {
       name = "Microsoft YaHei UI";
-      package = pkgs.vistafonts-chs;
+      package = pkgs.vista-fonts-chs;
       size = 10;
     };
     gtk2.configLocation = "${config.xdg.configHome}/gtk-2.0/gtkrc";

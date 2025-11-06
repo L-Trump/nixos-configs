@@ -4,11 +4,11 @@
   ...
 }:
 let
-  fcitx5Addons = with pkgs; [
+  fcitx5Addons = with pkgs.qt6Packages; [
     fcitx5-configtool
     fcitx5-chinese-addons
   ];
-  fcitx5Package = pkgs.fcitx5-with-addons.override { addons = fcitx5Addons; };
+  fcitx5Package = pkgs.qt6Packages.fcitx5-with-addons.override { addons = fcitx5Addons; };
   cfg.package = fcitx5Package;
 
   gtk2Cache =

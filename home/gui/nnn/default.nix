@@ -18,7 +18,7 @@ let
         ]
       ))
     ];
-    nativeBuildInputs = with pkgs; [ wrapGAppsHook ];
+    nativeBuildInputs = with pkgs; [ wrapGAppsHook3 ];
     dontUnpack = true;
     installPhase = ''
       install -Dm755 ${./nnn-dbus} $out/bin/nnn-dbus
@@ -52,14 +52,14 @@ in
     };
     extraPackages = with pkgs; [
       # for drag and drop
-      xdragon
+      dragon-drop
       # for preview-tui
       bat
       libarchive
       imagemagick
       ffmpeg
       ffmpegthumbnailer
-      poppler_utils
+      poppler-utils
       fontpreview
       glow
     ];

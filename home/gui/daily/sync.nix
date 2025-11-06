@@ -10,7 +10,6 @@
     bitwarden-desktop
     clouddrive2
     rbw
-    pinentry
     rofi-rbw-wayland
     rustdesk-flutter
   ];

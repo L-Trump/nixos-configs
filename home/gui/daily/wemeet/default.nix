@@ -20,7 +20,7 @@ let
         ]
       ))
     ];
-    nativeBuildInputs = with pkgs; [ wrapGAppsHook ];
+    nativeBuildInputs = with pkgs; [ wrapGAppsHook3 ];
     dontUnpack = true;
     installPhase = ''
       install -Dm755 ${./scripts/xdp-screen-cast} $out/bin/xdp-screen-cast
