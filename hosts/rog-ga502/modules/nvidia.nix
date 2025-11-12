@@ -67,7 +67,7 @@ in
     # needed by nvidia-docker
     enable32Bit = true;
     extraPackages = with pkgs; [
-      vaapiVdpau
+      libva-vdpau-driver
       # amdvlk
       ocl-icd
     ];

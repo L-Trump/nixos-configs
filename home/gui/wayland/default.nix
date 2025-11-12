@@ -37,7 +37,6 @@ in
       wl-clipboard-rs
       grim
       slurp
-      grimblast
       swappy
       copyq
       dex

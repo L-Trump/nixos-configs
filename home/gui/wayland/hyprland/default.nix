@@ -12,6 +12,25 @@ in
 {
   config = mkIf cfg.enable {
     wayland.windowManager.hyprland = import ./hyprland-conf.nix { inherit pkgs inputs; };
+    home.packages = with pkgs; [
+      grimblast
+    ];
+    xdg.portal = {
+      extraPortals = with pkgs; [
+        xdg-desktop-portal-hyprland
+      ];
+      config = {
+        hyprland = {
+          default = [
+            "hyprland"
+            "gtk"
+          ];
+          "org.freedesktop.impl.portal.FileChooser" = [ "termfilechooser" ];
+          # "org.freedesktop.impl.portal.Screenshot" = ["wlr"];
+        };
+      };
+    };
+
 
     # programs.fish = {
     #   interactiveShellInit = ''
