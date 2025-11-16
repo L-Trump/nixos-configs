@@ -41,6 +41,8 @@ in
   dbeaver-agent = pkgs.callPackage ./dbeaver-agent { };
   dbeaver-ultimate = pkgs.callPackage ./dbeaver-ultimate { };
 
+  rustdesk-flutter = pkgs-unstable.rustdesk-flutter; # TODO wait upstream merge 461661
+
   # Some package derived from unstable repo
   # siyuan = pkgs-unstable.siyuan;
   # easytier = pkgs-unstable.easytier;
