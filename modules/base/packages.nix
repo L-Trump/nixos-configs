@@ -22,6 +22,7 @@
 
     # networking tools
     mtr # A network diagnostic tool
+    nexttrace # modern traceroute
     iperf3
     dnsutils # `dig` + `nslookup`
     ldns # replacement of `dig`, it provide the command `drill`

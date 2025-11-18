@@ -9,7 +9,7 @@
     inputs.lan-mouse.homeManagerModules.default
   ];
   programs.lan-mouse = {
-    enable = true;
+    enable = false;
     systemd = true;
     package = pkgs.lan-mouse;
     settings = {

@@ -31,7 +31,6 @@ in
       };
     };
 
-
     # programs.fish = {
     #   interactiveShellInit = ''
     #     # auto login

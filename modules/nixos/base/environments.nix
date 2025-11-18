@@ -12,7 +12,7 @@
     neovim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     helix
     just # justfile
-    nushell # nushell
+    # nushell
     fish # fish shell
     tmux # Terminal split tool
     nnn
@@ -26,8 +26,8 @@
     # ebpf related tools
     # https://github.com/bpftrace/bpftrace
     # bpftrace # powerful tracing tool
-    bpftop # monitor BPF programs
-    bpfmon # BPF based visual packet rate monitor
+    # bpftop # monitor BPF programs
+    # bpfmon # BPF based visual packet rate monitor
 
     # system monitoring
     sysstat
@@ -59,7 +59,7 @@
 
   # BCC - Tools for BPF-based Linux IO analysis, networking, monitoring, and more
   # https://github.com/iovisor/bcc
-  programs.bcc.enable = true;
+  # programs.bcc.enable = true;
 
   # replace default editor with neovim
   environment.variables.EDITOR = "hx";

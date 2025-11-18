@@ -7,12 +7,12 @@
   home.packages = with pkgs; [
     # e-book viewer(.epub/.mobi/...)
     # do not support .pdf
-    foliate
+    # foliate
     wpsoffice-cn
     # wpsoffice-365
     nur.repos.rewine.ttf-wps-fonts
     # pkgs-stable.logseq
-    vikunja
+    # vikunja
     typora
     xournalpp
     # edrawmax-cn
