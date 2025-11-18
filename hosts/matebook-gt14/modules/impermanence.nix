@@ -104,6 +104,7 @@ in
         ".cache/onedriver"
         ".cache/zellij"
         ".cache/restic"
+        ".cache/tlrc"
         ".vnc"
 
         # Configs
@@ -205,5 +206,5 @@ in
 
   # Impermanence will copy permissions from source dir
   # Chown to <username>:users
-  systemd.tmpfiles.rules = [ "d /nix/persistent/home/${username} 700 ${username} users" ];
+  systemd.tmpfiles.rules = [ "d /persistent/home/${username} 700 ${username} users" ];
 }
