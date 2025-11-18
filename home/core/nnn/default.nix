@@ -6,14 +6,7 @@
 {
   programs.nnn = {
     enable = true;
-    plugins.src =
-      (pkgs.fetchFromGitHub {
-        owner = "jarun";
-        repo = "nnn";
-        rev = "v5.0";
-        hash = "sha256-HShHSjqD0zeE1/St1Y2dUeHfac6HQnPFfjmFvSuEXUA=";
-      })
-      + "/plugins";
+    plugins.src = pkgs.nnn.src + "/plugins";
     plugins.mappings = {
       z = "autojump";
       s = "!fish -i*";
