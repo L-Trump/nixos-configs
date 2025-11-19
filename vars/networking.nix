@@ -54,7 +54,6 @@ rec {
       ];
     };
     qfynat.ipv4 = "10.144.144.252";
-    dorm-router.ipv4 = "10.144.144.198";
     gs445.ipv4 = "10.144.144.195";
     gs445-2.ipv4 = "10.144.144.196";
     oneplus-ace.ipv4 = "10.144.144.239";
@@ -78,10 +77,6 @@ rec {
     #   ipv4 = "10.144.144.199";
     #   ssh.user = "caddy";
     # };
-    eo-hw = {
-      ipv4 = "10.144.144.200";
-      ssh.user = "caddy";
-    };
   };
 
   # Physical interfaces declaration
@@ -99,7 +94,7 @@ rec {
     };
     qfynat = {
       iface = "enp*";
-      ipv4 = "172.16.0.11/12";
+      ipv4 = "172.16.0.18/12";
       gateway = "172.16.0.1";
     };
   };

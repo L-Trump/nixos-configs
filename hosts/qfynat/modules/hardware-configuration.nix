@@ -13,6 +13,16 @@
     (modulesPath + "/profiles/qemu-guest.nix")
   ];
 
+  boot.loader.grub = {
+    enable = true;
+    device = "/dev/vda";
+    efiSupport = true;
+  };
+  boot.loader.efi = {
+    canTouchEfiVariables = false;
+    efiSysMountPoint = "/boot/efi";
+  };
+
   boot.initrd.availableKernelModules = [
     "ahci"
     "ata_piix"
@@ -43,44 +53,89 @@
   ];
 
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/b83714c4-b346-44cf-b3be-867ce8f78c15";
+    device = "/dev/disk/by-label/nixos";
     fsType = "btrfs";
-    options = [ "subvol=@root" ];
+    options = [
+      "subvol=@root"
+      "noatime"
+      "compress=zstd"
+    ];
   };
 
   fileSystems."/btrfs-root" = {
-    device = "/dev/disk/by-uuid/b83714c4-b346-44cf-b3be-867ce8f78c15";
+    device = "/dev/disk/by-label/nixos";
     fsType = "btrfs";
+    options = [ "subvolid=5" ];
   };
 
   fileSystems."/nix" = {
-    device = "/dev/disk/by-uuid/b83714c4-b346-44cf-b3be-867ce8f78c15";
+    device = "/dev/disk/by-label/nixos";
     fsType = "btrfs";
-    options = [ "subvol=@nix" ];
+    options = [
+      "subvol=@nix"
+      "noatime"
+      "compress=zstd"
+    ];
   };
 
   fileSystems."/snapshots" = {
-    device = "/dev/disk/by-uuid/b83714c4-b346-44cf-b3be-867ce8f78c15";
+    device = "/dev/disk/by-label/nixos";
     fsType = "btrfs";
-    options = [ "subvol=@snapshots" ];
+    options = [
+      "subvol=@snapshots"
+      "noatime"
+      "compress=zstd"
+    ];
   };
 
   fileSystems."/tmp" = {
-    device = "/dev/disk/by-uuid/b83714c4-b346-44cf-b3be-867ce8f78c15";
+    device = "/dev/disk/by-label/nixos";
     fsType = "btrfs";
-    options = [ "subvol=@tmp" ];
+    options = [
+      "subvol=@tmp"
+      "compress=zstd"
+    ];
   };
 
   fileSystems."/swap" = {
-    device = "/dev/disk/by-uuid/b83714c4-b346-44cf-b3be-867ce8f78c15";
+    device = "/dev/disk/by-label/nixos";
     fsType = "btrfs";
-    options = [ "subvol=@swap" ];
+    options = [
+      "subvol=@swap"
+      "ro"
+    ];
+  };
+
+  # remount swapfile in read-write mode
+  fileSystems."/swap/swapfile" = {
+    # the swapfile is located in /swap subvolume, so we need to mount /swap first.
+    depends = [ "/swap" ];
+
+    device = "/swap/swapfile";
+    fsType = "none";
+    options = [
+      "bind"
+      "rw"
+    ];
   };
 
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/b83714c4-b346-44cf-b3be-867ce8f78c15";
+    device = "/dev/disk/by-label/nixos";
     fsType = "btrfs";
-    options = [ "subvol=@boot" ];
+    options = [
+      "subvol=@boot"
+      "noatime"
+      "compress=zstd"
+    ];
+  };
+
+  fileSystems."/boot/efi" = {
+    device = "/dev/disk/by-uuid/23FE-E131";
+    fsType = "vfat";
+    options = [
+      "fmask=0022"
+      "dmask=0022"
+    ];
   };
 
   swapDevices = [ { device = "/swap/swapfile"; } ];
@@ -89,7 +144,6 @@
   # (the default) this is the recommended approach. When using systemd-networkd it's
   # still possible to use this option, but it's recommended to use it in conjunction
   # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
-  networking.useDHCP = lib.mkDefault true;
   # networking.interfaces.eth0.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";

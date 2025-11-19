@@ -15,8 +15,6 @@ in
   zramSwap.enable = true;
   services.openssh.enable = true;
   services.resolved.enable = true;
-  boot.loader.grub.enable = true;
-  boot.loader.grub.device = "/dev/vda"; # or "nodev" for efi only
   services.qemuGuest.enable = true;
 
   networking = {
@@ -49,6 +47,10 @@ in
   ];
 
   services.openssh.settings.PermitRootLogin = lib.mkForce "yes";
+  services.openssh.ports = [
+    22
+    3389
+  ];
 
   # This option defines the first version of NixOS you have installed on this particular machine,
   # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.
