@@ -12,7 +12,7 @@ let
   dcfg = config.mymodules.server.redis.juicefs-meta;
   pkg = pkgs.juicefs;
   master = {
-    host = "chick-vm-cd.ltnet";
+    host = "aliyun-vm-sh.ltnet";
     port = dcfg.port;
   };
 in

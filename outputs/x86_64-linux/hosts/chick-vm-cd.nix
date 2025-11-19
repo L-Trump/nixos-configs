@@ -34,7 +34,10 @@ let
         enableWebdav = true;
       };
       immich.machine-learning.enable = true;
-      redis.juicefs-meta.enable = true;
+      redis.juicefs-meta = {
+        enable = true;
+        isSlave = true;
+      };
     };
   };
   myconfigs.myhome = preset.myhome;

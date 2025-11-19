@@ -41,7 +41,7 @@ let
       };
       redis.juicefs-meta = {
         enable = true;
-        isSlave = true;
+        isSlave = false;
       };
     };
   };
