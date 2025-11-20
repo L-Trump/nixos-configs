@@ -33,7 +33,7 @@ let
       homepage-dashboard.enable = true;
       openlist.enable = true;
       siyuan-server.enable = true;
-      cloudreve.master.enable = true;
+      cloudreve.master.enable = false;
       xpipe-webtop.enable = true;
       juicefs = {
         enable = true;
