@@ -2,21 +2,12 @@
   config,
   pkgs,
   lib,
+  myvars,
   ...
 }:
 let
   inherit (lib) mapAttrsToList;
-  bookmarks = {
-    h = "~";
-    r = "/";
-    n = "~/nixos-configs";
-    u = "~/Onedrive/上交";
-    c = "~/Codes";
-    d = "~/Documents";
-    D = "~/Downloads";
-    U = "/run/media";
-    m = "/run/media";
-  };
+  bookmarks = myvars.daily.pathBookmarks;
   plugins = {
     z = "plugin zoxide";
     f = "plugin fzf";

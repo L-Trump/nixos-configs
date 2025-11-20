@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  myvars,
   ...
 }:
 let
@@ -35,15 +36,7 @@ in
   programs.nnn = {
     enable = true;
     package = lib.mkForce (pkgs.nnn.override { withNerdIcons = true; });
-    bookmarks = {
-      n = "~/nixos-configs";
-      u = "~/Onedrive/上交";
-      c = "~/Codes";
-      d = "~/Documents";
-      D = "~/Downloads";
-      U = "/run/media";
-      m = "/run/media";
-    };
+    bookmarks = myvars.daily.pathBookmarks;
     plugins.mappings = {
       d = "dragdrop";
       p = "preview-tui";
