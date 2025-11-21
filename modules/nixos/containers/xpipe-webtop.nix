@@ -25,7 +25,7 @@ in
         config.age.secrets.xpipe-webtop-env.path
       ];
       volumes = [
-        "/data/docker/${name}/config:/confige:rw"
+        "/data/docker/${name}/config:/config:rw"
         "/var/run/docker.sock:/var/run/docker.sock:ro"
       ];
       ports = [
