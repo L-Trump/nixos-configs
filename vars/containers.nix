@@ -1,35 +1,35 @@
 _: {
   nezha-server = {
     image = "registry.cn-shanghai.aliyuncs.com/naibahq/nezha-dashboard";
-    digest = "sha256:531839f142a24ddd71de2fe09213182c2886aa2d324b9a501797046437715074";
+    digest = "sha256:4d6e72abda083ff3bd51aa25019d0eb433941e30c3fdb85c033f9c751fecfb46";
   };
   immich-machine-learning = {
-    image = "gh.mmm.fan/ghcr.io/immich-app/immich-machine-learning";
+    image = "m.daocloud.io/ghcr.io/immich-app/immich-machine-learning";
     latestTag = "release";
-    digest = "sha256:45626a33361ef7ed361de41b0d2dc19e5949442cdf0a8eb64b157dc8a04e9855";
+    digest = "sha256:379e31b8c75107b0af8141904baa8cc933d7454b88fdb204265ef11749d7d908";
   };
   siyuan-server = {
-    image = "gh.mmm.fan/b3log/siyuan";
-    digest = "sha256:f83d07e1ebf00ba00a9e86876594a607e9b6833d770330df7b0ee29a415e8a1d";
+    image = "m.daocloud.io/docker.io/b3log/siyuan";
+    digest = "sha256:d63485de0b47af96aa7b9fc2dc9d53cb682f114510b2b0e8068f8ea11bfd4579";
   };
   cloudreve = {
-    image = "gh.mmm.fan/cloudreve/cloudreve";
-    digest = "sha256:a553e5138ffc039388a0b45124189d0dec08f0c9b90d57469dc6240df9bfa452";
+    image = "m.daocloud.io/docker.io/cloudreve/cloudreve";
+    digest = "sha256:70debed86997389b00624d0ac2fe25ecbaca8dbe444157c6660bc93ca940cc9d";
   };
   cloudreve-redis = {
-    image = "gh.mmm.fan/library/redis";
-    digest = "sha256:f0957bcaa75fd58a9a1847c1f07caf370579196259d69ac07f2e27b5b389b021";
+    image = "m.daocloud.io/docker.io/library/redis";
+    digest = "sha256:43355efd22490e31ca14b9d569367d05121e2be61fd8e47937563ae2a80952ae";
   };
   cloudreve-postgresql = {
-    image = "gh.mmm.fan/library/postgres";
-    digest = "sha256:073e7c8b84e2197f94c8083634640ab37105effe1bc853ca4d5fbece3219b0e8";
+    image = "m.daocloud.io/docker.io/library/postgres";
+    digest = "sha256:5ec39c188013123927f30a006987c6b0e20f3ef2b54b140dfa96dac6844d883f";
   };
   rustdesk-api = {
-    image = "gh.mmm.fan/lejianwen/rustdesk-api";
+    image = "docker.linkos.org/lejianwen/rustdesk-api";
     digest = "sha256:ed35016339d3bcadf15c7bb3ae8490af1e3950c33f58fd2261ae009b94f5de45";
   };
   xpipe-webtop = {
-    image = "gh.mmm.fan/ghcr.io/xpipe-io/xpipe-webtop";
-    digest = "sha256:a78765c7718bfb7ee46fafc7e30fe96e5f347007b1f0d05ace56d0fff542d05d";
+    image = "ghcr.linkos.org/xpipe-io/xpipe-webtop";
+    digest = "sha256:a5de465f7020d13e45014798c428751c979fc857686446bccebc18f620fd7354";
   };
 }

@@ -8,7 +8,7 @@ let
       dir = "~/.cache/tlrc";
       languages = [ ];
       max_age = 336;
-      mirror = "https://gh.mmm.fan/https://github.com/tldr-pages/tldr/releases/latest/download";
+      mirror = "https://ghfast.top/https://github.com/tldr-pages/tldr/releases/latest/download";
     };
     indent = {
       bullet = 2;
