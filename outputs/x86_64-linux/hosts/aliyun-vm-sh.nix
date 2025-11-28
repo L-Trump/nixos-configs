@@ -35,6 +35,7 @@ let
       siyuan-server.enable = true;
       cloudreve.master.enable = false;
       xpipe-webtop.enable = false;
+      authentik.enable = true;
       juicefs = {
         enable = true;
         enableS3Gateway = true;
