@@ -27,5 +27,6 @@ The modules in this directory are used in my cloud servers
 | cloudreve-master   | et-ip:5212              | Cloudreve master node    |
 | xpipe-webtop       | et-ip:6790              | xpipe webtop             |
 | authentik          | localhost:(6900-6940)   | authentik server         |
+| sshwifty           | localhost:8182          | sshwifty server          |
 
 **Note:** et-ip means the virtual ipv4 address in easytier, indicating the service can only be accessed in the internal network.

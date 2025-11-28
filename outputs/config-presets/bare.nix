@@ -38,6 +38,7 @@
       siyuan-server.enable = false;
       xpipe-webtop.enable = false;
       authentik.enable = false;
+      sshwifty.enable = false;
       immich.machine-learning.enable = false;
       juicefs.enable = false;
       redis = {

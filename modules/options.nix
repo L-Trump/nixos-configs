@@ -65,6 +65,7 @@ in
       hubproxy.enable = mkEnableOption "Enable hubproxy server";
       xpipe-webtop.enable = mkEnableOption "Enable xpipe webtop";
       authentik.enable = mkEnableOption "Enable authentik server";
+      sshwifty.enable = mkEnableOption "Enable sshwifty server";
       cloudreve = {
         master.enable = mkEnableOption "Enable cloudreve master";
       };
