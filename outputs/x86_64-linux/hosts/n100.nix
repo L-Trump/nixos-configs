@@ -36,6 +36,7 @@ let
         isSlave = true;
       };
       xpipe-webtop.enable = true;
+      backrest.enable = true;
     };
   };
   myconfigs.myhome = lib.recursiveUpdate preset.myhome {
