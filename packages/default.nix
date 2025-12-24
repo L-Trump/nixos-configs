@@ -33,8 +33,8 @@ in
       patches = [
         (pkgs.fetchpatch {
           name = "niri-support-shm.patch";
-          url = "https://github.com/wrvsrx/niri/compare/tag_support-shm-sharing~17..tag_support-shm-sharing.patch";
-          hash = "sha256-aqsbn8iHtepiyG6dPVFvUt8qWWbvU+sZ6AGhQ8RYSko=";
+          url = "https://github.com/wrvsrx/niri/compare/tag_support-shm-sharing_2~19..tag_support-shm-sharing_2.patch";
+          hash = "sha256-M2Z2HMwuJpDtk7bvvREXF21cHVra+qqUUeaKCywLt48=";
         })
       ];
     }
