@@ -1,16 +1,16 @@
 _: {
   nezha-server = {
     image = "registry.cn-shanghai.aliyuncs.com/naibahq/nezha-dashboard";
-    digest = "sha256:4d6e72abda083ff3bd51aa25019d0eb433941e30c3fdb85c033f9c751fecfb46";
+    digest = "sha256:c21078e4683300d29659f2011fc54ab9812e0065c60670843650bd377da0549c";
   };
   immich-machine-learning = {
     image = "m.daocloud.io/ghcr.io/immich-app/immich-machine-learning";
     latestTag = "release";
-    digest = "sha256:379e31b8c75107b0af8141904baa8cc933d7454b88fdb204265ef11749d7d908";
+    digest = "sha256:b3deefd1826f113824e9d7bc30d905e7f823535887d03f869330946b6db3b44a";
   };
   siyuan-server = {
     image = "m.daocloud.io/docker.io/b3log/siyuan";
-    digest = "sha256:d63485de0b47af96aa7b9fc2dc9d53cb682f114510b2b0e8068f8ea11bfd4579";
+    digest = "sha256:bac87c146ebd11338be28b392971944bcf76a4c530e3ec2384eed5ceb37b9bf3";
   };
   cloudreve = {
     image = "m.daocloud.io/docker.io/cloudreve/cloudreve";
@@ -18,11 +18,11 @@ _: {
   };
   cloudreve-redis = {
     image = "m.daocloud.io/docker.io/library/redis";
-    digest = "sha256:43355efd22490e31ca14b9d569367d05121e2be61fd8e47937563ae2a80952ae";
+    digest = "sha256:3906b477e4b60250660573105110c28bfce93b01243eab37610a484daebceb04";
   };
   cloudreve-postgresql = {
     image = "m.daocloud.io/docker.io/library/postgres";
-    digest = "sha256:5ec39c188013123927f30a006987c6b0e20f3ef2b54b140dfa96dac6844d883f";
+    digest = "sha256:38d5c9d522037d8bf0864c9068e4df2f8a60127c6489ab06f98fdeda535560f9";
   };
   rustdesk-api = {
     image = "docker.linkos.org/lejianwen/rustdesk-api";
@@ -30,6 +30,6 @@ _: {
   };
   xpipe-webtop = {
     image = "ghcr.linkos.org/xpipe-io/xpipe-webtop";
-    digest = "sha256:a5de465f7020d13e45014798c428751c979fc857686446bccebc18f620fd7354";
+    digest = "sha256:b7198458c962a35ef360e1e68f6c3837169b64b607d13ef105a83b42ba20e70e";
   };
 }
