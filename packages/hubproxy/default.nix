@@ -10,14 +10,14 @@ let
 in
 stdenv.mkDerivation rec {
   pname = "hubproxy";
-  version = "1.1.9";
+  version = "1.2.0";
 
   src = fetchurl {
     url = "https://github.com/sky22333/hubproxy/releases/download/v${version}/hubproxy-v${version}-linux-${arch}.tar.gz";
     sha256 =
       {
-        x86_64-linux = "sha256-Ei2z6h+AHW9HFKLffmsFu09BsxxcIkopi2MH8N2ifwg=";
-        aarch64-linux = "sha256-fHdL8IFiMKtOqyJaJBFfUKmtm9KzMD+vCw76QiXShAY=";
+        x86_64-linux = "sha256-oFvK4BgY3nV42xcozGfBr+KVnSifIy4fbyJ+svP8gWc=";
+        aarch64-linux = "sha256-vjNChWd6AN/opbLR0oOKZKsU8YllKPUDTd36FVD7XXY=";
       }
       .${stdenv.hostPlatform.system} or (throw "unsupported system ${stdenv.hostPlatform.system}");
   };
