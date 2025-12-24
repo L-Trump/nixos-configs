@@ -40,6 +40,7 @@ let
       juicefs = {
         enable = true;
         enableS3Gateway = true;
+        enableWebdav = true;
       };
       redis.juicefs-meta = {
         enable = true;

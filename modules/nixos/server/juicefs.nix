@@ -41,6 +41,7 @@ in
             "remote-fs.target"
           ];
           mountConfig = {
+            Environment = [ "ALICLOUD_REGION_ID=cn-shanghai" ];
             TimeoutSec = "20s";
           };
         }
