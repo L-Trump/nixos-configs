@@ -1,5 +1,6 @@
 {
   inputs,
+  lib,
   pkgs,
   pkgs-stable,
   ...
@@ -11,6 +12,13 @@ in
   imports = [
     inputs.proxmox-nixos.nixosModules.proxmox-ve
   ];
+  services.openssh = {
+    enable = true;
+    settings.AcceptEnv = lib.mkForce [
+      "LANG"
+      "LC_*"
+    ];
+  };
   environment.systemPackages = with pkgs; [ swtpm ];
   environment.etc."swtpm_setup.conf".source = "${pkgs.swtpm}/etc/swtpm_setup.conf";
   services.proxmox-ve = {
