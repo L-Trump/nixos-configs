@@ -29,7 +29,7 @@ _: {
     digest = "sha256:ed35016339d3bcadf15c7bb3ae8490af1e3950c33f58fd2261ae009b94f5de45";
   };
   xpipe-webtop = {
-    image = "ghcr.linkos.org/xpipe-io/xpipe-webtop";
+    image = "gh.qninq.cn/ghcr.io/xpipe-io/xpipe-webtop";
     digest = "sha256:b7198458c962a35ef360e1e68f6c3837169b64b607d13ef105a83b42ba20e70e";
   };
 }
