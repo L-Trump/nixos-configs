@@ -63,13 +63,15 @@ in
     services.hyprpaper = {
       enable = true;
       settings = {
-        preload = [
-          wallpaper_umy
-          wallpaper_merry
-        ];
         wallpaper = [
-          ",${wallpaper_umy}"
-          "HDMI-A-1,${wallpaper_merry}"
+          {
+            monitor = "HDMI-A-1";
+            path = wallpaper_merry;
+          }
+          {
+            monitor = "";
+            path = wallpaper_umy;
+          }
         ];
       };
     };
