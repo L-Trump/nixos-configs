@@ -2,15 +2,15 @@
 
 # routes to add
 declare -A ROUTES_TO_ADD=(
-    ["192.168.2.233"]="ppp0"
-    ["192.168.2.236"]="ppp0"
-    ["192.168.2.238"]="ppp0"
-    ["192.168.2.250"]="ppp0"
+    ["192.168.1.233"]="ppp0"
+    ["192.168.1.236"]="ppp0"
+    ["192.168.1.238"]="ppp0"
+    ["192.168.1.250"]="ppp0"
 )
 
 # routes to delete
 declare -a ROUTES_TO_DELETE=(
-    "112.86.83.102"
+    "112.81.86.178"
 )
 
 # start fortivpn

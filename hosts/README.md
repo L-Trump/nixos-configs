@@ -3,11 +3,12 @@
 1. `matebook-gt14`: My main laptop, Huawei Matebook GT14 2024, for daily use.
 1. `rog-ga502`: My old laptop, ASUS ROG Zephyrus G15 2020 (GA502IV).
 1. `n100`: N100 NUC in home, as homelab.
-1. `tencent-vm-jp`: Virtual machine on Tencent Cloud, located in Japan.
+<!-- 1. `tencent-vm-jp`: Virtual machine on Tencent Cloud, located in Japan. -->
 1. `aliyun-vm-sh`: Virtual machine on Ailyun, located in Shanghai, China.
 1. `aliyun-vm-hk`: Virtual machine on Ailyun, located in HongKong, China.
-1. `chick-vm-cd`: Virtual machine on bigchick.xyz, located in Chengdu, Sichuan, China.
-1. `qfynat`: A NAT vps hosted by qfyidc, located in Hubei, China.
+<!-- 1. `chick-vm-cd`: Virtual machine on bigchick.xyz, located in Chengdu, Sichuan, China. -->
+1. `gx-vm-js`: Virtual machine on guanxingyun, located in Suqian, Jiangsu, China.
+<!-- 1. `qfynat`: A NAT vps hosted by qfyidc, located in Hubei, China. -->
 1. `iso`: For install/live image generation.
 1. `microvms/microvm-umy`: MicroVM machine with daily use configs
 

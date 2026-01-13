@@ -18,60 +18,38 @@ rec {
   ];
 
   hostsAddr.easytier = {
-    matebook-gt14.ipv4 = "10.144.144.250";
-    rog-ga502.ipv4 = "10.144.144.247";
-    n100.ipv4 = "10.144.144.111";
-    microvm-umy.ipv4 = "10.144.144.112";
-    tencent-vm-jp.ipv4 = "10.144.144.253";
-    aliyun-vm-sh = {
-      ipv4 = "10.144.144.251";
-      domainPrefix = [
-        "kopia"
-        "backrest"
-        "backup"
-        "alist"
-        "olist"
-      ];
-    };
-    aliyun-vm-hk = {
-      ipv4 = "10.144.144.245";
-      domainPrefix = [
-        "backrest"
-        "backup"
-        "alist"
-        "olist"
-      ];
-    };
-    chick-vm-cd = {
-      ipv4 = "10.144.144.249";
-      domainPrefix = [
-        "s3"
-        "backrest"
-        "kopia"
-        "backup"
-        "alist"
-        "olist"
-      ];
-    };
-    qfynat.ipv4 = "10.144.144.252";
-    gs445.ipv4 = "10.144.144.195";
-    gs445-2.ipv4 = "10.144.144.196";
-    oneplus-ace.ipv4 = "10.144.144.239";
-    rhcg-dell.ipv4 = "10.144.144.246";
-    matepad.ipv4 = "10.144.144.248";
-    homewin.ipv4 = "10.144.144.240";
-    nucwin.ipv4 = "10.144.144.241";
     nas = {
       ipv4 = "10.144.144.110";
       ssh.port = 2233;
     };
-    dice = {
-      ipv4 = "10.144.144.254";
-      ssh.port = 223;
-    };
+    n100.ipv4 = "10.144.144.111";
+    microvm-umy.ipv4 = "10.144.144.112";
+    gs445.ipv4 = "10.144.144.195";
+    gs445-2.ipv4 = "10.144.144.196";
     eo-deep = {
       ipv4 = "10.144.144.197";
       ssh.user = "caddy";
+    };
+    oneplus-ace.ipv4 = "10.144.144.239";
+    homewin.ipv4 = "10.144.144.240";
+    nucwin.ipv4 = "10.144.144.241";
+    aliyun-vm-hk.ipv4 = "10.144.144.245";
+    rhcg-dell.ipv4 = "10.144.144.246";
+    rog-ga502.ipv4 = "10.144.144.247";
+    matepad.ipv4 = "10.144.144.248";
+    matebook-gt14.ipv4 = "10.144.144.250";
+    aliyun-vm-sh = {
+      ipv4 = "10.144.144.251";
+      domainPrefix = [
+        "backup"
+        "alist"
+        "olist"
+      ];
+    };
+    gx-vm-js.ipv4 = "10.144.144.252";
+    dice = {
+      ipv4 = "10.144.144.254";
+      ssh.port = 223;
     };
     # eo-acs = {
     #   ipv4 = "10.144.144.199";
