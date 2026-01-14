@@ -26,16 +26,17 @@ let
     server = {
       backrest.enable = true;
       openlist.enable = true;
-      # juicefs = {
-      #   enable = true;
-      #   enableS3Gateway = true;
-      #   enableWebdav = true;
-      # };
-      # immich.machine-learning.enable = true;
-      # redis.juicefs-meta = {
-      #   enable = true;
-      #   isSlave = true;
-      # };
+      juicefs = {
+        enable = true;
+        # enableS3Gateway = true;
+        enableWebdav = true;
+      };
+      authentik.enable = true;
+      immich.machine-learning.enable = true;
+      redis.juicefs-meta = {
+        enable = true;
+        isSlave = true;
+      };
     };
   };
   myconfigs.myhome = preset.myhome;

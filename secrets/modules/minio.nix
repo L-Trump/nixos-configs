@@ -17,7 +17,7 @@ in
     group = "minio";
   };
 
-  age.secrets.jfs-s3-env = lib.mkIf cfgJfs.enableS3Gateway {
+  age.secrets.jfs-s3-env = lib.mkIf (cfgJfs.enableS3Gateway || cfgJfs.enableWebdav) {
     file = "${mysecrets}/minio/minio-juicefs.env.age";
   };
 }

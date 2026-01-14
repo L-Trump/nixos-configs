@@ -21,7 +21,7 @@ in
 
   hubproxy = pkgs.callPackage ./hubproxy { };
 
-  vaultwarden = pkgs.callPackage ./vaultwarden-unstable { };
+  # vaultwarden = pkgs.callPackage ./vaultwarden-unstable { };
 
   obs-studio-plugins = pkgs.obs-studio-plugins // {
     obs-nvfbc = pkgs.callPackage ./obs-nvfbc { };

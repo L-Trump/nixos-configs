@@ -35,12 +35,12 @@ let
       siyuan-server.enable = true;
       cloudreve.master.enable = false;
       xpipe-webtop.enable = false;
-      authentik.enable = true;
+      authentik.enable = false;
       sshwifty.enable = true;
       juicefs = {
         enable = true;
         enableS3Gateway = true;
-        enableWebdav = true;
+        enableWebdav = false;
       };
       redis.juicefs-meta = {
         enable = true;

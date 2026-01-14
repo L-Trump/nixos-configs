@@ -22,7 +22,7 @@ in
       environmentFile = config.age.secrets.authentik-env.path;
       settings = {
         listen = {
-          http = "127.0.0.1:6900";
+          http = "0.0.0.0:6900";
           https = "127.0.0.1:6910";
           metrics = "127.0.0.1:6920";
           # debug = "127.0.0.1:6903";
