@@ -77,7 +77,7 @@ let
         ])
       ) attrs;
     in
-    ''${name} ${optArgsString}${optPropsString}''
+    "${name} ${optArgsString}${optPropsString}"
     + (
       if children == { } then
         ""
@@ -96,7 +96,7 @@ let
 
   # String -> ListOf Anything -> String
   convertListOfNonFlatAttrsToKDL =
-    name: list: ''${concatStringsSep "\n" (map (x: convertAttributeToKDL name x) list)}'';
+    name: list: "${concatStringsSep "\n" (map (x: convertAttributeToKDL name x) list)}";
 
   # String -> ListOf Anything  -> String
   convertListToKDL =

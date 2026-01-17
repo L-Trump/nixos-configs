@@ -39,7 +39,7 @@ in
   xdg.configFile."openbox/menu.xml".source = ./openbox-menu.xml;
   xdg.desktopEntries.wemeetapp-openbox-cast = {
     name = "Wemeet (OpenBox)";
-    exec = ''${pkg-wemeet-openbox-cast}/bin/wemeet-openbox-cast %u'';
+    exec = "${pkg-wemeet-openbox-cast}/bin/wemeet-openbox-cast %u";
     icon = "wemeetapp";
     mimeType = [ "x-scheme-handler/wemeet" ];
     categories = [ "AudioVideo" ];
