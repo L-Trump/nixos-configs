@@ -83,7 +83,13 @@ in
   services.easytier = {
     enable = cfg.et.enable;
     allowSystemForward = true;
-    instances.web.configServer = cfg.et.config-server;
+    instances.web = {
+      configServer = cfg.et.config-server;
+      extraArgs = [
+        "-r"
+        "15889"
+      ];
+    };
     instances.ltnet = lib.mkMerge [
       (lib.mkIf (cfg.et-ltnet.hasConf) {
         configFile = config.age.secrets.easytier-conf.path;
