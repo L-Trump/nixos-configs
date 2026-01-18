@@ -82,6 +82,9 @@ in
         cudaSupport = true;
         waylandSupport = true;
       };
+      onnxruntime = super.onnxruntime.override {
+        cudaSupport = false;
+      };
 
       # ffmpeg-full = super.ffmpeg-full.override {
       #   withNvcodec = true;
