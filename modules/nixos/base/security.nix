@@ -7,6 +7,7 @@
 }:
 let
   u2fAuthFile = "${mysecrets}/canokey/u2f_keys";
+  ltnetCAFile = "${mysecrets}/ssl/ltnet-ca.crt";
 in
 {
   # Allow no password sudo
@@ -30,6 +31,10 @@ in
     enableSSHSupport = false;
     settings.default-cache-ttl = 4 * 60 * 60; # 4 hours
   };
+
+  security.pki.certificateFiles = [
+    ltnetCAFile
+  ];
 
   # Canokeys related
   environment.systemPackages = with pkgs; [ ccid ];
