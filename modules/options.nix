@@ -57,6 +57,7 @@ in
       duplicati.enable = mkEnableOption "Enable duplicati backup tool";
       kopia-server.enable = mkEnableOption "Enable duplicati backup tool";
       backrest.enable = mkEnableOption "Enable backrest (restic) backup tool";
+      syncthing.enable = mkEnableOption "Enable syncthing server";
       vaultwarden.enable = mkEnableOption "Enable vaultwarden password manager";
       homepage-dashboard.enable = mkEnableOption "Enable homepage-dashboard";
       minio.enable = mkEnableOption "Enable minio s3 storage";

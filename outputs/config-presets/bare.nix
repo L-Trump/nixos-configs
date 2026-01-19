@@ -30,6 +30,7 @@
       duplicati.enable = false;
       kopia-server.enable = false;
       backrest.enable = false;
+      syncthing.enable = false;
       hubproxy.enable = false;
       vaultwarden.enable = false;
       homepage-dashboard.enable = false;

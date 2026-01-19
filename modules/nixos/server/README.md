@@ -20,6 +20,7 @@ The modules in this directory are used in my cloud servers
 | nezha-server       | et-ip:8008              | nezha dashboard          |
 | kopia              | localhost:51515         | Kopia backup service     |
 | backrest           | localhost:9898          | Backrest backup service  |
+| syncthing          | localhost:8384          | Syncthing service        |
 | openlist           | localhost:(5244/5246)   | openlist server          |
 | hubproxy           | localhost:5000          | hubproxy server          |
 | immich (ml)        | et-ip:3003              | Immich machine learning  |

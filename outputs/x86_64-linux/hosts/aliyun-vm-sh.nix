@@ -29,6 +29,7 @@ let
       nezha-server.enable = true;
       kopia-server.enable = false;
       backrest.enable = true;
+      syncthing.enable = true;
       vaultwarden.enable = true;
       homepage-dashboard.enable = true;
       openlist.enable = true;
