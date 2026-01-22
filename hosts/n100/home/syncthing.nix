@@ -1,6 +1,6 @@
 _: {
   services.syncthing = {
-    enable = true;
+    enable = false;
     extraOptions = [
       "--gui-address=0.0.0.0:8384"
     ];
