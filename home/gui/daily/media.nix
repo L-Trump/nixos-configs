@@ -4,7 +4,7 @@
     # A bilibili client
     wiliwili
     # Music
-    # lx-music-desktop
+    lx-music-desktop
 
     # creative
     # blender # 3d modeling

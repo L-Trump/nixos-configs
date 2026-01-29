@@ -33,7 +33,7 @@ Below are some of the components used for my daily machine.
 
 |                             | NixOS(Wayland)                                                 |
 | --------------------------- | :------------------------------------------------------------- |
-| **Window Manager**          | [Hyprland][Hyprland]                                           |
+| **Window Manager**          | [Niri][Niri]                                           |
 | **Terminal Emulator**       | [Kitty][Kitty] + [Zellij][Zellij]                              |
 | **Bar**                     | [Waybar][Waybar]                                               |
 | **Application Launcher**    | [rofi-wayland][rofi-wayland]                                   |
@@ -111,7 +111,7 @@ See [./secrets](./secrets) for details.
 
 ## References
 
-[Hyprland]: https://github.com/hyprwm/Hyprland
+[Niri]: https://github.com/YaLTeR/niri
 [Zellij]: https://github.com/zellij-org/zellij
 [Kitty]: https://github.com/kovidgoyal/kitty
 [Waybar]: https://github.com/Alexays/Waybar
