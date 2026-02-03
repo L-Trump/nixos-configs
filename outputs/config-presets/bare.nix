@@ -40,6 +40,7 @@
       xpipe-webtop.enable = false;
       authentik.enable = false;
       sshwifty.enable = false;
+      ncm-api.enable = false;
       immich.machine-learning.enable = false;
       juicefs.enable = false;
       redis = {

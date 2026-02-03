@@ -67,6 +67,7 @@ in
       xpipe-webtop.enable = mkEnableOption "Enable xpipe webtop";
       authentik.enable = mkEnableOption "Enable authentik server";
       sshwifty.enable = mkEnableOption "Enable sshwifty server";
+      ncm-api.enable = mkEnableOption "Enable NeteaseCloudMusic API server";
       cloudreve = {
         master.enable = mkEnableOption "Enable cloudreve master";
       };

@@ -25,6 +25,7 @@ The modules in this directory are used in my cloud servers
 | hubproxy           | localhost:5000          | hubproxy server          |
 | immich (ml)        | et-ip:3003              | Immich machine learning  |
 | siyuan-server      | et-ip:6806              | Siyuan docker            |
+| ncm-api            | et-ip:6816              | NeteaseCloudMusic API    |
 | cloudreve-master   | et-ip:5212              | Cloudreve master node    |
 | xpipe-webtop       | et-ip:6790              | xpipe webtop             |
 | authentik          | localhost:(6900-6940)   | authentik server         |

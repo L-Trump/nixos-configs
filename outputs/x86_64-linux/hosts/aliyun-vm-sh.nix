@@ -38,6 +38,7 @@ let
       xpipe-webtop.enable = false;
       authentik.enable = false;
       sshwifty.enable = true;
+      ncm-api.enable = true;
       juicefs = {
         enable = true;
         enableS3Gateway = true;
