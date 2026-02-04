@@ -41,6 +41,7 @@
       authentik.enable = false;
       sshwifty.enable = false;
       ncm-api.enable = false;
+      rustical.enable = false;
       immich.machine-learning.enable = false;
       juicefs.enable = false;
       redis = {

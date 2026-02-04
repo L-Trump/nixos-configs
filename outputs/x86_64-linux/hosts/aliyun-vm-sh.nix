@@ -39,6 +39,7 @@ let
       authentik.enable = false;
       sshwifty.enable = true;
       ncm-api.enable = true;
+      rustical.enable = true;
       juicefs = {
         enable = true;
         enableS3Gateway = true;
