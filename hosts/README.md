@@ -6,6 +6,7 @@
 1. `aliyun-vm-sh`: Virtual machine on Ailyun, located in Shanghai, China.
 1. `aliyun-vm-hk`: Virtual machine on Ailyun, located in HongKong, China.
 1. `gx-vm-js`: Virtual machine on guanxingyun, located in Suqian, Jiangsu, China.
+1. `jcloud`: Virtual machine on jCloud, located in Shanghai, China.
 1. `iso`: For install/live image generation.
 1. `microvms/microvm-umy`: MicroVM machine with daily use configs
 <!-- 1. `tencent-vm-jp`: Virtual machine on Tencent Cloud, located in Japan. -->
