@@ -51,7 +51,7 @@ in
     };
   };
 
-  nix.settings.substituters = lib.mkForce [
+  nix.settings.substituters = lib.mkBefore [
     "https://mirror.sjtu.edu.cn/nix-channels/store"
     "https://mirrors.ustc.edu.cn/nix-channels/store"
   ];

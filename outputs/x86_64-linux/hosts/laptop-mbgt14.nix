@@ -14,7 +14,9 @@
 let
   # Huawei Matebook-GT14
   name = "matebook-gt14";
-  dname = "matebook-gt14";
+  tags = [ name ];
+  ssh-user = "root";
+
   preset = mypresets.daily;
   myconfigs.mymodules = lib.recursiveUpdate preset.mymodules {
     server = {
@@ -32,14 +34,14 @@ let
       "secrets/modules"
       "modules/nixos/default.nix"
       # host specific
-      "hosts/${dname}/modules"
+      "hosts/${name}/modules"
     ];
     home-modules = map mylib.relativeToRoot [
       # common
       "home/default.nix"
       "secrets/home"
       # host specific
-      "hosts/${dname}/home"
+      "hosts/${name}/home"
     ];
   };
   systemArgs = modules // args // myconfigs;
@@ -48,5 +50,15 @@ in
   nixosConfigurations = {
     # host with hyprland compositor
     "${name}" = mylib.nixosSystem systemArgs;
+  };
+
+  colmena."${name}" = mylib.colmenaSystem (systemArgs // { inherit tags ssh-user; });
+
+  colmenaMeta = {
+    nodeNixpkgs."${name}" = import inputs.nixpkgs {
+      inherit system;
+      config = myvars.nixpkgs-config;
+    };
+    nodeSpecialArgs."${name}" = { inherit (myconfigs) myhome mymodules; };
   };
 }
