@@ -38,6 +38,8 @@
       "wireshark"
       "adbusers"
       "libvirtd"
+      "input"
+      "uinput"
     ];
   };
 
