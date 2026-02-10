@@ -6,24 +6,7 @@
 }:
 with lib;
 let
-  version = "76e55f39222e2d251600d7c4d52846ef838702ba";
-  src = pkgs.fetchFromGitLab {
-    owner = "shackra";
-    repo = "goimapnotify";
-    rev = version;
-    hash = "sha256-oNcEftR4wystgMuSN9mmzqkUXAPDe02JH2elhzdymDY=";
-  };
-  cfg.package = pkgs.goimapnotify.override {
-    buildGoModule =
-      args:
-      pkgs.buildGoModule (
-        args
-        // {
-          inherit src version;
-          vendorHash = "sha256-rWPXQj0XFS/Mv9ylGv09vol0kkRDNaOAEgnJvSWMvoI=";
-        }
-      );
-  };
+  cfg.package = pkgs.goimapnotify;
 in
 {
   home.packages = [ cfg.package ];
