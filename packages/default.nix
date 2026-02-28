@@ -27,6 +27,9 @@ in
   # TODO wait merge https://github.com/NixOS/nixpkgs/pull/493384
   sunshine = pkgs-unstable.sunshine;
 
+  # TODO wait merge https://github.com/NixOS/nixpkgs/pull/491229
+  backrest = pkgs.callPackage ./backrest { };
+
   # vaultwarden = pkgs.callPackage ./vaultwarden-unstable { };
 
   obs-studio-plugins = pkgs.obs-studio-plugins // {
