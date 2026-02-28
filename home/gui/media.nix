@@ -32,13 +32,16 @@
     mpv = {
       enable = true;
       defaultProfiles = [ "gpu-hq" ];
-      scripts = with pkgs.mpvScripts; [
-        mpris
-        encode
-        mpv-cheatsheet
-        uosc
-        thumbfast
-      ];
+      scripts =
+        with pkgs;
+        with pkgs.mpvScripts;
+        [
+          mpris
+          encode
+          mpv-cheatsheet-ng
+          uosc
+          thumbfast
+        ];
       config = {
         osd-bar = "no";
         border = "no";

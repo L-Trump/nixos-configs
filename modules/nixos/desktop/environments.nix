@@ -31,7 +31,7 @@
   # thunar file manager(part of xfce) related options
   programs.thunar = {
     enable = true;
-    plugins = with pkgs.xfce; [
+    plugins = with pkgs; [
       thunar-archive-plugin
       thunar-volman
     ];

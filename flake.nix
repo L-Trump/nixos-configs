@@ -83,7 +83,6 @@
     # Proxmox on NixOS
     proxmox-nixos = {
       url = "github:SaumonNet/proxmox-nixos";
-      inputs.nixpkgs-unstable.follows = "nixpkgs";
     };
     # MicroVM
     microvm = {

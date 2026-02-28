@@ -21,6 +21,12 @@ in
 
   hubproxy = pkgs.callPackage ./hubproxy { };
 
+  # TODO wait merge https://github.com/NixOS/nixpkgs/pull/490264
+  mpv-cheatsheet-ng = pkgs.mpvScripts.callPackage ./mpv-cheatsheet-ng { };
+
+  # TODO wait merge https://github.com/NixOS/nixpkgs/pull/493384
+  sunshine = pkgs-unstable.sunshine;
+
   # vaultwarden = pkgs.callPackage ./vaultwarden-unstable { };
 
   obs-studio-plugins = pkgs.obs-studio-plugins // {
