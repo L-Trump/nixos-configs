@@ -54,6 +54,6 @@ in
 
   # generate iso image for hosts with desktop environment
   packages = {
-    "${name}" = inputs.self.nixosConfigurations."${name}".config.formats.iso;
+    "${name}" = inputs.self.nixosConfigurations."${name}".config.system.build.images.iso;
   };
 }

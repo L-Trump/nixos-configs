@@ -12,7 +12,7 @@
   ...
 }:
 let
-  inherit (inputs) nixpkgs home-manager nixos-generators;
+  inherit (inputs) nixpkgs home-manager;
   spArgs = specialArgs // {
     inherit mymodules myhome;
   };
@@ -22,9 +22,6 @@ nixpkgs.lib.nixosSystem {
   specialArgs = spArgs;
   modules =
     nixos-modules
-    ++ [
-      nixos-generators.nixosModules.all-formats
-    ]
     ++ (lib.optionals ((lib.lists.length home-modules) > 0) [
       home-manager.nixosModules.home-manager
       (
