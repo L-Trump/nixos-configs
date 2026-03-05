@@ -23,6 +23,31 @@
         };
       }
       {
+        _args = [ "Dell Inc. DELL S2721NX 5Z116H3" ];
+        focus-at-startup = { };
+        position = {
+          _props = {
+            x = 1440;
+            y = 0;
+          };
+        };
+      }
+      {
+        _args = [ "Dell Inc. DELL SE2722H JT50WP3" ];
+        transform = "270";
+        layout = {
+          default-column-width = {
+            proportion = 1.0;
+          };
+        };
+        position = {
+          _props = {
+            x = 3360;
+            y = 0;
+          };
+        };
+      }
+      {
         _args = [ "Dell Inc. DELL SE2722H CVW0WP3" ];
         position = {
           _props = {
