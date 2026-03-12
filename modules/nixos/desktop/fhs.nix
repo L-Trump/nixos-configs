@@ -11,7 +11,7 @@
         base
         // {
           name = "fhs";
-          targetPkgs = pkgs: (base.targetPkgs pkgs) ++ [ pkgs.pkg-config ];
+          targetPkgs = pkgs: (base.targetPkgs pkgs) ++ [ pkgs.pkg-config pkgs.pcre2 ];
           profile = "export FHS=1";
           runScript = "bash";
           extraOutputsToInstall = [ "dev" ];

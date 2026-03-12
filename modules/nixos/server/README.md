@@ -31,5 +31,6 @@ The modules in this directory are used in my cloud servers
 | authentik          | localhost:(6900-6940)   | authentik server         |
 | sshwifty           | localhost:8182          | sshwifty server          |
 | rustical           | localhost:6826          | rustical server          |
+| code-server        | localhost:6829          | VSCode in browser        |
 
 **Note:** et-ip means the virtual ipv4 address in easytier, indicating the service can only be accessed in the internal network.

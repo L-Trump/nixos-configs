@@ -42,6 +42,7 @@
       sshwifty.enable = false;
       ncm-api.enable = false;
       rustical.enable = false;
+      code-server.enable = false;
       immich.machine-learning.enable = false;
       juicefs.enable = false;
       redis = {

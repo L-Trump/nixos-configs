@@ -9,5 +9,7 @@
     (final: prev: {
       nur-xddxdd = inputs.nur-xddxdd.overlays.default final prev;
     })
+    # vscode extensions from community
+    inputs.nix-vscode-extensions.overlays.default
   ];
 }

@@ -32,6 +32,7 @@ let
       };
       authentik.enable = false;
       immich.machine-learning.enable = false;
+      code-server.enable = true;
       redis.juicefs-meta = {
         enable = true;
         isSlave = true;

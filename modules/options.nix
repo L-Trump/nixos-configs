@@ -69,6 +69,7 @@ in
       sshwifty.enable = mkEnableOption "Enable sshwifty server";
       ncm-api.enable = mkEnableOption "Enable NeteaseCloudMusic API server";
       rustical.enable = mkEnableOption "Enable rustical (caldav) server";
+      code-server.enable = mkEnableOption "Enable code-server";
       cloudreve = {
         master.enable = mkEnableOption "Enable cloudreve master";
       };
