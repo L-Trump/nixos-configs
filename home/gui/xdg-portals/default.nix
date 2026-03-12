@@ -41,7 +41,10 @@
   xdg.configFile."xdg-desktop-portal-termfilechooser/config".text = ''
     [filechooser]
     cmd=${./ffnnn}
+    create_help_file=0
     default_dir=$HOME/Downloads
+    open_mode=suggested
+    save_mode=suggested
   '';
 
   systemd.user.services.xdg-desktop-portal-termfilechooser = {
