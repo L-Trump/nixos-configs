@@ -25,7 +25,9 @@ let
 
     input = {
       keyboard = {
-        xkb = { };
+        xkb = {
+          layout = "us";
+        };
         numlock = { };
       };
       touchpad = {
