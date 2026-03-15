@@ -2,16 +2,16 @@
 { pkgs, ... }:
 {
   services.fprintd = {
-    enable = true;
+    enable = false;
   };
-  systemd.services.fprintd = {
-    wantedBy = [ "multi-user.target" ];
-    serviceConfig.Type = "simple";
-  };
+  # systemd.services.fprintd = {
+  #   wantedBy = [ "multi-user.target" ];
+  #   serviceConfig.Type = "simple";
+  # };
 
-  security.pam.services.swaylock = {
-    fprintAuth = true;
-    allowNullPassword = true;
-    rules.auth.unix.order = 11390;
-  };
+  # security.pam.services.swaylock = {
+  #   fprintAuth = true;
+  #   allowNullPassword = true;
+  #   rules.auth.unix.order = 11390;
+  # };
 }

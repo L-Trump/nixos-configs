@@ -162,6 +162,7 @@ in
         ".xwechat"
         ".config/github-copilot" # nvim plugins
         "Waytech" # clouddrive2
+        ".openclaw"
 
         # cloud native
         {

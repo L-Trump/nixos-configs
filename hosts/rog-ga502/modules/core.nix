@@ -39,7 +39,6 @@ in
   services.supergfxd.enable = true;
   services.asusd = {
     enable = true;
-    enableUserService = true;
   };
 
   environment.systemPackages = with pkgs; [
