@@ -4,6 +4,7 @@
     qq
     wechat-uos
     telegram-desktop
+    feishu
   ];
 
   # xdg.desktopEntries.qq = {
