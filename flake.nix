@@ -63,6 +63,11 @@
       url = "github:L-Trump/nixos-fonts?shallow=1";
       flake = false;
     };
+    # My wallpapers
+    mywallpapers = {
+      url = "github:L-Trump/nixos-wallpapers?shallow=1";
+      flake = false;
+    };
     # Impermanence
     impermanence.url = "github:nix-community/impermanence";
 

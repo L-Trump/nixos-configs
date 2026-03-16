@@ -4,11 +4,13 @@
   lib,
   mylib,
   myhome,
+  inputs,
   ...
 }:
 let
-  wallpaper_umy = builtins.path { path = ../../../wallpapers/Meumy/91689568_p1.jpg; };
-  wallpaper_merry = builtins.path { path = ../../../wallpapers/Meumy/91689568_p6.jpg; };
+  wallpaper_umy = builtins.path { path = "${inputs.mywallpapers}/Meumy/91689568_p1.jpg"; };
+  wallpaper_merry = builtins.path { path = "${inputs.mywallpapers}/Meumy/91689568_p6.jpg"; };
+  wallpaper_hazel_qu = builtins.path { path = "${inputs.mywallpapers}/Hazel/hazel_qu.png"; };
   cfg.niri = myhome.desktop.niri;
   cfg.hyprland = myhome.desktop.hyprland;
   cfg.enable = cfg.niri.enable || cfg.hyprland.enable;
@@ -66,7 +68,11 @@ in
         wallpaper = [
           {
             monitor = "HDMI-A-1";
-            path = wallpaper_merry;
+            path = wallpaper_hazel_qu;
+          }
+          {
+            monitor = "eDP-1";
+            path = wallpaper_hazel_qu;
           }
           {
             monitor = "";

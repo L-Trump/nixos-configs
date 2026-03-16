@@ -1,6 +1,8 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 let
-  lock_wallpaper = builtins.path { path = ../../../wallpapers/LockWallpapers/75778903_p0.jpg; };
+  lock_wallpaper = builtins.path {
+    path = "${inputs.mywallpapers}/LockWallpapers/75778903_p0.jpg";
+  };
 in
 {
   programs.swaylock = {

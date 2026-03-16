@@ -987,6 +987,22 @@
         "url": "ssh://git@github.com/L-Trump/nixos-secrets.git"
       }
     },
+    "mywallpapers": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1773662083,
+        "narHash": "sha256-WVrPA5tChBDjvkkGNlrAgyNP5m1r9qj6YwDx7iX8MQg=",
+        "owner": "L-Trump",
+        "repo": "nixos-wallpapers",
+        "rev": "8e9e894a147dd2f5fc9f8a58bc6e76e0ff3c43af",
+        "type": "github"
+      },
+      "original": {
+        "owner": "L-Trump",
+        "repo": "nixos-wallpapers",
+        "type": "github"
+      }
+    },
     "napalm": {
       "inputs": {
         "flake-utils": [
@@ -1601,6 +1617,7 @@
         "microvm": "microvm",
         "myfonts": "myfonts",
         "mysecrets": "mysecrets",
+        "mywallpapers": "mywallpapers",
         "nix-index-database": "nix-index-database",
         "nix-matlab": "nix-matlab",
         "nix-openclaw": "nix-openclaw",
