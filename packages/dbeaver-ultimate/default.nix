@@ -59,7 +59,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
       };
     in
     fetchurl {
-      url = "https://dbeaver.com/downloads-ultimate/${finalAttrs.version}/dbeaver-ue-${finalAttrs.version}-${suffix}";
+      url = "https://downloads.dbeaver.net/ultimate/${finalAttrs.version}/dbeaver-ue-${finalAttrs.version}-${suffix}";
       inherit hash;
     };
 
