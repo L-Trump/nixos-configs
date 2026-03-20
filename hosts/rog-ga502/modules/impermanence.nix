@@ -129,6 +129,8 @@ in
         ".config/sunshine"
         ".config/Moonlight Game Streaming Project"
         ".config/rclone"
+        ".config/LarkShell"
+        ".config/discord"
 
         # Logseq / Zotero
         ".config/Logseq"
