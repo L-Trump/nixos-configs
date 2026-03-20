@@ -9,32 +9,8 @@
   imports = [
     inputs.nix-openclaw.homeManagerModules.openclaw
   ];
-  programs.openclaw = {
-    enable = false;
-    documents = ./openclaw-documents;
-    package = pkgs.openclawPackages.openclaw;
-    bundledPlugins = {
-      summarize.enable = true;
-      sag.enable = true;
-      camsnap.enable = true;
-      # gogcli.enable = true;
-      goplaces.enable = true;
-      # bird.enable = true;
-      # peekaboo.enable = true;
-      sonoscli.enable = true;
-    };
-    config = {
-      gateway = {
-        mode = "local";
-      };
-    };
 
-    instances.default = {
-      enable = false;
-      package = pkgs.openclawPackages.openclaw;
-    };
-  };
-
+  home.file.".openclaw/node_modules/openclaw".source = "${pkgs.openclawPackages.openclaw-gateway}/lib/openclaw";
   # OpenClaw Gateway systemd user service managed by Home Manager
   systemd.user.services.openclaw-gateway = {
     Unit = {
