@@ -803,6 +803,16 @@ let
         power-off-monitors = { };
       };
     };
+    recent-windows = {
+      binds = {
+        "Mod+Tab" = {
+          next-window = { };
+        };
+        "Mod+Shift+Tab" = {
+          previous-window = { };
+        };
+      };
+    };
   };
 in
 settings
