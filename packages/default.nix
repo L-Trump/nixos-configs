@@ -54,6 +54,8 @@ in
 
   rustdesk-flutter = pkgs-unstable.rustdesk-flutter; # TODO wait upstream merge 461661
 
+  hokit = pkgs.callPackage ./hokit { };
+
   # Some package derived from unstable repo
   # siyuan = pkgs-unstable.siyuan;
   # easytier = pkgs-unstable.easytier;
