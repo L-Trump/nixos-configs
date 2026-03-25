@@ -1,4 +1,5 @@
 set path_prepend \
+      $HOME/.npm/bin \
       $HOME/.local/bin/custom_scripts \
       $HOME/.cargo/bin \
       $HOME/go/bin

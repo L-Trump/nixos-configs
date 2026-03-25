@@ -9,6 +9,7 @@
     # onedriver
     bitwarden-desktop
     clouddrive2
+    localsend
     rbw
     rofi-rbw-wayland
     rustdesk-flutter
