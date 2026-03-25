@@ -97,6 +97,7 @@ in
         # neovim / remmina / flatpak / ...
         ".local/share"
         ".local/state"
+        ".local/bin"
 
         # States
         ".cache/betterlockscreen"
@@ -164,7 +165,11 @@ in
         ".xwechat"
         ".config/github-copilot" # nvim plugins
         "Waytech" # clouddrive2
+
+        # OpenClaw
         ".openclaw"
+        "self-improving"
+        ".agent-browser"
 
         # cloud native
         {
