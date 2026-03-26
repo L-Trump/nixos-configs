@@ -2,6 +2,7 @@
   appimageTools,
   lib,
   fetchurl,
+  makeWrapper,
 }:
 let
   pname = "hokit";
@@ -21,6 +22,12 @@ in
 appimageTools.wrapAppImage {
   inherit pname version;
   src = extracted;
+
+  extraInstallCommands = ''
+    . ${makeWrapper}/nix-support/setup-hook
+    wrapProgram $out/bin/${pname} \
+      --add-flags "\''${WAYLAND_DISPLAY:+--ozone-platform-hint=auto --enable-features=WaylandWindowDecorations --enable-wayland-ime=true}"
+  '';
 
   passthru.updateScript = ./update.sh;
 
