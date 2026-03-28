@@ -36,6 +36,7 @@ rec {
     aliyun-vm-hk.ipv4 = "10.144.144.245";
     rhcg-dell.ipv4 = "10.144.144.246";
     rog-ga502.ipv4 = "10.144.144.247";
+    purax.ipv4 = "10.144.144.244";
     matepad.ipv4 = "10.144.144.248";
     matebook-gt14.ipv4 = "10.144.144.250";
     aliyun-vm-sh = {
