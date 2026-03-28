@@ -21,11 +21,9 @@ in
 
   hubproxy = pkgs.callPackage ./hubproxy { };
 
-  # TODO wait merge https://github.com/NixOS/nixpkgs/pull/490264
-  mpv-cheatsheet-ng = pkgs.mpvScripts.callPackage ./mpv-cheatsheet-ng { };
+  # mpv-cheatsheet-ng = pkgs.mpvScripts.callPackage ./mpv-cheatsheet-ng { };
 
-  # TODO wait merge https://github.com/NixOS/nixpkgs/pull/493384
-  sunshine = pkgs-unstable.sunshine;
+  # sunshine = pkgs-unstable.sunshine;
 
   # TODO wait merge https://github.com/NixOS/nixpkgs/pull/491229
   backrest = pkgs.callPackage ./backrest { };
@@ -52,9 +50,11 @@ in
   dbeaver-agent = pkgs.callPackage ./dbeaver-agent { };
   dbeaver-ultimate = pkgs.callPackage ./dbeaver-ultimate { };
 
-  rustdesk-flutter = pkgs-unstable.rustdesk-flutter; # TODO wait upstream merge 461661
+  # rustdesk-flutter = pkgs-unstable.rustdesk-flutter;
 
   hokit = pkgs.callPackage ./hokit { };
+
+  hdc = pkgs.callPackage ./hdc { };
 
   # Some package derived from unstable repo
   # siyuan = pkgs-unstable.siyuan;

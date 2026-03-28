@@ -48,8 +48,7 @@ in
   ];
   services.xserver.videoDrivers = [ "nvidia" ]; # will install nvidia-vaapi-driver by default
   hardware.nvidia = {
-    # TODO wait merge https://github.com/NixOS/nixpkgs/pull/490123
-    open = false;
+    open = true;
     # Optionally, you may need to select the appropriate driver version for your specific GPU.
     # https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/os-specific/linux/nvidia-x11/default.nix
     package = pkgs.nvidia-patch.patch-nvenc (pkgs.nvidia-patch.patch-fbc nvidia-package);
