@@ -10,6 +10,8 @@
     inputs.nix-openclaw.homeManagerModules.openclaw
   ];
 
+  home.packages = with pkgs; [ hdc ];
+
   home.file.".openclaw/node_modules/openclaw".source =
     "${pkgs.openclawPackages.openclaw-gateway}/lib/openclaw";
   # OpenClaw Gateway systemd user service managed by Home Manager
