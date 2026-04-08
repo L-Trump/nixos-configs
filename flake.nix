@@ -34,10 +34,10 @@
     #   inputs.hyprland.follows = "hyprland"; # IMPORTANT
     # };
     # xddxdd packages, for qq/wechat
-    nur-xddxdd = {
-      url = "github:xddxdd/nur-packages";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # nur-xddxdd = {
+    #   url = "github:xddxdd/nur-packages";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
     # Agenix - secrets manager
     agenix = {
       url = "github:ryantm/agenix";
@@ -110,7 +110,7 @@
       url = "github:openclaw/nix-openclaw";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
-      inputs.nix-steipete-tools.inputs.nixkpgs.follows = "nixpkgs";
+      inputs.nix-steipete-tools.inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 }

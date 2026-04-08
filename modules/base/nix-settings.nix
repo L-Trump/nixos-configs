@@ -9,7 +9,7 @@
 {
   imports = [
     # XDDXDD cache substituter
-    inputs.nur-xddxdd.nixosModules.nix-cache-attic
+    # inputs.nur-xddxdd.nixosModules.nix-cache-attic
     inputs.nix-index-database.nixosModules.nix-index
   ];
   # auto upgrade nix to the unstable version

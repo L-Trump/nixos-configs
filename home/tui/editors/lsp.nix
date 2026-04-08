@@ -37,7 +37,7 @@ in
         ]
         ++ lib.optionals ((elem "all" cfg.lang) || (elem "bash" cfg.lang)) [
           #-- bash
-          nodePackages.bash-language-server
+          bash-language-server
           shellcheck
           shfmt
         ]

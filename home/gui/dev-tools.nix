@@ -4,7 +4,7 @@
     enable = true;
     # let vscode sync and update its configuration & extensions across devices, using github account.
     # userSettings = {};
-    extensions = with pkgs.vscode-marketplace; [
+    profiles.default.extensions = with pkgs.vscode-marketplace; [
       bbenoist.nix
       mkhl.direnv
       jnoortheen.nix-ide

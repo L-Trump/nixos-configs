@@ -2,7 +2,7 @@
   lib,
   stdenvNoCC,
   fetchurl,
-  fetchFromGitHub,
+  fetchgit,
   makeWrapper,
   openjdk21,
   gnused,
@@ -21,9 +21,8 @@ let
     pname = "dbeaver-agent";
     version = "25.2";
 
-    src = fetchFromGitHub {
-      owner = "wgzhao";
-      repo = "dbeaver-agent";
+    src = fetchgit {
+      url = "https://gitee.com/lunakan/dbeaver-agent";
       tag = "v${version}";
       hash = "sha256-m+kkIP9WnNa/sXVuHUuUUnamcAvFE3l68G2sERsAyMw=";
     };
