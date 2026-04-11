@@ -21,6 +21,9 @@ in
 
   hubproxy = pkgs.callPackage ./hubproxy { };
 
+  # TODO wait upstream merge https://github.com/NixOS/nixpkgs/pull/505623
+  wechat-uos = pkgs.callPackage ./wechat-uos { };
+
   # mpv-cheatsheet-ng = pkgs.mpvScripts.callPackage ./mpv-cheatsheet-ng { };
 
   # sunshine = pkgs-unstable.sunshine;
