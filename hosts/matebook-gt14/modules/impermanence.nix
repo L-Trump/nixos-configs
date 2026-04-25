@@ -170,6 +170,10 @@ in
         ".openclaw"
         "self-improving"
         ".agent-browser"
+        "proactivity"
+        ".mcporter"
+        ".lark-cli"
+        ".claude"
 
         # cloud native
         {
@@ -208,6 +212,7 @@ in
       ];
       files = [
         ".cache/rofi3.druncache"
+        ".claude.json"
       ];
     };
   };
