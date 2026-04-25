@@ -21,9 +21,6 @@ in
 
   hubproxy = pkgs.callPackage ./hubproxy { };
 
-  # TODO wait upstream merge https://github.com/NixOS/nixpkgs/pull/505623
-  wechat-uos = pkgs.callPackage ./wechat-uos { };
-
   # mpv-cheatsheet-ng = pkgs.mpvScripts.callPackage ./mpv-cheatsheet-ng { };
 
   # sunshine = pkgs-unstable.sunshine;
@@ -64,6 +61,8 @@ in
   # easytier = pkgs-unstable.easytier;
   # niri = pkgs-unstable.niri;
 
+  # wechat-uos = pkgs.callPackage ./wechat-uos { };
+  # easytier = pkgs.callPackage ./easytier { };
   # intel-graphics-compiler =  pkgs-unstable.intel-graphics-compiler;
   # siyuan = pkgs.callPackage ./siyuan {};
   # easytier = pkgs.callPackage ./easytier { };

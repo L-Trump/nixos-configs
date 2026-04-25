@@ -71,32 +71,40 @@
     ];
   };
 
-  # clean on boot
-  boot.initrd.postDeviceCommands = lib.mkAfter ''
-    mkdir -p /btrfs_tmp
-    mount -o subvolid=5,compress=zstd ${config.fileSystems."/".device} /btrfs_tmp
-
-    delete_subvolume_recursively() {
-        IFS=$'\n'
-        for i in $(btrfs subvolume list -o "$1" | cut -f 9- -d ' '); do
+  # clean old btrfs snapshots on boot (migrated to systemd stage-1)
+  boot.initrd.systemd.services.btrfs-cleanup = {
+    description = "Clean old btrfs snapshots before boot";
+    wantedBy = [ "initrd.target" ];
+    before = [ "sysroot.mount" ];
+    after = [ "systemd-tmpfiles-setup.service" ];
+    unitConfig.DefaultDependencies = "no";
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = pkgs.writeScript "btrfs-cleanup.sh" ''
+        #!${pkgs.bash}/bin/bash
+        set -euo pipefail
+        mkdir -p /btrfs_tmp
+        mount -o subvolid=5,compress=zstd /dev/disk/by-label/nixos /btrfs_tmp
+        delete_subvolume_recursively() {
+          IFS=$'\n'
+          for i in $(btrfs subvolume list -o "$1" | cut -f 9- -d ' '); do
             delete_subvolume_recursively "/btrfs_tmp/$i"
+          done
+          btrfs subvolume delete "$1"
         done
-        btrfs subvolume delete "$1"
-    }
-
-    for i in $(find /btrfs_tmp/@snapshots/old_roots/ -maxdepth 1 -mtime +10); do
-        delete_subvolume_recursively "$i"
-    done
-
-    if [[ -e /btrfs_tmp/@root ]]; then
-        mkdir -p /btrfs_tmp/@snapshots/old_roots
-        timestamp=$(date --date="@$(stat -c %Y /btrfs_tmp/@root)" "+%Y-%m-%-d_%H:%M:%S")
-        mv /btrfs_tmp/@root "/btrfs_tmp/@snapshots/old_roots/$timestamp"
-    fi
-
-    btrfs subvolume create /btrfs_tmp/@root
-    umount /btrfs_tmp
-  '';
+        for i in $(find /btrfs_tmp/@snapshots/old_roots/ -maxdepth 1 -mtime +10 2>/dev/null || true); do
+          delete_subvolume_recursively "$i"
+        done
+        if [[ -e /btrfs_tmp/@root ]]; then
+          mkdir -p /btrfs_tmp/@snapshots/old_roots
+          timestamp=$(date --date="@$(stat -c %Y /btrfs_tmp/@root)" "+%Y-%m-%-d_%H:%M:%S")
+          mv /btrfs_tmp/@root "/btrfs_tmp/@snapshots/old_roots/$timestamp"
+        fi
+        btrfs subvolume create /btrfs_tmp/@root
+        umount /btrfs_tmp
+      '';
+    };
+  };
 
   fileSystems."/btr_pool" = {
     device = "/dev/disk/by-label/nixos";
