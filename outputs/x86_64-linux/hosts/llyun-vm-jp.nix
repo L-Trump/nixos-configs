@@ -26,9 +26,15 @@ let
     server = {
       backrest.enable = true;
       hubproxy.enable = true;
+      openclaw.enable = true;
     };
   };
-  myconfigs.myhome = preset.myhome;
+  myconfigs.myhome = lib.recursiveUpdate preset.myhome {
+    tuiExtra = {
+      enable = true;
+      openclaw.enable = true;
+    };
+  };
   modules = {
     nixos-modules = map mylib.relativeToRoot [
       # common
