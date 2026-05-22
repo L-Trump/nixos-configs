@@ -38,6 +38,7 @@ rec {
     rog-ga502.ipv4 = "10.144.144.247";
     purax.ipv4 = "10.144.144.244";
     matepad.ipv4 = "10.144.144.248";
+    llyun-vm-jp.ipv4 = "10.144.144.249";
     matebook-gt14.ipv4 = "10.144.144.250";
     aliyun-vm-sh = {
       ipv4 = "10.144.144.251";

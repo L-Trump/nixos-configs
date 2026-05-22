@@ -12,23 +12,20 @@
   ...
 }@args:
 let
-  name = "tencent-vm-jp";
+  name = "llyun-vm-jp";
   tags = [
     name
-    # "vm-jp"
-    # "all"
-    # "vps"
+    "vm-jp"
+    "all"
+    "vps"
   ];
   ssh-user = "root";
 
   preset = mypresets.server;
   myconfigs.mymodules = lib.recursiveUpdate preset.mymodules {
     server = {
-      juicefs.enable = true;
-      redis.juicefs-meta = {
-        enable = true;
-        isSlave = true;
-      };
+      backrest.enable = true;
+      hubproxy.enable = true;
     };
   };
   myconfigs.myhome = preset.myhome;
@@ -59,6 +56,6 @@ in
       inherit system;
       config = myvars.nixpkgs-config;
     };
-    nodeSpecialArgs."${name}" = { inherit (myconfigs) mymodules; };
+    nodeSpecialArgs."${name}" = { inherit (myconfigs) myhome mymodules; };
   };
 }

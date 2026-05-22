@@ -8,40 +8,38 @@
   modulesPath,
   ...
 }:
-
 {
   imports = [
     (modulesPath + "/profiles/qemu-guest.nix")
   ];
 
-  boot.loader.grub = {
-    enable = true;
-    device = "/dev/vda";
-    efiSupport = true;
-  };
-  # boot.loader.systemd-boot.enable = true;
-  boot.loader.efi = {
-    canTouchEfiVariables = false;
-    efiSysMountPoint = "/boot/efi";
-  };
-
   boot.initrd.availableKernelModules = [
     "ata_piix"
     "uhci_hcd"
     "virtio_pci"
+    "virtio_scsi"
     "sr_mod"
     "virtio_blk"
     "ahci"
     "xen_blkfront"
     "vmw_pvscsi"
   ];
+  boot.initrd.kernelModules = [ ];
+  boot.kernelModules = [ ];
   boot.kernelParams = [
     "console=ttyS0,115200n8"
     "console=tty0"
   ];
-  boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ ];
   boot.extraModulePackages = [ ];
+  boot.loader.grub = {
+    enable = true;
+    device = "/dev/vda";
+    efiSupport = true;
+  };
+  boot.loader.efi = {
+    canTouchEfiVariables = false;
+    efiSysMountPoint = "/boot/efi";
+  };
   boot.supportedFilesystems = [
     "ext4"
     "btrfs"
@@ -129,7 +127,7 @@
   };
 
   fileSystems."/boot/efi" = {
-    device = "/dev/disk/by-uuid/1D74-2099";
+    device = "/dev/disk/by-uuid/313A-EA2C";
     fsType = "vfat";
     options = [
       "fmask=0022"
@@ -138,6 +136,13 @@
   };
 
   swapDevices = [ { device = "/swap/swapfile"; } ];
+
+  # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
+  # (the default) this is the recommended approach. When using systemd-networkd it's
+  # still possible to use this option, but it's recommended to use it in conjunction
+  # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
+  networking.useDHCP = lib.mkDefault true;
+  # networking.interfaces.eth0.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 }
