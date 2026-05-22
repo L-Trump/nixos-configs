@@ -8,8 +8,8 @@
   ...
 }:
 let
-  cfg = config.myhome.tuiExtra.mail;
-  rawcfg = myhome.tuiExtra.mail;
+  cfg = config.myhome.tuiExtra.openclaw;
+  rawcfg = myhome.tuiExtra.openclaw;
 in
 {
   imports = lib.optionals rawcfg.enable [
