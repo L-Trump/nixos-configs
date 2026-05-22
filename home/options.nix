@@ -22,6 +22,7 @@ in
     tuiExtra = {
       enable = mkEnableOption "Extra TUI configs (mainly for developing)";
       mail.enable = mkEnableOption "E-Mail related";
+      openclaw.enable = mkEnableOption "OpenClaw agent (via home-manager)";
       lsp = {
         enable = mkEnableOption "Enable language server protocols programs";
         lang = mkOption {

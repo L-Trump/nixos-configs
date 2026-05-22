@@ -45,6 +45,7 @@
       code-server.enable = false;
       immich.machine-learning.enable = false;
       juicefs.enable = false;
+      openclaw.enable = false;
       redis = {
         juicefs-meta.enable = false;
       };
@@ -59,6 +60,7 @@
       enable = false;
       mail.enable = false;
       lsp.enable = false;
+      openclaw.enable = false;
       # lsp.lang = ["all"];
     };
     desktop = {

@@ -62,6 +62,7 @@ in
       homepage-dashboard.enable = mkEnableOption "Enable homepage-dashboard";
       minio.enable = mkEnableOption "Enable minio s3 storage";
       openlist.enable = mkEnableOption "Enable OpenList file driver";
+      openclaw.enable = mkEnableOption "Enable OpenClaw agent";
       siyuan-server.enable = mkEnableOption "Enable siyuan server";
       hubproxy.enable = mkEnableOption "Enable hubproxy server";
       xpipe-webtop.enable = mkEnableOption "Enable xpipe webtop";

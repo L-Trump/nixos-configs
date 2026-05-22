@@ -24,9 +24,14 @@ let
       backrest.enable = true;
       openlist.enable = true;
       nezha-agent.enable = true;
+      openclaw.enable = true;
     };
   };
-  myconfigs.myhome = preset.myhome;
+  myconfigs.myhome = lib.recursiveUpdate preset.myhome {
+    tuiExtra = {
+      openclaw.enable = true;
+    };
+  };
   modules = {
     nixos-modules = map mylib.relativeToRoot [
       # common

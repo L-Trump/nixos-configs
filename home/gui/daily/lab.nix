@@ -17,6 +17,7 @@
     # lutris
     # dbeaver-bin
     dbeaver-ultimate
+    hdc
   ];
 
   home.sessionVariables = {
