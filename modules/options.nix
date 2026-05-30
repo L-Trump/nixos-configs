@@ -66,6 +66,7 @@ in
       siyuan-server.enable = mkEnableOption "Enable siyuan server";
       hubproxy.enable = mkEnableOption "Enable hubproxy server";
       xpipe-webtop.enable = mkEnableOption "Enable xpipe webtop";
+      sub2api.enable = mkEnableOption "Enable sub2api LLM api gateway";
       authentik.enable = mkEnableOption "Enable authentik server";
       sshwifty.enable = mkEnableOption "Enable sshwifty server";
       ncm-api.enable = mkEnableOption "Enable NeteaseCloudMusic API server";

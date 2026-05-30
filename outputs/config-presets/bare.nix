@@ -38,6 +38,7 @@
       openlist.enable = false;
       siyuan-server.enable = false;
       xpipe-webtop.enable = false;
+      sub2api.enable = false;
       authentik.enable = false;
       sshwifty.enable = false;
       ncm-api.enable = false;

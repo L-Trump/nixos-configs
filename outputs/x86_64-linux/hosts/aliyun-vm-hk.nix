@@ -26,6 +26,7 @@ let
     server = {
       backrest.enable = true;
       hubproxy.enable = true;
+      sub2api.enable = true;
     };
   };
   myconfigs.myhome = preset.myhome;

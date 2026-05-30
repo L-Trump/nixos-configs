@@ -36,4 +36,18 @@ _: {
     image = "gh.qninq.cn/moefurina/ncm-api";
     digest = "sha256:7a158842040bac3781f3a03aee9574da1e35929ce26fb889df88f9d5dfd290a9";
   };
+  sub2api = {
+    image = "m.daocloud.io/ghcr.io/wei-shaw/sub2api";
+    digest = "sha256:6054ebc4795528f2898cc2f591c683154cde4ace9def68a35f24747c0f9ed173";
+  };
+  sub2api-postgres = {
+    image = "m.daocloud.io/docker.io/library/postgres";
+    latestTag = "18-alpine";
+    digest = "sha256:96d56f7f57c6aacd1fcb908bc83b345ec5f83231ee486dd66a1baadce274db88";
+  };
+  sub2api-redis = {
+    image = "m.daocloud.io/docker.io/library/redis";
+    latestTag = "8-alpine";
+    digest = "sha256:09160599abd229764c0fb44cb6be640294e1d360a54b19985ab4843dcf2d90f1";
+  };
 }
