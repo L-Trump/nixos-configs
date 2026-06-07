@@ -31,6 +31,7 @@ let
         # enableS3Gateway = true;
         enableWebdav = true;
       };
+      sub2api.enable = true;
       authentik.enable = true;
       immich.machine-learning.enable = true;
       redis.juicefs-meta = {

@@ -95,7 +95,7 @@ in
         "POSTGRES_USER" = "sub2api";
       };
       volumes = [
-        "/data/docker/${name}/postgres-data:/var/lib/postgres/data:rw"
+        "/data/docker/${name}/postgres-data:/var/lib/postgresql:rw"
       ];
       log-driver = "journald";
       extraOptions = [

@@ -25,6 +25,7 @@ let
       openlist.enable = true;
       nezha-agent.enable = true;
       openclaw.enable = true;
+      sub2api.enable = false;
     };
   };
   myconfigs.myhome = lib.recursiveUpdate preset.myhome {

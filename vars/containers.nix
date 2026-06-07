@@ -37,8 +37,8 @@ _: {
     digest = "sha256:7a158842040bac3781f3a03aee9574da1e35929ce26fb889df88f9d5dfd290a9";
   };
   sub2api = {
-    image = "m.daocloud.io/ghcr.io/wei-shaw/sub2api";
-    digest = "sha256:6054ebc4795528f2898cc2f591c683154cde4ace9def68a35f24747c0f9ed173";
+    image = "gh.qninq.cn/ghcr.io/wei-shaw/sub2api";
+    digest = "sha256:1185d83b1546ad69d22962a39f6c2e1adef46756f37935de3764f6e116afe22d";
   };
   sub2api-postgres = {
     image = "m.daocloud.io/docker.io/library/postgres";
