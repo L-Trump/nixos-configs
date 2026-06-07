@@ -48,6 +48,7 @@ in
           "OPENCLAW_WINDOWS_TASK_NAME=OpenClaw Gateway"
           "OPENCLAW_SERVICE_MARKER=openclaw"
           "OPENCLAW_SERVICE_KIND=gateway"
+          "OPENCLAW_NIX_MODE=0"
         ];
       };
 
