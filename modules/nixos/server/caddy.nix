@@ -23,6 +23,12 @@ in
 
     services.caddy = {
       enable = true;
+      package = pkgs.caddy.withPlugins {
+        plugins = [
+          "github.com/caddy-dns/cloudflare@v0.2.4"
+        ];
+        hash = "sha256-J0HWjCPoOoARAxDpG2bS9c0x5Wv4Q23qWZbTjd8nW84=";
+      };
       configFile = cfgPath;
       enableReload = false;
     };
@@ -32,6 +38,7 @@ in
       443
       8080
       8443
+      18088
     ];
   };
 }
