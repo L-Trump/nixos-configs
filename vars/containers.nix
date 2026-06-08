@@ -38,7 +38,7 @@ _: {
   };
   sub2api = {
     image = "gh.qninq.cn/ghcr.io/wei-shaw/sub2api";
-    digest = "sha256:1185d83b1546ad69d22962a39f6c2e1adef46756f37935de3764f6e116afe22d";
+    digest = "sha256:17370daa2324b53ec749a6aeb35ef8aad56cfe9088b2037a7a15c263fc1b9e3e";
   };
   sub2api-postgres = {
     image = "m.daocloud.io/docker.io/library/postgres";
