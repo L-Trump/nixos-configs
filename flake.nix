@@ -110,7 +110,6 @@
       url = "github:openclaw/nix-openclaw";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
-      inputs.nix-steipete-tools.inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 }
