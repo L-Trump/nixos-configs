@@ -848,10 +848,10 @@
     "mysecrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1780981456,
-        "narHash": "sha256-FEH6ViKDN+MbX7iZbt73MNt0G60rtSA9XbgokWtSIhY=",
+        "lastModified": 1781241098,
+        "narHash": "sha256-rpTqe50n+Li3YWqm5lgQA/ePdCB/nr7WnXHnz34dcd8=",
         "ref": "refs/heads/master",
-        "rev": "3890a9dfdf858e237b18bfd11704117d57b6d019",
+        "rev": "bce4be096eb96d4e58b6d840411c872c930a57b6",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/L-Trump/nixos-secrets.git"
@@ -958,11 +958,11 @@
         "qmd": "qmd"
       },
       "locked": {
-        "lastModified": 1780757526,
-        "narHash": "sha256-EVt8AItP8DtX96ZVAMt1JwavSE/28zAM6maIA5MD0Bc=",
+        "lastModified": 1781072789,
+        "narHash": "sha256-/F/4Kg7t7accuaAzc8khMyK+xXReXjpU9Tn4L0LrnyI=",
         "owner": "openclaw",
         "repo": "nix-openclaw",
-        "rev": "48bd7a29e1904b0e0926aa94e44da14fa5b1f196",
+        "rev": "a60fb12d461edfdadb6dca65a3b72230e35014ad",
         "type": "github"
       },
       "original": {

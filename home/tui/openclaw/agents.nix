@@ -1,4 +1,4 @@
-{ config }:
+{ config, ... }:
 {
   # Agent 默认配置。
   agents.defaults = {
@@ -29,6 +29,17 @@
       "minimax/MiniMax-M3".alias = "m3";
       "deepseek/deepseek-v4-flash".alias = "ds4f";
       "deepseek/deepseek-v4-pro".alias = "ds4p";
+      # Volcano Engine Ark Coding Plan models from the official OpenClaw example.
+      "volcengine-plan/ark-code-latest".alias = "ark";
+      "volcengine-plan/doubao-seed-2.0-code".alias = "seedcode";
+      "volcengine-plan/doubao-seed-2.0-pro".alias = "seedpro";
+      "volcengine-plan/doubao-seed-2.0-lite".alias = "seedlite";
+      "volcengine-plan/doubao-seed-code".alias = "seed1code";
+      "volcengine-plan/glm-5.1".alias = "vol-glm5.1";
+      "volcengine-plan/minimax-m3".alias = "vol-m3";
+      "volcengine-plan/kimi-k2.6".alias = "vol-k2.6";
+      "volcengine-plan/deepseek-v4-flash".alias = "vol-ds4f";
+      "volcengine-plan/deepseek-v4-pro".alias = "vol-ds4p";
       "rhcg/gpt-5.5".alias = "gpt5.5";
       "rhcg/gpt-5.4".alias = "gpt5.4";
       "rhcg/gpt-5.4-mini".alias = "gpt5.4m";
@@ -76,6 +87,8 @@
   agents.list = [
     {
       id = "main";
+      # 不设置 agent identity，避免 Feishu 等消息渠道把 name/emoji 渲染成卡片 header。
+      # Dashboard/WebChat 的显示偏好应走 UI 自身设置，而不是 agent runtime identity。
       # 主 agent 工具授权。
       tools = {
         # 使用 full 工具 profile。

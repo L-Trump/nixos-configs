@@ -43,6 +43,20 @@
     # DM session 按 channel + peer 隔离。
     dmScope = "per-channel-peer";
 
+    # Dashboard/WebChat session 按 channel 特判为 7 天 idle reset。
+    # 不设置 resetByType.direct，保留 Feishu 私聊等 direct 会话的默认 daily reset。
+    resetByChannel = {
+      webchat = {
+        mode = "idle";
+        idleMinutes = 10080;
+      };
+      # 保险覆盖 dashboard 原始 provider/channel key；运行态目前主要命中 webchat。
+      dashboard = {
+        mode = "idle";
+        idleMinutes = 10080;
+      };
+    };
+
     # 按 session 类型设置自动 reset 策略。
     resetByType = {
       # 群聊 session 空闲 7 天后 reset。
@@ -55,6 +69,14 @@
         mode = "idle";
         idleMinutes = 10080;
       };
+    };
+  };
+
+  # 诊断配置。默认保持关闭；需要排查 prompt cache 行为时可临时启用。
+  diagnostics = {
+    # 关闭 cache trace，避免长 jsonl 持续写入。
+    cacheTrace = {
+      enabled = false;
     };
   };
 

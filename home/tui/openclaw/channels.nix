@@ -67,5 +67,17 @@
     streaming = true;
     # 群聊按 topic/thread 划分 session scope。
     groupSessionScope = "group_topic";
+
+    # 使用 lark-cli / lark-* skills 处理飞书 API；禁用 OpenClaw Feishu 原生工具，减少上下文占用和工具选择冲突。
+    tools = {
+      doc = false;
+      chat = false;
+      wiki = false;
+      drive = false;
+      perm = false;
+      scopes = false;
+      bitable = false;
+      base = false;
+    };
   };
 }
