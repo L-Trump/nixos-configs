@@ -243,7 +243,7 @@
     rhcg = {
       # RHCG OpenAI-compatible endpoint。
       baseUrl = myvars.openclaw.models.rhcg.baseUrl;
-      api = "openai-responses";
+      api = "openai-completions";
       # RHCG API key，从 agenix SecretRef 获取。
       apiKey = {
         source = "file";
@@ -263,7 +263,7 @@
           ];
           contextWindow = 272000;
           maxTokens = 128000;
-          api = "openai-responses";
+          api = "openai-completions";
         }
         {
           id = "gpt-5.4";
@@ -275,7 +275,7 @@
           ];
           contextWindow = 272000;
           maxTokens = 128000;
-          api = "openai-responses";
+          api = "openai-completions";
         }
         {
           id = "gpt-5.4-mini";
@@ -287,7 +287,7 @@
           ];
           contextWindow = 272000;
           maxTokens = 128000;
-          api = "openai-responses";
+          api = "openai-completions";
         }
       ];
     };
