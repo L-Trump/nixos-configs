@@ -5,6 +5,7 @@
     "feishu"
     # Brave web search provider runtime plugin。
     "brave"
+    "codex"
   ];
 
   # 插件相关 OpenClaw runtime 配置。
@@ -21,6 +22,8 @@
         "graph-memory"
         "minimax"
         "telegram"
+        "codex"
+        "openai"
       ];
 
       # 指定上下文引擎插件为 graph-memory。
@@ -35,6 +38,7 @@
         feishu.enabled = true;
         minimax.enabled = true;
         deepseek.enabled = true;
+        codex.enabled = true;
         google = {
           enabled = true;
           # Google web search API key，从 agenix SecretRef 获取。

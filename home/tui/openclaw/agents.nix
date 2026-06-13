@@ -43,6 +43,9 @@
       "rhcg/gpt-5.5".alias = "gpt5.5";
       "rhcg/gpt-5.4".alias = "gpt5.4";
       "rhcg/gpt-5.4-mini".alias = "gpt5.4m";
+      "openai/gpt-5.5" = { };
+      "openai/gpt-5.4" = { };
+      "openai/gpt-5.4-mini" = { };
     };
 
     # 默认 workspace，AGENTS.md / SOUL.md 等上下文从这里读取。
@@ -53,6 +56,21 @@
 
     # 所有 bootstrap 文件合计最大读取字符数。
     bootstrapTotalMaxChars = 150000;
+
+    # 默认 agent 模型调用参数：把 Anthropic / OpenAI 系列的 prompt cache
+    params = {
+      cacheRetention = "long";
+    };
+
+    # 上下文压缩策略（cache-ttl 模式）。
+    contextPruning = {
+      mode = "cache-ttl";
+      # 和 cacheRetention="long" 对齐，5min 太短、1h 才好命中。
+      ttl = "1h";
+      # softTrim/hardClear 阈值：context 用到 70% 先软剪，90% 再硬清。
+      softTrimRatio = 0.7;
+      hardClearRatio = 0.9;
+    };
 
     # 上下文压缩策略。
     compaction = {

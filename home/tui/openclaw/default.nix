@@ -19,7 +19,12 @@ in
 
   # 仅在用户配置启用 OpenClaw 时渲染下方配置。
   config = lib.mkIf cfg.enable {
-    home.packages = with pkgs; [ uv ];
+    home.packages = with pkgs; [
+      uv
+      bubblewrap
+      codex
+      mcporter
+    ];
 
     # nix-openclaw 的用户级 OpenClaw 配置入口。
     programs.openclaw = {
