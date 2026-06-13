@@ -17,6 +17,11 @@ in
     nixos-hardware.nixosModules.asus-zephyrus-ga502
   ];
 
+  nix.settings = {
+    max-jobs = 4;
+    cores = 4;
+  };
+
   # Use the systemd-boot EFI boot loader.
 
   networking.hostName = "rog-ga502"; # Define your hostname.
