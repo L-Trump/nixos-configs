@@ -59,7 +59,7 @@ in
         (import ./gateway.nix { inherit myvars; })
         # Skill 发现和启用配置。
         (import ./skills.nix { inherit config; })
-        # 插件 allow/entries/contextEngine 和插件私有配置。
+        # 插件 allow/entries、hook policy 和插件私有配置。
         openclawPlugins.config
       ];
     };

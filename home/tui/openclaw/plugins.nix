@@ -26,9 +26,6 @@
         "openai"
       ];
 
-      # 指定上下文引擎插件为 graph-memory。
-      slots.contextEngine = "graph-memory";
-
       # 只按 allow/entries/slots 发现 bundled plugins，避免旧兼容模式绕过 allowlist。
       bundledDiscovery = "allowlist";
 
@@ -58,10 +55,15 @@
           };
         };
 
-        # Graph Memory 上下文引擎配置。
+        # Graph Memory hook-only 记忆插件配置。
         graph-memory = {
           # 启用 graph-memory 插件。
           enabled = true;
+          # graph-memory 需要读取会话消息并注入召回上下文；非 bundled 插件需显式授权 typed hooks。
+          hooks = {
+            allowConversationAccess = true;
+            allowPromptInjection = true;
+          };
           # graph-memory 插件私有配置。
           config = {
             # 记忆抽取/归纳使用的 LLM 配置。
@@ -101,7 +103,7 @@
 
             # graph-memory SQLite 数据库路径。
             dbPath = "~/.openclaw/graph-memory.db";
-            # 每隔多少 afterTurn 触发周期性归纳/维护。
+            # 每隔多少 agent_end 触发周期性归纳/维护。
             compactTurnCount = 7;
             # 单次召回最大节点数。
             recallMaxNodes = 15;
@@ -123,7 +125,7 @@
         browser.enabled = false;
         # 启用执行校验插件。
         execution-validator-plugin.enabled = true;
-        # 禁用 memory-core，避免与 graph-memory context engine 重叠。
+        # 禁用 memory-core，避免与 graph-memory 记忆插件重叠。
         memory-core.enabled = false;
       };
     };
