@@ -9,12 +9,14 @@
     enable = true;
     configFile = "${config.xdg.configHome}/dunst/dunstrc.mutable";
     iconTheme = {
-      name = "Adwaita";
-      package = pkgs.adwaita-icon-theme;
+      name = "Papirus";
+      package = pkgs.papirus-icon-theme;
+      size = "24";
     };
     settings = {
       global = {
         follow = "keyboard";
+        markup = "no";
         origin = "top-center";
         transparency = 15;
         frame_color = "#d94085";

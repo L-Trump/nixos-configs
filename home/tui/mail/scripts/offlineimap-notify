@@ -87,7 +87,7 @@ function offlineimap_notify {
     then
         # osascript -e 'display notification "'"$body"'" with title "'"$title"'" subtitle "'"$subtitle"'"'
         # terminal-notifier -title "${title}" -subtitle "${subtitle}" -message "$body" -sender 'org.gnu.Emacs'
-        notify-send -u normal -i /usr/share/icons/HighContrast/48x48/status/mail-unread.png -t 8000 -a "OfflineIMAP" "New Mail!" "${title}\r\nSender: ${subtitle}\r\nSubject: ${body}"
+        notify-send -u normal -i mail-unread -t 8000 -a "OfflineIMAP" "New Mail!" "${title}\r\nSender: ${subtitle}\r\nSubject: ${body}"
         paplay /usr/share/sounds/freedesktop/stereo/message-new-instant.oga 
     fi
 }

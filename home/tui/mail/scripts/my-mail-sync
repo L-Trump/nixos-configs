@@ -7,7 +7,7 @@ if [ -n "$OFFLINEIMAP" ]; then
 fi
 
 if [ "$2" != "quiet" ] && [ "$1" != "quiet" ]; then
-    notify-send -u normal -i /usr/share/icons/HighContrast/48x48/status/mail-unread.png -t 3000 -a "OfflineIMAP" "OfflineIMAP" "Start Syncing..."
+    notify-send -u normal -i mail-unread -t 3000 -a "OfflineIMAP" "OfflineIMAP" "Start Syncing..."
     # paplay /usr/share/sounds/freedesktop/stereo/message-new-instant.oga 
 fi
     
@@ -18,7 +18,7 @@ else
 fi
 
 if [ "$2" != "quiet" ] && [ "$1" != "quiet" ]; then
-    notify-send -u normal -i /usr/share/icons/HighContrast/48x48/status/mail-unread.png -t 3000 -a "OfflineIMAP" "OfflineIMAP" "Sync Finished!"
+    notify-send -u normal -i mail-unread -t 3000 -a "OfflineIMAP" "OfflineIMAP" "Sync Finished!"
     # paplay /usr/share/sounds/freedesktop/stereo/message-new-instant.oga 
     paplay /run/current-system/sw/share/sounds/freedesktop/stereo/message-new-instant.oga 
 fi

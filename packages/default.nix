@@ -54,6 +54,8 @@ in
 
   hokit = pkgs.callPackage ./hokit { };
 
+  lossless-claw = pkgs.callPackage ./lossless-claw { };
+
   hdc = pkgs.callPackage ./hdc { };
 
   # Some package derived from unstable repo
