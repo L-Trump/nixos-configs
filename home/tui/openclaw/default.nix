@@ -9,7 +9,7 @@
 }:
 let
   cfg = config.myhome.tuiExtra.openclaw;
-  openclawPlugins = import ./plugins.nix;
+  openclawPlugins = import ./plugins.nix { inherit lib; };
 in
 {
   # 引入 nix-openclaw 的 Home Manager 模块，提供 programs.openclaw 选项。
@@ -24,6 +24,7 @@ in
       bubblewrap
       codex
       mcporter
+      gh
     ];
 
     # nix-openclaw 的用户级 OpenClaw 配置入口。
@@ -33,6 +34,7 @@ in
 
       # 需要由 nix-openclaw 额外链接/启用的 runtime plugin。
       runtimePlugins = openclawPlugins.runtimePlugins;
+      runtimePluginSources = openclawPlugins.runtimePluginSources;
 
       # Dashboard / WebChat 头像等静态资源，激活时 materialize 到 workspace。
       workspace.files = {

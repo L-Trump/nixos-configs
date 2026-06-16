@@ -62,6 +62,11 @@
       cacheRetention = "long";
     };
 
+    # Live tool result 上限；同时影响 aggregate tool-result truncation 阈值（约为 4x）。
+    # contextLimits = {
+    #   toolResultMaxChars = 64000;
+    # };
+
     # 上下文压缩策略（cache-ttl 模式）。
     contextPruning = {
       mode = "cache-ttl";
@@ -72,10 +77,10 @@
       hardClearRatio = 0.9;
     };
 
-    # 上下文压缩策略。
+    # 上下文压缩兜底策略：lossless-claw 作为 context engine 负责主路径，
+    # OpenClaw 内置 compaction 仅保留轻量 fallback，避免 safeguard 质量审计拖慢溢出恢复。
     compaction = {
-      # safeguard 模式：保守压缩，降低重要上下文丢失概率。
-      mode = "safeguard";
+      mode = "default";
       # 压缩时预留的输出/工具调用 token 下限。
       reserveTokensFloor = 20000;
       # 压缩任务最长等待时间。

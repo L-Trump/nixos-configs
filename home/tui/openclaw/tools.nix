@@ -43,6 +43,13 @@
     # DM session 按 channel + peer 隔离。
     dmScope = "per-channel-peer";
 
+    # lossless-claw README 推荐的兜底 idle reset：7 天无活动后 reset。
+    # resetByChannel / resetByType 会覆盖特定 channel/type；这里覆盖 direct 等默认场景。
+    reset = {
+      mode = "idle";
+      idleMinutes = 10080;
+    };
+
     # Dashboard/WebChat session 按 channel 特判为 7 天 idle reset。
     # 不设置 resetByType.direct，保留 Feishu 私聊等 direct 会话的默认 daily reset。
     resetByChannel = {

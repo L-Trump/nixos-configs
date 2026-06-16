@@ -18,6 +18,11 @@ in
   config = lib.mkIf cfg.enable {
     nixpkgs.overlays = [
       inputs.nix-openclaw.overlays.default
+      (final: prev: {
+        openclawRuntimePlugins = (prev.openclawRuntimePlugins or { }) // {
+          lossless-claw = final.lossless-claw;
+        };
+      })
     ];
 
     nix.settings = {
