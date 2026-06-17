@@ -33,10 +33,11 @@ rec {
     oneplus-ace.ipv4 = "10.144.144.239";
     homewin.ipv4 = "10.144.144.240";
     nucwin.ipv4 = "10.144.144.241";
+    aliyun-vm-sh-qi.ipv4 = "10.144.144.243";
+    purax.ipv4 = "10.144.144.244";
     aliyun-vm-hk.ipv4 = "10.144.144.245";
     rhcg-dell.ipv4 = "10.144.144.246";
     rog-ga502.ipv4 = "10.144.144.247";
-    purax.ipv4 = "10.144.144.244";
     matepad.ipv4 = "10.144.144.248";
     llyun-vm-jp.ipv4 = "10.144.144.249";
     matebook-gt14.ipv4 = "10.144.144.250";

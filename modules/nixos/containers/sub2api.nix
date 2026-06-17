@@ -106,6 +106,6 @@ in
 
     systemd.services."docker-${name}" = serviceConfig;
     systemd.services."docker-${name}-redis" = serviceConfig;
-    systemd.services."docker-${name}-postgresql" = serviceConfig;
+    systemd.services."docker-${name}-postgres" = serviceConfig;
   };
 }

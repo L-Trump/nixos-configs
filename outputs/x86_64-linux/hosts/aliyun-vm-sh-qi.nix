@@ -12,10 +12,10 @@
   ...
 }@args:
 let
-  name = "aliyun-vm-sh";
+  name = "aliyun-vm-sh-qi";
   tags = [
     name
-    "vm-sh"
+    "vm-sh-qi"
     "all"
     "vps"
   ];
@@ -24,31 +24,16 @@ let
   preset = mypresets.server;
   myconfigs.mymodules = lib.recursiveUpdate preset.mymodules {
     server = {
-      rustdesk-server.enable = true;
-      rustdesk-api.enable = true;
-      nezha-server.enable = true;
-      kopia-server.enable = false;
       backrest.enable = true;
-      syncthing.enable = true;
-      vaultwarden.enable = true;
-      homepage-dashboard.enable = true;
-      openlist.enable = true;
-      siyuan-server.enable = true;
-      cloudreve.master.enable = false;
-      xpipe-webtop.enable = false;
-      authentik.enable = false;
-      sshwifty.enable = true;
-      ncm-api.enable = true;
-      rustical.enable = true;
-      sub2api.enable = false;
+      sub2api.enable = true;
       juicefs = {
         enable = true;
-        enableS3Gateway = true;
+        enableS3Gateway = false;
         enableWebdav = false;
       };
       redis.juicefs-meta = {
         enable = true;
-        isSlave = false;
+        isSlave = true;
       };
     };
   };
