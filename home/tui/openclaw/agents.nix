@@ -73,7 +73,7 @@
       # 和 cacheRetention="long" 对齐，5min 太短、1h 才好命中。
       ttl = "1h";
       # softTrim/hardClear 阈值：context 用到 70% 先软剪，90% 再硬清。
-      softTrimRatio = 0.7;
+      softTrimRatio = 0.8;
       hardClearRatio = 0.9;
     };
 

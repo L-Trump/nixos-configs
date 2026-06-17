@@ -163,7 +163,7 @@
             freshTailCount = 64;
             leafChunkTokens = 40000;
             newSessionRetainDepth = 2;
-            contextThreshold = 0.75;
+            contextThreshold = 0.65;
             cacheAwareCompaction = {
               "enabled" = true;
               "cacheTTLSeconds" = 300;
