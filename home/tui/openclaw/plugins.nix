@@ -30,6 +30,7 @@
         "codex"
         "openai"
         "lossless-claw"
+        "workboard"
       ];
 
       # 只按 allow/entries/slots 发现 bundled plugins，避免旧兼容模式绕过 allowlist。
@@ -45,6 +46,7 @@
         minimax.enabled = true;
         deepseek.enabled = true;
         codex.enabled = true;
+        workboard.enabled = true;
         google = {
           enabled = true;
           # Google web search API key，从 agenix SecretRef 获取。
