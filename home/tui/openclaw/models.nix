@@ -263,6 +263,17 @@
           ];
           contextWindow = 272000;
           maxTokens = 128000;
+          thinkingLevelMap = {
+            xhigh = "xhigh";
+            max = "xhigh";
+          };
+          compat.supportsReasoningEffort = true;
+          compat.supportedReasoningEfforts = [
+            "low"
+            "medium"
+            "high"
+            "xhigh"
+          ];
           api = "openai-completions";
         }
         {
@@ -275,6 +286,17 @@
           ];
           contextWindow = 272000;
           maxTokens = 128000;
+          thinkingLevelMap = {
+            xhigh = "xhigh";
+            max = "xhigh";
+          };
+          compat.supportsReasoningEffort = true;
+          compat.supportedReasoningEfforts = [
+            "low"
+            "medium"
+            "high"
+            "xhigh"
+          ];
           api = "openai-completions";
         }
         {
@@ -287,6 +309,17 @@
           ];
           contextWindow = 272000;
           maxTokens = 128000;
+          thinkingLevelMap = {
+            xhigh = "xhigh";
+            max = "xhigh";
+          };
+          compat.supportsReasoningEffort = true;
+          compat.supportedReasoningEfforts = [
+            "low"
+            "medium"
+            "high"
+            "xhigh"
+          ];
           api = "openai-completions";
         }
       ];
