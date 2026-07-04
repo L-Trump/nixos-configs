@@ -7,16 +7,16 @@
 
 buildNpmPackage rec {
   pname = "openclaw-runtime-plugin-lossless-claw";
-  version = "0.13.0";
+  version = "0.13.2";
 
   src = fetchFromGitHub {
     owner = "Martian-Engineering";
     repo = "lossless-claw";
     rev = "v${version}";
-    hash = "sha256-REx3duIZMrmToGq0U/dr0k+frjkfTM3BmrQzmnhaelg=";
+    hash = "sha256-icpWV9upvivvdX9JMgkMx4RFdQRk/2eNNH5sbrPX2V0=";
   };
 
-  npmDepsHash = "sha256-dPItQm/3wGgih1FCkHn3bh1nIukG4VK4fUvh1AXR3Ng=";
+  npmDepsHash = "sha256-aS26/oTzAoncYANck1MbPbBCL/UQowiU02/Wn3L+5So=";
   npmDepsFetcherVersion = 2;
 
   npmBuildScript = "build";
@@ -28,9 +28,9 @@ buildNpmPackage rec {
     const fs = require('fs');
     const lock = JSON.parse(fs.readFileSync('package-lock.json', 'utf8'));
     const integrityByPath = {
-      'node_modules/@earendil-works/pi-coding-agent/node_modules/@earendil-works/pi-agent-core': 'sha512-PBPjBa2YBm9jauiLtHAKaSfVJ4Dvm3/nK/bR/oHebLjwBCS2tGx3aQDX7MSGAOXi6BejlhzbB/z82BkyAyNjjQ==',
-      'node_modules/@earendil-works/pi-coding-agent/node_modules/@earendil-works/pi-ai': 'sha512-UnORwrcsTNLm4StEvoM8iEom0u87Te7BXEWxhec3iNXygWD6eEBosUoq9ddcveqtj/QpUZBMPWUu81cCtZxzkQ==',
-      'node_modules/@earendil-works/pi-coding-agent/node_modules/@earendil-works/pi-tui': 'sha512-YvZCMfSE0YDSLNklAwMY6LC6SyEgnP0zMOoioTLNnXFNdexrCexMJdee7iDJsNcFlKt7+DVLccomuURtZS1C6g==',
+      'node_modules/@earendil-works/pi-coding-agent/node_modules/@earendil-works/pi-agent-core': 'sha512-8m5fcqRpoGpq3QY0I/tFXROSTmPwBb1dAuzYZO3XYgjsdCokkRMAGRjA9P8s/UD6Jy9yy69lyE4H6sz/5A1TmQ==',
+      'node_modules/@earendil-works/pi-coding-agent/node_modules/@earendil-works/pi-ai': 'sha512-ZpSwaD7oNpsjn9vtEatZQNT9PSdDJXi6rFeY5Qv+OHQGFDKlmcrfJE4ypm4SAc/fBECPs4Rdi3l+YjVtXYrkKw==',
+      'node_modules/@earendil-works/pi-coding-agent/node_modules/@earendil-works/pi-tui': 'sha512-QerB+0wUc6eEO8MwvzOQGtzcsbwo6y8VvdxYU6vGcakz6ofJZWhrmwrknp1dCGx3bEtCf+siUIxEzkqvFCzIsg==',
     };
     for (const [path, integrity] of Object.entries(integrityByPath)) {
       if (lock.packages?.[path]) lock.packages[path].integrity = integrity;
