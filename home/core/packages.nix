@@ -50,7 +50,7 @@
     nvd # Nix/NixOS package version diff tool
 
     # productivity
-    croc # File transfer between computers securely and easily
+    # croc # File transfer between computers securely and easily
   ];
 
   # auto mount usb drives

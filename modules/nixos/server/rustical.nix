@@ -12,6 +12,6 @@ in
     settings = {
       http.port = 6826;
     };
-    environmentFile = "${config.age.secrets.rustical-env.path}";
+    environmentFiles = [ "${config.age.secrets.rustical-env.path}" ];
   };
 }

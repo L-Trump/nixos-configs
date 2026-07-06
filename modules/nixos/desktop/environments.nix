@@ -47,7 +47,7 @@
   services.tumbler.enable = true; # Thumbnail support for images
 
   # Ugly but useful systemd
-  systemd.user.extraConfig = ''
-    DefaultEnvironment="PATH=/run/wrappers/bin:/etc/profiles/per-user/%u/bin:/nix/var/nix/profiles/default/bin:/run/current-system/sw/bin:$PATH"
-  '';
+  systemd.user.settings.Manager = {
+    DefaultEnvironment = "PATH=/run/wrappers/bin:/etc/profiles/per-user/%u/bin:/nix/var/nix/profiles/default/bin:/run/current-system/sw/bin:$PATH";
+  };
 }

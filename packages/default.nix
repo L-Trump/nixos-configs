@@ -25,9 +25,6 @@ in
 
   # sunshine = pkgs-unstable.sunshine;
 
-  # TODO wait merge https://github.com/NixOS/nixpkgs/pull/491229
-  backrest = pkgs.callPackage ./backrest { };
-
   # vaultwarden = pkgs.callPackage ./vaultwarden-unstable { };
 
   obs-studio-plugins = pkgs.obs-studio-plugins // {
@@ -92,4 +89,5 @@ in
   # wpsoffice-cn = libsForQt5.callPackage ./wpsoffice {
   #   useChineseVersion = true;
   # };
+  # backrest = pkgs.callPackage ./backrest { };
 }

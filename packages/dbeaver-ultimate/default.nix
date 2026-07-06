@@ -27,7 +27,7 @@ let
       hash = "sha256-m+kkIP9WnNa/sXVuHUuUUnamcAvFE3l68G2sERsAyMw=";
     };
 
-    mvnHash = "sha256-OVZ34S4O/gucb9pR+IpMAsG7+I/3QKa8+Q0ZIc3STpw=";
+    mvnHash = "sha256-YBuok6hhPE+KMeH24Ue/RWGlSEaZOWrjz1TFrBGnUtQ=";
 
     installPhase = ''
       runHook preInstall
