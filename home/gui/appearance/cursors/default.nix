@@ -16,12 +16,13 @@ let
         cp -r $src/* $out/share/icons/${name}
       '';
     };
-  meumy-merry-cursors = mkIconPackage "meumy-merry-cursors" ./merry_cursors;
+  meumy-merry-cursors = mkIconPackage "meumy-merry-cursors" ./merry_pixel_cursors;
+  meumy-umy-pixel-cursors = mkIconPackage "meumy-umy-pixel-cursors" ./umy_pixel_cursors;
 in
 {
   home.pointerCursor = {
-    name = "meumy-merry-cursors";
+    name = "meumy-umy-pixel-cursors";
     size = 16;
-    package = meumy-merry-cursors;
+    package = meumy-umy-pixel-cursors;
   };
 }
