@@ -251,8 +251,80 @@
         id = "/models/rhcg/apiKey";
       };
       # Provider 请求超时时间。
-      timeoutSeconds = 60;
+      timeoutSeconds = 240;
       models = [
+        {
+          id = "gpt-5.6-luna";
+          name = "GPT-5.6 Luna";
+          reasoning = true;
+          input = [
+            "text"
+            "image"
+          ];
+          contextWindow = 372000;
+          maxTokens = 128000;
+          thinkingLevelMap = {
+            xhigh = "xhigh";
+            max = "max";
+          };
+          compat.supportsReasoningEffort = true;
+          compat.supportedReasoningEfforts = [
+            "low"
+            "medium"
+            "high"
+            "xhigh"
+            "max"
+          ];
+          api = "openai-completions";
+        }
+        {
+          id = "gpt-5.6-sol";
+          name = "GPT-5.6 Sol";
+          reasoning = true;
+          input = [
+            "text"
+            "image"
+          ];
+          contextWindow = 372000;
+          maxTokens = 128000;
+          thinkingLevelMap = {
+            xhigh = "xhigh";
+            max = "max";
+          };
+          compat.supportsReasoningEffort = true;
+          compat.supportedReasoningEfforts = [
+            "low"
+            "medium"
+            "high"
+            "xhigh"
+            "max"
+          ];
+          api = "openai-completions";
+        }
+        {
+          id = "gpt-5.6-terra";
+          name = "GPT-5.6 Terra";
+          reasoning = true;
+          input = [
+            "text"
+            "image"
+          ];
+          contextWindow = 372000;
+          maxTokens = 128000;
+          thinkingLevelMap = {
+            xhigh = "xhigh";
+            max = "max";
+          };
+          compat.supportsReasoningEffort = true;
+          compat.supportedReasoningEfforts = [
+            "low"
+            "medium"
+            "high"
+            "xhigh"
+            "max"
+          ];
+          api = "openai-completions";
+        }
         {
           id = "gpt-5.5";
           name = "GPT-5.5";

@@ -40,6 +40,27 @@
       "volcengine-plan/kimi-k2.6".alias = "vol-k2.6";
       "volcengine-plan/deepseek-v4-flash".alias = "vol-ds4f";
       "volcengine-plan/deepseek-v4-pro".alias = "vol-ds4p";
+      "rhcg/gpt-5.6-luna" = {
+        alias = "gpt5.6-luna";
+        params = {
+          parallel_tool_calls = true;
+          text_verbosity = "low";
+        };
+      };
+      "rhcg/gpt-5.6-sol" = {
+        alias = "gpt5.6-sol";
+        params = {
+          parallel_tool_calls = true;
+          text_verbosity = "low";
+        };
+      };
+      "rhcg/gpt-5.6-terra" = {
+        alias = "gpt5.6-terra";
+        params = {
+          parallel_tool_calls = true;
+          text_verbosity = "low";
+        };
+      };
       "rhcg/gpt-5.5" = {
         alias = "gpt5.5";
         params = {
