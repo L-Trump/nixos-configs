@@ -21,6 +21,8 @@ in
 
   hubproxy = pkgs.callPackage ./hubproxy { };
 
+  codex = pkgs.callPackage ./codex { };
+
   # mpv-cheatsheet-ng = pkgs.mpvScripts.callPackage ./mpv-cheatsheet-ng { };
 
   # sunshine = pkgs-unstable.sunshine;
