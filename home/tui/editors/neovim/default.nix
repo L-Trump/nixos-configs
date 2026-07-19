@@ -7,11 +7,16 @@
   imports = [
     inputs.nvimdots.homeManagerModules.nvimdots
   ];
-  programs.neovim.nvimdots = {
-    enable = true;
-    mergeLazyLock = true;
-    setBuildEnv = true;
-    withBuildTools = true;
+  programs.neovim = {
+    withRuby = true;
+    withPython3 = true;
+
+    nvimdots = {
+      enable = false;
+      mergeLazyLock = true;
+      setBuildEnv = true;
+      withBuildTools = true;
+    };
   };
 
   programs.neovim.extraPackages = with pkgs; [
