@@ -2,6 +2,10 @@
 {
   # Skill 系统配置。
   skills = {
+    # 跳过 Skill Workshop apply/reject/quarantine 的额外插件审批；
+    # Workshop 的提案、扫描、哈希校验和回滚流程仍然保留。
+    workshop.approvalPolicy = "auto";
+
     # 允许 workspace/skills 中指向 .agents/skills 的 symlink，消除 lark-cli skills 的 symlink-escape 警告。
     load.allowSymlinkTargets = [
       "${config.home.homeDirectory}/.openclaw/workspace/.agents/skills"
