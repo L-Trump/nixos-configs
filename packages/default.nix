@@ -21,7 +21,7 @@ in
 
   hubproxy = pkgs.callPackage ./hubproxy { };
 
-  codex = pkgs.callPackage ./codex { };
+  # codex = pkgs.callPackage ./codex { };
 
   # mpv-cheatsheet-ng = pkgs.mpvScripts.callPackage ./mpv-cheatsheet-ng { };
 
@@ -65,7 +65,7 @@ in
   # wechat-uos = pkgs.callPackage ./wechat-uos { };
   # easytier = pkgs.callPackage ./easytier { };
   # intel-graphics-compiler =  pkgs-unstable.intel-graphics-compiler;
-  # siyuan = pkgs.callPackage ./siyuan {};
+  # siyuan = pkgs.callPackage ./siyuan { };
   # easytier = pkgs.callPackage ./easytier { };
   # siyuan = pkgs.callPackage ./siyuan {};
   # linuxPackages_latest = pkgs.linuxPackages_latest.extend (_: prev: {

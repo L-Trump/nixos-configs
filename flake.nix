@@ -60,12 +60,12 @@
     };
     # My fonts
     myfonts = {
-      url = "github:L-Trump/nixos-fonts?shallow=1";
+      url = "git+https://github.com/L-Trump/nixos-fonts.git?shallow=1";
       flake = false;
     };
     # My wallpapers
     mywallpapers = {
-      url = "github:L-Trump/nixos-wallpapers?shallow=1";
+      url = "git+https://github.com/L-Trump/nixos-wallpapers.git?shallow=1";
       flake = false;
     };
     # Impermanence
