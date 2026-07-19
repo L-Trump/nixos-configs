@@ -6,6 +6,8 @@
     "feishu"
     # Brave web search provider runtime plugin。
     "brave"
+    # DeepSeek model provider runtime plugin。
+    "deepseek"
     "codex"
     # 本仓库 overlay 提供的第三方 Lossless Context Management 插件。
     "lossless-claw"
