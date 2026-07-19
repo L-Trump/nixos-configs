@@ -1,0 +1,225 @@
+diff --git a/src/assemble-fallback.ts b/src/assemble-fallback.ts
+index b6b676a..6a2ad5a 100644
+--- a/src/assemble-fallback.ts
++++ b/src/assemble-fallback.ts
+@@ -53,7 +53,12 @@ export function trimMessagesToBudget(messages: AgentMessage[], tokenBudget: numb
+  * output by serialized (model-boundary) estimate. Leaves headroom for the
+  * host's reserve tokens and renderer overhead beyond our approximation.
+  */
+-export const SERIALIZED_OUTPUT_CLAMP_SAFETY_RATIO = 0.9;
++export const SERIALIZED_OUTPUT_CLAMP_SAFETY_RATIO = 0.95;
++
++export function resolveSerializedOutputAdmissionBudget(tokenBudget: number): number {
++  const normalizedBudget = Number.isFinite(tokenBudget) ? Math.max(1, Math.floor(tokenBudget)) : 1;
++  return Math.max(1, Math.floor(normalizedBudget * SERIALIZED_OUTPUT_CLAMP_SAFETY_RATIO));
++}
+ 
+ /**
+  * Final budget clamp on assembled output, measured by serialized
+@@ -77,23 +82,19 @@ export function clampMessagesToSerializedBudget(params: {
+   evictedMessages: number;
+   overBudget: boolean;
+ } {
+-  // Trigger only when the serialized estimate actually exceeds the budget;
+-  // once eviction is unavoidable, clamp down to the safety target so the
+-  // result leaves headroom for host reserve tokens and renderer overhead.
+-  const triggerTokens = Math.max(1, Math.floor(params.tokenBudget));
+-  const targetTokens = Math.max(
+-    1,
+-    Math.floor(params.tokenBudget * SERIALIZED_OUTPUT_CLAMP_SAFETY_RATIO),
+-  );
++  // Treat the safety target as the hard admission budget. OpenClaw's tool-loop
++  // guard activates at 90% of the model window, so a runtime budget near that
++  // boundary still needs room for host prompt additions and estimator drift.
++  const targetTokens = resolveSerializedOutputAdmissionBudget(params.tokenBudget);
+   const serializedTokensBefore = estimateSerializedMessagesTokens(params.messages);
+-  if (serializedTokensBefore <= triggerTokens || params.messages.length === 0) {
++  if (serializedTokensBefore <= targetTokens || params.messages.length === 0) {
+     return {
+       messages: params.messages,
+       serializedTokens: serializedTokensBefore,
+       serializedTokensBefore,
+       clamped: false,
+       evictedMessages: 0,
+-      overBudget: serializedTokensBefore > triggerTokens,
++      overBudget: serializedTokensBefore > targetTokens,
+     };
+   }
+ 
+@@ -160,6 +161,7 @@ export function buildDegradedLiveAssembleResult(params: {
+   tokenBudget: number;
+ }): AssembleResult {
+   const withoutAssistantPrefill = stripTrailingAssistantPrefill(params.liveMessages.slice());
++  const admissionBudget = resolveSerializedOutputAdmissionBudget(params.tokenBudget);
+   const protectedPrefix: AgentMessage[] = [];
+   while (
+     protectedPrefix.length < withoutAssistantPrefill.length &&
+@@ -170,7 +172,7 @@ export function buildDegradedLiveAssembleResult(params: {
+   const liveTail = withoutAssistantPrefill.slice(protectedPrefix.length);
+   const remainingBudget = Math.max(
+     0,
+-    Math.floor(params.tokenBudget) - estimateAgentMessageTokens(protectedPrefix),
++    admissionBudget - estimateSerializedMessagesTokens(protectedPrefix),
+   );
+   let liveTailMessages = trimMessagesToBudget(liveTail, remainingBudget);
+   if (liveTailMessages.length === 0 && liveTail.length > 0) {
+@@ -179,7 +181,7 @@ export function buildDegradedLiveAssembleResult(params: {
+   const messages = [...protectedPrefix, ...liveTailMessages];
+   return {
+     messages,
+-    estimatedTokens: estimateAgentMessageTokens(messages),
++    estimatedTokens: estimateSerializedMessagesTokens(messages),
+   };
+ }
+ 
+@@ -226,7 +228,7 @@ export function buildForkBoundedLiveFallback(params: {
+   const candidateMessages = suffix.length > 0 ? suffix : params.liveMessages;
+   const boundedMessages = trimMessagesToBudget(
+     candidateMessages,
+-    Math.min(params.tokenBudget, params.bootstrapMaxTokens),
++    Math.min(resolveSerializedOutputAdmissionBudget(params.tokenBudget), params.bootstrapMaxTokens),
+   );
+   return {
+     messages: boundedMessages,
+diff --git a/src/estimate-tokens.ts b/src/estimate-tokens.ts
+index 89cec6a..deab116 100644
+--- a/src/estimate-tokens.ts
++++ b/src/estimate-tokens.ts
+@@ -102,6 +102,63 @@ function isLikelyOpaqueBinaryString(key: string, value: string): boolean {
+  */
+ const serializedEstimateCache = new WeakMap<object, number>();
+ 
++const OPENCLAW_BASE_CHARS_PER_TOKEN = 4;
++const OPENCLAW_TOOL_RESULT_CHARS_PER_TOKEN = 2;
++const OPENCLAW_IMAGE_CHAR_ESTIMATE = 8_000;
++
++function estimateOpenClawUnknownChars(value: unknown): number {
++  if (typeof value === "string") {
++    return value.length;
++  }
++  if (value === undefined) {
++    return 0;
++  }
++  try {
++    return JSON.stringify(value)?.length ?? 0;
++  } catch {
++    return 256;
++  }
++}
++
++function estimateOpenClawToolResultContentChars(message: unknown): number {
++  if (!message || typeof message !== "object") {
++    return 0;
++  }
++  const record = message as { role?: unknown; type?: unknown; content?: unknown };
++  if (record.role !== "toolResult" && record.role !== "tool" && record.type !== "toolResult") {
++    return 0;
++  }
++  if (typeof record.content === "string") {
++    return record.content.length;
++  }
++  if (!Array.isArray(record.content)) {
++    return 0;
++  }
++  let chars = 0;
++  for (const block of record.content) {
++    if (block && typeof block === "object") {
++      const typed = block as { type?: unknown; text?: unknown };
++      if (typed.type === "text" && typeof typed.text === "string") {
++        chars += typed.text.length;
++        continue;
++      }
++      if (typed.type === "image") {
++        chars += OPENCLAW_IMAGE_CHAR_ESTIMATE;
++        continue;
++      }
++    }
++    chars += estimateOpenClawUnknownChars(block);
++  }
++  return chars;
++}
++
++function estimateOpenClawToolResultSurchargeTokens(message: unknown): number {
++  const chars = estimateOpenClawToolResultContentChars(message);
++  const surchargePerChar =
++    1 / OPENCLAW_TOOL_RESULT_CHARS_PER_TOKEN - 1 / OPENCLAW_BASE_CHARS_PER_TOKEN;
++  return Math.ceil(chars * surchargePerChar);
++}
++
+ /**
+  * Estimate the model-boundary token cost of a full message object by
+  * serializing the entire structure, not just its text blocks.
+@@ -153,7 +210,10 @@ export function estimateSerializedMessageTokens(message: unknown): number {
+       }
+     }
+   }
+-  const estimate = estimateTokens(serialized) + opaqueParts * OPAQUE_BINARY_PART_TOKEN_ESTIMATE;
++  const estimate =
++    estimateTokens(serialized) +
++    opaqueParts * OPAQUE_BINARY_PART_TOKEN_ESTIMATE +
++    estimateOpenClawToolResultSurchargeTokens(message);
+   if (cacheable) {
+     serializedEstimateCache.set(message as object, estimate);
+   }
+diff --git a/test/bounded-assemble.test.ts b/test/bounded-assemble.test.ts
+index 36a2ab4..a1f9d3f 100644
+--- a/test/bounded-assemble.test.ts
++++ b/test/bounded-assemble.test.ts
+@@ -16,6 +16,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
+ import type { LcmConfig } from "../src/db/config.js";
+ import { closeLcmConnection, createLcmDatabaseConnection } from "../src/db/connection.js";
+ import { LcmContextEngine } from "../src/engine.js";
++import { SERIALIZED_OUTPUT_CLAMP_SAFETY_RATIO } from "../src/assemble-fallback.js";
+ import { estimateSerializedMessagesTokens } from "../src/estimate-tokens.js";
+ import type { AgentMessage } from "../src/openclaw-bridge.js";
+ import type { LcmDependencies } from "../src/types.js";
+@@ -141,11 +142,12 @@ describe("bounded assemble output", () => {
+       messages: liveMessages,
+       tokenBudget,
+     });
++    const admissionBudget = Math.floor(tokenBudget * SERIALIZED_OUTPUT_CLAMP_SAFETY_RATIO);
+ 
+     expect(result.messages.length).toBeGreaterThan(0);
+     expect(result.messages.length).toBeLessThan(liveMessages.length);
+-    expect(estimateSerializedMessagesTokens(result.messages)).toBeLessThanOrEqual(tokenBudget);
+-    expect(result.estimatedTokens).toBeLessThanOrEqual(tokenBudget);
++    expect(estimateSerializedMessagesTokens(result.messages)).toBeLessThanOrEqual(admissionBudget);
++    expect(result.estimatedTokens).toBeLessThanOrEqual(admissionBudget);
+     expect(result.estimatedTokens).toBeGreaterThan(0);
+     // Output keeps the newest suffix: the final user turn must survive.
+     expect(result.messages.some((m) => m.role === "user")).toBe(true);
+@@ -170,10 +172,11 @@ describe("bounded assemble output", () => {
+       messages: liveMessages,
+       tokenBudget,
+     });
++    const admissionBudget = Math.floor(tokenBudget * SERIALIZED_OUTPUT_CLAMP_SAFETY_RATIO);
+ 
+     expect(result.messages.length).toBeGreaterThan(0);
+-    expect(estimateSerializedMessagesTokens(result.messages)).toBeLessThanOrEqual(tokenBudget);
+-    expect(result.estimatedTokens).toBeLessThanOrEqual(tokenBudget);
++    expect(estimateSerializedMessagesTokens(result.messages)).toBeLessThanOrEqual(admissionBudget);
++    expect(result.estimatedTokens).toBeLessThanOrEqual(admissionBudget);
+     expect(result.messages.some((m) => m.role === "user")).toBe(true);
+   });
+ 
+diff --git a/test/estimate-tokens.test.ts b/test/estimate-tokens.test.ts
+index 8e959b6..54e3e3c 100644
+--- a/test/estimate-tokens.test.ts
++++ b/test/estimate-tokens.test.ts
+@@ -98,6 +98,16 @@ describe("estimateSerializedMessageTokens", () => {
+     expect(estimateSerializedMessageTokens(message)).toBeGreaterThan(2_000);
+   });
+ 
++  it("applies OpenClaw's two-chars-per-token weight to tool-result content", () => {
++    const payload = "x".repeat(12_000);
++    const userMessage = { role: "user", content: [{ type: "text", text: payload }] };
++    const toolMessage = { role: "toolResult", content: [{ type: "text", text: payload }] };
++
++    expect(
++      estimateSerializedMessageTokens(toolMessage) - estimateSerializedMessageTokens(userMessage),
++    ).toBeGreaterThanOrEqual(2_990);
++  });
++
+   it("substitutes a fixed cost for embedded base64 payloads", () => {
+     const base64 = "QUJDREVGR0hJSktMTU5PUFFSU1RVVldYWVo=".repeat(2_000); // ~74k chars
+     const message = {

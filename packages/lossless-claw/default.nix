@@ -7,17 +7,19 @@
 
 buildNpmPackage rec {
   pname = "openclaw-runtime-plugin-lossless-claw";
-  version = "0.13.2";
+  version = "0.14.0";
 
   src = fetchFromGitHub {
     owner = "Martian-Engineering";
     repo = "lossless-claw";
     rev = "v${version}";
-    hash = "sha256-icpWV9upvivvdX9JMgkMx4RFdQRk/2eNNH5sbrPX2V0=";
+    hash = "sha256-vVlbMrgvzR4bhI7v9J/s9Asp2zMxfxgK4l/b/9fdpec=";
   };
 
-  npmDepsHash = "sha256-aS26/oTzAoncYANck1MbPbBCL/UQowiU02/Wn3L+5So=";
+  npmDepsHash = "sha256-es2LKBb8Lxcm3uKFePRTK1CnczVownVMiw9ZSTpC9xc=";
   npmDepsFetcherVersion = 2;
+
+  patches = [ ./openclaw-admission-budget.patch ];
 
   npmBuildScript = "build";
 
@@ -52,6 +54,15 @@ buildNpmPackage rec {
       rm -rf "$out/lib"
       cp -R "$tmpRoot"/. "$out"/
       rm -rf "$tmpRoot"
+
+      for executable in lcm lossless-claw-migrate-sessions; do
+        if [ -f "$out/bin/$executable" ]; then
+          substituteInPlace "$out/bin/$executable" \
+            --replace-fail \
+            "$out/lib/node_modules/@martian-engineering/lossless-claw/" \
+            "$out/"
+        fi
+      done
     fi
   '';
 
