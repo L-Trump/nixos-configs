@@ -21,6 +21,7 @@ let
 in
 {
   home.pointerCursor = {
+    enable = true;
     name = "meumy-umy-pixel-cursors";
     size = 16;
     package = meumy-umy-pixel-cursors;
