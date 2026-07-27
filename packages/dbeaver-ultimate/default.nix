@@ -12,6 +12,9 @@
   glib,
   webkitgtk_4_1,
   glib-networking,
+  xorg,
+  alsa-lib,
+  libsecret,
   maven,
   writers,
   override_xmx ? "2048m",
@@ -19,12 +22,12 @@
 let
   dbeaver-agent = maven.buildMavenPackage rec {
     pname = "dbeaver-agent";
-    version = "25.2";
+    version = "26.1";
 
     src = fetchgit {
-      url = "https://gitee.com/lunakan/dbeaver-agent";
-      tag = "v${version}";
-      hash = "sha256-m+kkIP9WnNa/sXVuHUuUUnamcAvFE3l68G2sERsAyMw=";
+      url = "https://gitee.com/ltrump/dbeaver-agent.git";
+      rev = "c09a4a2ab35c752f95c0cad5ee4dd6958f6c9517";
+      hash = "sha256-QXbQCv4QnFVdZMhVNoPvnnN1iXTsD+tJaViOhqCC5tk=";
     };
 
     mvnHash = "sha256-YBuok6hhPE+KMeH24Ue/RWGlSEaZOWrjz1TFrBGnUtQ=";
@@ -33,8 +36,7 @@ let
       runHook preInstall
 
       mkdir -p $out/share/dbeaver-agent
-      cp -r target/* $out/share/dbeaver-agent/
-      cp -rf $out/share/dbeaver-agent/dbeaver-agent-${version}-SNAPSHOT-jar-with-dependencies.jar $out/share/dbeaver-agent/dbeaver-agent.jar
+      cp target/dbeaver-agent-${version}-SNAPSHOT-jar-with-dependencies.jar $out/share/dbeaver-agent/dbeaver-agent.jar
 
       runHook postInstall
     '';
@@ -42,19 +44,19 @@ let
 in
 stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "dbeaver-ultimate";
-  version = "25.2.0";
+  version = "26.1.0";
 
   src =
     let
       inherit (stdenvNoCC.hostPlatform) system;
       selectSystem = attrs: attrs.${system} or (throw "Unsupported system: ${system}");
       suffix = selectSystem {
-        x86_64-linux = "linux.gtk.x86_64-nojdk.tar.gz";
-        aarch64-linux = "linux.gtk.aarch64-nojdk.tar.gz";
+        x86_64-linux = "linux-x86_64.tar.gz";
+        aarch64-linux = "linux-aarch64.tar.gz";
       };
       hash = selectSystem {
-        x86_64-linux = "sha256-qzFOyHay5t3GAyd5YwdlpQ3hsQbceYig40NSiQPQpMo=";
-        aarch64-linux = "sha256-ip/EoJHY8mlDv348J0o3CwlqcoAXtpUzMSUyujbDtw0=";
+        x86_64-linux = "sha256-UmwOd1lnILRz+GISFoHXjkG+BiPtDsEb4at/T6ap/eM=";
+        aarch64-linux = "sha256-hKWyg4OMW/hRRZzSLWuJ34Jhkir+H9O1SN5klkKuXDs=";
       };
     in
     fetchurl {
@@ -71,12 +73,24 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     autoPatchelfHook
   ];
 
+  buildInputs = [
+    xorg.libXtst
+    alsa-lib
+    libsecret
+  ];
+
   dontConfigure = true;
   dontBuild = true;
 
   prePatch = ''
     substituteInPlace dbeaver.ini \
       --replace-fail '-Xmx2048m' '-Xmx${override_xmx}'
+    # Use system JDK instead of bundled JRE (bundled JRE lacks java.instrument module needed by -javaagent)
+    # Insert -vm and JDK path before -vmargs in dbeaver.ini
+    # Insert -nl zh before -vmargs for Chinese UI
+    JDK_PATH='${openjdk21.home}/bin/java'
+    sed -i "/^-vmargs/i -vm\n$JDK_PATH" dbeaver.ini
+    sed -i "/^-vmargs/i -nl\nzh" dbeaver.ini
     echo "-javaagent:${dbeaver-agent}/share/dbeaver-agent/dbeaver-agent.jar" >> dbeaver.ini
     echo "-Xbootclasspath/a:${dbeaver-agent}/share/dbeaver-agent/dbeaver-agent.jar" >> dbeaver.ini
   '';
@@ -104,6 +118,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
           glib
           webkitgtk_4_1
           glib-networking
+          libsecret
         ]
       }"
 
