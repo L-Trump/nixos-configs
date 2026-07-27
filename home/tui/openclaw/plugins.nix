@@ -1,5 +1,4 @@
-{ lib }:
-{
+{ lib }: {
   # 需要 nix-openclaw 作为 runtime plugin 链接/启用的插件。
   runtimePlugins = [
     # 飞书 channel runtime plugin。
@@ -8,6 +7,8 @@
     "brave"
     # DeepSeek model provider runtime plugin。
     "deepseek"
+    # Qwen / 阿里云百炼 provider runtime plugin；新版可接管 Token Plan 专属兼容逻辑。
+    "qwen"
     "codex"
     # 本仓库 overlay 提供的第三方 Lossless Context Management 插件。
     "lossless-claw"
@@ -26,11 +27,12 @@
         "execution-validator-plugin"
         "feishu"
         "google"
-        "graph-memory"
+        "graph-memory-pro"
         "minimax"
         "telegram"
         "codex"
         "openai"
+        "qwen"
         "lossless-claw"
         "workboard"
       ];
@@ -47,6 +49,7 @@
         feishu.enabled = true;
         minimax.enabled = true;
         deepseek.enabled = true;
+        qwen.enabled = true;
         codex.enabled = true;
         workboard.enabled = true;
         google = {
@@ -69,7 +72,7 @@
         };
 
         # Graph Memory hook-only 记忆插件配置。
-        graph-memory = {
+        graph-memory-pro = {
           # 启用 graph-memory 插件。
           enabled = true;
           # graph-memory 需要读取会话消息并注入召回上下文；非 bundled 插件需显式授权 typed hooks。
@@ -85,7 +88,7 @@
               apiKey = {
                 source = "file";
                 provider = "openclaw";
-                id = "/plugins/graph-memory/llm/apiKey";
+                id = "/plugins/graph-memory-pro/llm/apiKey";
               };
               # graph-memory 使用的 LLM 模型名。
               model = "MiniMax-M2.7-highspeed";
@@ -99,7 +102,7 @@
               apiKey = {
                 source = "file";
                 provider = "openclaw";
-                id = "/plugins/graph-memory/embedding/apiKey";
+                id = "/plugins/graph-memory-pro/embedding/apiKey";
               };
               # Jina embedding 模型。
               model = "jina-embeddings-v5-text-small";
@@ -163,6 +166,8 @@
           };
           config = {
             freshTailCount = 64;
+            # 限制受保护 fresh tail 的 token 总量，避免工具结果密集时尾部膨胀到无法 compact。
+            freshTailMaxTokens = 24000;
             leafChunkTokens = 40000;
             newSessionRetainDepth = 2;
             contextThreshold = 0.65;

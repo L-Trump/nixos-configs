@@ -1,5 +1,4 @@
-{ config, ... }:
-{
+{ config, ... }: {
   # Agent 默认配置。
   agents.defaults = {
     # 默认文本模型和 fallback 链。
@@ -29,17 +28,23 @@
       "minimax/MiniMax-M3".alias = "m3";
       "deepseek/deepseek-v4-flash".alias = "ds4f";
       "deepseek/deepseek-v4-pro".alias = "ds4p";
-      # Volcano Engine Ark Coding Plan models from the official OpenClaw example.
-      "volcengine-plan/ark-code-latest".alias = "ark";
-      "volcengine-plan/doubao-seed-2.0-code".alias = "seedcode";
-      "volcengine-plan/doubao-seed-2.0-pro".alias = "seedpro";
-      "volcengine-plan/doubao-seed-2.0-lite".alias = "seedlite";
-      "volcengine-plan/doubao-seed-code".alias = "seed1code";
-      "volcengine-plan/glm-5.1".alias = "vol-glm5.1";
-      "volcengine-plan/minimax-m3".alias = "vol-m3";
-      "volcengine-plan/kimi-k2.6".alias = "vol-k2.6";
-      "volcengine-plan/deepseek-v4-flash".alias = "vol-ds4f";
-      "volcengine-plan/deepseek-v4-pro".alias = "vol-ds4p";
+      "sjtu/glm-5.1".alias = "glm5.1";
+      "qwen-token-plan/qwen3.8-max-preview" = {
+        alias = "qwen3.8";
+        # Preview 模型始终思考，且思考模式 temperature 下限为 0.6。
+        params = {
+          temperature = 0.6;
+          extra_body.enable_thinking = true;
+        };
+      };
+      "qwen-token-plan/qwen3.7-max".alias = "qwen3.7m";
+      "qwen-token-plan/qwen3.7-plus".alias = "qwen3.7p";
+      "qwen-token-plan/qwen3.6-flash".alias = "qwen3.6f";
+      "qwen-token-plan/deepseek-v4-pro".alias = "ds4p";
+      "qwen-token-plan/glm-5.2" = {
+        alias = "glm5.2";
+        params.extra_body.tool_stream = true;
+      };
       "rhcg/gpt-5.6-luna" = {
         alias = "gpt5.6-luna";
         params = {

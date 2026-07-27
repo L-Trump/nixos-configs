@@ -1,5 +1,4 @@
-{ myvars }:
-{
+{ myvars }: {
   # 模型 provider 配置；渲染到 openclaw.json 的 models.providers。
   models.providers = {
     # MiniMax provider。
@@ -101,140 +100,207 @@
       ];
     };
 
-    # Volcano Engine Ark Coding Plan provider.
-    # 文档要求 Coding Plan 使用 /api/coding/v3；不要改成普通 /api/v3，否则会按量额外计费。
-    "volcengine-plan" = {
-      baseUrl = "https://ark.cn-beijing.volces.com/api/coding/v3";
+    # 阿里云百炼 Token Plan 个人版（华北 2 / 北京）。
+    # Provider ID 与新版官方 qwen provider 插件一致；当前 OpenClaw 2026.7.1
+    # 仍可通过标准 OpenAI-compatible transport 使用，升级后可直接接管专属兼容逻辑。
+    qwen-token-plan = {
+      baseUrl = "https://token-plan.cn-beijing.maas.aliyuncs.com/compatible-mode/v1";
       api = "openai-completions";
-      # Ark Coding Plan API key，从 agenix SecretRef 获取。
       apiKey = {
         source = "file";
         provider = "openclaw";
-        id = "/models/volcengine-plan/apiKey";
+        id = "/models/qwen-token-plan/apiKey";
       };
-      # Provider 请求超时时间。
-      timeoutSeconds = 120;
-      # 模型列表按火山方舟 OpenClaw 文档 JSON 示例填写；api/compat 为本机 OpenClaw 适配字段。
+      timeoutSeconds = 240;
       models = [
         {
-          id = "ark-code-latest";
-          name = "ark-code-latest";
+          id = "qwen3.8-max-preview";
+          name = "Qwen3.8 Max Preview (Token Plan)";
           reasoning = true;
-          contextWindow = 256000;
-          maxTokens = 32000;
           input = [
             "text"
             "image"
           ];
-          api = "openai-completions";
+          cost = {
+            input = 0;
+            output = 0;
+            cacheRead = 0;
+            cacheWrite = 0;
+          };
+          # contextWindow = 983616;
+          contextWindow = 524288;
+          maxTokens = 131072;
+          thinkingLevelMap = {
+            minimal = "low";
+            low = "low";
+            medium = "high";
+            high = "xhigh";
+            xhigh = "xhigh";
+            max = "xhigh";
+          };
+          compat = {
+            # qwen3.8-max-preview 始终思考，并使用 OpenAI 风格 reasoning_effort。
+            thinkingFormat = "openai";
+            supportsReasoningEffort = true;
+            supportedReasoningEfforts = [
+              "low"
+              "high"
+              "xhigh"
+            ];
+            supportsUsageInStreaming = true;
+            maxTokensField = "max_tokens";
+          };
         }
         {
-          id = "doubao-seed-code";
-          name = "doubao-seed-code";
+          id = "qwen3.7-max";
+          name = "Qwen3.7 Max (Token Plan)";
           reasoning = true;
-          contextWindow = 256000;
-          maxTokens = 32000;
+          input = [ "text" ];
+          cost = {
+            input = 0;
+            output = 0;
+            cacheRead = 0;
+            cacheWrite = 0;
+          };
+          contextWindow = 1000000;
+          maxTokens = 65536;
+          compat = {
+            thinkingFormat = "qwen";
+            supportsUsageInStreaming = true;
+            maxTokensField = "max_tokens";
+          };
+        }
+        {
+          id = "qwen3.7-plus";
+          name = "Qwen3.7 Plus (Token Plan)";
+          reasoning = true;
           input = [
             "text"
             "image"
           ];
-          api = "openai-completions";
+          cost = {
+            input = 0;
+            output = 0;
+            cacheRead = 0;
+            cacheWrite = 0;
+          };
+          contextWindow = 1000000;
+          maxTokens = 65536;
+          compat = {
+            thinkingFormat = "qwen";
+            supportsUsageInStreaming = true;
+            maxTokensField = "max_tokens";
+          };
         }
         {
-          id = "glm-5.1";
-          name = "glm-5.1";
+          id = "qwen3.6-flash";
+          name = "Qwen3.6 Flash (Token Plan)";
           reasoning = true;
-          contextWindow = 200000;
+          input = [
+            "text"
+            "image"
+          ];
+          cost = {
+            input = 0;
+            output = 0;
+            cacheRead = 0;
+            cacheWrite = 0;
+          };
+          contextWindow = 1000000;
           maxTokens = 65536;
-          input = [ "text" ];
-          api = "openai-completions";
-        }
-        {
-          id = "deepseek-v4-flash";
-          name = "deepseek-v4-flash";
-          reasoning = true;
-          contextWindow = 1024000;
-          maxTokens = 65536;
-          input = [ "text" ];
-          api = "openai-completions";
+          compat = {
+            thinkingFormat = "qwen";
+            supportsUsageInStreaming = true;
+            maxTokensField = "max_tokens";
+          };
         }
         {
           id = "deepseek-v4-pro";
-          name = "deepseek-v4-pro";
+          name = "DeepSeek V4 Pro (Token Plan)";
           reasoning = true;
-          contextWindow = 1024000;
-          maxTokens = 65536;
           input = [ "text" ];
-          api = "openai-completions";
+          cost = {
+            input = 0;
+            output = 0;
+            cacheRead = 0;
+            cacheWrite = 0;
+          };
+          contextWindow = 1000000;
+          maxTokens = 393216;
+          thinkingLevelMap = {
+            minimal = "high";
+            low = "high";
+            medium = "high";
+            high = "high";
+            xhigh = "max";
+            max = "max";
+          };
+          compat = {
+            # 显式 qwen 格式避免 2026.7.1 核心发送 DeepSeek 原生 thinking 对象。
+            thinkingFormat = "qwen";
+            requiresReasoningContentOnAssistantMessages = true;
+            supportsUsageInStreaming = true;
+            maxTokensField = "max_tokens";
+          };
         }
         {
-          id = "doubao-seed-2.0-code";
-          name = "doubao-seed-2.0-code";
+          id = "glm-5.2";
+          name = "GLM-5.2 (Token Plan)";
           reasoning = true;
-          contextWindow = 256000;
-          maxTokens = 65536;
-          input = [
-            "text"
-            "image"
-          ];
-          api = "openai-completions";
+          input = [ "text" ];
+          cost = {
+            input = 0;
+            output = 0;
+            cacheRead = 0;
+            cacheWrite = 0;
+          };
+          contextWindow = 1000000;
+          maxTokens = 131072;
+          compat = {
+            thinkingFormat = "qwen";
+            supportedReasoningEfforts = [
+              "minimal"
+              "low"
+              "medium"
+              "high"
+              "xhigh"
+              "max"
+            ];
+            supportsUsageInStreaming = true;
+            maxTokensField = "max_tokens";
+          };
         }
+      ];
+    };
+
+    # SJTU OpenAI-compatible provider。
+    sjtu = {
+      baseUrl = "https://llm.mmm.fan/v1";
+      api = "openai-completions";
+      # SJTU API key，从 agenix SecretRef 获取。
+      apiKey = {
+        source = "file";
+        provider = "openclaw";
+        id = "/models/sjtu/apiKey";
+      };
+      # 长上下文请求耗时较长，沿用同端点 RHCG provider 的超时配置。
+      timeoutSeconds = 240;
+      models = [
         {
-          id = "doubao-seed-2.0-pro";
-          name = "doubao-seed-2.0-pro";
+          id = "glm-5.1";
+          name = "GLM-5.1 (SJTU)";
           reasoning = true;
-          contextWindow = 256000;
-          maxTokens = 65536;
-          input = [
-            "text"
-            "image"
-          ];
-          api = "openai-completions";
-        }
-        {
-          id = "doubao-seed-2.0-lite";
-          name = "doubao-seed-2.0-lite";
-          reasoning = true;
-          contextWindow = 256000;
-          maxTokens = 65536;
-          input = [
-            "text"
-            "image"
-          ];
-          api = "openai-completions";
-        }
-        {
-          id = "minimax-m2.7";
-          name = "minimax-m2.7";
-          reasoning = true;
+          input = [ "text" ];
+          # llm.mmm.fan 当前部署实测总上下文上限为 262144 tokens。
           contextWindow = 200000;
-          maxTokens = 65536;
-          input = [ "text" ];
+          maxTokens = 32768;
           api = "openai-completions";
-        }
-        {
-          id = "minimax-m3";
-          name = "minimax-m3";
-          reasoning = true;
-          contextWindow = 512000;
-          maxTokens = 65536;
-          input = [
-            "text"
-            "image"
-          ];
-          api = "openai-completions";
-        }
-        {
-          id = "kimi-k2.6";
-          name = "kimi-k2.6";
-          reasoning = true;
-          contextWindow = 256000;
-          maxTokens = 32000;
-          input = [
-            "text"
-            "image"
-          ];
-          api = "openai-completions";
+          compat = {
+            # 该 vLLM 兼容端点通过 chat_template_kwargs.enable_thinking 控制思考。
+            thinkingFormat = "qwen-chat-template";
+            maxTokensField = "max_tokens";
+            supportsUsageInStreaming = true;
+          };
         }
       ];
     };
