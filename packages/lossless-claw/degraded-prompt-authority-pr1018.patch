@@ -1,0 +1,294 @@
+From 76ddb2c7f3a3fa925216dd394a3bc2ec2c28ebec Mon Sep 17 00:00:00 2001
+From: LTClaw <ltclaw@localhost>
+Date: Fri, 24 Jul 2026 17:44:58 +0800
+Subject: [PATCH] fix: scope degraded prompt authority to actual overflow
+
+---
+ .changeset/degraded-prompt-authority.md |  5 ++
+ src/assemble-fallback.ts                | 38 +++++++++---
+ src/engine.ts                           | 14 +++--
+ src/openclaw-bridge.ts                  |  2 +
+ test/bounded-assemble.test.ts           | 77 +++++++++++++++++++++++++
+ test/engine-assemble.test.ts            |  1 +
+ 6 files changed, 124 insertions(+), 13 deletions(-)
+ create mode 100644 .changeset/degraded-prompt-authority.md
+
+diff --git a/.changeset/degraded-prompt-authority.md b/.changeset/degraded-prompt-authority.md
+new file mode 100644
+index 0000000..f7d61ef
+--- /dev/null
++++ b/.changeset/degraded-prompt-authority.md
+@@ -0,0 +1,5 @@
++---
++"@martian-engineering/lossless-claw": patch
++---
++
++Keep OpenClaw's preemptive overflow check enabled when deferred compaction debt forces Lossless Claw to return a degraded live context that still exceeds its assembly budget. Safely bounded degraded output remains authoritative so the host does not recheck evicted pre-assembly history.
+diff --git a/src/assemble-fallback.ts b/src/assemble-fallback.ts
+index b6b676a..6f984ce 100644
+--- a/src/assemble-fallback.ts
++++ b/src/assemble-fallback.ts
+@@ -150,6 +150,18 @@ export function clampMessagesToSerializedBudget(params: {
+   };
+ }
+
++export function applyBudgetPromptAuthority(
++  result: AssembleResult,
++  tokenBudget: number,
++): AssembleResult {
++  const safeTokenBudget = Number.isFinite(tokenBudget)
++    ? Math.max(0, Math.floor(tokenBudget))
++    : 0;
++  return result.estimatedTokens > safeTokenBudget
++    ? { ...result, promptAuthority: "preassembly_may_overflow" }
++    : result;
++}
++
+ export function isProtectedLeadingLiveContextMessage(message: AgentMessage): boolean {
+   const role = typeof message.role === "string" ? message.role.toLowerCase() : "";
+   return role === "system" || role === "developer";
+@@ -159,6 +171,9 @@ export function buildDegradedLiveAssembleResult(params: {
+   liveMessages: AgentMessage[];
+   tokenBudget: number;
+ }): AssembleResult {
++  const safeTokenBudget = Number.isFinite(params.tokenBudget)
++    ? Math.max(0, Math.floor(params.tokenBudget))
++    : 0;
+   const withoutAssistantPrefill = stripTrailingAssistantPrefill(params.liveMessages.slice());
+   const protectedPrefix: AgentMessage[] = [];
+   while (
+@@ -170,17 +185,19 @@ export function buildDegradedLiveAssembleResult(params: {
+   const liveTail = withoutAssistantPrefill.slice(protectedPrefix.length);
+   const remainingBudget = Math.max(
+     0,
+-    Math.floor(params.tokenBudget) - estimateAgentMessageTokens(protectedPrefix),
++    safeTokenBudget - estimateAgentMessageTokens(protectedPrefix),
+   );
+   let liveTailMessages = trimMessagesToBudget(liveTail, remainingBudget);
+   if (liveTailMessages.length === 0 && liveTail.length > 0) {
+     liveTailMessages = [liveTail[liveTail.length - 1]!];
+   }
+   const messages = [...protectedPrefix, ...liveTailMessages];
+-  return {
+-    messages,
+-    estimatedTokens: estimateAgentMessageTokens(messages),
+-  };
++  const estimatedTokens = estimateAgentMessageTokens(messages);
++  // Degraded assembly is still authoritative when its serialized output
++  // fits the declared budget. Ask OpenClaw to inspect the unwindowed
++  // pre-assembly transcript only when a mandatory protected/last message
++  // leaves the returned view itself over budget.
++  return applyBudgetPromptAuthority({ messages, estimatedTokens }, safeTokenBudget);
+ }
+
+ export function resolveDeferredAssemblyPressure(params: {
+@@ -228,10 +245,13 @@ export function buildForkBoundedLiveFallback(params: {
+     candidateMessages,
+     Math.min(params.tokenBudget, params.bootstrapMaxTokens),
+   );
+-  return {
+-    messages: boundedMessages,
+-    estimatedTokens: estimateAgentMessageTokens(boundedMessages),
+-  };
++  return applyBudgetPromptAuthority(
++    {
++      messages: boundedMessages,
++      estimatedTokens: estimateAgentMessageTokens(boundedMessages),
++    },
++    params.tokenBudget,
++  );
+ }
+
+ /** Return the log level for fork-bounded live suffix append pressure. */
+diff --git a/src/engine.ts b/src/engine.ts
+index 402842b..1410340 100644
+--- a/src/engine.ts
++++ b/src/engine.ts
+@@ -80,7 +80,7 @@ import {
+   type TranscriptRewriteRequest,
+ } from "./session-rotation.js";
+ import { describeAssembledPrefixChange, formatOverflowDiagnosticsForLog, shouldLogOverflowDiagnostics, type AssemblePrefixSnapshot, type BootstrapImportObservation } from "./assemble-debug.js";
+-import { appendForkBoundedLiveSuffixWithinBudget, buildDegradedLiveAssembleResult, buildForkBoundedLiveFallback, clampMessagesToSerializedBudget, forkBoundedLiveSuffixAppendLogLevel, resolveDeferredAssemblyPressure } from "./assemble-fallback.js";
++import { appendForkBoundedLiveSuffixWithinBudget, applyBudgetPromptAuthority, buildDegradedLiveAssembleResult, buildForkBoundedLiveFallback, clampMessagesToSerializedBudget, forkBoundedLiveSuffixAppendLogLevel, resolveDeferredAssemblyPressure } from "./assemble-fallback.js";
+ import { resolveBootstrapMaxTokens, trimBootstrapMessagesToBudget } from "./bootstrap-budget.js";
+ import { batchLooksLikeHeartbeatAckTurn, pruneHeartbeatOkTurns } from "./heartbeat-filter.js";
+ import { appendUncoveredVolatileLiveInputsWithinBudget, isVolatileLiveInputMessage, messageContentCoveredBySummary, resolveProtectedFreshTailAssembledIndexes } from "./live-coverage.js";
+@@ -3568,7 +3568,10 @@ export class LcmContextEngine implements ContextEngine {
+             `[lcm] assemble: bounded live fallback conversation=${conversation.conversationId} ${sessionLabel} reason=${reason} serializedTokensBefore=${clamp.serializedTokensBefore} serializedTokens=${clamp.serializedTokens} evictedMessages=${clamp.evictedMessages} tokenBudget=${tokenBudget} overBudget=${clamp.overBudget}`,
+           );
+         }
+-        return { messages: clamp.messages, estimatedTokens: clamp.serializedTokens };
++        return applyBudgetPromptAuthority(
++          { messages: clamp.messages, estimatedTokens: clamp.serializedTokens },
++          tokenBudget,
++        );
+       };
+       const liveContextTokens = estimateSessionTokenCountForAfterTurn(liveMessages);
+       const maintenance = await this.compactionMaintenanceStore.getConversationCompactionMaintenance(
+@@ -3977,7 +3980,7 @@ export class LcmContextEngine implements ContextEngine {
+         },
+
+       };
+-      return result;
++      return applyBudgetPromptAuthority(result, tokenBudget);
+     } catch (err) {
+       this.deps.log.debug(
+         `[lcm] assemble: failed for session=${params.sessionId}${params.sessionKey?.trim() ? ` sessionKey=${params.sessionKey.trim()}` : ""} error=${describeLogError(err)}`,
+@@ -4001,7 +4004,10 @@ export class LcmContextEngine implements ContextEngine {
+           `[lcm] assemble: bounded live fallback session=${params.sessionId}${params.sessionKey?.trim() ? ` sessionKey=${params.sessionKey.trim()}` : ""} reason=assemble-error serializedTokensBefore=${clamp.serializedTokensBefore} serializedTokens=${clamp.serializedTokens} evictedMessages=${clamp.evictedMessages} tokenBudget=${fallbackBudget} overBudget=${clamp.overBudget}`,
+         );
+       }
+-      return { messages: clamp.messages, estimatedTokens: clamp.serializedTokens };
++      return applyBudgetPromptAuthority(
++        { messages: clamp.messages, estimatedTokens: clamp.serializedTokens },
++        fallbackBudget,
++      );
+     }
+   }
+
+diff --git a/src/openclaw-bridge.ts b/src/openclaw-bridge.ts
+index ff382d8..28ca4ee 100644
+--- a/src/openclaw-bridge.ts
++++ b/src/openclaw-bridge.ts
+@@ -36,6 +36,8 @@ export type ContextEngineProjection = {
+ export type AssembleResult = {
+   messages: AgentMessage[];
+   estimatedTokens: number;
++  /** Ask OpenClaw to include pre-assembly history in its overflow precheck. */
++  promptAuthority?: "assembled" | "preassembly_may_overflow";
+   systemPromptAddition?: string;
+   contextProjection?: ContextEngineProjection;
+ };
+diff --git a/test/bounded-assemble.test.ts b/test/bounded-assemble.test.ts
+index 36a2ab4..31cd1c8 100644
+--- a/test/bounded-assemble.test.ts
++++ b/test/bounded-assemble.test.ts
+@@ -14,6 +14,7 @@ import { tmpdir } from "node:os";
+ import { join } from "node:path";
+ import { afterEach, describe, expect, it, vi } from "vitest";
+ import type { LcmConfig } from "../src/db/config.js";
++import { buildDegradedLiveAssembleResult } from "../src/assemble-fallback.js";
+ import { closeLcmConnection, createLcmDatabaseConnection } from "../src/db/connection.js";
+ import { LcmContextEngine } from "../src/engine.js";
+ import { estimateSerializedMessagesTokens } from "../src/estimate-tokens.js";
+@@ -120,6 +121,31 @@ function makeHeavyLiveTranscript(pairs: number, payloadChars: number): AgentMess
+ }
+
+ describe("bounded assemble output", () => {
++  it("keeps a safely bounded degraded fallback authoritative", () => {
++    const result = buildDegradedLiveAssembleResult({
++      liveMessages: [
++        makeHeavyToolResultMessage(1, 8_000),
++        makeUserMessage(2),
++      ],
++      tokenBudget: 1_000,
++    });
++
++    expect(result.messages).toEqual([makeUserMessage(2)]);
++    expect(result.estimatedTokens).toBeLessThanOrEqual(1_000);
++    expect(result).not.toHaveProperty("promptAuthority");
++  });
++
++  it("downgrades authority when a mandatory last message cannot fit", () => {
++    const result = buildDegradedLiveAssembleResult({
++      liveMessages: [makeHeavyToolResultMessage(1, 8_000)],
++      tokenBudget: 10,
++    });
++
++    expect(result.messages).toHaveLength(1);
++    expect(result.estimatedTokens).toBeGreaterThan(10);
++    expect(result.promptAuthority).toBe("preassembly_may_overflow");
++  });
++
+   it("bounds the live fallback when stored coverage trails a heavy live transcript", async () => {
+     const engine = createEngine();
+     const sessionId = "session-bounded-fallback";
+@@ -147,11 +173,60 @@ describe("bounded assemble output", () => {
+     expect(estimateSerializedMessagesTokens(result.messages)).toBeLessThanOrEqual(tokenBudget);
+     expect(result.estimatedTokens).toBeLessThanOrEqual(tokenBudget);
+     expect(result.estimatedTokens).toBeGreaterThan(0);
++    expect(result).not.toHaveProperty("promptAuthority");
+     // Output keeps the newest suffix: the final user turn must survive.
+     expect(result.messages.some((m) => m.role === "user")).toBe(true);
+     expect(result.messages[result.messages.length - 1]?.role).not.toBe("assistant");
+   });
+
++  it("downgrades a bounded live fallback when its mandatory last message is oversized", async () => {
++    const engine = createEngine();
++    const sessionId = "session-oversized-bounded-fallback";
++    const sessionKey = "agent:main:telegram:group:test:topic:oversized-fallback";
++    await engine.ingest({ sessionId, sessionKey, message: makeUserMessage(0) });
++
++    const mandatoryLastMessage = {
++      ...makeUserMessage(1),
++      content: "oversized user input ".repeat(1_000),
++    } as AgentMessage;
++    const tokenBudget = 10;
++    const result = await engine.assemble({
++      sessionId,
++      sessionKey,
++      messages: [makeUserMessage(0), mandatoryLastMessage],
++      tokenBudget,
++    });
++
++    expect(result.messages).toEqual([mandatoryLastMessage]);
++    expect(result.estimatedTokens).toBeGreaterThan(tokenBudget);
++    expect(result.promptAuthority).toBe("preassembly_may_overflow");
++  });
++
++  it("downgrades canonical assembly when its mandatory last message is oversized", async () => {
++    const engine = createEngine();
++    const sessionId = "session-oversized-canonical";
++    const sessionKey = "agent:main:telegram:group:test:topic:oversized-canonical";
++    const mandatoryLastMessage = {
++      ...makeUserMessage(1),
++      content: "oversized canonical user input ".repeat(1_000),
++    } as AgentMessage;
++    await engine.ingest({ sessionId, sessionKey, message: mandatoryLastMessage });
++
++    const tokenBudget = 10;
++    const result = await engine.assemble({
++      sessionId,
++      sessionKey,
++      messages: [mandatoryLastMessage],
++      tokenBudget,
++    });
++
++    expect(result.messages).toHaveLength(1);
++    expect(result.messages[0]?.role).toBe("user");
++    expect(result.messages[0]?.content).toBe(mandatoryLastMessage.content);
++    expect(result.estimatedTokens).toBeGreaterThan(tokenBudget);
++    expect(result.promptAuthority).toBe("preassembly_may_overflow");
++  });
++
+   it("clamps assembled output whose serialized size exceeds the budget", async () => {
+     const engine = createEngine();
+     const sessionId = "session-clamped-assembled";
+@@ -175,6 +250,7 @@ describe("bounded assemble output", () => {
+     expect(estimateSerializedMessagesTokens(result.messages)).toBeLessThanOrEqual(tokenBudget);
+     expect(result.estimatedTokens).toBeLessThanOrEqual(tokenBudget);
+     expect(result.messages.some((m) => m.role === "user")).toBe(true);
++    expect(result).not.toHaveProperty("promptAuthority");
+   });
+
+   it("does not clamp small contexts and reports a non-zero estimate", async () => {
+@@ -194,6 +270,7 @@ describe("bounded assemble output", () => {
+     expect(result.messages).toHaveLength(1);
+     expect(result.estimatedTokens).toBeGreaterThan(0);
+     expect(result.estimatedTokens).toBeLessThan(1_000);
++    expect(result).not.toHaveProperty("promptAuthority");
+   });
+
+   it("passes ignored sessions through untouched", async () => {
+diff --git a/test/engine-assemble.test.ts b/test/engine-assemble.test.ts
+index 59f8130..7188915 100644
+--- a/test/engine-assemble.test.ts
++++ b/test/engine-assemble.test.ts
+@@ -93,6 +93,7 @@ describe("LcmContextEngine.assemble canonical path", () => {
+       mode: "thread_bootstrap",
+       epoch: expect.stringMatching(/^summary-prefix-v1:\d+:[a-f0-9]{32}$/),
+     });
++    expect(result).not.toHaveProperty("promptAuthority");
+   });
+
+   async function seedPromptRecallFixture(params: {

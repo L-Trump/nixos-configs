@@ -19,7 +19,12 @@ buildNpmPackage rec {
   npmDepsHash = "sha256-es2LKBb8Lxcm3uKFePRTK1CnczVownVMiw9ZSTpC9xc=";
   npmDepsFetcherVersion = 2;
 
-  patches = [ ./openclaw-admission-budget.patch ];
+  patches = [
+    # Backport and tighten lossless-claw#1018: safely bounded degraded output
+    # stays authoritative; only output still over budget restores the host precheck.
+    ./degraded-prompt-authority-pr1018.patch
+    ./deferred-compaction-cache-stability.patch
+  ];
 
   npmBuildScript = "build";
 
