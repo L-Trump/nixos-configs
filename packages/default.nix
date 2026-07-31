@@ -1,4 +1,5 @@
 {
+  inputs,
   pkgs ? import <nixpkgs> { },
   pkgs-unstable ? import <nixpkgs> { },
   pkgs-stable ? import <nixpkgs> { },
@@ -6,6 +7,14 @@
 }:
 let
   inherit (pkgs) lib libsForQt5 fetchFromGitHub;
+
+  # Match the current host's Nixpkgs configuration. In particular, machines
+  # enabling nixpkgs.config.cudaSupport get the corresponding unstable package
+  # set, while other machines keep using the regular CPU package set.
+  pkgs-unstable-host = import inputs.nixpkgs-unstable {
+    system = pkgs.stdenv.hostPlatform.system;
+    config = pkgs.config;
+  };
 in
 {
   wpsoffice-365 = libsForQt5.callPackage ./wpsoffice-365 { };
@@ -45,6 +54,11 @@ in
       ];
     }
   );
+
+  # TODO: Remove once the primary nixpkgs includes NixOS/nixpkgs#547077.
+  # Keep CUDA support consistent with the current host and use the matching
+  # prebuilt package from nixos-unstable-small.
+  onnxruntime = pkgs-unstable-host.onnxruntime;
 
   dbeaver-agent = pkgs.callPackage ./dbeaver-agent { };
   dbeaver-ultimate = pkgs.callPackage ./dbeaver-ultimate { };
