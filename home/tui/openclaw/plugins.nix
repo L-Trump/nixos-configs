@@ -24,6 +24,7 @@
         "brave"
         "browser"
         "deepseek"
+        "document-extract"
         "execution-validator-plugin"
         "feishu"
         "google"
@@ -52,6 +53,8 @@
         qwen.enabled = true;
         codex.enabled = true;
         workboard.enabled = true;
+        # 启用 PDF/文档文本提取及低文本量页面的图片回退；PDF 分析模型沿用现有模型选择链。
+        document-extract.enabled = true;
         google = {
           enabled = true;
           # Google web search API key，从 agenix SecretRef 获取。
