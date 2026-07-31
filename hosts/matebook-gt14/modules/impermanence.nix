@@ -166,7 +166,7 @@ in
         ".config/github-copilot" # nvim plugins
         "Waytech" # clouddrive2
 
-        # OpenClaw
+        # Agent
         ".openclaw"
         "self-improving"
         ".agent-browser"
@@ -174,6 +174,9 @@ in
         ".mcporter"
         ".lark-cli"
         ".claude"
+        ".virtuoso-bridge"
+        ".agents"
+        ".codex"
 
         # cloud native
         {
