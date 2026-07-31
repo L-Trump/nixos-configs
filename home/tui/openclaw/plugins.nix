@@ -80,20 +80,17 @@
             allowConversationAccess = true;
             allowPromptInjection = true;
           };
+          llm = {
+            allowModelOverride = true;
+            allowedModels = [
+              "rhcg/gpt-5.6-luna"
+            ];
+          };
           # graph-memory 插件私有配置。
           config = {
-            # 记忆抽取/归纳使用的 LLM 配置。
+            # 记忆抽取/归纳使用 OpenClaw model ref，不再由 graph-memory-pro 直连 MiniMax API。
             llm = {
-              # LLM API key，从 agenix SecretRef 获取。
-              apiKey = {
-                source = "file";
-                provider = "openclaw";
-                id = "/plugins/graph-memory-pro/llm/apiKey";
-              };
-              # graph-memory 使用的 LLM 模型名。
-              model = "MiniMax-M2.7-highspeed";
-              # graph-memory 直接调用 MiniMax OpenAI-compatible endpoint。
-              baseURL = "https://api.minimaxi.com/v1";
+              model = "rhcg/gpt-5.6-luna";
             };
 
             # 语义检索/去重使用的 embedding 配置。
@@ -151,17 +148,15 @@
           llm = {
             allowModelOverride = true;
             allowedModels = [
-              "minimax/MiniMax-M2.7-highspeed"
-              "rhcg/gpt-5.4-mini"
-              "openai/gpt-5.4-mini"
+              "rhcg/gpt-5.6-luna"
+              "rhcg/gpt-5.6-terra"
             ];
           };
           subagent = {
             allowModelOverride = true;
             allowedModels = [
-              "minimax/MiniMax-M2.7-highspeed"
-              "rhcg/gpt-5.4-mini"
-              "openai/gpt-5.4-mini"
+              "rhcg/gpt-5.6-luna"
+              "rhcg/gpt-5.6-terra"
             ];
           };
           config = {
@@ -180,8 +175,8 @@
             ];
             transcriptGcEnabled = false;
             proactiveThresholdCompactionMode = "deferred";
-            summaryModel = "minimax/MiniMax-M2.7-highspeed";
-            expansionModel = "minimax/MiniMax-M2.7-highspeed";
+            summaryModel = "rhcg/gpt-5.6-luna";
+            expansionModel = "rhcg/gpt-5.6-luna";
             delegationTimeoutMs = 180000;
             summaryTimeoutMs = 60000;
             summaryCallWindowMs = 600000;
