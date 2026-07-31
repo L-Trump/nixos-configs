@@ -16,10 +16,13 @@
     # 默认视觉/图片理解模型。
     imageModel = {
       # 优先使用 MiniMax M3 处理图片/多模态。
-      primary = "minimax/MiniMax-M3";
+      primary = "rhcg/gpt-5.6-sol";
 
       # 视觉模型 fallback。
-      fallbacks = [ "rhcg/gpt-5.4" ];
+      fallbacks = [
+        "minimax/MiniMax-M3"
+        "rhcg/gpt-5.4"
+      ];
     };
 
     # 模型别名，供 /model、子代理和工具配置中使用短名。
