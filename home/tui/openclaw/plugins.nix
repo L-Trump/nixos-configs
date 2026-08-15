@@ -36,6 +36,7 @@
         "qwen"
         "lossless-claw"
         "workboard"
+        "opencode-go"
       ];
 
       # 只按 allow/entries/slots 发现 bundled plugins，避免旧兼容模式绕过 allowlist。
@@ -53,6 +54,8 @@
         qwen.enabled = true;
         codex.enabled = true;
         workboard.enabled = true;
+        # OpenCode Go bundled provider 插件（内置扩展，非 runtime plugin）。
+        opencode-go.enabled = true;
         # 启用 PDF/文档文本提取及低文本量页面的图片回退；PDF 分析模型沿用现有模型选择链。
         document-extract.enabled = true;
         google = {

@@ -100,6 +100,61 @@
       ];
     };
 
+    # OpenCode Go provider；模型参数与 openclaw 内置 opencode-go 插件
+    # (extensions/opencode-go/provider-catalog.ts) 完全对齐。
+    opencode-go = {
+      baseUrl = "https://opencode.ai/zen/go/v1";
+      api = "openai-completions";
+      # OpenCode Go API key，从 agenix SecretRef 获取。
+      apiKey = {
+        source = "file";
+        provider = "openclaw";
+        id = "/models/opencode-go/apiKey";
+      };
+      models = [
+        {
+          id = "deepseek-v4-flash";
+          name = "DeepSeek V4 Flash (OpenCode Go)";
+          reasoning = true;
+          input = [ "text" ];
+          cost = {
+            input = 0.14;
+            output = 0.28;
+            cacheRead = 0.028;
+            cacheWrite = 0;
+          };
+          contextWindow = 1000000;
+          maxTokens = 384000;
+          compat = {
+            supportsReasoningEffort = true;
+            supportsUsageInStreaming = true;
+            maxTokensField = "max_tokens";
+          };
+          api = "openai-completions";
+        }
+        {
+          id = "deepseek-v4-pro";
+          name = "DeepSeek V4 Pro (OpenCode Go)";
+          reasoning = true;
+          input = [ "text" ];
+          cost = {
+            input = 1.74;
+            output = 3.48;
+            cacheRead = 0.145;
+            cacheWrite = 0;
+          };
+          contextWindow = 1000000;
+          maxTokens = 384000;
+          compat = {
+            supportsReasoningEffort = true;
+            supportsUsageInStreaming = true;
+            maxTokensField = "max_tokens";
+          };
+          api = "openai-completions";
+        }
+      ];
+    };
+
     # 阿里云百炼 Token Plan 个人版（华北 2 / 北京）。
     # Provider ID 与新版官方 qwen provider 插件一致；当前 OpenClaw 2026.7.1
     # 仍可通过标准 OpenAI-compatible transport 使用，升级后可直接接管专属兼容逻辑。

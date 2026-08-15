@@ -31,6 +31,9 @@
       "minimax/MiniMax-M3".alias = "m3";
       "deepseek/deepseek-v4-flash".alias = "ds4f";
       "deepseek/deepseek-v4-pro".alias = "ds4p";
+      # OpenCode Go 订阅的 DeepSeek 模型（与官方 API 区分）。
+      "opencode-go/deepseek-v4-flash".alias = "ds4f-go";
+      "opencode-go/deepseek-v4-pro".alias = "ds4p-go";
       "sjtu/glm-5.1".alias = "glm5.1";
       "qwen-token-plan/qwen3.8-max-preview" = {
         alias = "qwen3.8";
