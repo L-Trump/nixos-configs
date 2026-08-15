@@ -16,8 +16,8 @@ let
   tags = [
     name
     "vm-js"
-    "all"
-    "vps"
+    # "all"
+    # "vps"
   ];
   ssh-user = "root";
 

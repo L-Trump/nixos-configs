@@ -15,8 +15,8 @@ let
   name = "jcloud";
   tags = [
     name
-    "all"
-    "vps"
+    # "all"
+    # "vps"
   ];
   ssh-user = "root";
 
