@@ -71,6 +71,9 @@ in
 
   hdc = pkgs.callPackage ./hdc { };
 
+  # TODO wait upstream merge https://github.com/NixOS/nixpkgs/pull/513326
+  wiliwili = pkgs.callPackage ./wiliwili { };
+
   # Some package derived from unstable repo
   # siyuan = pkgs-unstable.siyuan;
   # easytier = pkgs-unstable.easytier;
