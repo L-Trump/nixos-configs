@@ -8,7 +8,6 @@
   programs.aerc = {
     enable = true;
     extraConfig = {
-      general.enable-osc8 = true;
       ui = {
         mouse-enabled = true;
         dirlist-tree = true;
