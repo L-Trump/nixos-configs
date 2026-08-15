@@ -46,6 +46,8 @@
       "qwen-token-plan/qwen3.7-max".alias = "qwen3.7m";
       "qwen-token-plan/qwen3.7-plus".alias = "qwen3.7p";
       "qwen-token-plan/qwen3.6-flash".alias = "qwen3.6f";
+      # 保留官方 DeepSeek provider 的 ds4f；Token Plan 版本使用独立别名。
+      "qwen-token-plan/deepseek-v4-flash-0731".alias = "ds4f-tp";
       "qwen-token-plan/deepseek-v4-pro".alias = "ds4p";
       "qwen-token-plan/glm-5.2" = {
         alias = "glm5.2";

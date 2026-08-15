@@ -270,6 +270,35 @@
           };
         }
         {
+          id = "deepseek-v4-flash-0731";
+          name = "DeepSeek V4 Flash 0731 (Token Plan)";
+          reasoning = true;
+          input = [ "text" ];
+          cost = {
+            input = 0;
+            output = 0;
+            cacheRead = 0;
+            cacheWrite = 0;
+          };
+          contextWindow = 1000000;
+          maxTokens = 393216;
+          thinkingLevelMap = {
+            minimal = "high";
+            low = "high";
+            medium = "high";
+            high = "high";
+            xhigh = "max";
+            max = "max";
+          };
+          compat = {
+            # 由 2026.7.1 Qwen runtime backport 转成 Token Plan 的 DeepSeek 字段。
+            thinkingFormat = "qwen";
+            requiresReasoningContentOnAssistantMessages = true;
+            supportsUsageInStreaming = true;
+            maxTokensField = "max_tokens";
+          };
+        }
+        {
           id = "deepseek-v4-pro";
           name = "DeepSeek V4 Pro (Token Plan)";
           reasoning = true;
