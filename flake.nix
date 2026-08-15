@@ -107,7 +107,8 @@
     };
     # Nix OpenClaw
     nix-openclaw = {
-      url = "github:openclaw/nix-openclaw";
+      # my fork
+      url = "github:L-Trump/nix-openclaw";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };
