@@ -371,17 +371,33 @@
       timeoutSeconds = 240;
       models = [
         {
-          id = "glm-5.1";
-          name = "GLM-5.1 (SJTU)";
+          id = "glm-5.2";
+          name = "GLM-5.2 (SJTU)";
           reasoning = true;
           input = [ "text" ];
           # llm.mmm.fan 当前部署实测总上下文上限为 262144 tokens。
-          contextWindow = 200000;
-          maxTokens = 32768;
+          contextWindow = 500000;
+          maxTokens = 128000;
           api = "openai-completions";
+          # OpenClaw 内部会把 max 规范化为 xhigh；SJTU GLM-5.2 的上游强档值是 max。
+          # 两层映射分别覆盖 simple-completion/model clamp 与 agent transport effort 解析。
+          thinkingLevelMap = {
+            xhigh = "max";
+            max = "max";
+          };
           compat = {
-            # 该 vLLM 兼容端点通过 chat_template_kwargs.enable_thinking 控制思考。
-            thinkingFormat = "qwen-chat-template";
+            # 用 openai 格式走顶层 reasoning_effort 路径（high/max），
+            # 避免 qwen-chat-template 路径与 reasoning_effort 互斥导致强度参数不发送。
+            thinkingFormat = "openai";
+            supportsReasoningEffort = true;
+            reasoningEffortMap = {
+              xhigh = "max";
+              max = "max";
+            };
+            supportedReasoningEfforts = [
+              "high"
+              "max"
+            ];
             maxTokensField = "max_tokens";
             supportsUsageInStreaming = true;
           };
