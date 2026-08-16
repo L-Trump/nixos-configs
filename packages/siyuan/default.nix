@@ -16,6 +16,7 @@
   copyDesktopItems,
   nix-update-script,
   xdg-utils,
+  zip,
   darwin,
 }:
 
@@ -27,28 +28,37 @@ let
   platformIds = {
     "x86_64-linux" = "linux";
     "aarch64-linux" = "linux-arm64";
-    "x86_64-darwin" = "darwin";
     "aarch64-darwin" = "darwin-arm64";
   };
 
   platformId = platformIds.${system} or (throw "Unsupported platform: ${system}");
+
+  # The pandoc archive that electron-builder expects for each platform. We build
+  # it from the Nix pandoc binary, so only the current platform's archive is needed.
+  pandocArchives = {
+    "linux" = "pandoc-linux-amd64.zip";
+    "linux-arm64" = "pandoc-linux-arm64.zip";
+    "darwin-arm64" = "pandoc-darwin-arm64.zip";
+  };
+
+  pandocArchive = pandocArchives.${platformId};
 in
 stdenv.mkDerivation (finalAttrs: {
   pname = "siyuan";
-  version = "3.7.1";
+  version = "3.8.0";
 
   src = fetchFromGitHub {
     owner = "siyuan-note";
     repo = "siyuan";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-K31h2noDpTn7vCXj16K2dxRPww5z+HC/nA4Gn5MAVms=";
+    hash = "sha256-XMJBe59Y6DwQ9kY+U/Dk9qiqjvthAJ3csbkpR6Jizmo=";
   };
 
   kernel = buildGoModule {
     name = "${finalAttrs.pname}-${finalAttrs.version}-kernel";
     inherit (finalAttrs) src;
     sourceRoot = "${finalAttrs.src.name}/kernel";
-    vendorHash = "sha256-fZLVqrWTWUHo6BhixB6+krXaM7WCiZpusHA8T2SicgQ=";
+    vendorHash = "sha256-/KQL0TPqe0jZQnjeGvhJ3bJw2KoDXWS4uzBUerjhk0E=";
 
     patches = [
       (replaceVars ./set-pandoc-path.patch {
@@ -71,12 +81,20 @@ stdenv.mkDerivation (finalAttrs: {
       "-X 'github.com/siyuan-note/siyuan/kernel/util.Mode=prod'"
     ];
     tags = [ "fts5" ];
+
+    # These upstream tests are environment-dependent or make brittle assumptions
+    # that do not hold in the Nix sandbox (status-code expectation, system MIME
+    # table, non-deterministic ordering, and our set-pandoc-path.patch).
+    checkFlags = [
+      "-skip=^(TestSpinBlockDOMInputSizeLimit|TestSecureAssetContentHeadersForcesAttachmentOnUnknownExtension|TestInitPandocDoesNotUseWorkspaceTemp|TestFilterPathsByPublishAccess)$"
+    ];
   };
 
   nativeBuildInputs = [
     nodejs
     pnpmConfigHook
     pnpm
+    zip
   ]
   ++ lib.optionals isLinux [
     pnpmBuildHook
@@ -95,8 +113,8 @@ stdenv.mkDerivation (finalAttrs: {
       sourceRoot
       ;
     inherit pnpm;
-    fetcherVersion = 3;
-    hash = "sha256-4yqTBR8gv5q6uyuDq7Bgs1275YBQ87aaTYkNFtamVek=";
+    fetcherVersion = 4;
+    hash = "sha256-ES8DF+/Dd97V0FUCBjaK2fLTPl6g0w//ne+hB6YNAzs=";
   };
 
   sourceRoot = "${finalAttrs.src.name}/app";
@@ -104,8 +122,23 @@ stdenv.mkDerivation (finalAttrs: {
   env.ELECTRON_SKIP_BINARY_DOWNLOAD = "1";
 
   postConfigure = ''
-    # remove prebuilt pandoc archives
-    rm -r pandoc
+    # Remove the prebuilt pandoc archives; we provide our own built from the
+    # Nix pandoc binary below, and keep pandoc-resources for the kernel.
+    rm -f pandoc/pandoc-*.zip
+
+    # Build the current platform's pandoc archive from the Nix pandoc binary so
+    # the electron-builder afterPack hook can extract it. The kernel itself uses
+    # the Nix pandoc directly via set-pandoc-path.patch.
+    (
+      cd pandoc
+      mkdir -p .tmp/bin
+      cp ${lib.getExe pandoc} .tmp/bin/pandoc
+      (
+        cd .tmp
+        zip -qr ../${pandocArchive} bin/pandoc
+      )
+      rm -rf .tmp
+    )
 
     # link kernel into the correct starting place so that electron-builder can copy it to it's final location
     mkdir kernel-${platformId}
