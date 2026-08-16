@@ -27,6 +27,7 @@ lib.recursiveUpdate bare {
     tuiExtra = {
       enable = true;
       mail.enable = true;
+      pi.enable = true;
       lsp.enable = true;
       lsp.lang = [ "all" ];
     };
