@@ -12,9 +12,12 @@ let
 in
 {
   imports = lib.optionals rawcfg.enable [
+    ./accounts.nix
     ./aerc
-    ./offlineimap
-    ./imapnotify
+    ./aerc/accounts-conf.nix
+    ./offlineimap.nix
+    ./imapnotify.nix
+    ./notmuch.nix
   ];
 
   config = lib.mkIf cfg.enable {

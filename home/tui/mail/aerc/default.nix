@@ -8,6 +8,13 @@
   programs.aerc = {
     enable = true;
     extraConfig = {
+      general = {
+        # aerc requires accounts.conf to have mode 0600; the Home Manager
+        # generated file lives in the Nix store (0444 and read-only), so allow
+        # it explicitly. Passwords are not stored in the file; passage
+        # retrieves them at runtime.
+        unsafe-accounts-conf = true;
+      };
       ui = {
         mouse-enabled = true;
         dirlist-tree = true;
@@ -22,7 +29,7 @@
         icon-invalid = "⚠";
       };
       compose = {
-        editor = "nvim";
+        editor = "hx";
         file-picker-cmd = "kdialog";
       };
       filters = {

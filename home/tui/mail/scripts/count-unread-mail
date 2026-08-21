@@ -1,7 +1,27 @@
 #!/bin/sh
-COUNT=$(find ~/Mail -type f | grep -vE ',[^,]*S[^,]*$' | grep -i INBOX | wc -l)
+# 未读邮件计数：统计 INBOX 与 [Gmail].重要 中的未读邮件。
+# Gmail 的重要邮件会同时存在于 INBOX 和 [Gmail].重要 两个文件夹，
+# 因此按 Message-ID 去重，避免同一封邮件被重复计数。
+tmp=$(mktemp)
+trap 'rm -f "$tmp"' EXIT
 
-if [ "$COUNT" -ne "0" ]; then
+cd "$HOME/Mail" || exit 1
+
+find . -type f -name '*,U=*' \
+  | grep -E '/(INBOX|\[Gmail\]\.重要)/(cur|new)/' \
+  | grep -vE ',[^,]*S[^,]*$' \
+  | while read -r f; do
+      # 提取 Message-ID 去重；无 Message-ID 的文件用路径兜底
+      if grep -h -m1 '^Message-ID:' "./$f" 2>/dev/null; then
+        :
+      else
+        echo "NOID:$f"
+      fi
+    done >> "$tmp"
+
+COUNT=$(sort -u "$tmp" | wc -l)
+
+if [ "$COUNT" -gt 0 ]; then
     echo "Unread: $COUNT"
 else
     echo "Mail"

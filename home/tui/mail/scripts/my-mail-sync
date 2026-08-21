@@ -17,6 +17,13 @@ else
     offlineimap -u quiet -a $1
 fi
 
+# Update the notmuch full-text index after synchronization.
+# NOTMUCH_CONFIG is injected automatically by the imapnotify systemd unit
+# (notmuch.enable), so it does not need to be set manually.
+if [ -x "$(command -v notmuch)" ]; then
+    notmuch new
+fi
+
 if [ "$2" != "quiet" ] && [ "$1" != "quiet" ]; then
     notify-send -u normal -i mail-unread -t 3000 -a "OfflineIMAP" "OfflineIMAP" "Sync Finished!"
     # paplay /usr/share/sounds/freedesktop/stereo/message-new-instant.oga 
