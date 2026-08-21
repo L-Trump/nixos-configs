@@ -25,6 +25,7 @@ let
   myconfigs.mymodules = lib.recursiveUpdate preset.mymodules {
     server = {
       backrest.enable = true;
+      siyuan-server.enable = true;
       sub2api.enable = true;
       juicefs = {
         enable = true;
