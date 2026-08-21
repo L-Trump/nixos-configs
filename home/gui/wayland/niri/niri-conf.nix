@@ -777,6 +777,12 @@ let
         toggle-window-floating = { };
       };
       "Mod+Space" = {
+        _props = {
+          hotkey-overlay-title = "Search Windows";
+        };
+        spawn = "~/.config/waybar/rofi-menus/window-switcher.sh";
+      };
+      "Mod+Ctrl+Space" = {
         switch-focus-between-floating-and-tiling = { };
       };
       # Toggle tabbed column display mode.
