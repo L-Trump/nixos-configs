@@ -874,10 +874,10 @@
     "mysecrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1787323021,
-        "narHash": "sha256-XJ3+slFzcEfg0UyL/lH7hASQ0XDiz03Vvpb/XRCbp7E=",
+        "lastModified": 1787323202,
+        "narHash": "sha256-Nzazy/4eUD7Zw/LeNmd41CyK98A8CfoAf7nAjsBgjkw=",
         "ref": "refs/heads/master",
-        "rev": "bb1c14a3c4a0fa451948d33ffc18bde789f9f82f",
+        "rev": "680cdd24db6a3add8ae13ab24e92b7b4f77ba10e",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/L-Trump/nixos-secrets.git"

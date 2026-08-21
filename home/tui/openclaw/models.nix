@@ -155,123 +155,60 @@
       ];
     };
 
-    # 阿里云百炼 Token Plan 个人版（华北 2 / 北京）。
-    # Provider ID 与新版官方 qwen provider 插件一致；当前 OpenClaw 2026.7.1
-    # 仍可通过标准 OpenAI-compatible transport 使用，升级后可直接接管专属兼容逻辑。
-    qwen-token-plan = {
-      baseUrl = "https://token-plan.cn-beijing.maas.aliyuncs.com/compatible-mode/v1";
+    # SCNet 超算互联网 Token Plan（https://api.scnet.cn/api/llm/v1）。
+    # 文档：reasoning_effort 仅支持 high/max，且只适用于 DeepSeek-V4 系列；
+    # enable_thinking 适用于 Qwen3 系列、DeepSeek-V4 系列。
+    scnet = {
+      baseUrl = "https://api.scnet.cn/api/llm/v1";
       api = "openai-completions";
       apiKey = {
         source = "file";
         provider = "openclaw";
-        id = "/models/qwen-token-plan/apiKey";
+        id = "/models/scnet/apiKey";
       };
       timeoutSeconds = 240;
       models = [
         {
-          id = "qwen3.8-max-preview";
-          name = "Qwen3.8 Max Preview (Token Plan)";
+          id = "DeepSeek-V4-Flash-0731";
+          name = "DeepSeek V4 Flash 0731 (SCNet)";
           reasoning = true;
-          input = [
-            "text"
-            "image"
-          ];
+          input = [ "text" ];
           cost = {
             input = 0;
             output = 0;
             cacheRead = 0;
             cacheWrite = 0;
           };
-          # contextWindow = 983616;
-          contextWindow = 524288;
-          maxTokens = 131072;
+          contextWindow = 1000000;
+          maxTokens = 393216;
+          # SCNet 仅支持 high/max 两档，OpenClaw 内部档位归一化到这两档。
           thinkingLevelMap = {
-            minimal = "low";
-            low = "low";
+            minimal = "high";
+            low = "high";
             medium = "high";
-            high = "xhigh";
-            xhigh = "xhigh";
-            max = "xhigh";
+            high = "high";
+            xhigh = "max";
+            max = "max";
           };
           compat = {
-            # qwen3.8-max-preview 始终思考，并使用 OpenAI 风格 reasoning_effort。
+            # 用 OpenAI 顶层 reasoning_effort 路径（high/max）。
             thinkingFormat = "openai";
             supportsReasoningEffort = true;
+            reasoningEffortMap = {
+              xhigh = "max";
+              max = "max";
+            };
             supportedReasoningEfforts = [
-              "low"
               "high"
-              "xhigh"
+              "max"
             ];
             supportsUsageInStreaming = true;
             maxTokensField = "max_tokens";
           };
         }
         {
-          id = "qwen3.7-max";
-          name = "Qwen3.7 Max (Token Plan)";
-          reasoning = true;
-          input = [ "text" ];
-          cost = {
-            input = 0;
-            output = 0;
-            cacheRead = 0;
-            cacheWrite = 0;
-          };
-          contextWindow = 1000000;
-          maxTokens = 65536;
-          compat = {
-            thinkingFormat = "qwen";
-            supportsUsageInStreaming = true;
-            maxTokensField = "max_tokens";
-          };
-        }
-        {
-          id = "qwen3.7-plus";
-          name = "Qwen3.7 Plus (Token Plan)";
-          reasoning = true;
-          input = [
-            "text"
-            "image"
-          ];
-          cost = {
-            input = 0;
-            output = 0;
-            cacheRead = 0;
-            cacheWrite = 0;
-          };
-          contextWindow = 1000000;
-          maxTokens = 65536;
-          compat = {
-            thinkingFormat = "qwen";
-            supportsUsageInStreaming = true;
-            maxTokensField = "max_tokens";
-          };
-        }
-        {
-          id = "qwen3.6-flash";
-          name = "Qwen3.6 Flash (Token Plan)";
-          reasoning = true;
-          input = [
-            "text"
-            "image"
-          ];
-          cost = {
-            input = 0;
-            output = 0;
-            cacheRead = 0;
-            cacheWrite = 0;
-          };
-          contextWindow = 1000000;
-          maxTokens = 65536;
-          compat = {
-            thinkingFormat = "qwen";
-            supportsUsageInStreaming = true;
-            maxTokensField = "max_tokens";
-          };
-        }
-        {
-          id = "deepseek-v4-flash-0731";
-          name = "DeepSeek V4 Flash 0731 (Token Plan)";
+          id = "DeepSeek-V4-Pro";
+          name = "DeepSeek V4 Pro (SCNet)";
           reasoning = true;
           input = [ "text" ];
           cost = {
@@ -291,45 +228,23 @@
             max = "max";
           };
           compat = {
-            # 由 2026.7.1 Qwen runtime backport 转成 Token Plan 的 DeepSeek 字段。
-            thinkingFormat = "qwen";
-            requiresReasoningContentOnAssistantMessages = true;
+            thinkingFormat = "openai";
+            supportsReasoningEffort = true;
+            reasoningEffortMap = {
+              xhigh = "max";
+              max = "max";
+            };
+            supportedReasoningEfforts = [
+              "high"
+              "max"
+            ];
             supportsUsageInStreaming = true;
             maxTokensField = "max_tokens";
           };
         }
         {
-          id = "deepseek-v4-pro";
-          name = "DeepSeek V4 Pro (Token Plan)";
-          reasoning = true;
-          input = [ "text" ];
-          cost = {
-            input = 0;
-            output = 0;
-            cacheRead = 0;
-            cacheWrite = 0;
-          };
-          contextWindow = 1000000;
-          maxTokens = 393216;
-          thinkingLevelMap = {
-            minimal = "high";
-            low = "high";
-            medium = "high";
-            high = "high";
-            xhigh = "max";
-            max = "max";
-          };
-          compat = {
-            # 显式 qwen 格式避免 2026.7.1 核心发送 DeepSeek 原生 thinking 对象。
-            thinkingFormat = "qwen";
-            requiresReasoningContentOnAssistantMessages = true;
-            supportsUsageInStreaming = true;
-            maxTokensField = "max_tokens";
-          };
-        }
-        {
-          id = "glm-5.2";
-          name = "GLM-5.2 (Token Plan)";
+          id = "GLM-5.2";
+          name = "GLM-5.2 (SCNet)";
           reasoning = true;
           input = [ "text" ];
           cost = {
@@ -341,15 +256,47 @@
           contextWindow = 1000000;
           maxTokens = 131072;
           compat = {
+            # GLM 走默认思考路径，不显式声明 reasoning_effort（文档仅 DeepSeek-V4 支持）。
+            thinkingFormat = "openai";
+            supportsUsageInStreaming = true;
+            maxTokensField = "max_tokens";
+          };
+        }
+        {
+          id = "Kimi-K3";
+          name = "Kimi K3 (SCNet)";
+          reasoning = true;
+          input = [ "text" ];
+          cost = {
+            input = 0;
+            output = 0;
+            cacheRead = 0;
+            cacheWrite = 0;
+          };
+          contextWindow = 1000000;
+          maxTokens = 131072;
+          compat = {
+            thinkingFormat = "openai";
+            supportsUsageInStreaming = true;
+            maxTokensField = "max_tokens";
+          };
+        }
+        {
+          id = "Qwen3.8-Max";
+          name = "Qwen3.8 Max (SCNet)";
+          reasoning = true;
+          input = [ "text" ];
+          cost = {
+            input = 0;
+            output = 0;
+            cacheRead = 0;
+            cacheWrite = 0;
+          };
+          contextWindow = 1000000;
+          maxTokens = 131072;
+          compat = {
+            # Qwen3 系列用 enable_thinking 控制思考，走 qwen 格式。
             thinkingFormat = "qwen";
-            supportedReasoningEfforts = [
-              "minimal"
-              "low"
-              "medium"
-              "high"
-              "xhigh"
-              "max"
-            ];
             supportsUsageInStreaming = true;
             maxTokensField = "max_tokens";
           };

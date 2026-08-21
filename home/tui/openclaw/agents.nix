@@ -4,10 +4,11 @@
     # 默认文本模型和 fallback 链。
     model = {
       # 新会话/未 pin 会话的主模型。
-      primary = "minimax/MiniMax-M2.7-highspeed";
+      primary = "sjtu/glm-5.2";
 
       # 主模型失败或过载时依次尝试的备用模型。
       fallbacks = [
+        "scnet/DeepSeek-V4-Flash-0731"
         "minimax/MiniMax-M3"
         "rhcg/gpt-5.4"
       ];
@@ -35,23 +36,18 @@
       "opencode-go/deepseek-v4-flash".alias = "ds4f-go";
       "opencode-go/deepseek-v4-pro".alias = "ds4p-go";
       "sjtu/glm-5.2".alias = "glm5.2";
-      "qwen-token-plan/qwen3.8-max-preview" = {
-        alias = "qwen3.8";
-        # Preview 模型始终思考，且思考模式 temperature 下限为 0.6。
+      # SCNet 超算互联网 Token Plan 模型。
+      "scnet/DeepSeek-V4-Flash-0731".alias = "ds4f-tp";
+      "scnet/DeepSeek-V4-Pro".alias = "ds4p-tp";
+      "scnet/GLM-5.2".alias = "glm5.2-tp";
+      "scnet/Kimi-K3".alias = "k3-tp";
+      "scnet/Qwen3.8-Max" = {
+        alias = "qwen3.8-tp";
+        # Qwen3 系列思考模式 temperature 下限为 0.6。
         params = {
           temperature = 0.6;
           extra_body.enable_thinking = true;
         };
-      };
-      "qwen-token-plan/qwen3.7-max".alias = "qwen3.7m";
-      "qwen-token-plan/qwen3.7-plus".alias = "qwen3.7p";
-      "qwen-token-plan/qwen3.6-flash".alias = "qwen3.6f";
-      # 保留官方 DeepSeek provider 的 ds4f；Token Plan 版本使用独立别名。
-      "qwen-token-plan/deepseek-v4-flash-0731".alias = "ds4f-tp";
-      "qwen-token-plan/deepseek-v4-pro".alias = "ds4p";
-      "qwen-token-plan/glm-5.2" = {
-        alias = "glm5.2";
-        params.extra_body.tool_stream = true;
       };
       "rhcg/gpt-5.6-luna" = {
         alias = "gpt5.6-luna";
