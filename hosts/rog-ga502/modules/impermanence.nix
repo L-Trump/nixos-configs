@@ -177,6 +177,8 @@ in
         ".virtuoso-bridge"
         ".agents"
         ".codex"
+        ".pi"
+        ".pi-lens"
 
         # cloud native
         {
