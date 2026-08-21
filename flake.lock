@@ -874,10 +874,10 @@
     "mysecrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1787322556,
-        "narHash": "sha256-FfIYJC2iUNUZZ6yswunr9aH7mAsCHBZYodop22vZq7k=",
+        "lastModified": 1787322799,
+        "narHash": "sha256-3hO8wmXE/mvYjR+sx9U34Oec/btAynjdMNu/sm+YujY=",
         "ref": "refs/heads/master",
-        "rev": "42a0c10713880b7ad05d8d4a838cdec2880cfd3a",
+        "rev": "025daaeba796b681c07efa96c01b10fe52133249",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/L-Trump/nixos-secrets.git"
@@ -1214,6 +1214,22 @@
         "type": "github"
       }
     },
+    "novnc": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1780746359,
+        "narHash": "sha256-VfP264Hmtegi0UKUwL9a1upgkJpLfS8PjZjNkToWBkg=",
+        "owner": "novnc",
+        "repo": "noVNC",
+        "rev": "7c36fabe599e053c5a81e98e091ac636f6c1e174",
+        "type": "github"
+      },
+      "original": {
+        "owner": "novnc",
+        "repo": "noVNC",
+        "type": "github"
+      }
+    },
     "nur": {
       "inputs": {
         "flake-parts": "flake-parts_2",
@@ -1441,6 +1457,7 @@
         "nixpkgs": "nixpkgs_4",
         "nixpkgs-stable": "nixpkgs-stable",
         "nixpkgs-unstable": "nixpkgs-unstable",
+        "novnc": "novnc",
         "nur": "nur",
         "nvidia-patch": "nvidia-patch",
         "nvimdots": "nvimdots",

@@ -27,6 +27,8 @@ let
       backrest.enable = true;
       siyuan-server.enable = true;
       sub2api.enable = true;
+      novnc-websockify.enable = true;
+      novnc-websockify.enableWeb = true;
       juicefs = {
         enable = true;
         enableS3Gateway = false;

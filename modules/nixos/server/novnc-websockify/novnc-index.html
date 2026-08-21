@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>noVNC</title>
+<link rel="stylesheet" href="app/styles/constants.css">
+<link rel="stylesheet" href="app/styles/base.css">
+<style>
+  html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #494949;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+  #login-modal {
+    width: 340px;
+    max-width: 90vw;
+    box-sizing: border-box;
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 28px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+  }
+  #login-modal h1 {
+    margin: 0 0 4px 0;
+    font-size: 20px;
+    font-weight: normal;
+    color: #fff;
+    text-align: center;
+  }
+  #login-modal .subtitle {
+    margin: 0 0 24px 0;
+    font-size: 13px;
+    color: var(--novnc-lightgrey);
+    text-align: center;
+  }
+  #login-modal label {
+    display: block;
+    margin: 14px 0 6px 0;
+    font-size: 13px;
+    color: var(--novnc-lightgrey);
+  }
+  #login-modal input,
+  #login-modal select {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px 12px;
+    font-size: 14px;
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    outline: none;
+  }
+  #login-modal input:focus,
+  #login-modal select:focus {
+    border-color: var(--novnc-lightblue);
+  }
+  #login-modal select option {
+    background-color: #494949;
+    color: #fff;
+  }
+  #login-modal .hint {
+    margin: 6px 0 0 0;
+    font-size: 12px;
+    color: var(--novnc-darkgrey);
+  }
+  #login-modal .error {
+    display: none;
+    margin: 12px 0 0 0;
+    font-size: 13px;
+    color: #ff7070;
+  }
+  #login-modal button {
+    width: 100%;
+    margin-top: 20px;
+    padding: 10px 12px;
+    font-size: 15px;
+    color: #fff;
+    background-color: var(--novnc-buttongrey);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  #login-modal button:hover {
+    background-color: rgba(192, 192, 192, 0.7);
+  }
+  #login-modal button:active {
+    background-color: rgba(192, 192, 192, 0.85);
+  }
+</style>
+</head>
+<body>
+  <div id="login-modal">
+    <h1>noVNC</h1>
+    <p class="subtitle">远程桌面连接</p>
+    <label for="server">服务器</label>
+    <input id="server" type="text" placeholder="服务器" autofocus autocomplete="off">
+    <label for="username">用户名</label>
+    <input id="username" type="text" placeholder="用户名" autocomplete="off">
+    <p class="error" id="error"></p>
+    <button id="connect">连接</button>
+  </div>
+
+<script>
+  function connect() {
+    const user = document.getElementById('username').value.trim();
+    const server = document.getElementById('server').value.trim();
+    const serverSuffix = server.split('.').pop();
+
+    // 不解析、不校验用户名：直接按“用户名-服务器”拼 token 跳转，
+    // 非法 token 由 websockify TokenFile 插件自然拒绝。
+    // 不传 host/port：noVNC 默认使用当前网站（https 下自动 wss）。
+    const qs = new URLSearchParams({
+      path: 'websockify?token=' + user + '-' + serverSuffix,
+      autoconnect: '1',
+      resize: 'remote',
+    });
+    location.href = 'vnc.html?' + qs.toString();
+  }
+
+  document.getElementById('connect').addEventListener('click', connect);
+  document.getElementById('server').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      document.getElementById('username').focus();
+    }
+  });
+  document.getElementById('username').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      connect();
+    }
+  });
+</script>
+</body>
+</html>

@@ -117,5 +117,10 @@
       url = "github:lukasl-dev/pi.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # noVNC (static web frontend for websockify)
+    novnc = {
+      url = "github:novnc/noVNC";
+      flake = false;
+    };
   };
 }

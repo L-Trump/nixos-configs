@@ -72,6 +72,10 @@ in
       ncm-api.enable = mkEnableOption "Enable NeteaseCloudMusic API server";
       rustical.enable = mkEnableOption "Enable rustical (caldav) server";
       code-server.enable = mkEnableOption "Enable code-server";
+      novnc-websockify = {
+        enable = mkEnableOption "Enable websockify token-based WebSocket relay (for noVNC)";
+        enableWeb = mkEnableOption "Serve the bundled noVNC web frontend at the websocket endpoint";
+      };
       cloudreve = {
         master.enable = mkEnableOption "Enable cloudreve master";
       };
