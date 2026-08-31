@@ -7,22 +7,25 @@
 
 buildNpmPackage rec {
   pname = "openclaw-runtime-plugin-lossless-claw";
-  version = "0.14.0";
+  version = "0.15.6";
 
   src = fetchFromGitHub {
     owner = "Martian-Engineering";
     repo = "lossless-claw";
     rev = "v${version}";
-    hash = "sha256-vVlbMrgvzR4bhI7v9J/s9Asp2zMxfxgK4l/b/9fdpec=";
+    hash = "sha256-P5jQq1bEX7B/yuMa7JE/Y6D0WjiHuKatdifXBjwaSyM=";
   };
 
-  npmDepsHash = "sha256-es2LKBb8Lxcm3uKFePRTK1CnczVownVMiw9ZSTpC9xc=";
+  npmDepsHash = "sha256-PBhAEKIsKyAfW426XrmP4hrjSfeyR9h3wPa5MpVOl2I=";
   npmDepsFetcherVersion = 2;
 
   patches = [
-    # Backport and tighten lossless-claw#1018: safely bounded degraded output
-    # stays authoritative; only output still over budget restores the host precheck.
+    # Upstream has the prompt-authority API, but still marks all degraded output
+    # as non-authoritative. Only output that remains over budget should restore
+    # the host pre-assembly overflow check.
     ./degraded-prompt-authority-pr1018.patch
+    # Keep temporary eligibility-policy blocks pending without charging failure,
+    # retry, or spend backoff; also force recovery at the 100% pressure watermark.
     ./deferred-compaction-cache-stability.patch
   ];
 
