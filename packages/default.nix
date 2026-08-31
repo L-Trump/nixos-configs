@@ -69,6 +69,9 @@ in
 
   lossless-claw = pkgs.callPackage ./lossless-claw { };
 
+  # TODO: wait upstream merge https://github.com/NixOS/nixpkgs/pull/553055
+  mcporter = pkgs.callPackage ./mcporter { };
+
   hdc = pkgs.callPackage ./hdc { };
 
   # TODO wait upstream merge https://github.com/NixOS/nixpkgs/pull/513326
