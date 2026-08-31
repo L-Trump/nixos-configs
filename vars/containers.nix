@@ -1,7 +1,7 @@
 _: {
   nezha-server = {
     image = "registry.cn-shanghai.aliyuncs.com/naibahq/nezha-dashboard";
-    digest = "sha256:afd4058d06e2eec8da38ee3c159a6aae4ffeb3b8b8dcb02dbdc303b547aef76d";
+    digest = "sha256:89391a7843df1f679abdd773c1c3518e24da76e8db4f7ec13d5a183d28ec46b7";
   };
   immich-machine-learning = {
     image = "m.daocloud.io/ghcr.io/immich-app/immich-machine-learning";
@@ -10,7 +10,7 @@ _: {
   };
   siyuan-server = {
     image = "m.daocloud.io/docker.io/b3log/siyuan";
-    digest = "sha256:a2da59a722da6a2243f0c2a99286d9c8e73cc47dbc8757cc81ffd1137d6461a0";
+    digest = "sha256:8e6395e3c328b57bcb47c101e67a7e7fbb02d8a7b748ba21f583309d03dbe539";
   };
   cloudreve = {
     image = "m.daocloud.io/docker.io/cloudreve/cloudreve";
@@ -18,11 +18,11 @@ _: {
   };
   cloudreve-redis = {
     image = "m.daocloud.io/docker.io/library/redis";
-    digest = "sha256:344e3945a0b431c8ff1eecd58c5573538126bd756f02fc7e218ddf1fc2546366";
+    digest = "sha256:298e5b3bc566bade82f46ad5511777a4a07a294097ce16ada2f6a42be5239df5";
   };
   cloudreve-postgresql = {
     image = "m.daocloud.io/docker.io/library/postgres";
-    digest = "sha256:7157393f508fd8eb46119937fab39813783fe3e7d4c6316c45c12ce2ea25e61d";
+    digest = "sha256:4ef4dbc939d61acea57712655ddb4b4ab27419c913f94cca0cd57cb3ea3c2280";
   };
   rustdesk-api = {
     image = "gh.qninq.cn/lejianwen/rustdesk-api";
@@ -34,20 +34,20 @@ _: {
   };
   ncm-api = {
     image = "gh.qninq.cn/moefurina/ncm-api";
-    digest = "sha256:d5cd90a2ae47261ebf9d6f2738ffc91accd6f9ae700d24b89a25902166642897";
+    digest = "sha256:7d0aa12f2b2e754d95fc8a5e649c9024a35da539035fd76b36ea4a6eaf6ad06f";
   };
   sub2api = {
     image = "gh.qninq.cn/ghcr.io/wei-shaw/sub2api";
-    digest = "sha256:905baf250580334dacd902471f61da7b8b1e5da57e3c8c1769489952d51771a1";
+    digest = "sha256:cff6bc3ed1a6eba7ea240bad8637cf12856161a4efb98be0882c2fa7aff371e3";
   };
   sub2api-postgres = {
     image = "m.daocloud.io/docker.io/library/postgres";
     latestTag = "18-alpine";
-    digest = "sha256:a1d02e4bd40c94d3bf2bdd3678c137388e76d9efcd23c285e9429d336a834b44";
+    digest = "sha256:d3e1620b530c944afa6e887d22eb899824da68e19c52024bf98f5220c88a65b2";
   };
   sub2api-redis = {
     image = "m.daocloud.io/docker.io/library/redis";
     latestTag = "8-alpine";
-    digest = "sha256:978f0e01593e65eed801f2402944efcd936d43b5027e4908a7897baf88ed6241";
+    digest = "sha256:becdda6c7f4b3fb42e42fd7f120bbf5c54c4caaaf16f26da24e4563d2c1f0576";
   };
 }
