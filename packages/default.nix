@@ -82,7 +82,7 @@ in
   # wechat-uos = pkgs.callPackage ./wechat-uos { };
   # easytier = pkgs.callPackage ./easytier { };
   # intel-graphics-compiler =  pkgs-unstable.intel-graphics-compiler;
-  # TODO wait for upstream merge pr #552595
+  # TODO wait for upstream merge pr #556604
   siyuan = pkgs.callPackage ./siyuan { };
   # easytier = pkgs.callPackage ./easytier { };
   # siyuan = pkgs.callPackage ./siyuan {};
