@@ -63,6 +63,7 @@ in
       minio.enable = mkEnableOption "Enable minio s3 storage";
       openlist.enable = mkEnableOption "Enable OpenList file driver";
       openclaw.enable = mkEnableOption "Enable OpenClaw agent";
+      openviking-server.enable = mkEnableOption "Enable OpenViking context database server";
       siyuan-server.enable = mkEnableOption "Enable siyuan server";
       hubproxy.enable = mkEnableOption "Enable hubproxy server";
       xpipe-webtop.enable = mkEnableOption "Enable xpipe webtop";

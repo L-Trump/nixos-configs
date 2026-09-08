@@ -48,6 +48,7 @@
       immich.machine-learning.enable = false;
       juicefs.enable = false;
       openclaw.enable = false;
+      openviking-server.enable = false;
       redis = {
         juicefs-meta.enable = false;
       };

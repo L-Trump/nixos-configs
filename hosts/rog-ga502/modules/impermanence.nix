@@ -168,6 +168,7 @@ in
 
         # Agent
         ".openclaw"
+        ".openviking"
         "self-improving"
         ".agent-browser"
         "proactivity"

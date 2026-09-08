@@ -117,6 +117,11 @@
       url = "github:lukasl-dev/pi.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # OpenViking context database
+    openviking = {
+      url = "github:Daaboulex/openviking-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     # noVNC (static web frontend for websockify)
     novnc = {
       url = "github:novnc/noVNC";
