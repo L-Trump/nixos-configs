@@ -35,6 +35,8 @@
       # OpenCode Go 订阅的 DeepSeek 模型（与官方 API 区分）。
       "opencode-go/deepseek-v4-flash".alias = "ds4f-go";
       "opencode-go/deepseek-v4-pro".alias = "ds4p-go";
+      # DeepSeek V4.1 Flash（OpenCode Go 侧 ID 为 deepseek-flash）。
+      "opencode-go/deepseek-flash".alias = "ds4.1f-go";
       "sjtu/glm-5.2".alias = "glm5.2";
       # SCNet 超算互联网 Token Plan 模型。
       "scnet/DeepSeek-V4-Flash-0731".alias = "ds4f-tp";
@@ -48,6 +50,18 @@
           temperature = 0.6;
           extra_body.enable_thinking = true;
         };
+      };
+      # 阿里云百炼 Qwen Token Plan（北京区）；别名与 SCNet Token Plan 区分。
+      "qwen-token-plan/qwen3.8-max".alias = "qwen3.8";
+      "qwen-token-plan/qwen3.8-flash".alias = "qwen3.8f";
+      "qwen-token-plan/qwen3.7-max".alias = "qwen3.7m";
+      "qwen-token-plan/qwen3.7-plus".alias = "qwen3.7p";
+      "qwen-token-plan/qwen3.6-flash".alias = "qwen3.6f";
+      "qwen-token-plan/deepseek-v4-flash-0731".alias = "ds4f-qwen";
+      "qwen-token-plan/deepseek-v4-pro".alias = "ds4p-qwen";
+      "qwen-token-plan/glm-5.2" = {
+        alias = "glm5.2-qwen";
+        params.extra_body.tool_stream = true;
       };
       "rhcg/gpt-5.6-luna" = {
         alias = "gpt5.6-luna";

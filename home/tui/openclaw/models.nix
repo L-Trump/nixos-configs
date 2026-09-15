@@ -100,11 +100,17 @@
       ];
     };
 
-    # OpenCode Go provider；模型参数与 openclaw 内置 opencode-go 插件
-    # (extensions/opencode-go/provider-catalog.ts) 完全对齐。
+    # OpenCode Go provider；deepseek-v4-flash / deepseek-v4-pro 与 openclaw
+    # 内置 opencode-go 插件 (extensions/opencode-go/provider-catalog.ts) 对齐；
+    # deepseek-flash（DeepSeek V4.1 Flash）为本地补充，上游 catalog 尚未收录。
     opencode-go = {
       baseUrl = "https://opencode.ai/zen/go/v1";
       api = "openai-completions";
+      # OpenCode Go 要求每个会话带上 x-opencode-session（用于路由/缓存），
+      # 缺失时返回 400 MissingSessionID。
+      # opencode-go 插件（nix-openclaw 补丁）会给主 agent 请求注入真实 session id；
+      # 这里给绕过该插件的辅助调用（简单补全等）留一个静态兜底值。
+      headers."x-opencode-session" = "openclaw-opencode-go-fallback";
       # OpenCode Go API key，从 agenix SecretRef 获取。
       apiKey = {
         source = "file";
@@ -112,6 +118,41 @@
         id = "/models/opencode-go/apiKey";
       };
       models = [
+        {
+          # DeepSeek V4.1 Flash；OpenCode Go 侧模型 ID 是 deepseek-flash。
+          id = "deepseek-flash";
+          name = "DeepSeek V4.1 Flash (OpenCode Go)";
+          reasoning = true;
+          # V4.1 Flash 原生多模态，支持图片输入。
+          input = [
+            "text"
+            "image"
+          ];
+          cost = {
+            input = 0.15;
+            output = 0.6;
+            cacheRead = 0.003;
+            cacheWrite = 0;
+          };
+          contextWindow = 500000;
+          maxTokens = 192000;
+          # 与 deepseek-v4-flash / deepseek-v4-pro 保持一致的档位映射：
+          # minimal/low/medium 归一到 high，xhigh/max 归一到 max。
+          thinkingLevelMap = {
+            minimal = "high";
+            low = "high";
+            medium = "high";
+            high = "high";
+            xhigh = "max";
+            max = "max";
+          };
+          compat = {
+            supportsReasoningEffort = true;
+            supportsUsageInStreaming = true;
+            maxTokensField = "max_tokens";
+          };
+          api = "openai-completions";
+        }
         {
           id = "deepseek-v4-flash";
           name = "DeepSeek V4 Flash (OpenCode Go)";
@@ -297,6 +338,264 @@
           compat = {
             # Qwen3 系列用 enable_thinking 控制思考，走 qwen 格式。
             thinkingFormat = "qwen";
+            supportsUsageInStreaming = true;
+            maxTokensField = "max_tokens";
+          };
+        }
+      ];
+    };
+
+    # 阿里云百炼 Qwen Token Plan 个人版（华北 2 / 北京）。
+    # 模型目录与当前 ~/.pi 的 qwen-token-plan-cn provider 及线上 /models 对齐；
+    # provider ID 保持 qwen-token-plan，以启用官方 qwen runtime plugin 的专属兼容逻辑。
+    qwen-token-plan = {
+      baseUrl = "https://token-plan.cn-beijing.maas.aliyuncs.com/compatible-mode/v1";
+      api = "openai-completions";
+      apiKey = {
+        source = "file";
+        provider = "openclaw";
+        id = "/models/qwen-token-plan/apiKey";
+      };
+      timeoutSeconds = 240;
+      models = [
+        {
+          id = "qwen3.8-max";
+          name = "Qwen3.8 Max (Token Plan)";
+          reasoning = true;
+          input = [
+            "text"
+            "image"
+          ];
+          cost = {
+            input = 0;
+            output = 0;
+            cacheRead = 0;
+            cacheWrite = 0;
+          };
+          contextWindow = 1000000;
+          maxTokens = 131072;
+          thinkingLevelMap = {
+            minimal = null;
+            low = "low";
+            medium = "medium";
+            high = null;
+            xhigh = "xhigh";
+            max = null;
+          };
+          compat = {
+            thinkingFormat = "qwen";
+            supportsDeveloperRole = false;
+            supportsStore = false;
+            supportsReasoningEffort = true;
+            supportedReasoningEfforts = [
+              "low"
+              "medium"
+              "xhigh"
+            ];
+            supportsUsageInStreaming = true;
+            maxTokensField = "max_tokens";
+          };
+        }
+        {
+          id = "qwen3.8-flash";
+          name = "Qwen3.8 Flash (Token Plan)";
+          reasoning = true;
+          input = [
+            "text"
+            "image"
+          ];
+          cost = {
+            input = 0;
+            output = 0;
+            cacheRead = 0;
+            cacheWrite = 0;
+          };
+          contextWindow = 1000000;
+          maxTokens = 131072;
+          thinkingLevelMap = {
+            minimal = null;
+            low = "low";
+            medium = "medium";
+            high = null;
+            xhigh = "xhigh";
+            max = null;
+          };
+          compat = {
+            thinkingFormat = "qwen";
+            supportsDeveloperRole = false;
+            supportsStore = false;
+            supportsReasoningEffort = true;
+            supportedReasoningEfforts = [
+              "low"
+              "medium"
+              "xhigh"
+            ];
+            supportsUsageInStreaming = true;
+            maxTokensField = "max_tokens";
+          };
+        }
+        {
+          id = "qwen3.7-max";
+          name = "Qwen3.7 Max (Token Plan)";
+          reasoning = true;
+          input = [ "text" ];
+          cost = {
+            input = 0;
+            output = 0;
+            cacheRead = 0;
+            cacheWrite = 0;
+          };
+          contextWindow = 1000000;
+          maxTokens = 65536;
+          compat = {
+            thinkingFormat = "qwen";
+            supportsDeveloperRole = false;
+            supportsStore = false;
+            supportsReasoningEffort = false;
+            supportsUsageInStreaming = true;
+            maxTokensField = "max_tokens";
+          };
+        }
+        {
+          id = "qwen3.7-plus";
+          name = "Qwen3.7 Plus (Token Plan)";
+          reasoning = true;
+          input = [
+            "text"
+            "image"
+          ];
+          cost = {
+            input = 0;
+            output = 0;
+            cacheRead = 0;
+            cacheWrite = 0;
+          };
+          contextWindow = 1000000;
+          maxTokens = 65536;
+          compat = {
+            thinkingFormat = "qwen";
+            supportsDeveloperRole = false;
+            supportsStore = false;
+            supportsReasoningEffort = false;
+            supportsUsageInStreaming = true;
+            maxTokensField = "max_tokens";
+          };
+        }
+        {
+          id = "qwen3.6-flash";
+          name = "Qwen3.6 Flash (Token Plan)";
+          reasoning = true;
+          input = [
+            "text"
+            "image"
+          ];
+          cost = {
+            input = 0;
+            output = 0;
+            cacheRead = 0;
+            cacheWrite = 0;
+          };
+          contextWindow = 1000000;
+          maxTokens = 65536;
+          compat = {
+            thinkingFormat = "qwen";
+            supportsDeveloperRole = false;
+            supportsStore = false;
+            supportsReasoningEffort = false;
+            supportsUsageInStreaming = true;
+            maxTokensField = "max_tokens";
+          };
+        }
+        {
+          id = "deepseek-v4-flash-0731";
+          name = "DeepSeek V4 Flash 0731 (Token Plan)";
+          reasoning = true;
+          input = [ "text" ];
+          cost = {
+            input = 0;
+            output = 0;
+            cacheRead = 0;
+            cacheWrite = 0;
+          };
+          contextWindow = 1000000;
+          maxTokens = 384000;
+          thinkingLevelMap = {
+            minimal = null;
+            low = null;
+            medium = null;
+            high = "high";
+            xhigh = null;
+            max = "max";
+          };
+          compat = {
+            # 官方 qwen plugin 会为 Token Plan 的 DeepSeek V4 规范化
+            # enable_thinking、reasoning_effort 和 reasoning_content replay。
+            thinkingFormat = "qwen";
+            supportsDeveloperRole = false;
+            supportsStore = false;
+            supportsReasoningEffort = true;
+            requiresReasoningContentOnAssistantMessages = true;
+            supportsUsageInStreaming = true;
+            maxTokensField = "max_tokens";
+          };
+        }
+        {
+          id = "deepseek-v4-pro";
+          name = "DeepSeek V4 Pro (Token Plan)";
+          reasoning = true;
+          input = [ "text" ];
+          cost = {
+            input = 0;
+            output = 0;
+            cacheRead = 0;
+            cacheWrite = 0;
+          };
+          contextWindow = 1000000;
+          maxTokens = 384000;
+          thinkingLevelMap = {
+            minimal = null;
+            low = null;
+            medium = null;
+            high = "high";
+            xhigh = null;
+            max = "max";
+          };
+          compat = {
+            thinkingFormat = "qwen";
+            supportsDeveloperRole = false;
+            supportsStore = false;
+            supportsReasoningEffort = true;
+            requiresReasoningContentOnAssistantMessages = true;
+            supportsUsageInStreaming = true;
+            maxTokensField = "max_tokens";
+          };
+        }
+        {
+          id = "glm-5.2";
+          name = "GLM-5.2 (Token Plan)";
+          reasoning = true;
+          input = [ "text" ];
+          cost = {
+            input = 0;
+            output = 0;
+            cacheRead = 0;
+            cacheWrite = 0;
+          };
+          contextWindow = 1000000;
+          maxTokens = 131072;
+          thinkingLevelMap = {
+            minimal = null;
+            low = null;
+            medium = null;
+            high = "high";
+            xhigh = null;
+            max = "max";
+          };
+          compat = {
+            thinkingFormat = "qwen";
+            supportsDeveloperRole = false;
+            supportsStore = false;
+            supportsReasoningEffort = true;
             supportsUsageInStreaming = true;
             maxTokensField = "max_tokens";
           };
