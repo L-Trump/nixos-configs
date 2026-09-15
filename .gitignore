@@ -3,3 +3,5 @@ result-man
 nixos-secrets/
 nixos-fonts/
 nixos-wallpapers/
+
+certs/
