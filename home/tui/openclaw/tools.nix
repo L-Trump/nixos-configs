@@ -47,7 +47,7 @@
     # resetByChannel / resetByType 会覆盖特定 channel/type；这里覆盖 direct 等默认场景。
     reset = {
       mode = "idle";
-      idleMinutes = 10080;
+      idleMinutes = 43200;
     };
 
     # Dashboard/WebChat session 按 channel 特判为 7 天 idle reset。
@@ -55,12 +55,12 @@
     resetByChannel = {
       webchat = {
         mode = "idle";
-        idleMinutes = 10080;
+        idleMinutes = 43200;
       };
       # 保险覆盖 dashboard 原始 provider/channel key；运行态目前主要命中 webchat。
       dashboard = {
         mode = "idle";
-        idleMinutes = 10080;
+        idleMinutes = 43200;
       };
     };
 
@@ -69,12 +69,12 @@
       # 群聊 session 空闲 7 天后 reset。
       group = {
         mode = "idle";
-        idleMinutes = 10080;
+        idleMinutes = 43200;
       };
       # thread session 空闲 7 天后 reset。
       thread = {
         mode = "idle";
-        idleMinutes = 10080;
+        idleMinutes = 43200;
       };
     };
   };
