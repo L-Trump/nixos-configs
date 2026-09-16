@@ -1050,13 +1050,12 @@
         "qmd": "qmd"
       },
       "locked": {
-        "lastModified": 1789022700,
-        "narHash": "sha256-aMxcbCtyegxZR9Br27nMkCgN09nOEvNplrIM3BREGpg=",
-        "ref": "refs/heads/custom",
-        "rev": "83b5117b90663b0748eb013085cdb6f63286ba20",
-        "revCount": 1399,
-        "type": "git",
-        "url": "file:///home/ltrump/Codes/nix-openclaw"
+        "lastModified": 1785507763,
+        "narHash": "sha256-jqqFUZXk1xXcP/ktotLoJ6T0hFh2l9g4qQOAI68qXfk=",
+        "owner": "L-Trump",
+        "repo": "nix-openclaw",
+        "rev": "0f912ffbe9b1749f39d538ce3ab2022d5843850c",
+        "type": "github"
       },
       "original": {
         "owner": "L-Trump",

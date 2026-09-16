@@ -6,16 +6,20 @@
 }:
 let
   pname = "hokit";
-  version = "1.2.9";
+  version = "1.8.9";
   src = fetchurl {
     url = "https://github.com/yabi-zzh/HoKit/releases/download/v${version}/HoKit-linux-x86_64-${version}.AppImage";
-    hash = "sha256-Tw50kwxnBNMd5NPQZgR2cMCWeKk251Uh44I+F+Gwi8Q=";
+    hash = "sha256-8PWJfVNCadNuiSp6jGwRcUin5ht7TRyax9GK/pd96fo=";
   };
-  # AppImage 解压后内部二进制可能丢失执行权限，需手动修复
+  # AppImage 内部 squashfs 未给 resources/assets/tools/ 下的二进制可执行位
+  # （hdc、jre 全都没 +x），导致 hdc 无法启动、java 相关的 HAP 签名/重签也会失败；
+  # 这里把所有 ELF 文件补回 +x。
   extracted = appimageTools.extract {
     inherit pname version src;
     postExtract = ''
-      chmod +x "$out"/resources/assets/tools/hdc/hdc
+      find "$out"/resources/assets/tools -type f -exec sh -c '
+        head -c 4 "$1" | grep -q ELF && chmod +x "$1"
+      ' _ {} \;
     '';
   };
 in

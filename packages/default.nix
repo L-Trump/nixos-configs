@@ -33,7 +33,6 @@ in
     }
   );
 
-  dbeaver-agent = pkgs.callPackage ./dbeaver-agent { };
   dbeaver-ultimate = pkgs.callPackage ./dbeaver-ultimate { };
 
   # TODO wait upstream merge https://github.com/NixOS/nixpkgs/pull/556768

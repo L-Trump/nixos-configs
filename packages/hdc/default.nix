@@ -9,11 +9,11 @@
 
 stdenv.mkDerivation rec {
   pname = "hdc";
-  version = "6.1.0";
+  version = "7.0.0";
 
   src = fetchurl {
-    url = "https://repo.huaweicloud.com/openharmony/os/6.1-Release/ohos-sdk-windows_linux-public.tar.gz";
-    sha256 = "sha256-uDO3WmTuRrvXiAkhq7tJtzPsXIFxtmhMm1JNV/YkzuA=";
+    url = "https://repo.huaweicloud.com/openharmony/os/7.0-Release/ohos-sdk-windows_linux-public_20260829.tar.gz";
+    sha256 = "sha256-a/auHv6N4Oi9Fd29f6xYvLVNliAmKlQbmyGUOTF6TEI=";
   };
 
   nativeBuildInputs = [
@@ -23,13 +23,13 @@ stdenv.mkDerivation rec {
   buildInputs = [ gcc.cc.lib ];
 
   unpackPhase = ''
-    tar -xzf "$src"
+    tar -xzf "$src" --wildcards 'ohos-sdk/linux/toolchains-linux-x64-*.zip'
   '';
 
   installPhase = ''
     runHook preInstall
 
-    unzip linux/toolchains-linux-x64-*.zip
+    unzip ohos-sdk/linux/toolchains-linux-x64-*.zip
 
     mkdir -p "$out/lib"
     mkdir -p "$out/bin"
