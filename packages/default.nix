@@ -7,14 +7,6 @@
 }:
 let
   inherit (pkgs) lib libsForQt5 fetchFromGitHub;
-
-  # Match the current host's Nixpkgs configuration. In particular, machines
-  # enabling nixpkgs.config.cudaSupport get the corresponding unstable package
-  # set, while other machines keep using the regular CPU package set.
-  pkgs-unstable-host = import inputs.nixpkgs-unstable {
-    system = pkgs.stdenv.hostPlatform.system;
-    config = pkgs.config;
-  };
 in
 {
   wpsoffice-365 = libsForQt5.callPackage ./wpsoffice-365 { };
@@ -26,17 +18,7 @@ in
 
   rustdesk-server-pro = pkgs.callPackage ./rustdesk-server-pro { };
 
-  canokey-manager = pkgs.callPackage ./canokey-manager { };
-
   hubproxy = pkgs.callPackage ./hubproxy { };
-
-  # codex = pkgs.callPackage ./codex { };
-
-  # mpv-cheatsheet-ng = pkgs.mpvScripts.callPackage ./mpv-cheatsheet-ng { };
-
-  # sunshine = pkgs-unstable.sunshine;
-
-  # vaultwarden = pkgs.callPackage ./vaultwarden-unstable { };
 
   obs-studio-plugins = pkgs.obs-studio-plugins // {
     obs-nvfbc = pkgs.callPackage ./obs-nvfbc { };
@@ -55,11 +37,6 @@ in
     }
   );
 
-  # TODO: Remove once the primary nixpkgs includes NixOS/nixpkgs#547077.
-  # Keep CUDA support consistent with the current host and use the matching
-  # prebuilt package from nixos-unstable-small.
-  onnxruntime = pkgs-unstable-host.onnxruntime;
-
   dbeaver-agent = pkgs.callPackage ./dbeaver-agent { };
   dbeaver-ultimate = pkgs.callPackage ./dbeaver-ultimate { };
 
@@ -74,25 +51,11 @@ in
   lossless-claw = pkgs.callPackage ./lossless-claw { };
 
   # TODO: wait upstream merge https://github.com/NixOS/nixpkgs/pull/553055
-  mcporter = pkgs.callPackage ./mcporter { };
+  mcporter = pkgs-unstable.mcporter;
 
   hdc = pkgs.callPackage ./hdc { };
 
-  # TODO wait upstream merge https://github.com/NixOS/nixpkgs/pull/513326
-  wiliwili = pkgs.callPackage ./wiliwili { };
-
-  # Some package derived from unstable repo
-  # siyuan = pkgs-unstable.siyuan;
-  # easytier = pkgs-unstable.easytier;
-  # niri = pkgs-unstable.niri;
-
-  # wechat-uos = pkgs.callPackage ./wechat-uos { };
-  # easytier = pkgs.callPackage ./easytier { };
   # intel-graphics-compiler =  pkgs-unstable.intel-graphics-compiler;
-  # TODO wait for upstream merge pr #556604
-  siyuan = pkgs.callPackage ./siyuan { };
-  # easytier = pkgs.callPackage ./easytier { };
-  # siyuan = pkgs.callPackage ./siyuan {};
   # linuxPackages_latest = pkgs.linuxPackages_latest.extend (_: prev: {
   #   # ipu6-drivers = pkgs.linuxPackages_latest.callPackage ./ipu6-drivers {};
   #   ipu6-drivers = prev.ipu6-drivers.overrideAttrs (_: _: {
@@ -104,17 +67,4 @@ in
   #     };
   #   });
   # });
-  # openvswitch = pkgs-stable.openvswitch.override {kernel = null;};
-  # clouddrive2 = pkgs.callPackage ./clouddrive2 {};
-  # snipaste = pkgs.callPackage ./snipaste {};
-  # sunshine = pkgs.callPackage ./sunshine {};
-  # nezha-agent = pkgs.callPackage ./nezha-agent {};
-  # dbeaver-bin = pkgs-unstable.dbeaver-bin;
-  # openlist = pkgs.callPackage ./openlist {};
-  # xdg-desktop-portal-termfilechooser = pkgs.callPackage ./xdg-desktop-portal-termfilechooser {};
-  # sctgdesk-server = pkgs.callPackage ./sctgdesk-server {};
-  # wpsoffice-cn = libsForQt5.callPackage ./wpsoffice {
-  #   useChineseVersion = true;
-  # };
-  # backrest = pkgs.callPackage ./backrest { };
 }
