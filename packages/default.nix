@@ -63,6 +63,10 @@ in
   dbeaver-agent = pkgs.callPackage ./dbeaver-agent { };
   dbeaver-ultimate = pkgs.callPackage ./dbeaver-ultimate { };
 
+  # TODO wait upstream merge https://github.com/NixOS/nixpkgs/pull/556768
+  # 上游 7.15.1 的 rpm 已被 RealVNC 下架（只剩 8.x 的新路径），故本地跟 PR 打到 8.5.0。
+  realvnc-vnc-viewer = pkgs.callPackage ./realvnc-vnc-viewer { };
+
   # rustdesk-flutter = pkgs-unstable.rustdesk-flutter;
 
   hokit = pkgs.callPackage ./hokit { };

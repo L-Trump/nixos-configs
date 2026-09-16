@@ -42,7 +42,8 @@
   # dconf is a low-level configuration system.
   programs.dconf.enable = true;
 
-  services.dbus.packages = [ pkgs.gcr ];
+  # TODO gcr 已拆成带 ABI 版本号的名字：gcr_3 = 旧的 pkgs.gcr（3.x），gcr_4 = 4.x
+  services.dbus.packages = [ pkgs.gcr_3 ];
   services.gvfs.enable = true; # Mount, trash, and other functionalities
   services.tumbler.enable = true; # Thumbnail support for images
 
