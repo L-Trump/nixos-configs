@@ -20,10 +20,6 @@ in
 
   hubproxy = pkgs.callPackage ./hubproxy { };
 
-  obs-studio-plugins = pkgs.obs-studio-plugins // {
-    obs-nvfbc = pkgs.callPackage ./obs-nvfbc { };
-  };
-
   niri = pkgs.niri.overrideAttrs (
     final: prev: {
       # TODO wait upstream merge  https://github.com/YaLTeR/niri/pull/1791
