@@ -10,7 +10,7 @@ in
   services.rustical = lib.mkIf cfg.enable {
     enable = true;
     settings = {
-      http.port = 6826;
+      http.bind = "127.0.0.1:6826";
     };
     environmentFiles = [ "${config.age.secrets.rustical-env.path}" ];
   };
