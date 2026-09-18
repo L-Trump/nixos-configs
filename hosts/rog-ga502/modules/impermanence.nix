@@ -180,6 +180,11 @@ in
         ".codex"
         ".pi"
         ".pi-lens"
+        "WorkBuddy"
+        ".workbuddy"
+        ".codebuddy"
+        ".workbuddy-key-fallback"
+        ".config/sidecar"
 
         # cloud native
         {
