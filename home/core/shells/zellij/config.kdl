@@ -67,7 +67,10 @@ keybinds clear-defaults=true {
     }
     scroll {
         bind "Ctrl s" { SwitchToMode "Normal"; }
-        bind "e" { EditScrollback; SwitchToMode "Normal"; }
+        // ansi=true -> dump the scrollback with its escape codes still in it, so the
+        // `scrollback_editor` below (zellij-scrollback-nvim) can replay the dump into
+        // a terminal buffer and keep every color/attribute of the pane.
+        bind "e" { EditScrollback ansi=true; SwitchToMode "Normal"; }
         bind "s" { SwitchToMode "EnterSearch"; SearchInput 0; }
         bind "Ctrl c" { ScrollToBottom; SwitchToMode "Normal"; }
         bind "j" "Down" { ScrollDown; }
@@ -358,8 +361,10 @@ theme "catppuccin-mocha"
 
 // Path to the default editor to use to edit pane scrollbuffer
 // Default: $EDITOR or $VISUAL
-//
-// scrollback_editor "/usr/bin/vim"
+// `zellij-scrollback-nvim` (home/core/shells/zellij/default.nix) renders the ANSI
+// dump of the pane in a read-only neovim terminal buffer instead of opening it
+// as plain text, so colors/bold/... all survive and there is no editor chrome.
+scrollback_editor "zellij-scrollback-nvim"
 
 // When attaching to an existing session with other users,
 // should the session be mirrored (true)

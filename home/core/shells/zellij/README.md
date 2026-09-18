@@ -35,6 +35,20 @@ experience for all terminal emulators!
 
 Terminal emulators should only be responsible for displaying characters.
 
+## Editing the scrollback (`Ctrl + s`, then `e`)
+
+The scroll mode binds `e` to `EditScrollback ansi=true`: zellij dumps the pane's
+scrollback - escape codes included - into a temp file and starts the command in
+`scrollback_editor` on it. That command is `zellij-scrollback-nvim`
+(`default.nix` + `scrollback-pager.lua`), a small wrapper that replays the dump
+into a read-only neovim *terminal* buffer: colors and attributes of the pane are
+kept, there is no editor chrome (no line numbers, no status line), and `q`/`Esc`
+leaves. It opens in place, so quitting restores the pane you came from.
+
+Same idea as kitty's `ctrl+shift+space` scrollback pager
+(`home/gui/terminal/kitty.nix`), except that it shows the focused pane instead of
+the whole terminal.
+
 ## Passthrough mode(Lock Mode)
 
 `Ctrl + g` lock the outer zellij interface, and all keys will be sent to the focused pane.
