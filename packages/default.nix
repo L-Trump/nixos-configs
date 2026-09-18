@@ -50,6 +50,10 @@ in
 
   hdc = pkgs.callPackage ./hdc { };
 
+  sidecar = pkgs.callPackage ./sidecar { };
+
+  td = pkgs.callPackage ./td { };
+
   # intel-graphics-compiler =  pkgs-unstable.intel-graphics-compiler;
   # linuxPackages_latest = pkgs.linuxPackages_latest.extend (_: prev: {
   #   # ipu6-drivers = pkgs.linuxPackages_latest.callPackage ./ipu6-drivers {};

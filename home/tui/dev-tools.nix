@@ -16,6 +16,8 @@
   #############################################################
 
   home.packages = with pkgs; [
+    sidecar
+    td
     colmena # nixos's remote deployment tool
 
     # db related
