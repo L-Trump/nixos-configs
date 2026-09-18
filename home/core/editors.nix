@@ -40,7 +40,11 @@
     };
   };
 
-  programs.neovim.enable = true;
+  programs.neovim = {
+    enable = true;
+    withPython3 = lib.mkDefault true;
+    withRuby = lib.mkDefault true;
+  };
 
   home.sessionVariables = {
     EDITOR = lib.mkForce "hx";
