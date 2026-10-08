@@ -14,6 +14,31 @@
       authHeader = true;
       models = [
         {
+          # 官方目前仅面向 M Plan / MiniMax Code；普通 API key 的可用性待实测。
+          id = "MiniMax-M3.1-Flash-Preview";
+          name = "MiniMax M3.1 Flash Preview";
+          reasoning = true;
+          input = [
+            "text"
+            "image"
+          ];
+          # 官方标称 1M 上下文；先参考本机 Pi 配置按 500k 保守接入，尚未实测。
+          contextWindow = 500000;
+          # 沿用同一 Anthropic 端点的 M3 输出上限，待实测再提高。
+          maxTokens = 131072;
+          # M3.1 只能开启 adaptive thinking；off/none 会被服务端拒绝。
+          # 档位由 OpenClaw 的 MiniMax 请求包装器写入 output_config.effort，而非 Claude 的预算路径。
+          thinkingLevelMap = {
+            off = null;
+            minimal = null;
+            low = "low";
+            medium = "medium";
+            high = "high";
+            xhigh = "xhigh";
+            max = "max";
+          };
+        }
+        {
           id = "MiniMax-M3";
           # UI 展示名称。
           name = "MiniMax M3";
@@ -148,6 +173,11 @@
           };
           compat = {
             supportsReasoningEffort = true;
+            # Go 的 deepseek-flash 档位为 high/max；思考选择器需要显式能力表。
+            supportedReasoningEfforts = [
+              "high"
+              "max"
+            ];
             supportsUsageInStreaming = true;
             maxTokensField = "max_tokens";
           };
@@ -617,6 +647,34 @@
       timeoutSeconds = 240;
       models = [
         {
+          id = "glm-5.3";
+          name = "GLM-5.3 (SJTU)";
+          reasoning = true;
+          input = [ "text" ];
+          # SJTU 端点的限制未重新压测；暂沿用本机 Pi 已配置的安全窗口。
+          contextWindow = 500000;
+          maxTokens = 131072;
+          api = "openai-completions";
+          thinkingLevelMap = {
+            xhigh = "max";
+            max = "max";
+          };
+          compat = {
+            thinkingFormat = "openai";
+            supportsReasoningEffort = true;
+            reasoningEffortMap = {
+              xhigh = "max";
+              max = "max";
+            };
+            supportedReasoningEfforts = [
+              "high"
+              "max"
+            ];
+            maxTokensField = "max_tokens";
+            supportsUsageInStreaming = true;
+          };
+        }
+        {
           id = "glm-5.2";
           name = "GLM-5.2 (SJTU)";
           reasoning = true;
@@ -665,6 +723,55 @@
       # Provider 请求超时时间。
       timeoutSeconds = 240;
       models = [
+        {
+          id = "gpt-6-luna";
+          name = "GPT-6 Luna";
+          reasoning = true;
+          input = [
+            "text"
+            "image"
+          ];
+          # 参考本机 Pi 的 RHCG 配置：272k / 64k；服务端上限待实测。
+          contextWindow = 272000;
+          maxTokens = 64000;
+          thinkingLevelMap = {
+            xhigh = "xhigh";
+            max = "max";
+          };
+          compat.supportsReasoningEffort = true;
+          compat.supportedReasoningEfforts = [
+            "low"
+            "medium"
+            "high"
+            "xhigh"
+            "max"
+          ];
+          api = "openai-completions";
+        }
+        {
+          id = "gpt-6-sol";
+          name = "GPT-6 Sol";
+          reasoning = true;
+          input = [
+            "text"
+            "image"
+          ];
+          contextWindow = 272000;
+          maxTokens = 64000;
+          thinkingLevelMap = {
+            xhigh = "xhigh";
+            max = "max";
+          };
+          compat.supportsReasoningEffort = true;
+          compat.supportedReasoningEfforts = [
+            "low"
+            "medium"
+            "high"
+            "xhigh"
+            "max"
+          ];
+          api = "openai-completions";
+        }
         {
           id = "gpt-5.6-luna";
           name = "GPT-5.6 Luna";

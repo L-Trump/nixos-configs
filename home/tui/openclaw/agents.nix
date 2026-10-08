@@ -30,6 +30,7 @@
     models = {
       "minimax/MiniMax-M2.7-highspeed".alias = "m2.7";
       "minimax/MiniMax-M3".alias = "m3";
+      "minimax/MiniMax-M3.1-Flash-Preview".alias = "m3.1f";
       "deepseek/deepseek-v4-flash".alias = "ds4f";
       "deepseek/deepseek-v4-pro".alias = "ds4p";
       # OpenCode Go 订阅的 DeepSeek 模型（与官方 API 区分）。
@@ -38,6 +39,7 @@
       # DeepSeek V4.1 Flash（OpenCode Go 侧 ID 为 deepseek-flash）。
       "opencode-go/deepseek-flash".alias = "ds4.1f-go";
       "sjtu/glm-5.2".alias = "glm5.2";
+      "sjtu/glm-5.3".alias = "glm5.3";
       # SCNet 超算互联网 Token Plan 模型。
       "scnet/DeepSeek-V4-Flash-0731".alias = "ds4f-tp";
       "scnet/DeepSeek-V4-Pro".alias = "ds4p-tp";
@@ -62,6 +64,20 @@
       "qwen-token-plan/glm-5.2" = {
         alias = "glm5.2-qwen";
         params.extra_body.tool_stream = true;
+      };
+      "rhcg/gpt-6-luna" = {
+        alias = "gpt6-luna";
+        params = {
+          parallel_tool_calls = true;
+          text_verbosity = "low";
+        };
+      };
+      "rhcg/gpt-6-sol" = {
+        alias = "gpt6-sol";
+        params = {
+          parallel_tool_calls = true;
+          text_verbosity = "low";
+        };
       };
       "rhcg/gpt-5.6-luna" = {
         alias = "gpt5.6-luna";
@@ -134,17 +150,12 @@
       mode = "cache-ttl";
       # 和 cacheRetention="long" 对齐，5min 太短、1h 才好命中。
       ttl = "1h";
-      # softTrim/hardClear 阈值：context 用到 70% 先软剪，90% 再硬清。
-      softTrimRatio = 0.8;
-      hardClearRatio = 0.9;
     };
 
     # 上下文压缩兜底策略：lossless-claw 作为 context engine 负责主路径，
     # OpenClaw 内置 compaction 仅保留轻量 fallback，避免 safeguard 质量审计拖慢溢出恢复。
     compaction = {
       mode = "default";
-      # 压缩时预留的输出/工具调用 token 下限。
-      reserveTokensFloor = 20000;
       # 压缩任务最长等待时间。
       timeoutSeconds = 1200;
     };
@@ -168,31 +179,28 @@
     subagents.maxConcurrent = 8;
   };
 
-  # 显式 agent 列表。
-  agents.list = [
-    {
-      id = "main";
-      # 不设置 agent identity，避免 Feishu 等消息渠道把 name/emoji 渲染成卡片 header。
-      # Dashboard/WebChat 的显示偏好应走 UI 自身设置，而不是 agent runtime identity。
-      # 主 agent 工具授权。
-      tools = {
-        # 使用 full 工具 profile。
-        profile = "full";
-        # 在 full profile 之外额外允许的工具。
-        alsoAllow = [
-          "canvas"
-          "message"
-          "agents_list"
-          "tts"
-        ];
-        # elevated 工具配置。
-        elevated = {
-          # 允许 elevated 工具能力。
-          enabled = true;
-          # 限定允许来源；空集表示沿用全局/运行时审批策略。
-          allowFrom = { };
-        };
+  # 显式 agent 配置，以 agent ID 为键。
+  agents.entries.main = {
+    # 不设置 agent identity，避免 Feishu 等消息渠道把 name/emoji 渲染成卡片 header。
+    # 新版不支持仅供 Dashboard/WebChat 使用的 ui.assistant，暂不配置显示身份。
+    # 主 agent 工具授权。
+    tools = {
+      # 使用 full 工具 profile。
+      profile = "full";
+      # 在 full profile 之外额外允许的工具。
+      alsoAllow = [
+        "canvas"
+        "message"
+        "agents_list"
+        "tts"
+      ];
+      # elevated 工具配置。
+      elevated = {
+        # 允许 elevated 工具能力。
+        enabled = true;
+        # 限定允许来源；空集表示沿用全局/运行时审批策略。
+        allowFrom = { };
       };
-    }
-  ];
+    };
+  };
 }

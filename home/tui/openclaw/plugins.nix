@@ -39,9 +39,6 @@
         "opencode-go"
       ];
 
-      # 只按 allow/entries/slots 发现 bundled plugins，避免旧兼容模式绕过 allowlist。
-      bundledDiscovery = "allowlist";
-
       # 使用 lossless-claw 接管 context engine / compaction。
       slots.contextEngine = "lossless-claw";
 

@@ -95,8 +95,6 @@
     nativeSkills = "auto";
     # 允许通过命令触发 restart 流程；实际重启仍遵守确认规则。
     restart = true;
-    # owner 显示原始 ID，便于排查授权。
-    ownerDisplay = "raw";
     # 允许执行命令的飞书用户 open_id allowlist。
     allowFrom.feishu = myvars.openclaw.commands.allowFrom.feishu;
   };

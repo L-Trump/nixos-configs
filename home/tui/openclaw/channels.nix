@@ -64,7 +64,7 @@
     # 群聊中不强制 @ 才处理；由上层群聊行为策略控制是否回复。
     requireMention = false;
     # 启用飞书流式输出/卡片更新。
-    streaming = true;
+    streaming.mode = "partial";
     # 群聊按 topic/thread 划分 session scope。
     groupSessionScope = "group_topic";
 
@@ -77,7 +77,6 @@
       perm = false;
       scopes = false;
       bitable = false;
-      base = false;
     };
   };
 }

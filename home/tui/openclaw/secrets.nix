@@ -8,7 +8,5 @@
     path = config.age.secrets.openclaw-secrets.path;
     # secret 文件格式为 JSON，id 使用 JSON Pointer 风格路径，如 /models/minimax/apiKey。
     mode = "json";
-    # 允许读取 agenix runtime 路径；当前 path 是 regular file，不是自定义 symlink。
-    allowInsecurePath = true;
   };
 }

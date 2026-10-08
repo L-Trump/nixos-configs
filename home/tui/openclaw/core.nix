@@ -4,8 +4,11 @@
     # 日志级别；debug 便于排查 Gateway、插件和模型调用问题。
     level = "debug";
 
-    # 敏感信息脱敏模式；off 保留完整调试信息，后续可考虑改为 tools。
-    redactSensitive = "off";
+  };
+
+  proxy = {
+    enabled = true;
+    proxyUrl = "http://127.0.0.1:7893";
   };
 
   # 浏览器/网页访问安全策略。
