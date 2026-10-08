@@ -23,13 +23,16 @@
 - 在本仓库内新增/编辑文件（不删除、不覆盖用户未要求改动的内容）。
 - **不要**顺手 `git add` / commit，除非用户要求。
 
-### 0.3 开工三件事
+### 0.3 开工四件事
 
 ```bash
+td usage --new-session -q                  # 先认领上轮遗留：当前 focus / 待 review / 阻塞 / 下一个该干的（见 §0.5）
 git status -sb && git log --oneline -10   # 常有在途半成品，不要 revert 别人的修改
 hostname                                   # 本机 = rog-ga502；很多命令以当前 hostname 为目标
 nix eval .#nixosConfigurations --apply builtins.attrNames --json   # 确认所有主机名（与文件名不一定一致）
 ```
+
+> `td` 那条放最前不是随便排的：若上一轮留了半成品，后面三条看到的东西都可能被误当成"该从头做"或"该 revert"。
 
 ### 0.4 术语表
 
@@ -41,6 +44,24 @@ nix eval .#nixosConfigurations --apply builtins.attrNames --json   # 确认所�
 | preset | `outputs/config-presets/{bare,server,daily}.nix`，被 host 文件 `recursiveUpdate` 覆盖 |
 | 总装单 | `outputs/x86_64-linux/hosts/<host>.nix`（或 `microvms/`），一台机器的完整定义 |
 | ltnet | 基于 easytier 的 SDWAN 网段 `10.144.144.0/24`，主机名 `<host>.ltnet` |
+
+### 0.5 跨会话工作记忆（td）
+
+本仓库用 [`td`](https://github.com/marcus/td) 记待办与跨会话工作状态。数据在项目本地 `.todos/`（SQLite），**已 gitignore**——纯本地、每台机器独立，不提交、别的机器也看不到（见 §8.15）。
+
+| 场景 | 命令 |
+| --- | --- |
+| 新会话开工 | `td usage --new-session -q`（当前 focus / 待 review / 阻塞 / 下一个该干的） |
+| 认领一条 | `td start <id>` |
+| 随手记录 | `td log "..."` 进度 · `td log --decision "..."` 决策 · `td log --blocker "..."` 卡点 |
+| 回看某条 | `td show <id>`（详情） / `td context <id>`（含历史日志与交接） |
+| 追踪改动 | `td link <id> <glob...>` 关联文件，之后 `td files <id>` 看变更 |
+| 要跨会话/收工 | `td handoff <id> --done "..." --remaining "..." --decision "..." --uncertain "..."` |
+| 提交评审 | `td review <id>` → 确认后 `td approve <id>` |
+
+- 状态机 `open → in_progress → in_review → closed`（另有 `blocked`），`td workflow` 可查；**关单需要评审**，别自己 `approve` 掉。
+- **多步、跨会话、有半成品的活**才建 issue；一次性小改动直接做，别制造流程噪音。
+- 完整工作流见本机 skill `~/.pi/agent/skills/td-task-management/SKILL.md`（已安装，pi 自动加载）。
 
 ---
 
@@ -470,6 +491,7 @@ colmena apply --on <host> --verbose
 12. **`n100` 的 microvm host 当前关闭**；`iso`/弃用主机不在 colmena `@all`。
 13. **`pkgs-unstable`/`pkgs-stable` 与主 nixpkgs 版本不同**，混用时注意依赖版本冲突（尤其 CUDA/onnxruntime 有专门处理）。
 14. 本机 = `rog-ga502`：`just switch` 只影响它；给别的机器"构建"与"部署"是两回事（见 §7）。
+15. **`.todos/`（td 数据）是机器本地状态**，已 gitignore。里面的 issue 不随仓库同步，别的机器 clone 下来是空的——别把"td 里应该有这条"当成交接依据，也别 `git add -f` 它（与 §8.11 的 `file:///` override 同类问题）。
 
 ---
 

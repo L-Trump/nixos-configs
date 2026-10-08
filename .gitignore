@@ -6,3 +6,6 @@ nixos-wallpapers/
 
 certs/
 .pi/
+
+# td
+.todos/
