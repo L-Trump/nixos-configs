@@ -45,6 +45,8 @@ in
 
   lossless-claw = pkgs.callPackage ./lossless-claw { };
 
+  pi-web = pkgs.callPackage ./pi-web { };
+
   # TODO: wait upstream merge https://github.com/NixOS/nixpkgs/pull/553055
   mcporter = pkgs-unstable.mcporter;
 

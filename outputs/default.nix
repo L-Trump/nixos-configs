@@ -134,9 +134,5 @@ in
     map (it: it.darwinConfigurations or { }) darwinSystemValues
   );
 
-  # Format the nix code in this flake
-  formatter = forAllSystems (
-    # alejandra is a nix formatter with a beautiful output
-    system: nixpkgs.legacyPackages.${system}.nixfmt
-  );
+  formatter = forAllSystems (system: nixpkgs.legacyPackages."${system}".nixfmt-tree);
 }

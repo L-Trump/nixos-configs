@@ -32,6 +32,7 @@ let
   myconfigs.myhome = lib.recursiveUpdate preset.myhome {
     tuiExtra = {
       openclaw.enable = true;
+      pi.pi-web.enable = true;
     };
   };
   modules = {

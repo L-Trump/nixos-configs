@@ -64,7 +64,10 @@
       mail.enable = false;
       lsp.enable = false;
       openclaw.enable = false;
-      pi.enable = false;
+      pi = {
+        enable = false;
+        pi-web.enable = false;
+      };
       # lsp.lang = ["all"];
     };
     desktop = {
