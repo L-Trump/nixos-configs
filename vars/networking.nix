@@ -26,13 +26,8 @@ rec {
     microvm-umy.ipv4 = "10.144.144.112";
     gs445.ipv4 = "10.144.144.195";
     gs445-2.ipv4 = "10.144.144.196";
-    eo-deep = {
-      ipv4 = "10.144.144.197";
-      ssh.user = "caddy";
-    };
-    oneplus-ace.ipv4 = "10.144.144.239";
     homewin.ipv4 = "10.144.144.240";
-    nucwin.ipv4 = "10.144.144.241";
+    ltgrok.ipv4 = "10.144.144.242";
     aliyun-vm-sh-qi.ipv4 = "10.144.144.243";
     purax.ipv4 = "10.144.144.244";
     aliyun-vm-hk.ipv4 = "10.144.144.245";
@@ -49,8 +44,6 @@ rec {
         "olist"
       ];
     };
-    gx-vm-js.ipv4 = "10.144.144.252";
-    jcloud.ipv4 = "10.144.144.253";
     dice = {
       ipv4 = "10.144.144.254";
       ssh.port = 223;
