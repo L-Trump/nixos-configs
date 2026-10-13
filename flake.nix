@@ -53,6 +53,11 @@
       url = "github:feschber/lan-mouse";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # Fcitx5 voice input (cloud ASR only, i.e. the "lite" build).
+    fcitx5-vinput = {
+      url = "github:xifan2333/fcitx5-vinput";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     # My secrets
     mysecrets = {
       url = "git+ssh://git@github.com/L-Trump/nixos-secrets.git?shallow=1";

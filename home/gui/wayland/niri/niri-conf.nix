@@ -208,6 +208,11 @@ let
               title = "^wps|wpp|et$";
             };
           }
+          {
+            _props = {
+              app-id = "^fcitx5$|^vinput-gui$|^org.fcitx.Vinput$";
+            };
+          }
         ];
         open-floating = true;
       }

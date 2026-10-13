@@ -106,6 +106,7 @@ in
         ".cache/zellij"
         ".cache/restic"
         ".cache/tlrc"
+        ".cache/vinput" # Voice Input ASR Cache
         ".vnc"
 
         # Configs
@@ -122,6 +123,7 @@ in
         ".config/rbw" # bitwarden accounts
         ".config/nnn" # NNN bookmarks
         ".config/fcitx5"
+        ".config/vinput" # vinput-gui 写入的运行时状态：已装 provider、active_provider、scenes
         ".config/copyq"
         ".config/Bitwarden"
         ".config/rustdesk"
