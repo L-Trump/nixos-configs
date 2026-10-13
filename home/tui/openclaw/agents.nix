@@ -4,7 +4,7 @@
     # 默认文本模型和 fallback 链。
     model = {
       # 新会话/未 pin 会话的主模型。
-      primary = "sjtu/glm-5.2";
+      primary = "sjtu/glm-5.3";
 
       # 主模型失败或过载时依次尝试的备用模型。
       fallbacks = [
@@ -38,7 +38,6 @@
       "opencode-go/deepseek-v4-pro".alias = "ds4p-go";
       # DeepSeek V4.1 Flash（OpenCode Go 侧 ID 为 deepseek-flash）。
       "opencode-go/deepseek-flash".alias = "ds4.1f-go";
-      "sjtu/glm-5.2".alias = "glm5.2";
       "sjtu/glm-5.3".alias = "glm5.3";
       # SCNet 超算互联网 Token Plan 模型。
       "scnet/DeepSeek-V4-Flash-0731".alias = "ds4f-tp";
