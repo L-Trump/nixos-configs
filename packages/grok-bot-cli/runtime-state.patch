@@ -1,0 +1,53 @@
+diff --git a/src/core/gateway.js b/src/core/gateway.js
+--- a/src/core/gateway.js
++++ b/src/core/gateway.js
+@@ -215,6 +215,13 @@ function asRecord(agent) {
+     avatarColor: agent.avatarColor || "",
+     ...(notify !== undefined ? { notifyOnAgentUpdates: Boolean(notify) } : {}),
+     ...(hidden !== undefined ? { hiddenFromSidebar: Boolean(hidden) } : {}),
++    ...(typeof agent.isRunning === "boolean" ? { isRunning: agent.isRunning } : {}),
++    ...(typeof agent.isRunningTurn === "boolean" ? { isRunningTurn: agent.isRunningTurn } : {}),
++    ...(typeof agent.isComposingMessage === "boolean" ? { isComposingMessage: agent.isComposingMessage } : {}),
++    // Missing means unknown; null is a known absence of a pending user response.
++    ...(agent.awaitingUserResponse === null || (typeof agent.awaitingUserResponse === "object" && !Array.isArray(agent.awaitingUserResponse))
++      ? { awaitingUserResponse: agent.awaitingUserResponse }
++      : {}),
+     isGroup: agent.isGroup === true || (agent.isGroup == null && Array.isArray(memberIds) && memberIds.length > 0),
+     memberIds: Array.isArray(memberIds) ? memberIds : [],
+   };
+diff --git a/src/core/format.js b/src/core/format.js
+--- a/src/core/format.js
++++ b/src/core/format.js
+@@ -19,6 +19,13 @@ export function summarize(rec) {
+     avatarColor: rec.avatarColor || undefined,
+     ...(rec.notifyOnAgentUpdates !== undefined ? { notifyOnAgentUpdates: rec.notifyOnAgentUpdates } : {}),
+     ...(rec.hiddenFromSidebar !== undefined ? { hiddenFromSidebar: rec.hiddenFromSidebar } : {}),
++    ...(typeof rec.isRunning === "boolean" ? { isRunning: rec.isRunning } : {}),
++    ...(typeof rec.isRunningTurn === "boolean" ? { isRunningTurn: rec.isRunningTurn } : {}),
++    ...(typeof rec.isComposingMessage === "boolean" ? { isComposingMessage: rec.isComposingMessage } : {}),
++    // File records have no runtime state; do not synthesize idle/no-wait defaults.
++    ...(rec.awaitingUserResponse === null || (typeof rec.awaitingUserResponse === "object" && !Array.isArray(rec.awaitingUserResponse))
++      ? { awaitingUserResponse: rec.awaitingUserResponse }
++      : {}),
+     kind: rec.isGroup ? "group" : "bot",
+     members: rec.isGroup ? rec.memberIds : undefined,
+   };
+diff --git a/src/cli/_shared.ts b/src/cli/_shared.ts
+--- a/src/cli/_shared.ts
++++ b/src/cli/_shared.ts
+@@ -49,11 +49,15 @@ export const onOffSchema = z.enum(['on', 'off']);
+ export const parseOnOff = (value: 'on' | 'off'): boolean => value === 'on';
+ 
+ export const agentSummarySchema = z.object({
++  awaitingUserResponse: z.record(z.string(), z.json()).nullable().optional(),
+   avatarColor: z.string().optional(),
+   avatarShape: z.string().optional(),
+   description: z.string().optional(),
+   hiddenFromSidebar: z.boolean().optional(),
+   id: z.string(),
++  isComposingMessage: z.boolean().optional(),
++  isRunning: z.boolean().optional(),
++  isRunningTurn: z.boolean().optional(),
+   kind: z.enum(['bot', 'group']),
+   members: z.array(z.string()).optional(),
+   name: z.string(),

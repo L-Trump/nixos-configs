@@ -187,6 +187,8 @@ in
         ".codebuddy"
         ".workbuddy-key-fallback"
         ".config/sidecar"
+        ".config/Grok Bot"
+        ".grokbot"
 
         # cloud native
         {

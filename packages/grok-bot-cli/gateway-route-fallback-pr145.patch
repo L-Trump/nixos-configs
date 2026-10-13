@@ -1,0 +1,230 @@
+diff --git a/README.md b/README.md
+index be61707..07df024 100644
+--- a/README.md
++++ b/README.md
+@@ -14,7 +14,7 @@ Manage [Grok Bot](https://cursor.com/help/grok-bot/plans) agents, groups, and me
+ npm install --global grok-bot-cli
+ ```
+ 
+-Requires Node.js 22.19.0+ and the Grok Bot desktop app on macOS, Linux, or Windows. Open Grok Bot and sign in once; `gbot` automatically uses the app's encrypted session and routing credentials. No token copying is required. On Linux the app keeps its session under `~/.config/Grok Bot` (or `$XDG_CONFIG_HOME`); when it is stored in the system keyring, `gbot` reads the key with `secret-tool` (package `libsecret-tools`). On Windows the session lives under `%APPDATA%\\Grok Bot` and decrypts with the app's DPAPI-wrapped Safe Storage key.
++Requires Node.js 22.19.0+ and the Grok Bot desktop app on macOS, Linux, or Windows. Open Grok Bot and sign in once; `gbot` automatically uses the app's encrypted session and routing credentials. No token copying is required. If the app removes its cached gateway route while the cloud computer sleeps, the CLI uses the active account in `sand-secrets.json` to request a fresh route through `EnsureSandBox`. Signed-out and inactive saved accounts are never selected. On macOS, backend requests use the installed Grok Bot app version; `SAND_CLIENT_VERSION` remains an explicit override. On Linux the app keeps its session under `~/.config/Grok Bot` (or `$XDG_CONFIG_HOME`); when it is stored in the system keyring, `gbot` reads the key with `secret-tool` (package `libsecret-tools`). On Windows the session lives under `%APPDATA%\\Grok Bot` and decrypts with the app's DPAPI-wrapped Safe Storage key.
+ 
+ ## Use
+ 
+@@ -355,7 +355,7 @@ the short summary. Unknown cursors set `gapReset: true`; repeat that call with
+ `full:true` to inspect the bounded reset snapshot.
+ 
+ Auth resolves exactly as for `gbot`: `GROK_BOT_GATEWAY_URL` + `GROK_BOT_GATEWAY_TOKEN`,
+-then the Grok Bot app session, then `CURSOR_ACCESS_TOKEN`. The MCP server therefore
++then the Grok Bot cached gateway session, then `CURSOR_ACCESS_TOKEN`, then the active Grok Bot account credentials. The MCP server therefore
+ needs outbound HTTPS to the gateway host and read access to the app-session file
+ (`~/.config/Grok Bot` on Linux, `~/Library/Application Support/Grok Bot` on macOS).
+ A sandbox that blocks network egress or hides the home directory makes `gbot_send`
+diff --git a/src/cli/doctor.tsx b/src/cli/doctor.tsx
+index 7ce6968..c4c7301 100644
+--- a/src/cli/doctor.tsx
++++ b/src/cli/doctor.tsx
+@@ -2,7 +2,7 @@ import { Agent } from '@agent-bundle/runtime';
+ import type { CliRouteConfig, CliRouteProps } from 'agent-bundle';
+ import { z } from 'zod';
+ 
+-import { inspectGrokBotGatewaySession } from '../core/app-session.js';
++import { hasGrokBotAppCredentials, inspectGrokBotGatewaySession } from '../core/app-session.js';
+ import { hasGatewayAuth } from '../core/gateway.js';
+ import {
+   defaultCandidateRoots,
+@@ -44,7 +44,7 @@ export default async function doctor({ input }: CliRouteProps<typeof inputSchema
+   } catch (err) {
+     if (!(err instanceof StoreError)) throw err;
+   }
+-  const note = 'Live roster is on the box. Prefer CURSOR_ACCESS_TOKEN then EnsureSandBox then POST gateway /api/*.';
++  const note = 'Live roster is on the box. A missing cached route can reconnect through the active Grok Bot account.';
+   const gatewayAuthPresent = hasGatewayAuth();
+   const grokBotAppSession = inspectGrokBotGatewaySession();
+   const sessionJson = {
+@@ -65,6 +65,7 @@ export default async function doctor({ input }: CliRouteProps<typeof inputSchema
+     `resolved: ${resolved ?? '(none)'}`,
+     `gateway auth: ${gatewayAuthPresent ? 'present' : 'no'}`,
+     sessionLine,
++    `Grok Bot active account credentials: ${hasGrokBotAppCredentials() ? 'present' : 'not found'}`,
+     'found:',
+     found.length ? found.map((p) => `  ${p}`).join('\n') : '  (none)',
+     'candidates:',
+diff --git a/src/core/app-session.js b/src/core/app-session.js
+index 9cdde1d..231ebeb 100644
+--- a/src/core/app-session.js
++++ b/src/core/app-session.js
+@@ -22,14 +22,14 @@ class GrokBotGatewaySessionError extends Error {
+ }
+ 
+ function encryptedPayload(wrapped) {
+-  if (wrapped.version != null && wrapped.version !== 1 && wrapped.version !== 2) {
++  if (wrapped.version != null && wrapped.version !== 1 && wrapped.version !== 2 && wrapped.version !== 3) {
+     throw new GrokBotGatewaySessionError(
+       "UNSUPPORTED_VERSION",
+       `Unsupported Grok Bot gateway descriptor version ${wrapped.version}.`,
+     );
+   }
+   let encrypted;
+-  if (wrapped.version === 2) {
++  if (wrapped.version === 2 || wrapped.version === 3) {
+     const entries = Object.values(wrapped.entries ?? {});
+     if (entries.length === 0) {
+       throw new GrokBotGatewaySessionError(
+@@ -135,6 +135,65 @@ export function hasGrokBotGatewaySession({
+   );
+ }
+ 
++export function grokBotAppVersion({ home = homedir(), platform = process.platform } = {}) {
++  if (platform !== "darwin") return null;
++  for (const root of [join(home, "Applications"), "/Applications"]) {
++    const plist = join(root, "Grok Bot.app/Contents/Info.plist");
++    if (!existsSync(plist)) continue;
++    const version = execFileSync("/usr/libexec/PlistBuddy", ["-c", "Print :CFBundleShortVersionString", plist], { encoding: "utf8" }).trim();
++    if (/^\d+\.\d+\.\d+(?:[-+][A-Za-z0-9.-]+)?$/.test(version)) return version;
++  }
++  return null;
++}
++
++// The app may delete its cached gateway route while the box sleeps. The active
++// account remains signed in; use only that account to request a fresh route.
++function activeGrokBotAccount({ home = homedir(), platform = process.platform, env = process.env } = {}) {
++  if (!SUPPORTED_PLATFORMS.has(platform)) return null;
++  const path = join(grokBotAppDataPath(home, platform, env), "sand-secrets.json");
++  if (!existsSync(path)) return null;
++  try {
++    const stored = JSON.parse(readFileSync(path, "utf8"));
++    if (stored.version != null && stored.version !== 1) return null;
++    const accounts = JSON.parse(stored["cursor-accounts"] ?? "null");
++    if (typeof accounts?.active !== "string" || !Object.hasOwn(accounts.accounts ?? {}, accounts.active)) return null;
++    const active = accounts.accounts[accounts.active];
++    return typeof active?.["cursor-access-token"] === "string" && active["cursor-access-token"] ? active : null;
++  } catch {
++    return null;
++  }
++}
++
++export function hasGrokBotAppCredentials(options = {}) {
++  return activeGrokBotAccount(options) !== null;
++}
++
++function decryptAppSecret(encrypted, { platform, home, env, getKeychainPassword, unprotectData }) {
++  if (platform === "win32") {
++    return decryptWindowsSafeStorageString(encrypted, readWindowsSafeStorageKey(home, env, unprotectData));
++  }
++  const prefix = Buffer.from(encrypted, "base64").subarray(0, 3).toString("latin1");
++  const password = platform === "linux" && prefix === SAFE_STORAGE_PREFIX_V10
++    ? LINUX_BASIC_TEXT_PASSWORD : getKeychainPassword(platform);
++  return decryptSafeStorageString(encrypted, password, platform);
++}
++
++export function loadGrokBotAppCredentials({
++  home = homedir(), platform = process.platform, env = process.env,
++  getKeychainPassword = readKeychainPassword, unprotectData = unprotectWithDpapi,
++} = {}) {
++  const active = activeGrokBotAccount({ home, platform, env });
++  if (!active) return null;
++  const decrypt = encrypted => decryptAppSecret(encrypted, { platform, home, env, getKeychainPassword, unprotectData });
++  const accessToken = decrypt(active["cursor-access-token"]);
++  const teamId = active["cursor-selected-team-id"] == null ? undefined : decrypt(active["cursor-selected-team-id"]);
++  if (!accessToken.trim()) throw new GrokBotGatewaySessionError("INCOMPLETE_CREDENTIALS", "Grok Bot active account has no access token.");
++  if (teamId !== undefined && (!/^[1-9][0-9]*$/.test(teamId) || !Number.isSafeInteger(Number(teamId)))) {
++    throw new GrokBotGatewaySessionError("INVALID_TEAM", "Grok Bot active account has an invalid selected team.");
++  }
++  return { accessToken, ...(teamId === undefined ? {} : { teamId }) };
++}
++
+ function readKeychainPassword(platform = process.platform) {
+   if (platform === "linux") {
+     return execFileSync(
+@@ -200,22 +259,7 @@ export function loadGrokBotGatewaySession({
+ 
+   const wrapped = JSON.parse(readFileSync(path, "utf8"));
+   const encrypted = encryptedPayload(wrapped);
+-  let clear;
+-  if (platform === "win32") {
+-    clear = decryptWindowsSafeStorageString(
+-      encrypted,
+-      readWindowsSafeStorageKey(home, effectiveEnv, unprotectData),
+-    );
+-  } else {
+-    const prefix = Buffer.from(encrypted, "base64").subarray(0, 3).toString("latin1");
+-    // Linux v10 is the keyring-less basic_text backend; no secret store to ask.
+-    const needsKeychain = !(platform === "linux" && prefix === SAFE_STORAGE_PREFIX_V10);
+-    clear = decryptSafeStorageString(
+-      encrypted,
+-      needsKeychain ? getKeychainPassword(platform) : LINUX_BASIC_TEXT_PASSWORD,
+-      platform,
+-    );
+-  }
++  const clear = decryptAppSecret(encrypted, { platform, home, env: effectiveEnv, getKeychainPassword, unprotectData });
+   const descriptor = JSON.parse(clear);
+   if (!descriptor.baseUrl || !descriptor.token) {
+     throw new GrokBotGatewaySessionError(
+diff --git a/src/core/gateway.js b/src/core/gateway.js
+index dcc9721..410e346 100644
+--- a/src/core/gateway.js
++++ b/src/core/gateway.js
+@@ -1,6 +1,6 @@
+ import { randomUUID } from "node:crypto";
+ import { ensureSandboxHeaders, headersFromEnsureSandbox, headersFromEnv, mergeGatewayHeaders, normalizeHeaderMap, requestHeaders } from "./headers.js";
+-import { hasGrokBotGatewaySession, loadGrokBotGatewaySession } from "./app-session.js";
++import { hasGrokBotAppCredentials, loadGrokBotAppCredentials, hasGrokBotGatewaySession, loadGrokBotGatewaySession } from "./app-session.js";
+ import { AVATAR_COLORS, AVATAR_SHAPES, MAX_GROUP_MEMBERS } from "./store.js";
+ import { assertAllowedCredentialUrl, redactSecrets } from "./url-policy.js";
+ import { grokApproval, grokApprovalResponseSchema } from "./grok-approvals.js";
+@@ -79,7 +79,7 @@ function sessionFromApp() {
+ }
+ 
+ export function hasGatewayAuth() {
+-  return Boolean(gatewayOverride() || accessTokenFromEnv() || hasGrokBotGatewaySession());
++  return Boolean(gatewayOverride() || accessTokenFromEnv() || hasGrokBotGatewaySession() || hasGrokBotAppCredentials());
+ }
+ 
+ async function readTextCapped(res, maxBytes) {
+@@ -124,7 +124,7 @@ function pick(obj, ...keys) {
+   return undefined;
+ }
+ 
+-async function ensureSandbox(accessToken, { signal } = {}) {
++async function ensureSandbox(accessToken, { signal, teamId } = {}) {
+   assertGatewayActive(signal);
+   const url = assertAllowedCredentialUrl(backendBase(), { kind: "backend" }) + "/aiserver.v1.GrokBotService/EnsureSandBox";
+   let res, body;
+@@ -133,7 +133,7 @@ async function ensureSandbox(accessToken, { signal } = {}) {
+       method: "POST",
+       redirect: "error",
+       signal: gatewayDeadline(signal),
+-      headers: ensureSandboxHeaders(accessToken),
++      headers: { ...ensureSandboxHeaders(accessToken), ...(teamId === undefined ? {} : { "x-cursor-team-id": teamId }) },
+       body: "{}",
+     });
+     body = await readJson(res);
+@@ -162,6 +162,8 @@ export async function connectGateway({ signal } = {}) {
+   if (fromApp) return fromApp;
+   const token = accessTokenFromEnv();
+   if (!token) {
++    const credentials = loadGrokBotAppCredentials();
++    if (credentials) return ensureSandbox(credentials.accessToken, { signal, teamId: credentials.teamId });
+     throw new GatewayError("Set CURSOR_ACCESS_TOKEN, or GROK_BOT_GATEWAY_URL + GROK_BOT_GATEWAY_TOKEN. Do not use a Cursor dashboard API key.");
+   }
+   return ensureSandbox(token, { signal });
+diff --git a/src/core/headers.js b/src/core/headers.js
+index 477c9ce..6508f25 100644
+--- a/src/core/headers.js
++++ b/src/core/headers.js
+@@ -1,3 +1,5 @@
++import { grokBotAppVersion } from "./app-session.js";
++
+ export function normalizeHeaderMap(obj) {
+   if (!obj || typeof obj !== "object" || Array.isArray(obj)) return {};
+   const out = {};
+@@ -47,7 +49,7 @@ export function ensureSandboxHeaders(accessToken) {
+     "connect-protocol-version": "1",
+     authorization: "Bearer " + accessToken,
+     "x-cursor-client-type": "sand",
+-    "x-cursor-client-version": process.env.SAND_CLIENT_VERSION || "0.20.0",
++    "x-cursor-client-version": process.env.SAND_CLIENT_VERSION || grokBotAppVersion() || "0.20.0",
+     "x-sand-box-namespace": process.env.SAND_BOX_NAMESPACE || "prod",
+   };
+ }

@@ -1,0 +1,22 @@
+diff --git a/src/core/app-session.js b/src/core/app-session.js
+index 231ebeb..93b98e6 100644
+--- a/src/core/app-session.js
++++ b/src/core/app-session.js
+@@ -135,7 +135,16 @@ export function hasGrokBotGatewaySession({
+   );
+ }
+ 
+-export function grokBotAppVersion({ home = homedir(), platform = process.platform } = {}) {
++export function grokBotAppVersion({ home = homedir(), platform = process.platform, env = process.env } = {}) {
++  if (platform === "linux") {
++    // The Linux desktop app records its version in desktop-status.json.
++    try {
++      const status = JSON.parse(readFileSync(join(grokBotAppDataPath(home, platform, env), "desktop-status.json"), "utf8"));
++      return typeof status?.appVersion === "string" && status.appVersion ? status.appVersion : null;
++    } catch {
++      return null;
++    }
++  }
+   if (platform !== "darwin") return null;
+   for (const root of [join(home, "Applications"), "/Applications"]) {
+     const plist = join(root, "Grok Bot.app/Contents/Info.plist");

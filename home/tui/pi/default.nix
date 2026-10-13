@@ -20,6 +20,7 @@ in
   # 仅在用户配置启用 Pi agent 时渲染下方配置。
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
+      grok-bot-cli
       yt-dlp
       pandoc
       mermaid-cli
