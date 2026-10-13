@@ -7,8 +7,6 @@
     "brave"
     # DeepSeek model provider runtime plugin。
     "deepseek"
-    # Qwen / 阿里云百炼 provider runtime plugin；新版可接管 Token Plan 专属兼容逻辑。
-    "qwen"
     "codex"
     # 本仓库 overlay 提供的第三方 Lossless Context Management 插件。
     "lossless-claw"
@@ -33,7 +31,6 @@
         "telegram"
         "codex"
         "openai"
-        "qwen"
         "lossless-claw"
         "workboard"
         "opencode-go"
@@ -48,7 +45,6 @@
         feishu.enabled = true;
         minimax.enabled = true;
         deepseek.enabled = true;
-        qwen.enabled = true;
         codex.enabled = true;
         workboard.enabled = true;
         # OpenCode Go bundled provider 插件（内置扩展，非 runtime plugin）。

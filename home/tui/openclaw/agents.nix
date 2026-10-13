@@ -8,21 +8,21 @@
 
       # 主模型失败或过载时依次尝试的备用模型。
       fallbacks = [
-        "scnet/DeepSeek-V4-Flash-0731"
-        "minimax/MiniMax-M3"
-        "rhcg/gpt-5.4"
+        "minimax/MiniMax-M3.1-Flash-Preview"
+        "opencode-go/deepseek-flash"
+        "rhcg/gpt-6-luna"
       ];
     };
 
     # 默认视觉/图片理解模型。
     imageModel = {
       # 优先使用 MiniMax M3 处理图片/多模态。
-      primary = "rhcg/gpt-5.6-sol";
+      primary = "rhcg/gpt-6-sol";
 
       # 视觉模型 fallback。
       fallbacks = [
-        "minimax/MiniMax-M3"
-        "rhcg/gpt-5.4"
+        "minimax/MiniMax-M3.1-Flash-Preview"
+        "rhcg/gpt-6-luna"
       ];
     };
 
@@ -39,31 +39,6 @@
       # DeepSeek V4.1 Flash（OpenCode Go 侧 ID 为 deepseek-flash）。
       "opencode-go/deepseek-flash".alias = "ds4.1f-go";
       "sjtu/glm-5.3".alias = "glm5.3";
-      # SCNet 超算互联网 Token Plan 模型。
-      "scnet/DeepSeek-V4-Flash-0731".alias = "ds4f-tp";
-      "scnet/DeepSeek-V4-Pro".alias = "ds4p-tp";
-      "scnet/GLM-5.2".alias = "glm5.2-tp";
-      "scnet/Kimi-K3".alias = "k3-tp";
-      "scnet/Qwen3.8-Max" = {
-        alias = "qwen3.8-tp";
-        # Qwen3 系列思考模式 temperature 下限为 0.6。
-        params = {
-          temperature = 0.6;
-          extra_body.enable_thinking = true;
-        };
-      };
-      # 阿里云百炼 Qwen Token Plan（北京区）；别名与 SCNet Token Plan 区分。
-      "qwen-token-plan/qwen3.8-max".alias = "qwen3.8";
-      "qwen-token-plan/qwen3.8-flash".alias = "qwen3.8f";
-      "qwen-token-plan/qwen3.7-max".alias = "qwen3.7m";
-      "qwen-token-plan/qwen3.7-plus".alias = "qwen3.7p";
-      "qwen-token-plan/qwen3.6-flash".alias = "qwen3.6f";
-      "qwen-token-plan/deepseek-v4-flash-0731".alias = "ds4f-qwen";
-      "qwen-token-plan/deepseek-v4-pro".alias = "ds4p-qwen";
-      "qwen-token-plan/glm-5.2" = {
-        alias = "glm5.2-qwen";
-        params.extra_body.tool_stream = true;
-      };
       "rhcg/gpt-6-luna" = {
         alias = "gpt6-luna";
         params = {
@@ -99,30 +74,6 @@
           text_verbosity = "low";
         };
       };
-      "rhcg/gpt-5.5" = {
-        alias = "gpt5.5";
-        params = {
-          parallel_tool_calls = true;
-          text_verbosity = "low";
-        };
-      };
-      "rhcg/gpt-5.4" = {
-        alias = "gpt5.4";
-        params = {
-          parallel_tool_calls = true;
-          text_verbosity = "low";
-        };
-      };
-      "rhcg/gpt-5.4-mini" = {
-        alias = "gpt5.4m";
-        params = {
-          parallel_tool_calls = true;
-          text_verbosity = "low";
-        };
-      };
-      "openai/gpt-5.5" = { };
-      "openai/gpt-5.4" = { };
-      "openai/gpt-5.4-mini" = { };
     };
 
     # 默认 workspace，AGENTS.md / SOUL.md 等上下文从这里读取。
