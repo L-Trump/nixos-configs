@@ -9,6 +9,7 @@
     # do not support .pdf
     # foliate
     wpsoffice-cn
+    libreoffice
     # wpsoffice-365
     nur.repos.rewine.ttf-wps-fonts
     # pkgs-stable.logseq
