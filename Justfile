@@ -30,6 +30,13 @@ preview:
 diff:
   nvd diff $(command ls -d1v /nix/var/nix/profiles/system-*-link|tail -n 2)
 
+# Compare two store closures: added/removed/updated packages WITH size deltas,
+# merged by package name+version (so pure rebuilds are not listed).
+# Usage: just cdiff <before> <after>
+[group('nix')]
+cdiff before after:
+  nix store diff-closures {{before}} {{after}}
+
 # Run eval tests
 [group('nix')]
 test:

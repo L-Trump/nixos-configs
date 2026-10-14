@@ -463,11 +463,29 @@ nix build .#iso         # 安装镜像
 nix build .#microvm-umy # microvm runner
 nix build .#packages.x86_64-linux.<pkg>
 
+# —— 看变化（构建产物 vs 当前系统）——
+just diff                               # nvd diff 最近两代 system profile
+just cdiff /run/current-system ./result # nix store diff-closures（路径要写 ./result，否则被当成 flake ref）
+
 # —— 需要用户确认 ——
 just switch             # 本机切换（目标 = 当前 hostname）
 just col <tag>          # 远程：colmena apply --on '@<tag>'（tag = all/vps/home/<hostname>）
 colmena apply --on <host> --verbose
 ```
+
+### 看变化时用哪个
+
+| 工具 | 粒度 | 适用 |
+| --- | --- | --- |
+| `nvd diff`（`just preview` 尾部 / `just diff`） | **store 路径**，分 `[A]新增 [R]移除 [U]升级 [C]同名重建` | 看“动了哪些文件/服务”；重建会被列出来，所以数字很吓人 |
+| `nix store diff-closures`（`just cdiff`） | **包名 + 版本** + 体积增减 | **看真实体积/版本变化的首选**：同名同版本的重建不出现，只报真升级 |
+
+> 升级 inputs 后想知道“closure 到底大了多少、谁贡献的”，直接 `just cdiff /run/current-system ./result`（注意 `./result` 的 `./` 不能省）。
+> `just preview` 已在仓库根生成 `result` 软链，所以 preview 完紧接着跑 cdiff 即可。
+>
+> 两个易错点：
+> - 不要用 `nix path-info -S`（`--closure-size` 是闭包累计值）对多个路径累加求和——会把整个系统重复计 N 遍。
+> - 单个 store 路径的真实大小用 `nix path-info --json` 的 `narSize` 字段（`-s` 在新版本 nix 里语义已变）。
 
 - 没有 CI、没有 pre-commit hook、没有测试套件：**验证 = 你自己跑上面的命令**。
 - `warning: Git tree '...' is dirty` 是正常的。
