@@ -14,7 +14,6 @@ in
   imports = lib.optionals rawcfg.enable [
     ./accounts.nix
     ./aerc
-    ./aerc/accounts-conf.nix
     ./offlineimap.nix
     ./imapnotify.nix
     ./notmuch.nix

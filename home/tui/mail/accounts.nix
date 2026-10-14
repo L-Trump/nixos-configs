@@ -80,14 +80,11 @@ let
         "check-mail" = "5m";
         "check-mail-cmd" = "my-mail-sync ${name} quiet";
         "multi-file-strategy" = "act-dir";
-        # aerc 0.22+: explicit paths in a notmuch source are deprecated; the
-        # database path is discovered through $NOTMUCH_CONFIG.
-        source = "notmuch://";
       };
     };
 
     # notmuch integration:
-    # - Makes the aerc source notmuch:// (see above).
+    # - Makes the aerc source notmuch:// 。
     # - Makes the imapnotify systemd unit set NOTMUCH_CONFIG automatically.
     #   The services.imapnotify module injects it, so no manual export is needed.
     notmuch.enable = true;

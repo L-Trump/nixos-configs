@@ -1,7 +1,7 @@
 { pkgs, ... }:
 {
   home.packages = with pkgs; [
-    nur.repos.MCSeekeri.workbuddy
+    workbuddy
   ];
   programs.vscode = {
     enable = true;
