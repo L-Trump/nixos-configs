@@ -16,6 +16,8 @@ in
     useChineseVersion = true;
   };
 
+  lceda-pro = pkgs.callPackage ./lceda-pro { };
+
   rustdesk-server-pro = pkgs.callPackage ./rustdesk-server-pro { };
 
   hubproxy = pkgs.callPackage ./hubproxy { };

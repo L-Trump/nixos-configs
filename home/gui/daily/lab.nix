@@ -18,6 +18,7 @@
     # dbeaver-bin
     dbeaver-ultimate
     hdc
+    lceda-pro
   ];
 
   home.sessionVariables = {
