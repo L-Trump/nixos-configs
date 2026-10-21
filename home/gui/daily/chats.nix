@@ -2,7 +2,7 @@
 {
   home.packages = with pkgs; [
     qq
-    wechat-uos
+    wechat
     telegram-desktop
     # discord
     feishu

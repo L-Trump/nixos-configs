@@ -51,6 +51,25 @@ in
 
   sidecar = pkgs.callPackage ./sidecar { };
 
+  # TODO wait upstream merge https://github.com/NixOS/nixpkgs/pull/560225
+  # 本地打包 nixpkgs PR 里的 wechat 4.1.13.26（vendor 自该 PR 的
+  # pkgs/by-name/we/wechat/，含 sources.json + update.py），覆盖 nixpkgs 自带的
+  # pkgs.wechat（tarball 版 4.1.1.8），取代旧的 wechat-uos（4.1.1.7）。
+  #
+  # src 的本地覆盖：PR 的 sources.json 指向 web.archive.org 快照（厂商会覆盖同名
+  # .deb，上游用 Wayback 固定字节），但实测 archive.org 从国内只有 ~16KB/s，
+  # 222MB 要 4 小时。改指厂商直连 URL，哈希与 PR 完全一致（已逐字节校验相同）；
+  # 厂商再覆盖时需按 workbuddy 的先例重算这行哈希。
+  #
+  # 上游合并后删掉 packages/wechat/ 与下面这几行即可，
+  # wechat 会自动回到 nixpkgs 的 pkgs.wechat。
+  wechat = (pkgs.callPackage ./wechat { }).overrideAttrs (_: {
+    src = pkgs.fetchurl {
+      url = "https://dldir1v6.qq.com/weixin/Universal/Linux/WeChatLinux_x86_64.deb";
+      hash = "sha256-oNuMru6NHmz+CqXOWHECcPjXSpD/SSD1Oj/CKqCVb+k=";
+    };
+  });
+
   td = pkgs.callPackage ./td { };
 
   grok-bot-cli = pkgs.callPackage ./grok-bot-cli { };
