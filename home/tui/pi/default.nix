@@ -15,6 +15,7 @@ in
   imports = [
     inputs.pi.homeModules.coding-agent
     ./pi-web.nix
+    ./computer-use.nix
   ];
 
   # 仅在用户配置启用 Pi agent 时渲染下方配置。
