@@ -83,7 +83,7 @@ in
   services.easytier = {
     enable = cfg.et.enable;
     allowSystemForward = true;
-    instances.web = {
+    instances.web = lib.mkIf false {
       configServer = cfg.et.config-server;
       extraArgs = [
         "-r"

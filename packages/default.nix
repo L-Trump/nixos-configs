@@ -51,6 +51,9 @@ in
 
   hdc = pkgs.callPackage ./hdc { };
 
+  # TODO wait upstream merge https://github.com/NixOS/nixpkgs/pull/575504
+  easytier = pkgs.callPackage ./easytier { };
+
   sidecar = pkgs.callPackage ./sidecar { };
 
   # TODO wait upstream merge https://github.com/NixOS/nixpkgs/pull/560225
