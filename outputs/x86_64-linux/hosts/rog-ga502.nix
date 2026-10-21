@@ -25,7 +25,7 @@ let
       openlist.enable = true;
       nezha-agent.enable = true;
       openclaw.enable = true;
-      openviking-server.enable = true;
+      openviking-server.enable = false;
       sub2api.enable = false;
     };
   };
