@@ -1,7 +1,7 @@
 # AGENTS.md — LTrump's NixOS 配置仓库
 
 > 给在本仓库工作的 AI agent 的上手手册：仓库结构、配置约定、改动路径、验证方式、已知坑。
-> 建议阅读顺序：§0 红线 → §1 心智模型 → §2 目录地图；干活时查 §5 子系统 / §6 配方 / §7 验证。
+> 建议阅读顺序：§0 红线 → §1 心智模型 → §2 目录地图；干活时查 §5 子系统 / §6 配方 / §7 验证与部署（**动远程主机前先看 §7.2**）。
 
 ---
 
@@ -11,7 +11,7 @@
 
 | 类别 | 例子 | 说明 |
 | --- | --- | --- |
-| 系统级操作 | `just switch`、`nixos-rebuild`、`colmena apply`、`just col <tag>` | 会改动真实机器；用户在本机有 NOPASSWD sudo，任何 `sudo` 命令同样谨慎 |
+| 系统级操作 | `just switch`、`nixos-rebuild`、`colmena apply`、`just col <tag>` | 会改动真实机器；用户在本机有 NOPASSWD sudo，任何 `sudo` 命令同样谨慎。远程部署的规矩见 §7.2（**线上机永远本地 build 后推，不用 `--build-on-target`**） |
 | 清理/破坏性 | `just gc` / `gcall` / `gc7d` / `just clean`、`rm`、`trash` 之外的重命名 | |
 | 跨仓库提交 | 在 `nixos-secrets/` 里 `commit` / `push`、`just upp mysecrets`（动 flake.lock）、`agenix -r`（重写全部密文） | 私密仓库 + 锁文件，rekey 影响所有主机 |
 | git 危险动作 | `git add -A`（见 §8.1）、`reset --hard`、`push --force` | |
@@ -33,6 +33,8 @@ nix eval .#nixosConfigurations --apply builtins.attrNames --json   # 确认所�
 ```
 
 > `td` 那条放最前不是随便排的：若上一轮留了半成品，后面三条看到的东西都可能被误当成"该从头做"或"该 revert"。
+>
+> 还有一件容易漏的：若这台机器上 `mysecrets` / `nix-openclaw` 是 `file://` override（§5.9），构建前先确认对应 clone 的改动**已 commit**——nix 只认 commit，工作区改动一律看不见。
 
 ### 0.4 术语表
 
@@ -164,7 +166,8 @@ flake.nix
 | 输出 | 用途 |
 | --- | --- |
 | `nixosConfigurations.<host>` | 构建/切换目标（`--flake .#<host>`；省略 `#host` 时取当前 hostname） |
-| `colmena.<host>` + `colmena.meta` | 远程部署（`colmena apply --on '@<tag>'`） |
+| `colmena.<host>` + `colmena.meta` | 原始 hive（`meta` + 每主机一个 module 函数），给 `--legacy-flake-eval` 和调试用 |
+| `colmenaHive` | 经 `inputs.colmena.lib.makeHive` 预处理过的 hive，**colmena ≥ 0.5 默认读这个**（`__schema = "v0.5"`）；CLI 版本与 `colmena` input 的 tag 必须同版本（见 §8.16） |
 | `microvm-infras.<name>` | 由宿主机的 `microvm.host.vms` 消费（来自 `virtualization.microvm.host.infras`） |
 | `packages.x86_64-linux.{iso,microvm-umy,<pkgs>}` | 镜像与可交付产物 |
 | `formatter` | `nix fmt` → nixfmt |
@@ -306,7 +309,7 @@ in
 
 - **端口/服务对照**：`modules/nixos/server/README.md`（改端口要同步更新）。
 - **容器服务**（`containers/`）：nezha-server、immich-machine-learning、siyuan-server、cloudreve、rustdesk-api、xpipe-webtop、ncm-api、sub2api；镜像 `image@digest` 来自 `vars/containers.nix`；网络 `oci_net`；数据 `/data/docker/<name>`。
-- **原生服务**（`server/`）：caddy(反向代理，密文 Caddyfile 或私密仓库明文二选一)、cf-tunnel、easytier+tailscale(sdwan)、juicefs(+redis meta +S3/webdav 网关)、minio、vaultwarden、rustdesk-server、rustical(caldav)、homepage-dashboard、openlist、syncthing、backrest/duplicati/kopia(备份)、code-server、sshwifty、authentik、hubproxy、novnc-websockify、openclaw(gateway)、openviking-server。
+- **原生服务**（`server/`）：caddy(反向代理，密文 Caddyfile 或私密仓库明文二选一)、cf-tunnel、easytier+tailscale(sdwan)、juicefs(+redis meta +S3/webdav 网关)、minio、vaultwarden、rustdesk-server、rustical(caldav)、homepage-dashboard、openlist、syncthing、backrest/duplicati/kopia(备份)、code-server、sshwifty、authentik、hubproxy、novnc-websockify、openclaw(gateway)、openviking-server、rhcg-site（实验室官网静态托管 + tar/token 上传口，caddy 站点块在私密仓库 caddyfile，见 `modules/nixos/server/rhcg-site/README.md`）。
 - **microvm**：`server/microvm.nix` 按 `rawcfg.microvm.{host,guest}.enable` 决定 import microvm 模块；宿主机 `virtualization.microvm.host.infras = [ "<guest>" ]` 消费 `microvm-infras.<guest>`；guest 的 `guest.isInfra` 控制走 infra 版（关闭 nixpkgs.config/auto-optimise-store）。**注意 `n100` 当前 host.enable = false，功能保留但未启用。**
 - **openviking-server**：`modules/nixos/server/openviking-server/default.nix`，监听 `127.0.0.1:1933`，数据目录 `~/.openviking`，配置来自 `age.secrets.openviking-server-config`。
 
@@ -438,27 +441,35 @@ cd .. && just upp mysecrets                                    # 让本仓库锁
 | **加新主机** | `hosts/README.md` 全流程；补充：`hosts/<n>/modules/default.nix` 必需、`home/` 可选；`vars/networking.nix` 加 IP；host key 加入 `nixos-secrets/secrets.nix` 并 rekey；总装单 `name` 必须等于 hostname |
 | **弃用主机** | 注释总装单 `tags` 里的 `"all"`/`"vps"`（保留文件可单独构建） |
 | **加自定义包** | `packages/<name>/default.nix` + 在 `packages/default.nix` 注册；临时包直接 `pkgs.callPackage` |
-| **更新容器镜像** | `./scripts/update_containers.sh`（skopeo 写回 digest）→ 对应主机 `just preview` → `just switch`/colmena |
+| **更新容器镜像** | `./scripts/update_containers.sh`（skopeo 写回 digest）→ 对应主机 eval/diff（§7.1）→ `just switch`（本机）或 `just col <tag>`（远程，§7.2） |
 | **升级 flake inputs** | 需要用户确认：`just up`(全部) / `just upp <input>`；先 `just preview` 看 diff |
 | **改密钥** | §5.6 流程：在 `nixos-secrets/` 改并 commit（push 与否取决于 §5.9 的锁定模式）→ `nix flake update mysecrets` → 构建 |
 | **改 niri/waybar/kitty…** | §5.2 表格定位；niri 改 `niri-conf.nix`（单机改 `hosts/<host>/home/niri.nix`） |
 | **加 HM 应用/配置** | 判断层级（core/tui/gui）→ 新建文件即生效 → 需要开关时 §4.5 |
 | **改自定义脚本** | `home/gui/scripts/bin/<name>`（或 host 级 `hosts/<host>/home/`），`mkScriptsPackage` 打包 |
 | **让新数据重启后还在** | §5.7 白名单登记（仅两台笔电） |
+| **部署到远程/线上主机** | §7.2：本地 build → 推闭包；`just col <tag>`；新文件先 `git add`；私密仓库先 commit + `upp` |
+| **开一个只给 AI 用的上传口/静态站** | `modules/nixos/server/rhcg-site/`（tar + token 发布，原子版本 + 回滚；caddy 站点块在私密仓库） |
 
 ---
 
-## 7. 验证矩阵
+## 7. 验证与部署
+
+### 7.1 命令速查（只读 → 构建 → 看变化）
 
 ```bash
 # —— 只读 / 便宜 ——
 nix eval .#nixosConfigurations --apply builtins.attrNames --json      # 列出主机（秒级，走 eval 缓存）
 nix eval --raw .#nixosConfigurations.<host>.config.networking.hostName # 单独 attr（首次 ~40s）
+nix flake metadata | grep -E 'mysecrets|nix-openclaw'                 # 看 input 是不是 file:// 本地 override（§5.9）
 nix fmt                                                               # 格式化（提交前）
 nix build .#nixosConfigurations.<host>.config.system.build.toplevel --dry-run --no-link  # 只 eval+instantiate
 
 # —— 本机构建（不切换）——
 just preview            # nixos-rebuild build + nvd diff /run/current-system（分钟级，最常用）
+                        # 注意：`just preview` 只针对当前 hostname（rog-ga502）；给别的主机看变化用下面的显式路径
+nix build "path:$PWD#nixosConfigurations.<host>.config.system.build.toplevel" --dry-run --no-link
+                        # 加 `path:$PWD` 前缀 = 按工作区评估（包含未 git add 的新文件），用于“文件刚写完先看看能不能 eval”
 nix build .#iso         # 安装镜像
 nix build .#microvm-umy # microvm runner
 nix build .#packages.x86_64-linux.<pkg>
@@ -469,11 +480,56 @@ just cdiff /run/current-system ./result # nix store diff-closures（路径要写
 
 # —— 需要用户确认 ——
 just switch             # 本机切换（目标 = 当前 hostname）
-just col <tag>          # 远程：colmena apply --on '@<tag>'（tag = all/vps/home/<hostname>）
+just col <tag>          # 远程：colmena apply --on '@<tag>'（tag = all/vps/vm-sh/home/<hostname>）
 colmena apply --on <host> --verbose
+# 构建永远在本地：colmena 默认「本机 build → 推闭包」，线上机不要 --build-on-target（§7.2）
 ```
 
-### 看变化时用哪个
+### 7.2 colmena 部署（远程 / 线上机）
+
+```bash
+just col <tag>                        # = colmena apply --on '@<tag>' --verbose --show-trace
+colmena apply --on <host> --verbose   # 单台
+```
+
+**默认流程就是对的**：在**本机** build，把闭包**推**到目标机，目标机只收 store path 并激活。
+四条铁律：
+
+1. **线上 VPS（`aliyun-*` / `llyun-*`）永远不要 `--build-on-target`。** 这些机器**没有外网**、CPU/内存/磁盘都小：
+   远程构建 = 在拿不到依赖的前提下自己编译，分分钟把机器顶死，而且根本装不成。同理，任何要在
+   目标机上新出现的 store path 都必须**从本地推过去**，别指望它自己 substitute。
+2. **新文件必须先 `git add`。** flake 走 git 树，**没入索引的新文件对 `nix eval` / colmena 等于不存在**
+   （表现：`does not provide attribute`，或者模块悄悄没装上）。新建模块/脚本后先 `git add <path>` 再 eval。
+3. **私密仓库改动先落地再部署。** caddyfile 之类不在公开仓库：不 commit + `just upp mysecrets` 就构建，
+   等于用旧配置起服务（或 caddy 直接起不来）。顺序永远是：私密仓库 → 本仓库 → 部署。
+4. **部署前跑一次 eval/dry-run**：`nix build --dry-run --no-link .#nixosConfigurations.<host>.config.system.build.toplevel`；
+   想看清"到底会变什么"用 `just cdiff`（§7.3）。
+
+部署后自检（别只看 colmena 退出码）：
+
+```bash
+ssh <host> 'systemctl is-active <新服务>; ls -l /nix/var/nix/profiles/system'
+ssh <host> 'systemctl list-units --state=failed --plain'
+```
+
+**激活失败怎么读**：
+
+- colmena 末尾 `Activation failed: ... exited with error code: 4` = `switch-to-configuration` 里有 unit 失败，
+  往上二十行会点名（`warning: the following units failed: ...` 或 systemd 的 `Failed with result`）。
+- **`activation failed` ≠ 什么都没变**：新 generation 往往已经切上去了（看 `/nix/var/nix/profiles/system`
+  指向），新 unit 也可能已经启动。别假设回滚了，按实际状态判断再决定动作。
+- 两类反复出现的具体故障：
+  - **挂载 unit 抢跑**：`data-juicefs.mount` 这种 `requires = easytier-ltnet.service` 的挂载，激活时 easytier
+    正在重启，juicefs 在 SDWAN 通之前连 redis → 20s 超时 → `failed`。**下一轮 activation 常会自愈**，
+    先确认它是不是已经自己起来了，再决定要不要动线上数据面（重启挂载会 SIGTERM juicefs，`writeback_cache` 下有风险）。
+  - **新服务写不进 `/data/...`**：`ProtectSystem=strict` + `ReadWritePaths=<dir>` 在目录**不存在**时会以
+    **root** 身份把它建出来，服务用户随后 `PermissionError`。修法：`ExecStartPre = ["+${pkgs.coreutils}/bin/install -d -o <user> -g <user> -m 0755 <dir>"]`
+    （`+` = 以 root 执行），**不要依赖 `systemd.tmpfiles` 的时序**。
+
+> colmena ≥ 0.5 只认 `colmenaHive` 输出（schema `v0.5`），version/schema 细节见 §8.16。
+> 远程执行命令的 shell 是 fish、`systemctl` 需要 `sudo`，这两个坑见 §8.17。
+
+### 7.3 看变化时用哪个
 
 | 工具 | 粒度 | 适用 |
 | --- | --- | --- |
@@ -487,6 +543,8 @@ colmena apply --on <host> --verbose
 > - 不要用 `nix path-info -S`（`--closure-size` 是闭包累计值）对多个路径累加求和——会把整个系统重复计 N 遍。
 > - 单个 store 路径的真实大小用 `nix path-info --json` 的 `narSize` 字段（`-s` 在新版本 nix 里语义已变）。
 
+### 7.4 验证纪律（没有 CI）
+
 - 没有 CI、没有 pre-commit hook、没有测试套件：**验证 = 你自己跑上面的命令**。
 - `warning: Git tree '...' is dirty` 是正常的。
 - `just test`（`nix eval .#evalTests`）**当前损坏**：`outputs/x86_64-linux/default.nix` 的 `evalTests` 被注释，而 `outputs/default.nix` 仍在读 `it.evalTests`。不要用它当验证。
@@ -495,10 +553,12 @@ colmena apply --on <host> --verbose
 
 ## 8. 陷阱与已知问题
 
+> 按主题分布：**提交安全** 1、15 · **模块与 eval** 3、7、8、13、18 · **私密仓库与本地 override** 10、11 · **主机与 flake 状态** 2、5、12、14 · **部署与 activation** 16、17、19、20 · **运行时行为** 4、6、9。
+
 1. **`git add -A` 危险**：`nixos-secrets/`（已 gitignore，安全）、`certs/`（已于本次加入 .gitignore）之外，仍可能有私钥/临时产物。提交前用 `git status` 逐项确认。
 2. **`outputs/x86_64-linux/hosts/<file>.nix` 文件名 ≠ hostname**（`laptop-mbgt14.nix` → `matebook-gt14`）；`name` 属性才是真名。
 3. **总装单参数不能删**（haumea 惰性 + `mylib.*` 依赖）。
-4. **`just test` 已损坏**（见 §7）。
+4. **`just test` 已损坏**（见 §7.4）。
 5. **弃用主机靠 tags**，不是删文件。
 6. **Justfile 是 fish**：新增 recipe 用 fish 语法（`$argv`、`$"..."`），不要写 `$@`/`${var}`。
 7. **`systemConfig` 只在 nixosSystem 路径注入**，`colmenaSystem` 没有；HM 模块里引用它会导致 colmena eval 失败。
@@ -508,8 +568,17 @@ colmena apply --on <host> --verbose
 11. **`flake.lock` 里的 `file:///home/ltrump/...`（mysecrets、nix-openclaw）是本地开发态 override**（§5.9），提交或复制到其他机器会直接坏掉。
 12. **`n100` 的 microvm host 当前关闭**；`iso`/弃用主机不在 colmena `@all`。
 13. **`pkgs-unstable`/`pkgs-stable` 与主 nixpkgs 版本不同**，混用时注意依赖版本冲突（尤其 CUDA/onnxruntime 有专门处理）。
-14. 本机 = `rog-ga502`：`just switch` 只影响它；给别的机器"构建"与"部署"是两回事（见 §7）。
+14. 本机 = `rog-ga502`：`just switch` 只影响它；给别的机器"构建"与"部署"是两回事（见 §7.1/§7.2）。
 15. **`.todos/`（td 数据）是机器本地状态**，已 gitignore。里面的 issue 不随仓库同步，别的机器 clone 下来是空的——别把"td 里应该有这条"当成交接依据，也别 `git add -f` 它（与 §8.11 的 `file:///` override 同类问题）。
+16. **colmena ≥ 0.5 默认走 direct flake eval，只认 `colmenaHive` 输出**（schema `v0.5`，必须由 `colmena.lib.makeHive` 生成），不再读原始 `colmena` 输出。`flake.nix` 的 `colmena` input 钉在 `v0.5.0` 以匹配 nixpkgs 里的 `pkgs.colmena`；nixpkgs 升到 colmena 0.6 后会报 schema 不匹配，那时要同步改 input 的 tag。应急回退：`colmena apply --legacy-flake-eval ...`（0.5.0 仍保留该隐藏 flag），但**只在工作树干净时可用**——dirty 树上 nix 拒写 assets flake 的 lock（`Use '--allow-dirty-locks'`），会报 `cannot update unlocked flake input 'hive' in pure mode`。
+17. **`ssh <host> '<cmd>'` 在目标机上走的是 fish**（登录 shell）：别写 bash-ism 和通配，`ls /x/*` 直接报 `No matches for wildcard`，`$()`、`&&` 也要按 fish 的规矩写。另：`systemctl restart/stop` 必须 `sudo`（无交互 polkit 会报 `Access denied ... requires interactive authentication`）。
+18. **静默失败：没入索引的新文件对 flake 不存在**。新建模块/脚本不 `git add` 就 eval/部署，表现为
+    `does not provide attribute` 或模块没装上（服务 502/404），别往模块逻辑里找原因。
+19. **不要对线上 VPS 用 `colmena apply --build-on-target`**：没外网 + 资源小，远程构建拉不到依赖、把机器顶死。
+    一律默认流程（本机 build → 推闭包），细节与替代方案见 §7.2。
+20. **`Activation failed` ≠ 没生效**：新 generation 往往已切换、新 unit 已启动。先看
+    `/nix/var/nix/profiles/system` 和 `systemctl list-units --state=failed` 再决定动作；挂载类 unit
+    （`requires=easytier-ltnet`）超时常常下一轮激活就自愈（§7.2）。
 
 ---
 
