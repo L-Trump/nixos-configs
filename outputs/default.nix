@@ -63,25 +63,11 @@ let
 
   # Helper function to generate a set of attributes for each system
   forAllSystems = func: (nixpkgs.lib.genAttrs allSystemNames func);
-in
-{
-  # Add attribute sets into outputs, for debugging
-  debugAttrs = {
-    inherit
-      myvars
-      nixosSystems
-      darwinSystems
-      allSystems
-      allSystemNames
-      ;
-  };
 
-  # NixOS Hosts
-  nixosConfigurations = lib.attrsets.mergeAttrsList (
-    map (it: it.nixosConfigurations or { }) nixosSystemValues
-  );
-
-  colmena = {
+  # The hive in its raw form: `meta` plus one attribute per node.
+  # Consumed both by the `colmena` output (legacy evaluation) and by
+  # `colmena.lib.makeHive` (see the `colmenaHive` output).
+  colmenaRaw = {
     meta =
       let
         system = "x86_64-linux";
@@ -103,6 +89,30 @@ in
       };
   }
   // lib.attrsets.mergeAttrsList (map (it: it.colmena or { }) nixosSystemValues);
+in
+{
+  # Add attribute sets into outputs, for debugging
+  debugAttrs = {
+    inherit
+      myvars
+      nixosSystems
+      darwinSystems
+      allSystems
+      allSystemNames
+      ;
+  };
+
+  # NixOS Hosts
+  nixosConfigurations = lib.attrsets.mergeAttrsList (
+    map (it: it.nixosConfigurations or { }) nixosSystemValues
+  );
+
+  # Raw hive, kept for debugging and for `--legacy-flake-eval`.
+  colmena = colmenaRaw;
+
+  # Prepared hive required by Colmena >= 0.5's default (direct flake evaluation):
+  # the CLI asserts `__schema == "v0.5"`, which only `colmena.lib.makeHive` sets.
+  colmenaHive = inputs.colmena.lib.makeHive colmenaRaw;
 
   # MicroVM infras configs
   microvm-infras = lib.attrsets.mergeAttrsList (map (it: it.microvm-infras or { }) nixosSystemValues);
