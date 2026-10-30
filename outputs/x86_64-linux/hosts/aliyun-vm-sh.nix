@@ -40,6 +40,7 @@ let
       sshwifty.enable = true;
       ncm-api.enable = true;
       rustical.enable = true;
+      rhcg-site.enable = true;
       sub2api.enable = false;
       juicefs = {
         enable = true;
