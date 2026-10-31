@@ -224,6 +224,9 @@ in
         ".config/SiYuan-Electron"
         ".config/siyuan"
         "SiYuan"
+
+        # LCEDA
+        ".config/LCEDA-Pro"
       ];
       files = [
         ".cache/rofi3.druncache"
