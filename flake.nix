@@ -123,11 +123,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };
-    # Pi agent
-    pi = {
-      url = "github:lukasl-dev/pi.nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     # OpenViking context database
     openviking = {
       url = "github:Daaboulex/openviking-nix";

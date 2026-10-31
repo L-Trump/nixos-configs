@@ -51,7 +51,7 @@ in
     open = true;
     # Optionally, you may need to select the appropriate driver version for your specific GPU.
     # https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/os-specific/linux/nvidia-x11/default.nix
-    package = pkgs.nvidia-patch.patch-nvenc (pkgs.nvidia-patch.patch-fbc nvidia-package);
+    package = pkgs.nvidia-patch.auto-patch nvidia-package;
     # package = nvidia-package;
 
     nvidiaSettings = true;

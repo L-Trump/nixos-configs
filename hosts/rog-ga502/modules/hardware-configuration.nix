@@ -48,7 +48,26 @@
     canTouchEfiVariables = true;
     efiSysMountPoint = "/boot/efi";
   };
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  # LTS 内核（当前 6.18.x）而不是 linuxPackages_latest。
+  #
+  # TODO: 等 amdgpu 修好 7.3 的 HDMI 色彩回归后切回 `pkgs.linuxPackages_latest`。
+  #
+  # 2026-10-30 升到 7.3.0 后发现：接在 iGPU（card2/amdgpu）上的 HDMI-A-1
+  # (Dell S2721NX) 整体偏绿，而 NVIDIA 驱动的 DP-1 与 amdgpu 的 eDP-1 正常。
+  # 现场证据：
+  #   - dmesg: amdgpu ... Failed to setup vendor infoframe on connector HDMI-A-1: -22
+  #   - drm 属性：Colorspace=Default, color format=AUTO, Broadcast RGB=Automatic
+  #     (modetest 读)，运行中无法修改（niri 持有 DRM master，Permission denied）
+  #   - 7.2.9 上同一块屏正常 → 判定为 7.3 的 drm/amd/display 回归
+  # 上游同族问题：regzbot drm/amd #5720（YCbCr/ RGB 选择）、#5760；
+  # CachyOS 上也有 7.3 的 HDMI 色彩范围回归报告。
+  # 2026-10-30 实测：换到 6.18.59 后主观上“比之前好一点”（未彻底消失），
+  # 属于缓解而非根治，所以继续钉 LTS，等 amdgpu 修好再回 latest。
+  # 注意：dmesg 里那条 `Failed to setup vendor infoframe ... -22` 与此无关，
+  # 是 1080p 模式不需要 HDMI VSIF 的正常返回值（drm_warn_once，可忽略）。
+  # 恢复步骤：改回 linuxPackages_latest → 重启 → 看 HDMI 是否还绿；
+  # 仍绿则不是内核问题（再查显示器 OSD / 线材 / niri 侧）。
+  boot.kernelPackages = pkgs.linuxPackages;
   # boot.kernelPackages = pkgs.linuxPackages_testing;
   boot.kernelParams = [
     "nohibernate" # hibernate in impermanent system cause btrfs interruption!!!

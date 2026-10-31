@@ -11,9 +11,7 @@ let
   cfg = config.myhome.tuiExtra.pi;
 in
 {
-  # 引入 pi.nix 的 Home Manager 模块，提供 programs.pi.coding-agent 选项。
   imports = [
-    inputs.pi.homeModules.coding-agent
     ./pi-web.nix
     ./computer-use.nix
   ];
@@ -21,6 +19,7 @@ in
   # 仅在用户配置启用 Pi agent 时渲染下方配置。
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
+      pi-coding-agent
       grok-bot-cli
       yt-dlp
       pandoc
@@ -42,7 +41,6 @@ in
         ]
       ))
     ];
-    programs.pi.coding-agent.enable = true;
 
     # pi-markdown-preview 的 Chromium 探测在 Linux 上只查
     # /usr/bin/{google-chrome,google-chrome-stable,chromium,chromium-browser}
