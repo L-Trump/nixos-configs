@@ -1,27 +1,56 @@
 #!/usr/bin/env nix-shell
-#!nix-shell -i bash -p bash curl coreutils jq common-updater-scripts
-BASEDIR="$(dirname "$0")/.."
+# shellcheck shell=bash
+#!nix-shell -i bash -p bash curl coreutils gnused jq
 
-echo "$BASEDIR"
+set -euo pipefail
 
-latestVersion=$(curl "https://api.github.com/repos/dbeaver/dbeaver/tags" | jq -r '.[0].name')
-currentVersion=$(nix-instantiate --eval -E "with import ${BASEDIR} {}; dbeaver-ultimate.version" | tr -d '"')
+nixFile="$(cd "$(dirname "$0")" && pwd)/default.nix"
+baseUrl="https://downloads.dbeaver.net/ultimate"
+
+currentVersion=$(sed --regexp-extended -n 's/^  version = "([^"]+)";/\1/p' "$nixFile" | head -1)
+if [ -z "$currentVersion" ]; then
+    echo "error: could not parse the current version from $nixFile" >&2
+    exit 1
+fi
+
+mapfile -t candidates < <(
+    curl -fsSL "https://api.github.com/repos/dbeaver/dbeaver/tags?per_page=60" | jq -r '.[].name'
+)
+
+latestVersion=""
+for version in "${candidates[@]}"; do
+    code=$(curl -s -o /dev/null -w '%{http_code}' "$baseUrl/$version/")
+    if [ "$code" = "403" ]; then
+        latestVersion="$version"
+        break
+    fi
+done
+if [ -z "$latestVersion" ]; then
+    echo "error: no existing Ultimate release directory found among the CE tags" >&2
+    exit 1
+fi
 
 echo "latest  version: $latestVersion"
 echo "current version: $currentVersion"
 
-if [[ "$latestVersion" == "$currentVersion" ]]; then
+if [ "$latestVersion" = "$currentVersion" ]; then
     echo "package is up-to-date"
     exit 0
 fi
 
-for i in \
-    "x86_64-linux linux.gtk.x86_64-nojdk.tar.gz" \
-    "aarch64-linux linux.gtk.aarch64-nojdk.tar.gz"
-do
-    set -- $i
-    prefetch=$(nix-prefetch-url "https://dbeaver.com/downloads-ultimate/$latestVersion/dbeaver-ue-$latestVersion-$2")
-    hash=$(nix-hash --type sha256 --to-sri $prefetch)
-
-    (cd "${BASEDIR}" && update-source-version dbeaver-ultimate $latestVersion $hash --system=$1 --ignore-same-version)
+for arch in x86_64 aarch64; do
+    url="$baseUrl/$latestVersion/dbeaver-ue-$latestVersion-linux-$arch.tar.gz"
+    hash=$(nix store prefetch-file --json --hash-type sha256 "$url" | jq -r '.hash')
+    if [ -z "$hash" ] || [ "$hash" = "null" ]; then
+        echo "error: could not prefetch $url" >&2
+        exit 1
+    fi
+    echo "$arch-linux  $hash"
+    sed --regexp-extended -i \
+        "s|(^        ${arch}-linux = )\"sha256-[^\"]+\";|\1\"$hash\";|" "$nixFile"
 done
+
+sed --regexp-extended -i "s/^  version = \"[^\"]+\";/  version = \"$latestVersion\";/" "$nixFile"
+
+echo "updated $(basename "$nixFile") to $latestVersion"
+echo "note: dbeaver-agent (gitee ltrump/dbeaver-agent) 是独立版本号，需要手动确认是否有配套 tag"

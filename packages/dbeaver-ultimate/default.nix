@@ -30,7 +30,7 @@ let
       hash = "sha256-QXbQCv4QnFVdZMhVNoPvnnN1iXTsD+tJaViOhqCC5tk=";
     };
 
-    mvnHash = "sha256-YBuok6hhPE+KMeH24Ue/RWGlSEaZOWrjz1TFrBGnUtQ=";
+    mvnHash = "sha256-I+ocLTpze4dxOQGObWZVF903NfIZuDqnrh5yA8RiSYg=";
 
     installPhase = ''
       runHook preInstall
@@ -44,7 +44,7 @@ let
 in
 stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "dbeaver-ultimate";
-  version = "26.1.0";
+  version = "26.2.0";
 
   src =
     let
@@ -55,8 +55,8 @@ stdenvNoCC.mkDerivation (finalAttrs: {
         aarch64-linux = "linux-aarch64.tar.gz";
       };
       hash = selectSystem {
-        x86_64-linux = "sha256-UmwOd1lnILRz+GISFoHXjkG+BiPtDsEb4at/T6ap/eM=";
-        aarch64-linux = "sha256-hKWyg4OMW/hRRZzSLWuJ34Jhkir+H9O1SN5klkKuXDs=";
+        x86_64-linux = "sha256-HG/Te1ccS43JFw1dqkwYFFqAij0mwwIYA9aSBbtoIRU=";
+        aarch64-linux = "sha256-4w52Vzq6mcdVY9hF0wM+mS4TwLx9RsY5DWgCx+T/0bU=";
       };
     in
     fetchurl {

@@ -10,13 +10,13 @@
 # td 的 go.mod 从 v0.63.0 起要求 go 1.27，而 nixpkgs 默认 go 仍是 1.26。
 buildGo127Module rec {
   pname = "td";
-  version = "0.65.0";
+  version = "0.69.0";
 
   src = fetchFromGitHub {
     owner = "marcus";
     repo = "td";
     tag = "v${version}";
-    hash = "sha256-Qausm1RXJAqS1+KHAzP8o+vBxdttUwfEjMAdunmCKvo=";
+    hash = "sha256-utzjZKwzOUNDpgH5pu+GG+lAJr2ttHLAp1u46OPMisY=";
   };
 
   vendorHash = "sha256-/IWBYL+WfLz7vDdUs//0KY8rb9mOv4S1jBXCZbYxJRo=";

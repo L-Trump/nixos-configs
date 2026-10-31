@@ -20,7 +20,7 @@
 #   - Electron < 44 还要给 ANGLE（libEGL/libGLESv2）单独设 rpath。
 #
 # 升级版本（厂商会不断发新版 zip，旧版文件保留、可继续下载）：
-#   1. 试探下一个版本还在不在（403 = 不存在；实测 4.1.80 是当前最新，4.1.81 起 403）：
+#   1. 试探下一个版本还在不在（403 = 不存在；2026-10-31 实测 4.1.93 是当前最新，4.1.94 起 403）：
 #      curl -sL -r0-3 -o /dev/null -w '%{http_code}\n' \
 #        https://image.lceda.cn/files/lceda-pro-linux-x64-<ver>.zip
 #   2. 取 hash：
@@ -85,7 +85,7 @@
 }:
 
 let
-  version = "4.1.80";
+  version = "4.1.93";
 
   # 与 nixpkgs electron_*-bin 的 electronLibPath 保持一致
   electronLibPath = lib.makeLibraryPath [
@@ -144,7 +144,7 @@ stdenv.mkDerivation (finalAttrs: {
 
   src = fetchurl {
     url = "https://image.lceda.cn/files/lceda-pro-linux-x64-${finalAttrs.version}.zip";
-    hash = "sha256-m8X8MRTQZKnsGvVcdu5x1s8Zn8m2R7kto5nmPfMUJP4=";
+    hash = "sha256-GDWpjMWJRSKdMT6HnXhfoDjcLRCoXqShmYkk5tz1+Pk=";
   };
 
   nativeBuildInputs = [

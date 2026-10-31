@@ -19,7 +19,7 @@
 # that exact message.
 buildNpmPackage rec {
   pname = "pi-web";
-  version = "0.12.2";
+  version = "0.13.0";
 
   # Build from the git tag rather than the npm tarball: only the git tree ships
   # `package-lock.json`, which `npmDepsHash` needs to pin the dependency
@@ -28,7 +28,7 @@ buildNpmPackage rec {
     owner = "agegr";
     repo = "pi-web";
     rev = "v${version}";
-    hash = "sha256-3SLxCRZVFYie1Ux73KlGCACFpJt2xaKTXc8eAdxPFy4=";
+    hash = "sha256-XJm2SKqG6T6mGmKDw3eKkPP+iywXA8ehBu5Y1W/dFNw=";
   };
 
   # The published npm release ships a prebuilt Next.js server bundle (735 files,
@@ -38,10 +38,10 @@ buildNpmPackage rec {
   # so the bundle is mandatory.
   dist = fetchurl {
     url = "registry.npmjs.org/@agegr/pi-web/-/pi-web-${version}.tgz";
-    hash = "sha256-Fq/g7h/2O5VCmtc4AtE+U6L4MXJGQT7Ri5L3s2/YbGo=";
+    hash = "sha256-3ucPpk7VL7MgUd/EurrCh678ikr1TD0ZAMUeY03t6T0=";
   };
 
-  npmDepsHash = "sha256-7FOzIFfa+uZH5Sa9+o9tPi5AN5vv4nQDJfUfj8lOuRQ=";
+  npmDepsHash = "sha256-C8UW58gchTRoKMn1cEC2w3hLz/iriHzRuPflDNscDZI=";
   npmDepsFetcherVersion = 2;
 
   npmDeps = fetchNpmDeps {
