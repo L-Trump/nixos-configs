@@ -1,28 +1,28 @@
 _: {
   nezha-server = {
     image = "registry.cn-shanghai.aliyuncs.com/naibahq/nezha-dashboard";
-    digest = "sha256:8a2cfff23fa807df5e23c5557fde571fe0f57256cd176781d69e2011e2ab270c";
+    digest = "sha256:c3de06b940fc2da673e7d29be3c742270440cb881675df84b35e474ab9799bf1";
   };
   immich-machine-learning = {
     image = "m.daocloud.io/ghcr.io/immich-app/immich-machine-learning";
     latestTag = "release";
-    digest = "sha256:60dfcf266a9ef3b7376f5678e8c980d4fb61db5fc48c078fe8a326ab1535d60d";
+    digest = "sha256:5b28c9352c8374b8a1ed96fbdd8d6755fea6e43510ec43fdf6538aa02ea40f56";
   };
   siyuan-server = {
     image = "m.daocloud.io/docker.io/b3log/siyuan";
-    digest = "sha256:6ab17ed3ca40f646eab674f3fdcc459ff186614c02434b9b07709bd4cc98716d";
+    digest = "sha256:4f9c119048b9dc685603b04aebf9e9d513695014c9fbd834e0dadd1c22801235";
   };
   cloudreve = {
     image = "m.daocloud.io/docker.io/cloudreve/cloudreve";
-    digest = "sha256:d8e2ab58e163f760b0890f589d294c994f45e3eeac6563ee644a90647d6f9554";
+    digest = "sha256:5c6c5baf7fa5bc6e1bb9a7509c09dde00e80b618d180244eb1d5f7e36b358ea2";
   };
   cloudreve-redis = {
     image = "m.daocloud.io/docker.io/library/redis";
-    digest = "sha256:298e5b3bc566bade82f46ad5511777a4a07a294097ce16ada2f6a42be5239df5";
+    digest = "sha256:4764ce37931aac77c0d033680b339b19b4a4a81772204d268947cb851212d0ac";
   };
   cloudreve-postgresql = {
     image = "m.daocloud.io/docker.io/library/postgres";
-    digest = "sha256:4ef4dbc939d61acea57712655ddb4b4ab27419c913f94cca0cd57cb3ea3c2280";
+    digest = "sha256:979bccfde35445db618c65107d27d08c6c21339d8dc3ad4c830c6633947be0e4";
   };
   rustdesk-api = {
     image = "gh.qninq.cn/lejianwen/rustdesk-api";
@@ -30,24 +30,24 @@ _: {
   };
   xpipe-webtop = {
     image = "gh.qninq.cn/ghcr.io/xpipe-io/xpipe-webtop";
-    digest = "sha256:76a27e7251944b84143d77c715ea9ae75b1ea74cc64d854119854581b5437e92";
+    digest = "sha256:ad385a08044040335f971eb57d84465ead22fe9fd1120883e2f1fed6b8d1f1dc";
   };
   ncm-api = {
     image = "gh.qninq.cn/moefurina/ncm-api";
-    digest = "sha256:7d0aa12f2b2e754d95fc8a5e649c9024a35da539035fd76b36ea4a6eaf6ad06f";
+    digest = "sha256:2fcf4dc49313109a91f6cec99c6b36ebd17e8f1fdc89686121dfd14525937896";
   };
   sub2api = {
     image = "gh.qninq.cn/ghcr.io/wei-shaw/sub2api";
-    digest = "sha256:73797a8b44894c7b65c0bfcefe6002c7f3cfba6223f01e9d909c1d31365fcdf8";
+    digest = "sha256:969e5c0fddc13f52be2772ea86e8e03ee2261f80ff08495916ffff68292c8380";
   };
   sub2api-postgres = {
     image = "m.daocloud.io/docker.io/library/postgres";
     latestTag = "18-alpine";
-    digest = "sha256:d3e1620b530c944afa6e887d22eb899824da68e19c52024bf98f5220c88a65b2";
+    digest = "sha256:10a5c69a83035ab5239f5620d708520e8b28f5aa1f2b20143e6024532edadfb5";
   };
   sub2api-redis = {
     image = "m.daocloud.io/docker.io/library/redis";
     latestTag = "8-alpine";
-    digest = "sha256:becdda6c7f4b3fb42e42fd7f120bbf5c54c4caaaf16f26da24e4563d2c1f0576";
+    digest = "sha256:21090af93f8324db2f0f0f4f38a7c60369d47d917e000c3423d89d2ae2883537";
   };
 }
