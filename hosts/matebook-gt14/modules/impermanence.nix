@@ -177,6 +177,7 @@ in
         ".mcporter"
         ".lark-cli"
         ".claude"
+        ".config/Claude"
         ".virtuoso-bridge"
         ".agents"
         ".codex"
