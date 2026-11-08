@@ -11,7 +11,6 @@
     realvnc-vnc-viewer
     zotero
     wemeet
-    matlab
     # winetricks
     # wineWowPackages.waylandFull
     # lutris
