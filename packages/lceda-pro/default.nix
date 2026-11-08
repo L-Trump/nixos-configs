@@ -38,6 +38,13 @@
 #     升级 = 改版本号重新 build。
 #   - zip 里有一个中文名 EULA PDF，其 local/central 文件名编码不一致，std 自带的
 #     unpackPhase 会直接放弃，故 dontUnpack + 在 installPhase 里自己 unzip。
+#
+# 两个入口（v4.1.70+ 的同一个二进制既是 GUI 也是 CLI，见 libexec/lceda-pro/docs/cli-for-ai.md）：
+#   bin/lceda-pro       GUI：注入 --no-sandbox/ozone/wayland-ime 等 Electron 参数
+#   bin/lceda-pro-cli   CLI：不注入任何参数，否则子命令被挤到参数后面，
+#                       `lceda-pro doctor` 会变成 UNKNOWN_COMMAND: Unknown command: --no-sandbox
+# 另：resources/app 里的 node_sqlite3.node 是厂商原样打包的、没有 rpath，dlopen 时找不到
+# libstdc++（主进程抛异常并弹阻塞式错误框，CLI 会直接卡住），故在 postFixup 里给 .node 补 rpath。
 {
   lib,
   stdenv,
@@ -192,6 +199,15 @@ stdenv.mkDerivation (finalAttrs: {
       "''${gappsWrapperArgs[@]}" \
       --add-flags "--no-sandbox --gtk-version=3 --ozone-platform-hint=auto --enable-wayland-ime" \
       --prefix PATH : "${lib.makeBinPath [ xdg-utils ]}"
+
+    # CLI 入口：同一个可执行文件，但 makeWrapper 的 --add-flags 会插在用户参数**前面**，
+    # 而 CLI 的 argv 解析把第一个未知的 --flag 当成子命令名（`doctor` 永远走不到），
+    # 故 CLI 单独包一个不注入 Electron 参数的 wrapper。CLI 走 local bridge 连已开的编辑器，
+    # 不需要 --no-sandbox / ozone / wayland-ime；gapps 的 GTK 环境变量留着，
+    # 因为 `open --headless` 这类命令仍会拉起渲染进程。
+    makeWrapper "$out/libexec/lceda-pro/lceda-pro" $out/bin/lceda-pro-cli \
+      "''${gappsWrapperArgs[@]}" \
+      --prefix PATH : "${lib.makeBinPath [ xdg-utils ]}"
   '';
 
   postFixup = ''
@@ -215,6 +231,14 @@ stdenv.mkDerivation (finalAttrs: {
         ]
       }" \
       $out/libexec/lceda-pro/lib*GL*
+
+    # 厂商打包的 node 原生模块（如 sqlite3 的 node_sqlite3.node）没有 rpath，且 NEEDED 里有
+    # libstdc++.so.6：主进程 dlopen 时解析不到就抛异常 + 弹阻塞式错误框（CLI 卡死、GUI 靠
+    # 后续 GTK 才把 libstdc++ 带进进程，属时序侥幸）。这里给每个 .node 补上 rpath，
+    # 等价于手工绕过时用的 LD_LIBRARY_PATH=<gcc-lib>/lib，但不用污染运行环境。
+    while IFS= read -r -d ''' node_module; do
+      patchelf --set-rpath "${lib.makeLibraryPath [ stdenv.cc.cc ]}" "$node_module"
+    done < <(find $out/libexec/lceda-pro/resources/app -name '*.node' -print0)
   '';
 
   desktopItems = [
