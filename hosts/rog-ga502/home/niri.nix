@@ -8,30 +8,21 @@
 {
   myhome.desktop.niri.settings = {
     output = [
+      # LG 27" 2K 144Hz, landscape — leftmost (HDMI on the iGPU: 144Hz + VRR,
+      # the dGPU DP port only negotiates 120Hz without VRR)
       {
-        _args = [ "eDP-1" ];
-        scale = 1.333333;
-      }
-      {
-        _args = [ "Lenovo Group Limited LEN Y27q-20 0x01010101" ];
-        scale = 1.6;
+        _args = [ "LG Electronics LG ULTRAGEAR 610BOSF14310" ];
+        scale = 1.25;
+        # bare flag node — niri rejects `variable-refresh-rate true`
+        variable-refresh-rate = { };
         position = {
           _props = {
-            x = 1440;
+            x = 0;
             y = 0;
           };
         };
       }
-      {
-        _args = [ "Dell Inc. DELL S2721NX 5Z116H3" ];
-        focus-at-startup = { };
-        position = {
-          _props = {
-            x = 1440;
-            y = 0;
-          };
-        };
-      }
+      # Dell 27" 1080p, rotated to portrait — middle
       {
         _args = [ "Dell Inc. DELL SE2722H JT50WP3" ];
         transform = "270";
@@ -42,36 +33,18 @@
         };
         position = {
           _props = {
-            x = 3360;
+            x = 2048;
             y = 0;
           };
         };
       }
+      # laptop panel — rightmost
       {
-        _args = [ "Dell Inc. DELL SE2722H CVW0WP3" ];
+        _args = [ "eDP-1" ];
+        scale = 1.333333;
         position = {
           _props = {
-            x = 1440;
-            y = 0;
-          };
-        };
-      }
-      {
-        _args = [ "Dell Inc. DELL D2721H C1SSW53" ];
-        mode = "1920x1080@60";
-        position = {
-          _props = {
-            x = 3360;
-            y = 0;
-          };
-        };
-      }
-      {
-        _args = [ "Dell Inc. DELL SE2722H H6RZVP3" ];
-        mode = "1920x1080@60";
-        position = {
-          _props = {
-            x = 3360;
+            x = 3128;
             y = 0;
           };
         };
