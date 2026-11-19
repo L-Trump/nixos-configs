@@ -39,6 +39,7 @@ let
       authentik.enable = false;
       sshwifty.enable = true;
       ncm-api.enable = true;
+      lab-cms.enable = true;
       rustical.enable = true;
       rhcg-site.enable = true;
       sub2api.enable = false;

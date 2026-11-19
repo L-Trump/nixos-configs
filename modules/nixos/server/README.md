@@ -35,5 +35,6 @@ The modules in this directory are used in my cloud servers
 | sub2api            | localhost:6835          | LLM api gateway          |
 | novnc-websockify   | localhost:6884          | noVNC token relay        |
 | rhcg-site-publish  | localhost:18778         | lab static site uploader |
+| lab-cms            | localhost:18779         | lab cms site             |
 
 **Note:** et-ip means the virtual ipv4 address in easytier, indicating the service can only be accessed in the internal network.

@@ -9,3 +9,7 @@ certs/
 
 # td
 .todos/
+
+# python
+__pycache__/
+*.py[co]

@@ -45,6 +45,7 @@
       rustical.enable = false;
       code-server.enable = false;
       novnc-websockify.enable = false;
+      lab-cms.enable = false;
       rhcg-site.enable = false;
       immich.machine-learning.enable = false;
       juicefs.enable = false;

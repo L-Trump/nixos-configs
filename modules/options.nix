@@ -77,14 +77,8 @@ in
         enable = mkEnableOption "Enable websockify token-based WebSocket relay (for noVNC)";
         enableWeb = mkEnableOption "Serve the bundled noVNC web frontend at the websocket endpoint";
       };
-      rhcg-site = {
-        enable = mkEnableOption "Enable the static site publisher (tar/token upload endpoint)";
-        port = mkOption {
-          type = types.port;
-          default = 18778;
-          description = "Loopback port of the publish endpoint that caddy proxies";
-        };
-      };
+      lab-cms.enable = mkEnableOption "Enable the lab website CMS";
+      rhcg-site.enable = mkEnableOption "Enable the static site publisher";
       cloudreve = {
         master.enable = mkEnableOption "Enable cloudreve master";
       };

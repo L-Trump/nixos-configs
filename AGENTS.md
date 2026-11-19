@@ -309,7 +309,7 @@ in
 
 - **端口/服务对照**：`modules/nixos/server/README.md`（改端口要同步更新）。
 - **容器服务**（`containers/`）：nezha-server、immich-machine-learning、siyuan-server、cloudreve、rustdesk-api、xpipe-webtop、ncm-api、sub2api；镜像 `image@digest` 来自 `vars/containers.nix`；网络 `oci_net`；数据 `/data/docker/<name>`。
-- **原生服务**（`server/`）：caddy(反向代理，密文 Caddyfile 或私密仓库明文二选一)、cf-tunnel、easytier+tailscale(sdwan)、juicefs(+redis meta +S3/webdav 网关)、minio、vaultwarden、rustdesk-server、rustical(caldav)、homepage-dashboard、openlist、syncthing、backrest/duplicati/kopia(备份)、code-server、sshwifty、authentik、hubproxy、novnc-websockify、openclaw(gateway)、openviking-server、rhcg-site（实验室官网静态托管 + tar/token 上传口，caddy 站点块在私密仓库 caddyfile，见 `modules/nixos/server/rhcg-site/README.md`）。
+- **原生服务**（`server/`）：caddy(反向代理，密文 Caddyfile 或私密仓库明文二选一)、cf-tunnel、easytier+tailscale(sdwan)、juicefs(+redis meta +S3/webdav 网关)、minio、vaultwarden、rustdesk-server、rustical(caldav)、homepage-dashboard、openlist、syncthing、backrest/duplicati/kopia(备份)、code-server、sshwifty、authentik、hubproxy、novnc-websockify、openclaw(gateway)、openviking-server、rhcg-site（实验室官网静态托管 + tar/token 上传口，**实现与 caddy 站点块都在私密仓库** `nixos-secrets/rhcg-site/`，公开仓库只有 `modules/nixos/server/rhcg-site.nix` 一句 import）。
 - **microvm**：`server/microvm.nix` 按 `rawcfg.microvm.{host,guest}.enable` 决定 import microvm 模块；宿主机 `virtualization.microvm.host.infras = [ "<guest>" ]` 消费 `microvm-infras.<guest>`；guest 的 `guest.isInfra` 控制走 infra 版（关闭 nixpkgs.config/auto-optimise-store）。**注意 `n100` 当前 host.enable = false，功能保留但未启用。**
 - **openviking-server**：`modules/nixos/server/openviking-server/default.nix`，监听 `127.0.0.1:1933`，数据目录 `~/.openviking`，配置来自 `age.secrets.openviking-server-config`。
 
@@ -449,7 +449,7 @@ cd .. && just upp mysecrets                                    # 让本仓库锁
 | **改自定义脚本** | `home/gui/scripts/bin/<name>`（或 host 级 `hosts/<host>/home/`），`mkScriptsPackage` 打包 |
 | **让新数据重启后还在** | §5.7 白名单登记（仅两台笔电） |
 | **部署到远程/线上主机** | §7.2：本地 build → 推闭包；`just col <tag>`；新文件先 `git add`；私密仓库先 commit + `upp` |
-| **开一个只给 AI 用的上传口/静态站** | `modules/nixos/server/rhcg-site/`（tar + token 发布，原子版本 + 回滚；caddy 站点块在私密仓库） |
+| **开一个只给 AI 用的上传口/静态站** | 实现全部在私密仓库 `nixos-secrets/rhcg-site/`（tar + token 发布，原子版本 + 回滚；caddy 站点块在 `nixos-secrets/caddy/`），公开仓库只有 `modules/nixos/server/rhcg-site.nix` import |
 
 ---
 
