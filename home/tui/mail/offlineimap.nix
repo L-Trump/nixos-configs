@@ -18,6 +18,7 @@
 
     extraConfig.general = {
       ui = "basic";
+      socktimeout = 90;
     };
   };
 }

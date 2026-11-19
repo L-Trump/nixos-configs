@@ -77,7 +77,6 @@ let
     aerc = {
       enable = true;
       extraAccounts = {
-        "check-mail" = "5m";
         "check-mail-cmd" = "my-mail-sync ${name} quiet";
         "multi-file-strategy" = "act-dir";
       };
@@ -97,7 +96,11 @@ let
         ssl_version = "tls1_2";
         maxconnections = 5;
         createfolders = false;
-        retrycount = 5;
+        retrycount = 3;
+      }
+      // lib.optionalAttrs (lib.hasInfix "gmail.com" data.imap.host) {
+        # exclude all mails dir in gmail accounts
+        folderfilter = "lambda f: f != '[Gmail]/所有邮件'";
       };
       postSyncHookCommand = ''
         notmuch new
@@ -109,7 +112,11 @@ let
     # port 993 with TLS and no STARTTLS.
     imapnotify = {
       enable = true;
-      onNotify = "my-mail-sync ${name} quiet";
+      # goimapnotify runs onNewMail as a Go text/template fed with the IDLE
+      # event, so the reason can be told apart (EventType: 1 = NEWMAIL,
+      # 2 = DELETEDMAIL, 3 = FLAGCHANGED, 4 = SYNC).
+      #
+      onNotify = ''{{ if eq (printf "%d" .Reason) "4" }}true{{ else }}my-mail-sync ${name} quiet{{ end }}'';
       onNotifyPost = "offlineimap-notify ${name}";
       boxes = [ "INBOX" ];
       # goimapnotify 2.5.7: wait is not a configuration-file field; it is only

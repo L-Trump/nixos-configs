@@ -17,6 +17,7 @@ in
     ./offlineimap.nix
     ./imapnotify.nix
     ./notmuch.nix
+    ./sync-timer.nix
   ];
 
   config = lib.mkIf cfg.enable {

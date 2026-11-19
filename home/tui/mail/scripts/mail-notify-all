@@ -1,0 +1,21 @@
+#!/bin/sh
+# Send the per-account "new mail" desktop notification after a scheduled
+# (timer driven) sync.
+#
+# Why this exists: with goimapnotify's reconnect event disabled (onNotify only
+# syncs on real NEWMAIL), mail that arrives during an IDLE disconnect is picked
+# up by the periodic sync instead -- and that path has no onNotifyPost hook.
+# offlineimap-notify de-duplicates against /tmp/offlineimap_<account>_messages,
+# so running it for every account is safe and idempotent.
+set -u
+
+notify() {
+    if command -v offlineimap-notify >/dev/null 2>&1; then
+        offlineimap-notify "$1" >/dev/null 2>&1 || true
+    fi
+}
+
+for dir in "$HOME"/Mail/*/; do
+    [ -d "$dir" ] || continue
+    notify "$(basename "$dir")"
+done
