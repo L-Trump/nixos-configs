@@ -15,6 +15,10 @@
       # make it use text-input-v1, which works for kwin 5.27 and weston
       "--enable-wayland-ime"
 
+      # allow extensions work on chrome:// page
+      "--extensions-on-chrome-urls"
+      "--disable-features=DisableExtensionsOnChromeUrlsSwitch"
+
       # enable hardware acceleration - vulkan api
       # "--enable-features=Vulkan"
     ];
