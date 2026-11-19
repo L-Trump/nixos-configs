@@ -106,11 +106,12 @@ in
         ".cache/zellij"
         ".cache/restic"
         ".cache/tlrc"
-        ".cache/vinput" # Voice Input ASR Cache
+        ".cache/vinput" # Voice Input ASR cache
         ".vnc"
 
         # Configs
         ".config/autostart"
+        ".config/secretary"
         ".config/clash-verge"
         ".config/DingTalk"
         ".config/Kingsoft"
@@ -134,6 +135,9 @@ in
         ".config/rclone"
         ".config/LarkShell"
         ".config/discord"
+
+        # systemd user configs
+        ".config/systemd/user"
 
         # Logseq / Zotero
         ".config/Logseq"
