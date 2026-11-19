@@ -11,6 +11,11 @@
   # Networks
   systemd.services."docker-network-oci_net" = {
     path = [ pkgs.docker ];
+    wants = [ "docker.service" ];
+    after = [
+      "docker.service"
+      "docker.socket"
+    ];
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = true;
