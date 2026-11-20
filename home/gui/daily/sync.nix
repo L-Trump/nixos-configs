@@ -12,7 +12,6 @@
     localsend
     rbw
     rofi-rbw-wayland
-    rustdesk-flutter
   ];
 
   services.syncthing.enable = true;

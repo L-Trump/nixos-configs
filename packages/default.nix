@@ -7,6 +7,9 @@
 }:
 let
   inherit (pkgs) lib libsForQt5 fetchFromGitHub;
+
+  # DRM/KMS backend for rustdesk
+  libdrmtap = pkgs.callPackage ./libdrmtap { };
 in
 {
   wpsoffice-365 = libsForQt5.callPackage ./wpsoffice-365 { };
@@ -19,6 +22,11 @@ in
   lceda-pro = pkgs.callPackage ./lceda-pro { };
 
   rustdesk-server-pro = pkgs.callPackage ./rustdesk-server-pro { };
+
+  # 官方 unattended-wayland deb 重打包（不编译），drm+drm-wake 抓屏
+  rustdesk-unattended-wayland = pkgs.callPackage ./rustdesk-unattended-wayland { };
+
+  inherit libdrmtap;
 
   hubproxy = pkgs.callPackage ./hubproxy { };
 

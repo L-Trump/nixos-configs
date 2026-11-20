@@ -17,6 +17,7 @@ lib.recursiveUpdate bare {
       game.enable = false;
       keyremap.enable = true;
       remote-desktop.sunshine.enable = true;
+      remote-desktop.rustdesk.enable = true;
     };
     server = {
       easytier.enable = true;

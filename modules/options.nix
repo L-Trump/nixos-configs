@@ -46,6 +46,7 @@ in
       keyremap.enable = mkEnableOption "Remap capslock and escape";
       remote-desktop = {
         sunshine.enable = mkEnableOption "Enable sunshine remote desktop";
+        rustdesk.enable = mkEnableOption "RustDesk remote desktop (unattended Wayland build, DRM/KMS capture)";
       };
     };
 

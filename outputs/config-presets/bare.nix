@@ -20,6 +20,7 @@
       game.enable = false;
       keyremap.enable = false;
       remote-desktop.sunshine.enable = false;
+      remote-desktop.rustdesk.enable = false;
     };
     server = {
       easytier.enable = false;
