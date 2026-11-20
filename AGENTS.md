@@ -167,7 +167,7 @@ flake.nix
 | --- | --- |
 | `nixosConfigurations.<host>` | 构建/切换目标（`--flake .#<host>`；省略 `#host` 时取当前 hostname） |
 | `colmena.<host>` + `colmena.meta` | 原始 hive（`meta` + 每主机一个 module 函数），给 `--legacy-flake-eval` 和调试用 |
-| `colmenaHive` | 经 `inputs.colmena.lib.makeHive` 预处理过的 hive，**colmena ≥ 0.5 默认读这个**（`__schema = "v0.5"`）；CLI 版本与 `colmena` input 的 tag 必须同版本（见 §8.16） |
+| `colmenaHive` | 经 `inputs.colmena.lib.makeHive` 预处理过的 hive，**colmena ≥ 0.5 默认读这个**（`__schema = "v0.5"`）；CLI 必须与 input 同源（由 `packages.colmena` 提供，见 §8.16） |
 | `microvm-infras.<name>` | 由宿主机的 `microvm.host.vms` 消费（来自 `virtualization.microvm.host.infras`） |
 | `packages.x86_64-linux.{iso,microvm-umy,<pkgs>}` | 镜像与可交付产物 |
 | `formatter` | `nix fmt` → nixfmt |
@@ -412,10 +412,10 @@ cd .. && just upp mysecrets                                    # 让本仓库锁
 ### 5.8 包、overlay 与 nixpkgs 分支
 
 - `packages/*/default.nix` + 在 `packages/default.nix` 注册 → `overlays/packages.nix` 生成 overlay → 所有机器 `pkgs.<name>` 可用，同时 `packages.x86_64-linux.<name>` 可单独 `nix build`。
-- 常用 patch 位点也在 `packages/default.nix`（如 `niri` 打 shm patch、`onnxruntime` 取 unstable、`siyuan/mcporter/wiliwili` 等 `# TODO wait upstream merge`）。
+- 常用 patch 位点也在 `packages/default.nix`（如 `onnxruntime` 取 unstable、`siyuan/mcporter/wiliwili` 等 `# TODO wait upstream merge`）；`niri` 在那里被整体换成 `inputs.niri-flake` 的上游 main 构建（不再打 shm 补丁）。
 - nixpkgs 分支：默认 `nixpkgs`(unstable) → `pkgs`；需要更新的包用 `pkgs-unstable`（unstable-small）；需要稳的/兼容用 `pkgs-stable`（26.05）。
 - `vars/nixpkgs-config.nix`：`allowUnfree = true`、`permittedInsecurePackages`（`openclaw-*`、`electron-*`）。新增 insecure 包报错时来这里加。
-- substituters 在 `modules/base/nix-settings.nix`（USTC 镜像、nix-community、nixpkgs-update-cache、pi.cachix）与 `modules/nixos/desktop/wayland.nix`（hyprland cachix）。
+- substituters 在 `modules/base/nix-settings.nix`（USTC 镜像、nix-community、nixpkgs-update-cache、pi.cachix）与 `modules/nixos/desktop/wayland.nix`（hyprland cachix、niri-epireyn cachix）。
 
 ### 5.9 本地 input override（开发态）
 
@@ -570,7 +570,7 @@ ssh <host> 'systemctl list-units --state=failed --plain'
 13. **`pkgs-unstable`/`pkgs-stable` 与主 nixpkgs 版本不同**，混用时注意依赖版本冲突（尤其 CUDA/onnxruntime 有专门处理）。
 14. 本机 = `rog-ga502`：`just switch` 只影响它；给别的机器"构建"与"部署"是两回事（见 §7.1/§7.2）。
 15. **`.todos/`（td 数据）是机器本地状态**，已 gitignore。里面的 issue 不随仓库同步，别的机器 clone 下来是空的——别把"td 里应该有这条"当成交接依据，也别 `git add -f` 它（与 §8.11 的 `file:///` override 同类问题）。
-16. **colmena ≥ 0.5 默认走 direct flake eval，只认 `colmenaHive` 输出**（schema `v0.5`，必须由 `colmena.lib.makeHive` 生成），不再读原始 `colmena` 输出。`flake.nix` 的 `colmena` input 钉在 `v0.5.0` 以匹配 nixpkgs 里的 `pkgs.colmena`；nixpkgs 升到 colmena 0.6 后会报 schema 不匹配，那时要同步改 input 的 tag。应急回退：`colmena apply --legacy-flake-eval ...`（0.5.0 仍保留该隐藏 flag），但**只在工作树干净时可用**——dirty 树上 nix 拒写 assets flake 的 lock（`Use '--allow-dirty-locks'`），会报 `cannot update unlocked flake input 'hive' in pure mode`。
+16. **colmena 的 CLI 与 flake input 必须同源**：colmena ≥ 0.5 只认 `colmenaHive` 输出（schema `v0.5`，由 `colmena.lib.makeHive` 生成），CLI 启动时断言 `__schema` 版本。因此 `flake.nix` 的 `colmena` input 跟 main，CLI 也一律从该 input 取（`packages.colmena` → `just shell`；`home/tui/dev-tools.nix` → 用户 PATH），**不要装 nixpkgs 的 `pkgs.colmena`**（那是独立的版本流，会漂移）。升级就是 `just upp colmena` 一步，schema 与 CLI 自动同步。应急回退：`colmena apply --legacy-flake-eval ...`，但**只在工作树干净时可用**——dirty 树上 nix 拒写 assets flake 的 lock（`Use '--allow-dirty-locks'`），会报 `cannot update unlocked flake input 'hive' in pure mode`。
 17. **`ssh <host> '<cmd>'` 在目标机上走的是 fish**（登录 shell）：别写 bash-ism 和通配，`ls /x/*` 直接报 `No matches for wildcard`，`$()`、`&&` 也要按 fish 的规矩写。另：`systemctl restart/stop` 必须 `sudo`（无交互 polkit 会报 `Access denied ... requires interactive authentication`）。
 18. **静默失败：没入索引的新文件对 flake 不存在**。新建模块/脚本不 `git add` 就 eval/部署，表现为
     `does not provide attribute` 或模块没装上（服务 502/404），别往模块逻辑里找原因。

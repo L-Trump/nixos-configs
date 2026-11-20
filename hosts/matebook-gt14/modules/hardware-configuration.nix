@@ -57,7 +57,7 @@
     "nohibernate" # hibernate in impermanent system cause btrfs interruption!!!
     "i915.enable_psr=0"
     "i915.enable_guc=3"
-    "initcall_blacklist=simpledrm_platform_driver_init" # wait fix TODO
+    "initcall_blacklist=simpledrm_platform_driver_init"
   ];
   boot.tmp.cleanOnBoot = true;
 

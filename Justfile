@@ -101,7 +101,7 @@ gc7d:
 [linux]
 [group('nix')]
 shell:
-  nix shell nixpkgs#git nixpkgs#neovim nixpkgs#colmena
+  nix shell nixpkgs#git nixpkgs#neovim .#colmena
 
 [group('nix')]
 fmt:

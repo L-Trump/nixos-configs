@@ -30,7 +30,10 @@ let
       hash = "sha256-QXbQCv4QnFVdZMhVNoPvnnN1iXTsD+tJaViOhqCC5tk=";
     };
 
-    mvnHash = "sha256-TZER1AlNZneBtoxc8MrAtrNJeDSdUqS6AMXqKiJ8arc=";
+    mvnHash = "sha256-VChT7qUtJLNJqAYREvY944YYiKq+HBNEc1/dpitqHqQ=";
+
+    # Maven Central 对部分国内出口 IP 返回 403（Sonatype 反爬封禁），改用阿里云镜像
+    mvnParameters = "-s ${./maven-settings.xml}";
 
     doCheck = false;
 

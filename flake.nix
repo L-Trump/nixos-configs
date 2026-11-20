@@ -77,7 +77,7 @@
     impermanence.url = "github:nix-community/impermanence";
 
     colmena = {
-      url = "github:nix-community/colmena/v0.5.0";
+      url = "github:nix-community/colmena";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.stable.follows = "nixpkgs-stable";
     };

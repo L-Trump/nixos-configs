@@ -1,0 +1,16 @@
+<!-- Maven Central 对部分国内出口 IP 直接返回 403（Sonatype 反爬封禁），
+     这里把 central 镜像到阿里云。镜像 id 保持 "central"，
+     这样 ~/.m2 里的 _remote.repositories 记录与直连一致，mvnHash 无需重算。 -->
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
+                              https://maven.apache.org/xsd/settings-1.0.0.xsd">
+  <mirrors>
+    <mirror>
+      <id>central</id>
+      <mirrorOf>central</mirrorOf>
+      <name>aliyun central mirror</name>
+      <url>https://maven.aliyun.com/repository/central</url>
+    </mirror>
+  </mirrors>
+</settings>

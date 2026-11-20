@@ -45,6 +45,8 @@ in
 
   hokit = pkgs.callPackage ./hokit { };
 
+  colmena = inputs.colmena.packages.${pkgs.stdenv.hostPlatform.system}.colmena;
+
   lossless-claw = pkgs.callPackage ./lossless-claw { };
 
   pi-web = pkgs.callPackage ./pi-web { };
