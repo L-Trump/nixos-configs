@@ -740,6 +740,9 @@ let
       "Mod+Ctrl+Shift+F" = {
         toggle-windowed-fullscreen = { };
       };
+      "Mod+M" = {
+        maximize-window-to-edges = { };
+      };
 
       # Expand the focused column to space not taken up by other fully visible columns.
       # Makes the column "fill the rest of the space".

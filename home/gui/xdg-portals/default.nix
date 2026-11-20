@@ -33,10 +33,6 @@
         "org.freedesktop.impl.portal.Access" = "gtk";
         "org.freedesktop.impl.portal.Notification" = "gtk";
         "org.freedesktop.impl.portal.Secret" = "gnome-keyring";
-        # TODO niri 26.04 的 org.gnome.Shell.Screenshot 多输出直接
-        # anyhow::ensure!(outputs.len() == 1) 失败（本机三屏），gnome impl
-        # 连带 portal 截图一起挂；wlr impl 本质就是 spawn grim，多屏正常。
-        "org.freedesktop.impl.portal.Screenshot" = [ "wlr" ];
       };
     };
   };

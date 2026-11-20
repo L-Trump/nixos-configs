@@ -82,6 +82,13 @@
       inputs.stable.follows = "nixpkgs-stable";
     };
 
+    # Niri use git version
+    niri-flake = {
+      url = "github:epireyn/niri-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs-stable.follows = "nixpkgs-stable";
+    };
+
     haumea = {
       url = "github:nix-community/haumea/v0.2.2";
       inputs.nixpkgs.follows = "nixpkgs";

@@ -23,33 +23,15 @@ in
 
   rustdesk-server-pro = pkgs.callPackage ./rustdesk-server-pro { };
 
-  # 官方 unattended-wayland deb 重打包（不编译），drm+drm-wake 抓屏
   rustdesk-unattended-wayland = pkgs.callPackage ./rustdesk-unattended-wayland { };
 
   inherit libdrmtap;
 
   hubproxy = pkgs.callPackage ./hubproxy { };
 
-  niri = pkgs.niri.overrideAttrs (
-    final: prev: {
-      # TODO wait upstream merge  https://github.com/YaLTeR/niri/pull/1791
-      patches = [
-        (pkgs.fetchpatch {
-          name = "niri-support-shm.patch";
-          url = "https://github.com/wrvsrx/niri/compare/tag_support-shm-sharing_4~19..tag_support-shm-sharing_4.patch";
-          hash = "sha256-mfX0CVJWSFb/Hr1lDvlggphpXc2PI6C5CBa+aGwkVIM=";
-        })
-      ];
-    }
-  );
+  niri = inputs.niri-flake.packages.${pkgs.stdenv.hostPlatform.system}.niri-unstable;
 
   dbeaver-ultimate = pkgs.callPackage ./dbeaver-ultimate { };
-
-  # TODO wait upstream merge https://github.com/NixOS/nixpkgs/pull/556768
-  # 上游 7.15.1 的 rpm 已被 RealVNC 下架（只剩 8.x 的新路径），故本地跟 PR 打到 8.5.0。
-  realvnc-vnc-viewer = pkgs.callPackage ./realvnc-vnc-viewer { };
-
-  # rustdesk-flutter = pkgs-unstable.rustdesk-flutter;
 
   hokit = pkgs.callPackage ./hokit { };
 
