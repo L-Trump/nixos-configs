@@ -1,3 +1,7 @@
+{
+  config,
+  ...
+}:
 let
   mkargs = args: {
     _args = args;
@@ -21,6 +25,11 @@ let
       LANG = "en_GB.UTF-8";
       LANGUAGE = "zh_CN.UTF-8";
       # DISPLAY = ":0";
+    };
+
+    cursor = {
+      xcursor-theme = config.home.pointerCursor.name;
+      xcursor-size = config.home.pointerCursor.size;
     };
 
     input = {

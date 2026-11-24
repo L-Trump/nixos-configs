@@ -4,14 +4,14 @@
   pkgs,
   mylib,
   ...
-}:
+}@inputs:
 with lib;
 let
   cfg = config.myhome.desktop.niri;
 in
 {
   config = mkIf cfg.enable {
-    myhome.desktop.niri.settings = import ./niri-conf.nix;
+    myhome.desktop.niri.settings = import ./niri-conf.nix inputs;
 
     xdg.configFile."niri/config.kdl".source = pkgs.writeText "config.kdl" (mylib.toKDL cfg.settings);
 
