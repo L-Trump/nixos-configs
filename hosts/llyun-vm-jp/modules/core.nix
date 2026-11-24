@@ -50,7 +50,7 @@ in
   nix.settings.substituters = lib.mkForce [
     "https://cache.nixos.org"
     "https://nix-community.cachix.org"
-    "https://nixpkgs-update-cache.nix-community.org"
+    "https://nixpkgs-update-cache.nixos.org"
   ];
 
   # This option defines the first version of NixOS you have installed on this particular machine,
