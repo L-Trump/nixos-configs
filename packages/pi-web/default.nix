@@ -19,7 +19,7 @@
 # that exact message.
 buildNpmPackage rec {
   pname = "pi-web";
-  version = "0.15.0";
+  version = "0.18.0";
 
   # Build from the git tag rather than the npm tarball: only the git tree ships
   # `package-lock.json`, which `npmDepsHash` needs to pin the dependency
@@ -28,7 +28,7 @@ buildNpmPackage rec {
     owner = "agegr";
     repo = "pi-web";
     rev = "v${version}";
-    hash = "sha256-EUa1w0HP5J45yNRGYLtP401q+mjyRjcq9FWhy+++wxk=";
+    hash = "sha256-Dl8cgjULhdc5dNeIxexOe7oMaxIZqF0Kv0JGa9AFt7A=";
   };
 
   # `next build`, which would have to download the Next.js SWC binaries into
@@ -36,10 +36,10 @@ buildNpmPackage rec {
   # so the bundle is mandatory.
   dist = fetchurl {
     url = "registry.npmjs.org/@agegr/pi-web/-/pi-web-${version}.tgz";
-    hash = "sha256-4VCI9UU/R825RpNfA6iU0CEdyALiuiQCOObXWRNsCvc=";
+    hash = "sha256-jVkbA1rGFfqXT41szeTZz7pJcO0dodkR3bFPfq5w50o=";
   };
 
-  npmDepsHash = "sha256-moP10ZDbFzIpef0FHXtbySO7r7uso04qqeueL9JELUo=";
+  npmDepsHash = "sha256-Aw/NeAJdz53KEVqkWcfMTJiZnkck8jOEpEzcOwcTjGw=";
   npmDepsFetcherVersion = 2;
 
   npmDeps = fetchNpmDeps {
