@@ -898,10 +898,10 @@
     "mywallpapers": {
       "flake": false,
       "locked": {
-        "lastModified": 1773662083,
-        "narHash": "sha256-WVrPA5tChBDjvkkGNlrAgyNP5m1r9qj6YwDx7iX8MQg=",
+        "lastModified": 1795527525,
+        "narHash": "sha256-Kg9hebU9A4908+vB/fc2uFA5PQyFIS3hq6e4ob5h214=",
         "ref": "refs/heads/main",
-        "rev": "8e9e894a147dd2f5fc9f8a58bc6e76e0ff3c43af",
+        "rev": "316b7e6b09521bed4e5ffb9be089ed3b012b013e",
         "shallow": true,
         "type": "git",
         "url": "https://github.com/L-Trump/nixos-wallpapers.git"

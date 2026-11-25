@@ -1,7 +1,7 @@
 { pkgs, inputs, ... }:
 let
   lock_wallpaper = builtins.path {
-    path = "${inputs.mywallpapers}/LockWallpapers/75778903_p0.jpg";
+    path = "${inputs.mywallpapers}/Hazel/hazel_library.png";
   };
 in
 {

@@ -75,7 +75,7 @@ nix eval .#nixosConfigurations --apply builtins.attrNames --json   # 确认所�
 数据/值      vars/{default,networking,nixpkgs-config,containers}.nix   +   nixos-secrets/vars/*
 通用行为     modules/base（全平台） modules/nixos/{base,desktop,server,containers}   +   home/{core,tui,gui}
 单机差异     hosts/<host>/{modules,home}/      outputs/x86_64-linux/hosts/<host>.nix（preset + 开关覆盖）
-外部仓库     mysecrets（secrets/配置）、myfonts、mywallpapers —— 都是 flake input，不是本仓库内容
+外部仓库     mysecrets（secrets/配置）、myfonts、mywallpapers（壁纸，见 §5.10）—— 都是 flake input，不是本仓库内容
 ```
 
 设计原则（改动时请遵守）：
@@ -114,6 +114,7 @@ nix eval .#nixosConfigurations --apply builtins.attrNames --json   # 确认所�
 | `vars/` | `networking.nix`（**easytier IP 真源**、ssh 别名、/etc/hosts）、`containers.nix`（镜像 digest）、`nixpkgs-config.nix`、`default.nix` | IP、镜像版本、unfree 白名单 |
 | `secrets/` | agenix 接线：`modules/`（NixOS 侧 `age.secrets`）、`home/`（HM 侧） | 新增/修改密钥引用 |
 | `nixos-secrets/` | 私密仓库的**本地 clone**（.gitignore），编辑用；构建读的是 flake input | 改密钥/私密配置 |
+| `nixos-wallpapers/` | 壁纸仓库的**本地 clone**（.gitignore，独立 git 仓库）；构建读 flake input `mywallpapers` | 加/换壁纸（§5.10） |
 | `packages/` | 自定义包与补丁后的上游包，经 overlay 注入 → 全局 `pkgs.<name>` | 打包 |
 | `overlays/` | `packages.nix`(注入)、`tools.nix`(`mkScriptsPackage` 等)、`nurs.nix` | 覆盖 nixpkgs |
 | `scripts/update_containers.sh` | 用 skopeo 刷新 `vars/containers.nix` 的 digest | 更新容器镜像 |
@@ -432,6 +433,16 @@ cd .. && just upp mysecrets                                    # 让本仓库锁
 
 ---
 
+### 5.10 壁纸（`mywallpapers`）
+
+- 图片**只存** `github:L-Trump/nixos-wallpapers`（input `mywallpapers`），本机 clone 在 `nixos-wallpapers/`（gitignore 的独立仓库，同 `nixos-secrets/`）。**不要往 `nixos-configs` 放图**，也别在 `home/gui/` 下建非模块目录（`scanPaths` 会要 `default.nix` 并让 eval 报错）。
+- 引用：`builtins.path { path = "${inputs.mywallpapers}/<dir>/<file>"; }`（见 `home/gui/wayland/default.nix`）。生效：clone 里 commit（远端源还要 push）→ `just upp mywallpapers`。
+- 现有分配：`home/gui/wayland/default.nix` 只留**一条兜底**（`monitor = ""` → `Hazel/hazel_qu.png`，所有显示器默认）；逐显示器指定一律进 `hosts/<host>/home/wallpapers.nix`（rog-ga502：HDMI-A-1 = `hazel_sea.jpg`、DP-1 = `hazel_park.png`、eDP-1 = `hazel_qu.png`）。锁屏（`swaylock.nix`）= `Hazel/hazel_library.png`，仍是通用配置。
+- 单机给某个显示器单独加图：`hosts/<host>/home/*.nix` 里 `services.hyprpaper.settings.wallpaper = lib.mkBefore [ { monitor = "DP-1"; path = …; } ];`（同 key 的 list 会合并）。**不要**动 `home/options.nix` 或重排通用列表。
+- 体积基准：12MB(4K JPG) ～ 18MB(5.5K PNG)，~1 B/px 属正常。
+
+---
+
 ## 6. 任务配方
 
 | 任务 | 步骤 |
@@ -445,6 +456,7 @@ cd .. && just upp mysecrets                                    # 让本仓库锁
 | **升级 flake inputs** | 需要用户确认：`just up`(全部) / `just upp <input>`；先 `just preview` 看 diff |
 | **改密钥** | §5.6 流程：在 `nixos-secrets/` 改并 commit（push 与否取决于 §5.9 的锁定模式）→ `nix flake update mysecrets` → 构建 |
 | **改 niri/waybar/kitty…** | §5.2 表格定位；niri 改 `niri-conf.nix`（单机改 `hosts/<host>/home/niri.nix`） |
+| **换/加壁纸** | 图片进 `nixos-wallpapers/`（**不是本仓库**）→ commit（+push 视锁定方式）→ `just upp mywallpapers` → 分配与预览见 §5.10 |
 | **加 HM 应用/配置** | 判断层级（core/tui/gui）→ 新建文件即生效 → 需要开关时 §4.5 |
 | **改自定义脚本** | `home/gui/scripts/bin/<name>`（或 host 级 `hosts/<host>/home/`），`mkScriptsPackage` 打包 |
 | **让新数据重启后还在** | §5.7 白名单登记（仅两台笔电） |

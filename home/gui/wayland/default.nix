@@ -8,8 +8,6 @@
   ...
 }:
 let
-  wallpaper_umy = builtins.path { path = "${inputs.mywallpapers}/Meumy/91689568_p1.jpg"; };
-  wallpaper_merry = builtins.path { path = "${inputs.mywallpapers}/Meumy/91689568_p6.jpg"; };
   wallpaper_hazel_qu = builtins.path { path = "${inputs.mywallpapers}/Hazel/hazel_qu.png"; };
   cfg.niri = myhome.desktop.niri;
   cfg.hyprland = myhome.desktop.hyprland;
@@ -65,18 +63,11 @@ in
     services.hyprpaper = {
       enable = true;
       settings = {
+        # default for every monitor; per-host overrides live in hosts/<host>/home/
         wallpaper = [
           {
-            monitor = "HDMI-A-1";
-            path = wallpaper_hazel_qu;
-          }
-          {
-            monitor = "eDP-1";
-            path = wallpaper_hazel_qu;
-          }
-          {
             monitor = "";
-            path = wallpaper_umy;
+            path = wallpaper_hazel_qu;
           }
         ];
       };
