@@ -4,7 +4,7 @@
   ...
 }:
 let
-  browser = [ "firefox.desktop" ];
+  browser = [ "google-chrome.desktop" ];
   editor = [
     "nvim.desktop"
     "Helix.desktop"

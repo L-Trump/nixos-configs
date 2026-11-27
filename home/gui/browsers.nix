@@ -13,6 +13,6 @@
 
   home.sessionVariables = {
     "MOZ_USE_XINPUT2" = 1;
-    "BROWSER" = "firefox";
+    "BROWSER" = "google-chrome";
   };
 }
