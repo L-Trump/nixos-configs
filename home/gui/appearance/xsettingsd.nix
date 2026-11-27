@@ -42,7 +42,7 @@ in
     '';
   };
 
-  services.darkman.lightModeScripts.xsettingsd = ''
+  services.darkman.lightModeScripts.xsettings = ''
     XFILE=${config.xdg.configHome}/xsettingsd/xsettingsd.conf
     if [ -n "$(${pkgs.gnugrep}/bin/grep -E '^Net/ThemeName *".*-Dark"$' $XFILE)" ]; then
       ${pkgs.gnused}/bin/sed -i 's/^\(Net\/ThemeName[[:blank:]]*\)"\(.*\)-Dark"$/\1"\2-Light"/;' $XFILE
@@ -50,7 +50,7 @@ in
     fi
   '';
 
-  services.darkman.darkModeScripts.xsettingsd = ''
+  services.darkman.darkModeScripts.xsettings = ''
     XFILE=${config.xdg.configHome}/xsettingsd/xsettingsd.conf
     if [ -n "$(${pkgs.gnugrep}/bin/grep -E '^Net/ThemeName *".*-Light"$' $XFILE)" ]; then
       ${pkgs.gnused}/bin/sed -i 's/^\(Net\/ThemeName[[:blank:]]*\)"\(.*\)-Light"$/\1"\2-Dark"/;' $XFILE

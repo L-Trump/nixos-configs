@@ -101,15 +101,15 @@ nix eval .#nixosConfigurations --apply builtins.attrNames --json   # 确认所�
 | `modules/options.nix` | **NixOS 开关总表** `mymodules.*` | 新增 NixOS 功能开关 |
 | `modules/base/` | 全主机：nix settings(GitHub 缓存/GC/registry/comma)、overlays、系统包、用户与 polkit | 系统包、nix 配置、authorizedKeys |
 | `modules/nixos/base/` | core(grub/power)、environments(系统 CLI 包)、i18n(时区/中文)、log、network(avahi/ntp/firewall)、security(sudo/u2f/CA)、ssh、ttyd、user-group、virtualization(docker/qemu/microvm)、zram | 基础系统行为 |
-| `modules/nixos/desktop/` | wayland(niri/hyprland/uwsm)、hardware(pipewire/打印/蓝牙)、fonts、fhs、i3(xorg，已弃用)、network(clash-verge)、remote-desktop(sunshine)、security(pinentry)、game、makima(数位板)、animeboot(grub+plymouth)、vpn(SJTU ipsec/forti) | 桌面系统层 |
+| `modules/nixos/desktop/` | wayland(niri 系统层 + quickshell)、hardware(pipewire/打印/蓝牙)、fonts、fhs、network(clash-verge)、remote-desktop(sunshine)、security(pinentry)、game、makima(数位板)、animeboot(grub+plymouth)、vpn(SJTU ipsec/forti) | 桌面系统层 |
 | `modules/nixos/server/` | 各服务模块；**端口表见 `server/README.md`** | 服务端服务 |
 | `modules/nixos/containers/` | OCI(docker) 容器服务 + `oci_net` 网络与 `docker-compose-oci-root.target` | 容器化服务 |
 | `home/options.nix` | **HM 开关总表** `myhome.*` | 新增 HM 开关 |
 | `home/core/` | 全主机 HM：editors、git、nix-settings、packages、security(gpg)、shells(fish/starship/zellij/…)、nnn、yazi、pip、dev 工具 | 所有机器都有的用户配置 |
 | `home/tui/` | `tuiExtra.enable` 下的终端向配置：`mail/`、`openclaw/`、`pi/`、`editors/{neovim,lsp}`、`dev-tools.nix` | 远程/终端工作流 |
-| `home/gui/` | `desktop.enable` 下的图形配置：`wayland/{niri,hyprland,waybar,swaylock}`、`fcitx5/`、`dunst/`、`terminal/`、`appearance/`、`daily/`、`scripts/bin/`（自定义脚本）、`xdg-portals/` | 桌面用户层 |
+| `home/gui/` | `desktop.enable` 下的图形配置：`wayland/{niri,swaylock}`、`dux-shell/`（DMS 桌面壳，见 §5.11）、`fcitx5/`、`terminal/`、`appearance/`、`daily/`、`scripts/bin/`（自定义脚本）、`xdg-portals/` | 桌面用户层 |
 | `hosts/<host>/modules/` | 该机专属 NixOS 模块（impermanence、nvidia、fingerprint、proxmox、touch-screen…） | 单机系统差异 |
-| `hosts/<host>/home/` | 该机专属 HM 模块（niri/hyprland 覆盖、lan-mouse、syncthing…） | 单机用户差异 |
+| `hosts/<host>/home/` | 该机专属 HM 模块（niri/DMS 覆盖、lan-mouse、syncthing…） | 单机用户差异 |
 | `hosts/microvms/<name>/` | microvm guest 的单机配置 | |
 | `vars/` | `networking.nix`（**easytier IP 真源**、ssh 别名、/etc/hosts）、`containers.nix`（镜像 digest）、`nixpkgs-config.nix`、`default.nix` | IP、镜像版本、unfree 白名单 |
 | `secrets/` | agenix 接线：`modules/`（NixOS 侧 `age.secrets`）、`home/`（HM 侧） | 新增/修改密钥引用 |
@@ -154,7 +154,7 @@ flake.nix
 
 | 参数 | 说明 |
 | --- | --- |
-| `inputs` / 各 input 名（`mysecrets`、`nixpkgs`、`agenix`、`hyprland`…） | `inputs` 被平铺，所以 `mysecrets` 可直接用 |
+| `inputs` / 各 input 名（`mysecrets`、`nixpkgs`、`agenix`、`dms`…） | `inputs` 被平铺，所以 `mysecrets` 可直接用 |
 | `mylib` | `relativeToRoot`、`scanPaths`、`toKDL`、`nixosSystem`、`colmenaSystem`、`microvmInfra` |
 | `myvars` | 见术语表 |
 | `pkgs` / `nixpkgs` | 主 nixpkgs（含本仓库 overlay） |
@@ -289,12 +289,13 @@ in
 
 | 关注点 | 位置 |
 | --- | --- |
-| WM | `desktop/wayland.nix`（hyprland/niri/uwsm 系统层）+ `home/gui/wayland/{niri,hyprland,waybar,swaylock}` |
+| WM | `desktop/wayland.nix`（niri 系统层 + quickshell）+ `home/gui/wayland/{niri,swaylock}` |
+| 桌面壳（DMS） | `home/gui/dux-shell/`（settings/session/plugin settings，见 §5.11）；bar/通知/launcher/锁屏/剪贴板/电源菜单都由它提供 |
 | niri 配置 | `myhome.desktop.niri.settings` → `lib/toKDL.nix` → `~/.config/niri/config.kdl`；内容 `home/gui/wayland/niri/niri-conf.nix`，单机覆盖 `hosts/<host>/home/niri.nix` |
 | 音频/硬件 | `desktop/hardware.nix`（pipewire、蓝牙 blueman、打印、fwupd） |
 | 字体 | `desktop/fonts.nix`（系统）+ `home/gui/fonts.nix`（用户）；字体文件来自 `myfonts` input |
 | 输入法 | `home/gui/fcitx5/`（flypy 小鹤音形） |
-| 主题/外观 | `home/gui/appearance/{gtk,dconf,darkman,xsettingsd,cursors,eye-protection}` |
+| 主题/外观 | `home/gui/appearance/{gtk,dconf,darkman,xsettingsd,cursors,eye-protection}`；darkman 仍是日/夜唯一权威，DMS 跟随 portal `color-scheme` |
 | 终端 | `home/gui/terminal/{kitty,alacritty}`、`home/core/shells/{fish,zellij,starship,...}` |
 | 自定义脚本 | `home/gui/scripts/bin/*` 由 `mkScriptsPackage` 打包（改脚本后要 `just switch` 生效） |
 | 网盘/代理 | `desktop/network.nix`（clash-verge-rev，tun+serviceMode）、`home/gui/daily/sync.nix`（onedriver） |
@@ -304,7 +305,6 @@ in
 | 数位板 | `desktop/makima/`（配置在 `environment.etc."makima"`，服务默认 disabled） |
 | Windows 应用 | `desktop/fhs.nix`（buildFHSEnv `fhs`）、flatpak/appimage 支持 |
 | 会议/聊天 | `home/gui/daily/{wemeet,chats}.nix`（腾讯会议 xwayland+openbox 兼容层） |
-| Xorg/i3 | `desktop/i3.nix` + `home/gui/i3/`（历史遗留，`xorg.enable` 默认 false） |
 
 ### 5.3 服务端与容器（`modules/nixos/server` + `containers`）
 
@@ -416,7 +416,7 @@ cd .. && just upp mysecrets                                    # 让本仓库锁
 - 常用 patch 位点也在 `packages/default.nix`（如 `onnxruntime` 取 unstable、`siyuan/mcporter/wiliwili` 等 `# TODO wait upstream merge`）；`niri` 在那里被整体换成 `inputs.niri-flake` 的上游 main 构建（不再打 shm 补丁）。
 - nixpkgs 分支：默认 `nixpkgs`(unstable) → `pkgs`；需要更新的包用 `pkgs-unstable`（unstable-small）；需要稳的/兼容用 `pkgs-stable`（26.05）。
 - `vars/nixpkgs-config.nix`：`allowUnfree = true`、`permittedInsecurePackages`（`openclaw-*`、`electron-*`）。新增 insecure 包报错时来这里加。
-- substituters 在 `modules/base/nix-settings.nix`（USTC 镜像、nix-community、nixpkgs-update-cache、pi.cachix）与 `modules/nixos/desktop/wayland.nix`（hyprland cachix、niri-epireyn cachix）。
+- substituters 在 `modules/base/nix-settings.nix`（USTC 镜像、nix-community、nixpkgs-update-cache、pi.cachix）与 `modules/nixos/desktop/wayland.nix`（niri-epireyn、nix-cache.duxlabs.dev）。
 
 ### 5.9 本地 input override（开发态）
 
@@ -433,13 +433,34 @@ cd .. && just upp mysecrets                                    # 让本仓库锁
 
 ---
 
-### 5.10 壁纸（`mywallpapers`）
+### 5.10 壁纸（`mywallpapers` + DMS）
 
 - 图片**只存** `github:L-Trump/nixos-wallpapers`（input `mywallpapers`），本机 clone 在 `nixos-wallpapers/`（gitignore 的独立仓库，同 `nixos-secrets/`）。**不要往 `nixos-configs` 放图**，也别在 `home/gui/` 下建非模块目录（`scanPaths` 会要 `default.nix` 并让 eval 报错）。
-- 引用：`builtins.path { path = "${inputs.mywallpapers}/<dir>/<file>"; }`（见 `home/gui/wayland/default.nix`）。生效：clone 里 commit（远端源还要 push）→ `just upp mywallpapers`。
-- 现有分配：`home/gui/wayland/default.nix` 只留**一条兜底**（`monitor = ""` → `Hazel/hazel_qu.png`，所有显示器默认）；逐显示器指定一律进 `hosts/<host>/home/wallpapers.nix`（rog-ga502：HDMI-A-1 = `hazel_sea.jpg`、DP-1 = `hazel_park.png`、eDP-1 = `hazel_qu.png`）。锁屏（`swaylock.nix`）= `Hazel/hazel_library.png`，仍是通用配置。
-- 单机给某个显示器单独加图：`hosts/<host>/home/*.nix` 里 `services.hyprpaper.settings.wallpaper = lib.mkBefore [ { monitor = "DP-1"; path = …; } ];`（同 key 的 list 会合并）。**不要**动 `home/options.nix` 或重排通用列表。
+- 引用：`builtins.path { path = "${inputs.mywallpapers}/<dir>/<file>"; }`。生效：clone 里 commit（远端源还要 push）→ `just upp mywallpapers`。
+- 桌面壁纸由 DMS 管：`~/.local/state/dms/session.json` 的 `monitorWallpapers`（逐显示器）。首次部署由 `home/gui/dux-shell/dms-session.nix` seed（只写一次，之后归运行时）；日常改图要么在 DMS 设置里选，要么 `dms ipc call wallpaper setFor <monitor> <path>`；要固化成声明式就改 `dms-session.nix` 并删掉 `~/.local/state/dms/session.json` 重新 seed（§5.11）。
+- 锁屏壁纸在 `home/gui/wayland/swaylock.nix`（`lock_wallpaper`），与桌面壁纸分开。
 - 体积基准：12MB(4K JPG) ～ 18MB(5.5K PNG)，~1 B/px 属正常。
+
+### 5.11 dux-shell / DMS（桌面壳）
+
+bar、launcher、通知、锁屏、控制中心、电源菜单、剪贴板、dock、桌面组件都由 [dux-shell](https://github.com/duxlabs-dev/dux-shell)（DMS，Quickshell/QML）提供（2026-11 起取代 waybar + rofi + dunst + swaylock + copyq + hypridle）。
+
+- 依赖：`flake.nix` 的 `dms`（`homeModules.dank-material-shell`）与 `dms-plugin-registry`（`homeModules.default`）；`pkgs.quickshell` 在系统包里（`dms run` 会 exec `qs`）。
+- 组装：`home/gui/dux-shell/default.nix`（`systemd.enable = true`）；单机差异进 `hosts/<host>/home/dux-shell.nix`（例：rog 的 `matugenTargetMonitor = "HDMI-A-1"`）。
+- 三个配置文件：
+
+| 文件 | 内容 | 落地 |
+| --- | --- | --- |
+| `dms-settings.nix` | 62 个 key，完整声明（`configVersion = 47`、`dockConfigs`、bar 布局…） | `~/.config/dms/settings.json`（HM 只读软链） |
+| `dms-session.nix` | 8 个 key（`monitorWallpapers`、`hiddenTrayIds`、`appOverrides`、锁屏摆放…），`configVersion = 8` | activation **一次性 seed** 到 `~/.local/state/dms/session.json`（存在则不覆盖） |
+| `dms-plugin-settings.nix` | 插件 settings（目前只有 `intervalCommand`） | `~/.config/dms/plugin_settings.json`（带 settings 的插件 → 只读） |
+
+- 改配置流程：GUI 里试 → `dms ipc call settings dump`（会话类用 `dumpSession`）→ 回填 nix → `just switch`。settings 只读是设计（§8.22）。
+- 升级注意：`configVersion`（§8.21）与三处 `--replace-fail` 补丁（§8.24）。
+- 日/夜与主题：darkman 是唯一权威，DMS 跟随 portal `color-scheme`；不要开 `themeModeAuto`。gamma 由 gammastep 管（`eye-protection.nix`），不用 DMS 夜灯。
+- 锁屏：DMS lock 为准（`lockPamPath = "/etc/pam.d/swaylock"`）；`home/gui/wayland/swaylock.nix` 只留作应急锁 + 提供该 PAM 文件；niri 启动时用 fish 循环等 `dms ipc call lock isLocked` 返回后再 `dms ipc call lock lock`。
+- 托盘：`hiddenTrayIds` 隐藏 `nm-applet`/`blueman`/`udiskie`；GUI 备份仍保留 `blueman-manager`、`nm-connection-editor`、`pavucontrol`。
+- 插件：`niriWindows`（窗口搜索）、`intervalCommand`（周期命令）；注册表来自 `inputs.dms-plugin-registry`。
 
 ---
 
@@ -455,8 +476,9 @@ cd .. && just upp mysecrets                                    # 让本仓库锁
 | **更新容器镜像** | `./scripts/update_containers.sh`（skopeo 写回 digest）→ 对应主机 eval/diff（§7.1）→ `just switch`（本机）或 `just col <tag>`（远程，§7.2） |
 | **升级 flake inputs** | 需要用户确认：`just up`(全部) / `just upp <input>`；先 `just preview` 看 diff |
 | **改密钥** | §5.6 流程：在 `nixos-secrets/` 改并 commit（push 与否取决于 §5.9 的锁定模式）→ `nix flake update mysecrets` → 构建 |
-| **改 niri/waybar/kitty…** | §5.2 表格定位；niri 改 `niri-conf.nix`（单机改 `hosts/<host>/home/niri.nix`） |
-| **换/加壁纸** | 图片进 `nixos-wallpapers/`（**不是本仓库**）→ commit（+push 视锁定方式）→ `just upp mywallpapers` → 分配与预览见 §5.10 |
+| **改 niri/dux-shell/kitty…** | §5.2 表格定位；niri 改 `niri-conf.nix`（单机改 `hosts/<host>/home/niri.nix`）；DMS 见 §5.11 |
+| **改 DMS 设置/插件** | §5.11 流程：GUI 试 → `dms ipc call settings dump` → 回填 `dms-settings.nix`/`dms-session.nix` → `just switch`；插件 settings 进 `dms-plugin-settings.nix` |
+| **换/加壁纸** | 图片进 `nixos-wallpapers/`（**不是本仓库**）→ commit（+push 视锁定方式）→ `just upp mywallpapers` → 分配见 §5.10（DMS session 的 `monitorWallpapers`） |
 | **加 HM 应用/配置** | 判断层级（core/tui/gui）→ 新建文件即生效 → 需要开关时 §4.5 |
 | **改自定义脚本** | `home/gui/scripts/bin/<name>`（或 host 级 `hosts/<host>/home/`），`mkScriptsPackage` 打包 |
 | **让新数据重启后还在** | §5.7 白名单登记（仅两台笔电） |
@@ -565,7 +587,7 @@ ssh <host> 'systemctl list-units --state=failed --plain'
 
 ## 8. 陷阱与已知问题
 
-> 按主题分布：**提交安全** 1、15 · **模块与 eval** 3、7、8、13、18 · **私密仓库与本地 override** 10、11 · **主机与 flake 状态** 2、5、12、14 · **部署与 activation** 16、17、19、20 · **运行时行为** 4、6、9。
+> 按主题分布：**提交安全** 1、15 · **模块与 eval** 3、7、8、13、18 · **私密仓库与本地 override** 10、11 · **主机与 flake 状态** 2、5、12、14 · **部署与 activation** 16、17、19、20 · **运行时行为** 4、6、9 · **DMS/桌面壳** 21、22、23、24、25、26。
 
 1. **`git add -A` 危险**：`nixos-secrets/`（已 gitignore，安全）、`certs/`（已于本次加入 .gitignore）之外，仍可能有私钥/临时产物。提交前用 `git status` 逐项确认。
 2. **`outputs/x86_64-linux/hosts/<file>.nix` 文件名 ≠ hostname**（`laptop-mbgt14.nix` → `matebook-gt14`）；`name` 属性才是真名。
@@ -591,6 +613,12 @@ ssh <host> 'systemctl list-units --state=failed --plain'
 20. **`Activation failed` ≠ 没生效**：新 generation 往往已切换、新 unit 已启动。先看
     `/nix/var/nix/profiles/system` 和 `systemctl list-units --state=failed` 再决定动作；挂载类 unit
     （`requires=easytier-ltnet`）超时常常下一轮激活就自愈（§7.2）。
+21. **DMS 的 `configVersion` 必须手写**（settings=47、session=8）：settings 缺这个键会被当成"当前版本"（跳过迁移），session 缺会被当成 0（每次启动都跑迁移）。`just upp dms` 后若上游 bump 了版本，这两个数字和迁移涉及的键要同步更新。
+22. **`settings` 非空 → `~/.config/dms/settings.json` 是只读软链**（设计如此）：设置页里改什么都不落盘，UI 会提示只读。改配置 = GUI 试 → `dms ipc call settings dump` → 回填 `dms-settings.nix`。`session.json` 相反，它由 DMS 自由写，只在文件不存在时由 activation seed 一次。
+23. **`dockConfigs` 要显式写 `enabled = false`**：spec 默认 `enabled = true`，漏掉这个 key 会直接冒出 dock。
+24. **DMS 的三处 `--replace-fail` 补丁**：升级 `dms` 后若上游改了 `SessionService.qml` 的自定义键导出、`PowerMenuContent.qml` 的 `actionNeedsConfirm`、`DBarBody.qml` 的 `fullscreenAutoHide`，构建会直接失败——按报错找新锚点，不要改成 `--replace` 绕过。
+25. **`dms ipc call` 的退出码不可信**：目标或函数不存在时也返回 0（stdout 里是 `Function not found.`），脚本判断只能看 stdout。
+26. **`session.json` 不热重载**：改 `dms-session.nix` 不会覆盖已存在的 `~/.local/state/dms/session.json`；要重新 seed 得先删这个文件再 `systemctl --user restart dms`（settings 是热的，session 不是）。
 
 ---
 

@@ -107,6 +107,7 @@ in
         ".cache/restic"
         ".cache/tlrc"
         ".cache/vinput" # Voice Input ASR cache
+        ".cache/dms"
         ".vnc"
 
         # Configs
@@ -125,7 +126,6 @@ in
         ".config/nnn" # NNN bookmarks
         ".config/fcitx5"
         ".config/vinput" # vinput-gui 写入的运行时状态：已装 provider、active_provider、scenes
-        ".config/copyq"
         ".config/Bitwarden"
         ".config/rustdesk"
         ".config/OpenTabletDriver"
@@ -135,6 +135,8 @@ in
         ".config/rclone"
         ".config/LarkShell"
         ".config/discord"
+
+        ".config/dms"
 
         # systemd user configs
         ".config/systemd/user"

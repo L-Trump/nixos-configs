@@ -117,43 +117,18 @@ let
       [
         "fish"
         "-c"
+        "while not string match -qr '^(true|false)' (dms ipc call lock isLocked 2>/dev/null); sleep 1; end; dms ipc call lock lock"
+      ]
+      [
+        "fish"
+        "-c"
         "xrdb -merge ~/.Xresources"
       ]
-      [ "swaylock" ]
-      [
-        "systemctl"
-        "--user"
-        "restart"
-        "waybar.service"
-      ]
-      [ "lxqt-policykit-agent" ]
-      [ "nm-applet" ]
       [
         "systemctl"
         "--user"
         "restart"
         "fcitx5-daemon.service"
-      ]
-      [
-        "systemctl"
-        "--user"
-        "restart"
-        "hyprpaper.service"
-      ]
-      [
-        "systemctl"
-        "--user"
-        "restart"
-        "hypridle.service"
-      ]
-      [
-        "copyq"
-        "--start-server"
-      ]
-      [
-        "fish"
-        "-c"
-        "sleep 3; dex -a -s ~/.config/autostart"
       ]
       # ["fish" "-c" "xwayland-satellite :0"]
       [
@@ -172,7 +147,6 @@ let
         "restart"
         "xdg-desktop-portal.service"
       ]
-      # ["fish" "-c" "uwsm finalize"]
     ];
     prefer-no-csd = { };
     screenshot-path = "~/Pictures/Screenshots/Niri_%Y-%m-%d_%H-%M-%S.png";
@@ -235,16 +209,6 @@ let
         default-column-width.fixed = 715;
         default-window-height.fixed = 520;
       }
-      {
-        match = {
-          _props = {
-            app-id = "^com.github.hluk.copyq$";
-          };
-        };
-        open-floating = true;
-        default-column-width.fixed = 622;
-        default-window-height.fixed = 652;
-      }
     ];
     binds = {
       # shows a list of important hotkeys.
@@ -273,45 +237,180 @@ let
       # Mod+D hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
       "Mod+D" = {
         _props = {
-          hotkey-overlay-title = "Run an Application: rofi";
+          hotkey-overlay-title = "Launcher";
         };
-        spawn = "~/.config/waybar/rofi-menus/launcher.sh";
+        spawn = [
+          "dms"
+          "ipc"
+          "call"
+          "spotlight"
+          "toggle"
+        ];
       };
       "Mod+E" = {
         _props = {
           hotkey-overlay-title = "Power Menu";
         };
-        spawn = "~/.config/waybar/rofi-menus/powermenu.sh";
+        spawn = [
+          "dms"
+          "ipc"
+          "call"
+          "powermenu"
+          "toggle"
+        ];
       };
-      "Super+Alt+L" = {
+      "Mod+Alt+L" = {
         _props = {
-          hotkey-overlay-title = "Lock the Screen: swaylock";
+          hotkey-overlay-title = "Lock the Screen";
         };
-        spawn = "swaylock";
+        spawn = [
+          "dms"
+          "ipc"
+          "call"
+          "lock"
+          "lock"
+        ];
       };
 
       "Mod+Shift+S" = {
-        screenshot = { };
+        _props = {
+          hotkey-overlay-title = "Screenshot";
+        };
+        spawn = [
+          "dms"
+          "screenshot"
+          "region"
+        ];
+      };
+      "Mod+Ctrl+S" = {
+        _props = {
+          hotkey-overlay-title = "Screenshot (Scroll)";
+        };
+        spawn = [
+          "dms"
+          "screenshot"
+          "scroll"
+        ];
+      };
+      "Mod+Alt+S" = {
+        _props = {
+          hotkey-overlay-title = "Screenshot (Fullscreen)";
+        };
+        spawn = [
+          "dms"
+          "screenshot"
+          "full"
+        ];
       };
       "Print" = {
-        screenshot = { };
+        _props = {
+          hotkey-overlay-title = "Screenshot";
+        };
+        spawn = [
+          "dms"
+          "screenshot"
+          "region"
+        ];
       };
       "Ctrl+Print" = {
-        screenshot-screen = { };
+        _props = {
+          hotkey-overlay-title = "Screenshot (Fullscreen)";
+        };
+        spawn = [
+          "dms"
+          "screenshot"
+          "full"
+        ];
       };
       "Alt+Print" = {
-        screenshot-window = { };
+        _props = {
+          hotkey-overlay-title = "Screenshot (Window)";
+        };
+        spawn = [
+          "dms"
+          "screenshot"
+          "window"
+        ];
       };
 
       "Mod+N" = {
         spawn = [ "term-nnn" ];
       };
+
+      # 全局固定 workspace（fix:first / fix:second）：逗号/句号开关，加 Shift 把当前窗口移入/移出
+      "Mod+comma" = {
+        _props = {
+          hotkey-overlay-title = "Fix Workspace: first";
+        };
+        spawn = [
+          "fix-workspace"
+          "first"
+          "focus"
+        ];
+      };
+      "Mod+Shift+comma" = {
+        _props = {
+          hotkey-overlay-title = "Move Window to Fix Workspace: first";
+        };
+        spawn = [
+          "fix-workspace"
+          "first"
+          "move"
+        ];
+      };
+      "Mod+period" = {
+        _props = {
+          hotkey-overlay-title = "Fix Workspace: second";
+        };
+        spawn = [
+          "fix-workspace"
+          "second"
+          "focus"
+        ];
+      };
+      "Mod+Shift+period" = {
+        _props = {
+          hotkey-overlay-title = "Move Window to Fix Workspace: second";
+        };
+        spawn = [
+          "fix-workspace"
+          "second"
+          "move"
+        ];
+      };
+      "Mod+Shift+N" = {
+        _props = {
+          hotkey-overlay-title = "Notifications";
+        };
+        spawn = [
+          "dms"
+          "ipc"
+          "call"
+          "notifications"
+          "toggle"
+        ];
+      };
+      "Mod+Alt+N" = {
+        _props = {
+          hotkey-overlay-title = "Toggle Dark Mode: darkman";
+        };
+        spawn = [
+          "darkman"
+          "toggle"
+        ];
+      };
       "Mod+Alt+V" = {
         spawn = [ "rofi-rbw" ];
       };
-      "Mod+Shift+V" = {
+      "Mod+V" = {
+        _props = {
+          hotkey-overlay-title = "Clipboard History";
+        };
         spawn = [
-          "copyq"
+          "dms"
+          "ipc"
+          "call"
+          "clipboard"
           "toggle"
         ];
       };
@@ -723,11 +822,13 @@ let
       };
 
       # Consume one window from the right to the bottom of the focused column.
-      "Mod+Comma" = {
+      # 原 Mod+Comma（consume-window-into-column）让位给 fix workspace，改用 Ctrl 变体。
+      "Mod+Ctrl+Comma" = {
         consume-window-into-column = { };
       };
       # Expel the bottom window from the focused column to the right.
-      "Mod+Period" = {
+      # 原 Mod+Period（expel-window-from-column）让位给 fix workspace，改用 Ctrl 变体。
+      "Mod+Ctrl+Period" = {
         expel-window-from-column = { };
       };
 
@@ -797,7 +898,14 @@ let
         _props = {
           hotkey-overlay-title = "Search Windows";
         };
-        spawn = "~/.config/waybar/rofi-menus/window-switcher.sh";
+        spawn = [
+          "dms"
+          "ipc"
+          "call"
+          "spotlight"
+          "toggleQuery"
+          "!"
+        ];
       };
       "Mod+Ctrl+Space" = {
         switch-focus-between-floating-and-tiling = { };
@@ -836,6 +944,22 @@ let
         };
       };
     };
+    include = [
+      {
+        _args = [ "dms/wpblur.kdl" ];
+        _position = "after";
+        _props = {
+          optional = true;
+        };
+      }
+      {
+        _args = [ "dms/windowrules.kdl" ];
+        _position = "after";
+        _props = {
+          optional = true;
+        };
+      }
+    ];
   };
 in
 settings

@@ -3,7 +3,7 @@
   # your surroundings. This may help your eyes hurt less if you are
   # working in front of the screen at night.
   #
-  # works fine with both x11 & wayland(hyprland)
+  # works fine with both x11 & wayland(niri)
   #
   # https://gitlab.com/chinstrap/gammastep
   services.gammastep = {

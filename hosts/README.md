@@ -3,8 +3,9 @@
 1. `matebook-gt14`: My main laptop, Huawei Matebook GT14 2024, for daily use.
 1. `rog-ga502`: My old laptop, ASUS ROG Zephyrus G15 2020 (GA502IV).
 1. `n100`: N100 NUC in home, as homelab.
-1. `aliyun-vm-sh`: Virtual machine on Ailyun, located in Shanghai, China.
-1. `aliyun-vm-hk`: Virtual machine on Ailyun, located in HongKong, China.
+1. `aliyun-vm-sh`: Virtual machine on Aliyun, located in Shanghai, China.
+1. `aliyun-vm-sh-qi`: Lightweight VM on Aliyun, located in Shanghai, China.
+1. `aliyun-vm-hk`: Virtual machine on Aliyun, located in HongKong, China.
 1. `llyun-vm-jp`: Virtual machine on Langlangyun, located in Tokyo, Japan.
 1. `gx-vm-js`: Virtual machine on guanxingyun, located in Suqian, Jiangsu, China.
 1. `jcloud`: Virtual machine on jCloud, located in Shanghai, China.
@@ -16,19 +17,20 @@
 
 ## How to add a new host
 
-1. Under `hosts/`
-   1. Create a new folder under `hosts/` with the name of the new host.
-   1. Create & add the new host's `hardware-configuration.nix` to the new folder, and add the new
-      host's `configuration.nix` to `hosts/<name>/modules/core.nix`.
-   1. More system config in `hosts/<name>/modules`, home config in `hosts/<name>/home`
-1. Under `outputs/`
-   1. Add a new nix file named `outputs/<system-architecture>/src/<name>.nix`.
-   1. Copy the content from one of the existing similar host, and modify it to fit the new host.
-      1. Usually, you only need to modify the `name` and `tags` fields.
-   1. Modify `myconfigs` variable to toggle specefic common feature.
-1. Under secrets repo
-   1. Add easytier config for the new hosts if needed.
-1. Under `vars/networking.nix`
-   1. Add the new host's physical IP address if the new host is in local network.
-   1. Skip this step if the new host is not in the local network or is a mobile device.
-   1. Add the new host's easytier IP address if available.
+1. `hosts/<name>/`
+   1. `modules/` (required, with `default.nix`): hardware configuration and machine-specific NixOS modules.
+   1. `home/` (optional): machine-specific Home-Manager overrides (niri/DMS settings, lan-mouse, ...).
+1. `outputs/x86_64-linux/hosts/<name>.nix` — the host's assembly file
+   1. `name` must equal the hostname; the filename does not have to (e.g. `laptop-mbgt14.nix` -> `matebook-gt14`).
+   1. `tags` decides the colmena batch target (`all` / `vps` / `home` / ...). Deprecating a host means
+      commenting out its `all`/`vps` tags here instead of deleting the file.
+   1. `preset` picks `mypresets.{bare,server,daily}`; override it with `myconfigs.mymodules` / `myconfigs.myhome`.
+1. `vars/networking.nix`
+   1. Add the host's easytier IP under `hostsAddr.easytier` (`/etc/hosts` records and ssh aliases derive from it).
+   1. Add its physical IP too if the host is on the local network.
+1. `nixos-secrets/` (the private repo)
+   1. Add the host public key to the right group in `secrets.nix` (`all-hosts` / `server-hosts` / ...) and rekey.
+   1. Add the easytier config (`ltnet-<host>.nix` or `ltnet-<host>.conf.age`); see `secrets/README.md`.
+1. Verify: `nix build "path:$PWD#nixosConfigurations.<host>.config.system.build.toplevel" --dry-run --no-link`
+1. Deploy: `colmena apply --on <host>` — build locally and push the closure; never use `--build-on-target`
+   on the public VPS hosts.

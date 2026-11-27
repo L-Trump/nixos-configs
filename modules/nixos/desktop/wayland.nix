@@ -1,6 +1,3 @@
-# Edit this configuration file to define what should be installed on
-# your system. Help is available in the configuration.nix(5) man page, on
-# https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 {
   pkgs,
   lib,
@@ -11,37 +8,22 @@ let
   cfg = config.mymodules.desktop;
 in
 {
-  config = lib.mkMerge [
-    (lib.mkIf cfg.hyprland.enable {
-      programs.hyprland.enable = true;
-      # programs.hyprland.withUWSM = true;
-      environment.systemPackages = with pkgs; [
-        wl-clipboard-rs
-        xwayland-satellite
+  config = lib.mkIf cfg.niri.enable {
+    programs.niri.enable = true;
+    environment.systemPackages = with pkgs; [
+      wl-clipboard-rs
+      xwayland-satellite
+      quickshell
+    ];
+    nix.settings = {
+      substituters = [
+        "https://niri-epireyn.cachix.org"
+        "https://nix-cache.duxlabs.dev"
       ];
-      nix.settings = {
-        substituters = [ "https://hyprland.cachix.org" ];
-        trusted-public-keys = [ "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" ];
-      };
-    })
-    (lib.mkIf cfg.niri.enable {
-      programs.niri.enable = true;
-      programs.uwsm.enable = true;
-      programs.uwsm.waylandCompositors = {
-        niri = {
-          prettyName = "Niri";
-          comment = "Niri compositor managed by UWSM";
-          binPath = "/run/current-system/sw/bin/niri";
-        };
-      };
-      environment.systemPackages = with pkgs; [
-        wl-clipboard-rs
-        xwayland-satellite
+      trusted-public-keys = [
+        "niri-epireyn.cachix.org-1:tlVyFN7CtsDT+ZcLPS+ekFWeT1X6X4OqvWqbBMyIzFA="
+        "dux-1:lrBykuzHKu9F6WsCbK83C9/uOrfqUY1kflRZtrUcMF0="
       ];
-      nix.settings = {
-        substituters = [ "https://niri-epireyn.cachix.org" ];
-        trusted-public-keys = [ "niri-epireyn.cachix.org-1:tlVyFN7CtsDT+ZcLPS+ekFWeT1X6X4OqvWqbBMyIzFA=" ];
-      };
-    })
-  ];
+    };
+  };
 }

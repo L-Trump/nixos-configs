@@ -1,25 +1,17 @@
 {
   pkgs,
-  config,
   lib,
-  mylib,
   myhome,
-  inputs,
   ...
 }:
 let
-  wallpaper_hazel_qu = builtins.path { path = "${inputs.mywallpapers}/Hazel/hazel_qu.png"; };
-  cfg.niri = myhome.desktop.niri;
-  cfg.hyprland = myhome.desktop.hyprland;
-  cfg.enable = cfg.niri.enable || cfg.hyprland.enable;
+  cfg = myhome.desktop.niri;
 in
 {
   imports = [
     ./niri
-    ./hyprland
   ]
   ++ lib.optionals cfg.enable [
-    ./waybar
     ./swaylock.nix
   ];
 
@@ -32,45 +24,14 @@ in
     };
 
     home.packages = with pkgs; [
-      hyprpicker
       snipaste
       wl-clipboard-rs
       grim
       slurp
       swappy
-      copyq
-      dex
       acpi
       mpvpaper
+      xorg.xrdb
     ];
-
-    xdg.configFile."uwsm/env".text = ''
-      export NIXOS_OZONE_WL="1";
-      export XMODIFIERS="@im=fcitx";
-      export QT_IM_MODULE="fcitx";
-      export QT_IM_MODULES="wayland;fcitx;ibus";
-      # GUI Toolkit backend
-      export GDK_BACKEND="wayland,x11,*";
-      export QT_QPA_PLATFORM="wayland;xcb";
-      export QT_AUTO_SCREEN_SCALE_FACTOR="1";
-      # Session Type env
-      export XDG_SESSION_TYPE="wayland";
-      export # Locale
-      export LANG="en_GB.UTF-8";
-      export LANGUAGE="zh_CN.UTF-8";
-    '';
-
-    services.hyprpaper = {
-      enable = true;
-      settings = {
-        # default for every monitor; per-host overrides live in hosts/<host>/home/
-        wallpaper = [
-          {
-            monitor = "";
-            path = wallpaper_hazel_qu;
-          }
-        ];
-      };
-    };
   };
 }

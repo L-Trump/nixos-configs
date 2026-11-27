@@ -20,10 +20,6 @@
     ];
     config = {
       common.default = "*";
-      i3 = {
-        default = [ "gtk" ];
-        "org.freedesktop.impl.portal.FileChooser" = [ "termfilechooser" ];
-      };
       niri = {
         default = [
           "gnome"

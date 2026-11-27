@@ -74,16 +74,12 @@ let
         !(elem name [
           "_args"
           "_props"
+          "_position"
         ])
       ) attrs;
     in
     "${name} ${optArgsString}${optPropsString}"
-    + (
-      if children == { } then
-        ""
-      else
-        "{\n${indentStrings (mapAttrsToList convertAttributeToKDL children)}\n}"
-    );
+    + (if children == { } then "" else "{\n${indentStrings (childrenToKDL children)}\n}");
 
   # List Conversion
   # String -> ListOf (OneOf [Int Float String Bool Null])  -> String
@@ -142,7 +138,48 @@ let
         Cannot convert type `(${typeOf value})` to KDL:
           ${name} = ${toString value}
       '';
+
+  positionOf = value: if typeOf value == "set" then (value._position or "normal") else "normal";
+
+  positionRank =
+    position:
+    if position == "before" then
+      0
+    else if position == "after" then
+      2
+    else
+      1;
+
+  expandChild =
+    name: value:
+    let
+      isNodeList = typeOf value == "list" && any (el: typeOf el == "set") value;
+    in
+    if isNodeList then
+      map (el: {
+        inherit name;
+        node = el;
+        rank = positionRank (positionOf el);
+      }) value
+    else
+      [
+        {
+          inherit name;
+          node = value;
+          rank = positionRank (positionOf value);
+        }
+      ];
+
+  childrenToKDL =
+    attrs:
+    let
+      expanded = lib.concatLists (
+        lib.mapAttrsToList expandChild (lib.filterAttrs (name: _: name != "_position") attrs)
+      );
+      bucket = rank: lib.filter (item: item.rank == rank) expanded;
+    in
+    map (item: convertAttributeToKDL item.name item.node) (bucket 0 ++ bucket 1 ++ bucket 2);
 in
 attrs: ''
-  ${concatStringsSep "\n" (mapAttrsToList convertAttributeToKDL attrs)}
+  ${concatStringsSep "\n" (childrenToKDL attrs)}
 ''

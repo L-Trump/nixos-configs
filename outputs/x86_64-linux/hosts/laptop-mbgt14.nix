@@ -48,7 +48,6 @@ let
 in
 {
   nixosConfigurations = {
-    # host with hyprland compositor
     "${name}" = mylib.nixosSystem systemArgs;
   };
 

@@ -23,16 +23,6 @@
     };
     # NUR packages
     nur.url = "github:nix-community/NUR";
-    # Hyprland
-    hyprland = {
-      url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    # # Hyprland gestures
-    # hyprgrass = {
-    #   url = "github:horriblename/hyprgrass";
-    #   inputs.hyprland.follows = "hyprland"; # IMPORTANT
-    # };
     # xddxdd packages, for qq/wechat
     # nur-xddxdd = {
     #   url = "github:xddxdd/nur-packages";
@@ -87,6 +77,17 @@
       url = "github:epireyn/niri-flake";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.nixpkgs-stable.follows = "nixpkgs-stable";
+    };
+
+    # Dux Modular Shell
+    dms = {
+      url = "github:duxlabs-dev/dux-shell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    # DMS Plugins
+    dms-plugin-registry = {
+      url = "github:duxlabs-dev/dux-plugin-registry";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     haumea = {

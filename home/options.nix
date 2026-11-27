@@ -50,9 +50,6 @@ in
     };
     desktop = {
       enable = mkEnableOption "Enable Desktop Environment";
-      hyprland.enable = mkEnableOption "Hyprland WM" // {
-        default = true;
-      };
       niri = {
         enable = mkEnableOption "Niri WM" // {
           default = true;
@@ -62,9 +59,6 @@ in
           default = { };
           description = "Niri Configuration";
         };
-      };
-      xorg.enable = mkEnableOption "Xorg Display Server" // {
-        default = true;
       };
       daily.enable = mkEnableOption "Daily stuffs";
       daily.game.enable = mkEnableOption "Games";

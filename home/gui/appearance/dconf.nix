@@ -7,7 +7,6 @@
 {
   dconf.settings = {
     "org/gnome/interface" = {
-      color-scheme = "'prefer-light'";
       gtk-theme = config.gtk.theme.name;
       font-name = config.gtk.font.name;
       icon-theme = config.gtk.iconTheme.name;

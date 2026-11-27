@@ -1,0 +1,290 @@
+#!/usr/bin/env python3
+"""fix-workspace <first|second> <focus|move> — global pinned workspaces (niri)
+
+The names fix:first / fix:second are globally unique. The first creation lands
+at the top of the current monitor; on the same output, "second" is inserted
+right after an existing "first".
+
+  focus: enter the pinned workspace; if already inside, go back to the window
+         and workspace that were active before entering
+  move : move the focused window into the pinned workspace (focus follows); if
+         already inside, move it back to its original workspace
+
+Two pieces of state are recorded on entry and restored on exit:
+  origin_window / origin_monitor / origin_ws — the focused window we came from
+  fix_monitor / fix_prev_ws                  — which workspace the pinned
+                                               workspace's monitor showed before
+
+Talks to niri over its raw IPC socket (newline-delimited JSON), doing every
+read and write on a single connection: each `niri msg` process costs ~25ms,
+while one socket round trip keeps the whole run down to tens of milliseconds.
+"""
+
+import json
+import os
+import socket
+import sys
+
+STATE_DIR = os.path.join(os.environ.get("XDG_RUNTIME_DIR") or "/tmp", "fix-workspace")
+
+
+class Niri:
+    def __init__(self):
+        path = os.environ.get("NIRI_SOCKET")
+        if not path:
+            sys.exit("NIRI_SOCKET is not set (not running inside a niri session?)")
+        self.sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+        self.sock.connect(path)
+        self.f = self.sock.makefile("rwb")
+        self._ws = None
+        self._win = None
+
+    def rpc(self, req):
+        self.f.write(json.dumps(req).encode() + b"\n")
+        self.f.flush()
+        line = self.f.readline()
+        if not line:
+            raise RuntimeError("niri IPC connection closed")
+        reply = json.loads(line)
+        if "Err" in reply:
+            raise RuntimeError(f"niri: {reply['Err']}")
+        return reply["Ok"]
+
+    def workspaces(self, fresh=False):
+        if self._ws is None or fresh:
+            self._ws = self.rpc("Workspaces")["Workspaces"]
+        return self._ws
+
+    def windows(self, fresh=False):
+        if self._win is None or fresh:
+            self._win = self.rpc("Windows")["Windows"]
+        return self._win
+
+    def action(self, action_name, **args):
+        try:
+            self.rpc({"Action": {action_name: args} if args else action_name})
+        except RuntimeError as e:
+            if os.environ.get("FIX_WS_DEBUG"):
+                print(f"niri {action_name} failed: {e}", file=sys.stderr)
+
+
+def find(items, **match):
+    for it in items:
+        if all(it.get(k) == v for k, v in match.items()):
+            return it
+    return None
+
+
+def ws_of(id_, ws):
+    return find(ws, id=id_) if id_ else None
+
+
+def fallback_ws(ws, output, exclude):
+    """First workspace on that output that holds a window (pinned one excluded); if none does, the first one."""
+    pool = [w for w in ws if w.get("output") == output and w.get("id") != exclude]
+    withwin = sorted([w for w in pool if w.get("active_window_id") is not None], key=lambda w: w["idx"])
+    if withwin:
+        return withwin[0]
+    pool.sort(key=lambda w: w["idx"])
+    return pool[0] if pool else None
+
+
+def read_state(path):
+    try:
+        with open(path, encoding="utf-8") as f:
+            return json.load(f)
+    except (OSError, ValueError):
+        return None
+
+
+def write_state(path, **data):
+    os.makedirs(STATE_DIR, exist_ok=True)
+    tmp = path + ".tmp"
+    with open(tmp, "w", encoding="utf-8") as f:
+        json.dump(data, f)
+    os.replace(tmp, path)
+
+
+def create_fix_ws(n, name, slot, ws, out):
+    """Create a pinned workspace at the top of the current monitor; on the same output, "second" goes right after an existing "first"."""
+    target = 1
+    if slot == "second":
+        first = find(ws, name="fix:first")
+        if first and first.get("output") == out:
+            target = first["idx"] + 1
+    trailing = [w for w in ws if w.get("output") == out and w.get("active_window_id") is None]
+    if not trailing:
+        return False
+    # niri always keeps one empty trailing workspace per monitor; name that one
+    # instead of switching to it and renaming afterwards
+    idx = max(w["idx"] for w in trailing)
+    n.action("SetWorkspaceName", name=name, workspace={"Index": idx})
+    n.action("MoveWorkspaceToIndex", index=target, reference={"Name": name})
+    return True
+
+
+def main():
+    if len(sys.argv) < 3:
+        sys.exit("usage: fix-workspace <first|second> <focus|move>")
+    slot, mode = sys.argv[1], sys.argv[2]
+    if slot not in ("first", "second") or mode not in ("focus", "move"):
+        sys.exit("usage: fix-workspace <first|second> <focus|move>")
+
+    name = f"fix:{slot}"
+    state_path = os.path.join(STATE_DIR, f"{slot}.json")
+    state = read_state(state_path)
+
+    n = Niri()
+    ws = n.workspaces()
+    win = n.windows()
+    fix = find(ws, name=name)
+    fws = find(ws, is_focused=True)
+    fwin = find(win, is_focused=True)
+    if not fws:
+        return
+
+    if mode == "focus":
+        if fix and fws["id"] == fix["id"]:
+            # already inside the pinned workspace: exit
+            if not state:
+                n.action("FocusWorkspacePrevious")
+                return
+            fix_out = fix.get("output")
+            prev = state.get("fix_prev_ws") or 0
+            # the pinned workspace was dragged to another monitor, so the
+            # recorded fix_prev no longer applies
+            if fix_out != state.get("fix_monitor") or not prev:
+                fb = fallback_ws(ws, fix_out, fix["id"])
+                prev = fb["id"] if fb else 0
+            if os.environ.get("FIX_WS_DEBUG"):
+                print(f"[fix] exit fix_out={fix_out} state_mon={state.get('fix_monitor')} prev={prev}", file=sys.stderr)
+            if prev:
+                pws = ws_of(prev, ws)
+                if pws:
+                    if fws.get("output") != fix_out:
+                        n.action("FocusMonitor", output=fix_out)
+                    n.action("FocusWorkspace", reference={"Index": pws["idx"]})
+            # focus the origin window only when it is not in the pinned
+            # workspace; otherwise return to the recorded workspace
+            stat_win = ws_of(state.get("origin_ws") or 0, ws)
+            owin = find(win, id=state.get("origin_window") or 0)
+            if owin and owin.get("workspace_id") != fix["id"]:
+                n.action("FocusWindow", id=owin["id"])
+            elif stat_win:
+                if fws.get("output") != stat_win.get("output"):
+                    n.action("FocusMonitor", output=stat_win.get("output"))
+                n.action("FocusWorkspace", reference={"Index": stat_win["idx"]})
+            elif owin:
+                n.action("FocusWindow", id=owin["id"])
+            else:
+                n.action("FocusWorkspacePrevious")
+            if not any(w.get("workspace_id") == fix["id"] for w in win):
+                n.action("UnsetWorkspaceName", reference={"Name": name})
+            try:
+                os.unlink(state_path)
+            except OSError:
+                pass
+            return
+
+        # enter the pinned workspace
+        if fix:
+            fix_out = fix.get("output")
+            active = find(ws, output=fix_out, is_active=True)
+            fix_prev = active["id"] if active and active["id"] != fix["id"] else 0
+        else:
+            fix_out = fws.get("output")
+            fix_prev = fws["id"]
+            if not create_fix_ws(n, name, slot, ws, fix_out):
+                return
+        write_state(
+            state_path,
+            name=name,
+            fix_monitor=fix_out,
+            fix_prev_ws=fix_prev,
+            origin_window=(fwin or {}).get("id", 0),
+            origin_monitor=fws.get("output"),
+            origin_ws=fws["id"],
+        )
+        n.action("FocusWorkspace", reference={"Name": name})
+        return
+
+    # move mode
+    if not fwin:
+        return
+    if fix and fwin.get("workspace_id") == fix["id"]:
+        # move out of the pinned workspace
+        if not state:
+            # no state (e.g. niri restarted): pick an ordinary workspace and
+            # move the window there
+            cand = fallback_ws(ws, fix.get("output"), fix["id"])
+            if cand:
+                n.action("MoveWindowToWorkspace", window_id=fwin["id"],
+                         reference={"Index": cand["idx"]}, focus=False)
+                n.action("FocusWindow", id=fwin["id"])
+            if not any(w.get("workspace_id") == fix["id"] and w.get("id") != fwin["id"] for w in win):
+                n.action("UnsetWorkspaceName", reference={"Name": name})
+            return
+        target = ws_of(state.get("origin_ws") or 0, ws)
+        fix_out = fix.get("output")
+        prev = state.get("fix_prev_ws") or 0
+        if fix_out != state.get("fix_monitor") or not prev:
+            fb = fallback_ws(ws, fix_out, fix["id"])
+            prev = fb["id"] if fb else 0
+        if os.environ.get("FIX_WS_DEBUG"):
+            print(f"[fix] moveout fix_out={fix_out} state_mon={state.get('fix_monitor')} prev={prev} target={target and target['id']}", file=sys.stderr)
+        if target:
+            cur = ws_of(fwin.get("workspace_id"), ws)
+            cross = bool(cur and target.get("output") and cur.get("output") != target.get("output"))
+            if cross:
+                n.action("MoveWindowToMonitor", output=target["output"], id=fwin["id"])
+            # indices resolve against the window's own monitor, so move the
+            # window to the target monitor first when crossing screens
+            n.action("MoveWindowToWorkspace", window_id=fwin["id"], reference={"Index": target["idx"]}, focus=False)
+            pws = ws_of(prev, ws)
+            if pws:
+                # after a cross-monitor move the focus may follow the target
+                # monitor, so switch back to the pinned workspace monitor
+                if cross or fws.get("output") != fix_out:
+                    n.action("FocusMonitor", output=fix_out)
+                n.action("FocusWorkspace", reference={"Index": pws["idx"]})
+            n.action("FocusWindow", id=fwin["id"])
+        else:
+            n.action("FocusWorkspacePrevious")
+            ws2 = Niri().workspaces()  # refetch: indices may have shifted
+            cur = find(ws2, is_focused=True)
+            if cur:
+                n.action("MoveWindowToWorkspace", window_id=fwin["id"],
+                         reference={"Index": cur["idx"]}, focus=False)
+                n.action("FocusWindow", id=fwin["id"])
+        if not any(w.get("workspace_id") == fix["id"] for w in win if w.get("id") != fwin["id"]):
+            n.action("UnsetWorkspaceName", reference={"Name": name})
+        try:
+            os.unlink(state_path)
+        except OSError:
+            pass
+        return
+
+    # move into the pinned workspace
+    if fix:
+        fix_out = fix.get("output")
+        active = find(ws, output=fix_out, is_active=True)
+        fix_prev = active["id"] if active and active["id"] != fix["id"] else 0
+    else:
+        fix_out = fws.get("output")
+        fix_prev = fws["id"]
+        if not create_fix_ws(n, name, slot, ws, fix_out):
+            return
+    write_state(
+        state_path,
+        name=name,
+        fix_monitor=fix_out,
+        fix_prev_ws=fix_prev,
+        origin_window=fwin["id"],
+        origin_monitor=fws.get("output"),
+        origin_ws=fws["id"],
+    )
+    n.action("MoveWindowToWorkspace", window_id=fwin["id"], reference={"Name": name}, focus=True)
+
+
+if __name__ == "__main__":
+    main()

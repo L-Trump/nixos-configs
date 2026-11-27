@@ -8,10 +8,10 @@
 {
   myhome.desktop.niri.settings = {
     output = [
-      # LG 27" 2K 144Hz, landscape — leftmost (HDMI on the iGPU: 144Hz + VRR,
-      # the dGPU DP port only negotiates 120Hz without VRR)
+      # LG 27" 2K 144Hz, landscape — leftmost (HDMI on the iGPU)
       {
         _args = [ "LG Electronics LG ULTRAGEAR 610BOSF14310" ];
+        mode = "2560x1440@119.998";
         scale = 1.25;
         # bare flag node — niri rejects `variable-refresh-rate true`
         variable-refresh-rate = { };
